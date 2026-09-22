@@ -1,0 +1,36 @@
+{
+  "name": "football-11",
+  "version": "0.1.0",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "type": "module",
+  "scripts": {
+    "build": "tsc -b && npm run build --workspace @football-11/web",
+    "clean": "tsc -b --clean",
+    "format": "oxfmt package.json tsconfig.base.json tsconfig.json vitest.config.ts packages apps/web tools/mechanics",
+    "format:check": "oxfmt --check package.json tsconfig.base.json tsconfig.json vitest.config.ts packages apps/web tools/mechanics",
+    "lint": "oxlint --type-aware packages apps/web/app apps/web/src apps/web/preview apps/web/vite.config.ts tools/mechanics vitest.config.ts",
+    "mechanics:offers": "npm run build --silent && node tools/mechanics/analyze-offers.mjs",
+    "mechanics:fixture": "npm run build --silent && node tools/mechanics/run-fixture.mjs",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "typecheck": "tsc -b --pretty false && npm run typecheck --workspace @football-11/web",
+    "verify": "npm run format:check && npm run typecheck && npm run lint && npm test && npm run build",
+    "dev": "tsc -b && npm run dev --workspace @football-11/web",
+    "preview": "npm run preview --workspace @football-11/web"
+  },
+  "devDependencies": {
+    "@types/node": "22.19.19",
+    "oxfmt": "0.61.0",
+    "oxlint": "1.76.0",
+    "oxlint-tsgolint": "7.0.2001",
+    "typescript": "5.9.3",
+    "vitest": "4.0.18"
+  },
+  "engines": {
+    "node": ">=22.13.0"
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "schemaVersion": "football11-phase0-draft-cases-v1",
+  "rulesVersion": "draft-rules-v1",
+  "roundNumbering": "one-based",
+  "cooldownRule": {
+    "cooldownRounds": 2,
+    "eligibleAgainOffset": 3,
+    "formula": "eligibleAgainRound = resolvedRound + 3"
+  },
+  "cases": [
+    {
+      "id": "selected-card-leaves-run",
+      "action": { "type": "select", "round": 1, "playerIdentityId": "fixture:alpha" },
+      "expected": { "excludedFromCurrentRun": true, "eligibleAgainRound": null }
+    },
+    {
+      "id": "passed-card-two-round-cooldown",
+      "action": { "type": "pass", "round": 1, "playerIdentityId": "fixture:beta" },
+      "expected": { "ineligibleRounds": [2, 3], "eligibleAgainRound": 4 }
+    },
+    {
+      "id": "rerolled-card-current-and-future-exclusion",
+      "action": { "type": "reroll", "round": 5, "playerIdentityId": "fixture:gamma" },
+      "expected": { "excludedFromReplacementOffer": true, "ineligibleRounds": [6, 7], "eligibleAgainRound": 8 }
+    },
+    {
+      "id": "failed-reroll-does-not-consume",
+      "action": { "type": "reroll", "round": 9, "rerollsBefore": 1, "replacementCandidateCount": 2 },
+      "expected": { "replacementGenerated": false, "rerollsAfter": 1, "reason": "insufficient_replacement_candidates" }
+    },
+    {
+      "id": "forward-safe-placement-required",
+      "action": { "type": "select", "round": 8, "playerIdentityId": "fixture:delta", "slotId": "DM" },
+      "expected": { "acceptOnlyIfCompletionMatchingExists": true, "remainingOfferSize": 3 }
+    }
+  ]
+}

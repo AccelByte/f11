@@ -1,0 +1,28 @@
+{
+  "schemaVersion": "football11-phase0-match-cases-v1",
+  "seasonVersion": "season-v1",
+  "notes": "These cases freeze delta and probability calculations. Phase 1A adds exact sampled outcomes after rng-v1 is implemented.",
+  "cases": [
+    {
+      "id": "even-teams-home",
+      "team": { "attack": 75, "defence": 75, "control": 75 },
+      "opponent": { "attack": 75, "defence": 75, "control": 75 },
+      "venueBias": 2,
+      "expected": { "delta": 2, "winProbability": 0.444384, "drawProbability": 0.237202, "lossProbability": 0.318415 }
+    },
+    {
+      "id": "strong-team-away",
+      "team": { "attack": 85, "defence": 85, "control": 85 },
+      "opponent": { "attack": 70, "defence": 70, "control": 70 },
+      "venueBias": -2,
+      "expected": { "delta": 13, "winProbability": 0.812745, "drawProbability": 0.094147, "lossProbability": 0.093107 }
+    },
+    {
+      "id": "weak-team-home",
+      "team": { "attack": 65, "defence": 65, "control": 65 },
+      "opponent": { "attack": 80, "defence": 80, "control": 80 },
+      "venueBias": 2,
+      "expected": { "delta": -13, "winProbability": 0.093107, "drawProbability": 0.094147, "lossProbability": 0.812745 }
+    }
+  ]
+}

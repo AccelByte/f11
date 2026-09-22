@@ -1,0 +1,20 @@
+{
+  "schemaVersion": "football11-head-to-head-profile-v1",
+  "version": "head-to-head-v1",
+  "weights": {
+    "attackDefenceDuel": 0.425,
+    "control": 0.15
+  },
+  "outcomeModel": {
+    "deltaScale": 12,
+    "drawBase": -0.35,
+    "drawDeltaScale": 18
+  },
+  "challengeScore": {
+    "initial": 0,
+    "minimum": 0,
+    "win": 3,
+    "draw": 0,
+    "loss": -2
+  }
+}

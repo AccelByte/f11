@@ -1,0 +1,14 @@
+{
+  "files": [],
+  "references": [
+    {
+      "path": "./packages/domain"
+    },
+    {
+      "path": "./packages/content"
+    },
+    {
+      "path": "./packages/test-fixtures"
+    }
+  ]
+}

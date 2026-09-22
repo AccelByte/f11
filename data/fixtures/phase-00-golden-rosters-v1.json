@@ -1,0 +1,369 @@
+{
+  "schemaVersion": "football11-phase0-fixtures-v1",
+  "fixtureVersion": "phase0-rosters-v1",
+  "contentVersion": "openfootball-premier-league-2023-24-named-squads-v2",
+  "assessmentVersion": "assessment-v1",
+  "notes": "Reference scores freeze Phase 0 inputs; the Phase 1A TypeScript engine must reproduce them before they become final golden vectors.",
+  "validRosters": [
+    {
+      "id": "elite-balanced",
+      "purpose": "High effective position ratings across all eleven slots.",
+      "assignments": [
+        {
+          "slotId": "GK",
+          "position": "GK",
+          "playerSeasonId": "openfootball-liverpool-2023-24-alisson-becker-1992"
+        },
+        {
+          "slotId": "LB",
+          "position": "LB",
+          "playerSeasonId": "openfootball-liverpool-2023-24-trent-alexander-arnold-1998"
+        },
+        {
+          "slotId": "LCB",
+          "position": "CB",
+          "playerSeasonId": "openfootball-arsenal-2023-24-oleksandr-zinchenko-1996"
+        },
+        {
+          "slotId": "RCB",
+          "position": "CB",
+          "playerSeasonId": "openfootball-arsenal-2023-24-taylor-foran-2003"
+        },
+        {
+          "slotId": "RB",
+          "position": "RB",
+          "playerSeasonId": "openfootball-arsenal-2023-24-william-saliba-2001"
+        },
+        {
+          "slotId": "DM",
+          "position": "DM",
+          "playerSeasonId": "openfootball-manchester-city-2023-24-rodri-1996"
+        },
+        {
+          "slotId": "CM",
+          "position": "CM",
+          "playerSeasonId": "openfootball-arsenal-2023-24-martin-degaard-1998"
+        },
+        {
+          "slotId": "AM",
+          "position": "AM",
+          "playerSeasonId": "openfootball-arsenal-2023-24-leandro-trossard-1994"
+        },
+        {
+          "slotId": "LW",
+          "position": "LW",
+          "playerSeasonId": "openfootball-manchester-city-2023-24-will-dickson-2004"
+        },
+        {
+          "slotId": "CF",
+          "position": "CF",
+          "playerSeasonId": "openfootball-arsenal-2023-24-reiss-nelson-1999"
+        },
+        {
+          "slotId": "RW",
+          "position": "RW",
+          "playerSeasonId": "openfootball-manchester-city-2023-24-erling-h-land-2000"
+        }
+      ],
+      "expectedValidationErrors": [],
+      "expectedAssessment": {
+        "categories": {
+          "quality": 90.09,
+          "positioning": 100.0,
+          "chemistry": 64.6,
+          "tacticalBalance": 100.0,
+          "leadership": 79.87
+        },
+        "tacticalAxes": {
+          "width": {
+            "supply": 78.85,
+            "score": 100.0
+          },
+          "chanceCreation": {
+            "supply": 80.7,
+            "score": 100.0
+          },
+          "ballWinning": {
+            "supply": 76.73,
+            "score": 100.0
+          },
+          "pace": {
+            "supply": 80.02,
+            "score": 100.0
+          },
+          "defensiveCover": {
+            "supply": 80.56,
+            "score": 100.0
+          },
+          "aerialPresence": {
+            "supply": 71.94,
+            "score": 100.0
+          }
+        },
+        "composite": 88.45
+      }
+    },
+    {
+      "id": "star-heavy-mispositioned",
+      "purpose": "Legal placements chosen to expose positioning penalties.",
+      "assignments": [
+        {
+          "slotId": "GK",
+          "position": "GK",
+          "playerSeasonId": "openfootball-liverpool-2023-24-alisson-becker-1992"
+        },
+        {
+          "slotId": "LB",
+          "position": "LB",
+          "playerSeasonId": "openfootball-arsenal-2023-24-micha-rosiak-2005"
+        },
+        {
+          "slotId": "LCB",
+          "position": "CB",
+          "playerSeasonId": "openfootball-arsenal-2023-24-william-saliba-2001"
+        },
+        {
+          "slotId": "RCB",
+          "position": "CB",
+          "playerSeasonId": "openfootball-arsenal-2023-24-jakub-kiwior-2000"
+        },
+        {
+          "slotId": "RB",
+          "position": "RB",
+          "playerSeasonId": "openfootball-everton-2023-24-james-tarkowski-1992"
+        },
+        {
+          "slotId": "DM",
+          "position": "DM",
+          "playerSeasonId": "openfootball-west-ham-united-2023-24-gabriel-caliste-2006"
+        },
+        {
+          "slotId": "CM",
+          "position": "CM",
+          "playerSeasonId": "openfootball-liverpool-2023-24-kieran-morrison-2006"
+        },
+        {
+          "slotId": "AM",
+          "position": "AM",
+          "playerSeasonId": "openfootball-manchester-city-2023-24-micah-hamlton-2003"
+        },
+        {
+          "slotId": "LW",
+          "position": "LW",
+          "playerSeasonId": "openfootball-newcastle-united-2023-24-alexander-isak-1999"
+        },
+        {
+          "slotId": "CF",
+          "position": "CF",
+          "playerSeasonId": "openfootball-arsenal-2023-24-omari-benjamin-2005"
+        },
+        {
+          "slotId": "RW",
+          "position": "RW",
+          "playerSeasonId": "openfootball-manchester-city-2023-24-will-dickson-2004"
+        }
+      ],
+      "expectedValidationErrors": [],
+      "expectedAssessment": {
+        "categories": {
+          "quality": 87.0,
+          "positioning": 79.58,
+          "chemistry": 62.5,
+          "tacticalBalance": 98.44,
+          "leadership": 79.2
+        },
+        "tacticalAxes": {
+          "width": {
+            "supply": 70.11,
+            "score": 100.0
+          },
+          "chanceCreation": {
+            "supply": 78.52,
+            "score": 100.0
+          },
+          "ballWinning": {
+            "supply": 65.46,
+            "score": 96.26
+          },
+          "pace": {
+            "supply": 74.89,
+            "score": 100.0
+          },
+          "defensiveCover": {
+            "supply": 70.37,
+            "score": 100.0
+          },
+          "aerialPresence": {
+            "supply": 58.3,
+            "score": 91.09
+          }
+        },
+        "composite": 82.51
+      }
+    },
+    {
+      "id": "single-club-coherent",
+      "purpose": "One-club XI used to exercise the strongest documented chemistry affinity.",
+      "assignments": [
+        {
+          "slotId": "GK",
+          "position": "GK",
+          "playerSeasonId": "openfootball-arsenal-2023-24-noah-cooper-2006"
+        },
+        {
+          "slotId": "LB",
+          "position": "LB",
+          "playerSeasonId": "openfootball-arsenal-2023-24-oleksandr-zinchenko-1996"
+        },
+        {
+          "slotId": "LCB",
+          "position": "CB",
+          "playerSeasonId": "openfootball-arsenal-2023-24-jurrien-timber-2001"
+        },
+        {
+          "slotId": "RCB",
+          "position": "CB",
+          "playerSeasonId": "openfootball-arsenal-2023-24-reuell-walters-2004"
+        },
+        {
+          "slotId": "RB",
+          "position": "RB",
+          "playerSeasonId": "openfootball-arsenal-2023-24-takehiro-tomiyasu-1998"
+        },
+        {
+          "slotId": "DM",
+          "position": "DM",
+          "playerSeasonId": "openfootball-arsenal-2023-24-mohamed-elneny-1992"
+        },
+        {
+          "slotId": "CM",
+          "position": "CM",
+          "playerSeasonId": "openfootball-arsenal-2023-24-thomas-partey-1993"
+        },
+        {
+          "slotId": "AM",
+          "position": "AM",
+          "playerSeasonId": "openfootball-arsenal-2023-24-kai-havertz-1999"
+        },
+        {
+          "slotId": "LW",
+          "position": "LW",
+          "playerSeasonId": "openfootball-arsenal-2023-24-amario-cozier-duberry-2005"
+        },
+        {
+          "slotId": "CF",
+          "position": "CF",
+          "playerSeasonId": "openfootball-arsenal-2023-24-jakai-bascoe-fisher-2006"
+        },
+        {
+          "slotId": "RW",
+          "position": "RW",
+          "playerSeasonId": "openfootball-arsenal-2023-24-reiss-nelson-1999"
+        }
+      ],
+      "expectedValidationErrors": [],
+      "expectedAssessment": {
+        "categories": {
+          "quality": 86.0,
+          "positioning": 93.02,
+          "chemistry": 82.0,
+          "tacticalBalance": 100.0,
+          "leadership": 76.73
+        },
+        "tacticalAxes": {
+          "width": {
+            "supply": 69.63,
+            "score": 100.0
+          },
+          "chanceCreation": {
+            "supply": 74.22,
+            "score": 100.0
+          },
+          "ballWinning": {
+            "supply": 78.22,
+            "score": 100.0
+          },
+          "pace": {
+            "supply": 72.8,
+            "score": 100.0
+          },
+          "defensiveCover": {
+            "supply": 82.03,
+            "score": 100.0
+          },
+          "aerialPresence": {
+            "supply": 74.62,
+            "score": 100.0
+          }
+        },
+        "composite": 88.94
+      }
+    }
+  ],
+  "invalidRosters": [
+    {
+      "id": "duplicate-identity",
+      "purpose": "Reject the same real player identity assigned to both centre-back slots.",
+      "assignments": [
+        {
+          "slotId": "GK",
+          "position": "GK",
+          "playerSeasonId": "openfootball-liverpool-2023-24-alisson-becker-1992"
+        },
+        {
+          "slotId": "LB",
+          "position": "LB",
+          "playerSeasonId": "openfootball-liverpool-2023-24-trent-alexander-arnold-1998"
+        },
+        {
+          "slotId": "LCB",
+          "position": "CB",
+          "playerSeasonId": "openfootball-arsenal-2023-24-oleksandr-zinchenko-1996"
+        },
+        {
+          "slotId": "RCB",
+          "position": "CB",
+          "playerSeasonId": "openfootball-arsenal-2023-24-oleksandr-zinchenko-1996"
+        },
+        {
+          "slotId": "RB",
+          "position": "RB",
+          "playerSeasonId": "openfootball-arsenal-2023-24-william-saliba-2001"
+        },
+        {
+          "slotId": "DM",
+          "position": "DM",
+          "playerSeasonId": "openfootball-manchester-city-2023-24-rodri-1996"
+        },
+        {
+          "slotId": "CM",
+          "position": "CM",
+          "playerSeasonId": "openfootball-arsenal-2023-24-martin-degaard-1998"
+        },
+        {
+          "slotId": "AM",
+          "position": "AM",
+          "playerSeasonId": "openfootball-arsenal-2023-24-leandro-trossard-1994"
+        },
+        {
+          "slotId": "LW",
+          "position": "LW",
+          "playerSeasonId": "openfootball-manchester-city-2023-24-will-dickson-2004"
+        },
+        {
+          "slotId": "CF",
+          "position": "CF",
+          "playerSeasonId": "openfootball-arsenal-2023-24-reiss-nelson-1999"
+        },
+        {
+          "slotId": "RW",
+          "position": "RW",
+          "playerSeasonId": "openfootball-manchester-city-2023-24-erling-h-land-2000"
+        }
+      ],
+      "expectedValidationErrors": [
+        "duplicate_player_identity"
+      ]
+    }
+  ]
+}
