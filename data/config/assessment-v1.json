@@ -1,0 +1,46 @@
+{
+  "schemaVersion": "football11-assessment-config-v1",
+  "version": "assessment-v1",
+  "formation": {
+    "id": "4-3-3-v1",
+    "slots": [
+      { "id": "GK", "position": "GK" },
+      { "id": "LB", "position": "LB" },
+      { "id": "LCB", "position": "CB" },
+      { "id": "RCB", "position": "CB" },
+      { "id": "RB", "position": "RB" },
+      { "id": "DM", "position": "DM" },
+      { "id": "CM", "position": "CM" },
+      { "id": "AM", "position": "AM" },
+      { "id": "LW", "position": "LW" },
+      { "id": "CF", "position": "CF" },
+      { "id": "RW", "position": "RW" }
+    ]
+  },
+  "compositeWeights": { "quality": 0.35, "positioning": 0.2, "chemistry": 0.2, "tacticalBalance": 0.2, "leadership": 0.05 },
+  "chemistry": {
+    "neutralAffinity": 50,
+    "sameCompetitionSeasonAffinity": 58,
+    "sameClubSeasonAffinity": 82,
+    "edges": [
+      ["GK", "LCB", 1.0], ["GK", "RCB", 1.0], ["LB", "LCB", 1.0], ["LCB", "RCB", 1.2], ["RCB", "RB", 1.0],
+      ["LCB", "DM", 1.1], ["RCB", "DM", 1.1], ["LB", "LW", 0.8], ["RB", "RW", 0.8], ["DM", "CM", 1.2],
+      ["CM", "AM", 1.2], ["AM", "LW", 0.8], ["AM", "CF", 1.0], ["AM", "RW", 0.8], ["LW", "CF", 1.0], ["CF", "RW", 1.0]
+    ]
+  },
+  "tacticalAxes": {
+    "width": { "attributes": { "pace": 0.55, "chanceCreation": 0.45 }, "slots": { "LB": 0.8, "RB": 0.8, "LW": 1.2, "RW": 1.2 }, "minimum": 66, "maximum": null, "weight": 0.15 },
+    "chanceCreation": { "attributes": { "chanceCreation": 1.0 }, "slots": { "CM": 1.0, "AM": 1.4, "LW": 0.8, "CF": 0.6, "RW": 0.8 }, "minimum": 68, "maximum": null, "weight": 0.22 },
+    "ballWinning": { "attributes": { "ballWinning": 1.0 }, "slots": { "LB": 0.7, "LCB": 1.2, "RCB": 1.2, "RB": 0.7, "DM": 1.3, "CM": 0.8 }, "minimum": 68, "maximum": null, "weight": 0.18 },
+    "pace": { "attributes": { "pace": 1.0 }, "slots": { "LB": 0.7, "RB": 0.7, "LW": 1.2, "CF": 0.8, "RW": 1.2 }, "minimum": 67, "maximum": null, "weight": 0.15 },
+    "defensiveCover": { "attributes": { "defensiveCover": 1.0 }, "slots": { "GK": 0.5, "LB": 0.8, "LCB": 1.2, "RCB": 1.2, "RB": 0.8, "DM": 1.3, "CM": 0.5 }, "minimum": 69, "maximum": null, "weight": 0.2 },
+    "aerialPresence": { "attributes": { "aerialPresence": 1.0 }, "slots": { "GK": 0.5, "LCB": 1.4, "RCB": 1.4, "DM": 0.6, "CF": 1.1 }, "minimum": 64, "maximum": null, "weight": 0.1 }
+  },
+  "leadership": { "highestWeight": 0.6, "topThreeMeanWeight": 0.4 },
+  "unitWeights": {
+    "attack": { "attackingSlotRating": 0.45, "chanceCreation": 0.25, "pace": 0.15, "widthSupply": 0.15 },
+    "defence": { "defensiveSlotRating": 0.25, "goalkeeping": 0.25, "ballWinning": 0.2, "defensiveCover": 0.2, "aerialPresence": 0.1 },
+    "control": { "midfieldSlotRating": 0.35, "chanceCreation": 0.25, "ballWinning": 0.2, "positioning": 0.1, "chemistry": 0.1 }
+  },
+  "rounding": { "intermediateDecimals": 6, "resultDecimals": 2 }
+}

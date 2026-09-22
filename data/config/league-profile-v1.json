@@ -1,0 +1,27 @@
+{
+  "schemaVersion": "football11-league-profile-v1",
+  "version": "league-profile-v1",
+  "opponents": [
+    { "id": "opponent-01", "attack": 62, "defence": 64, "control": 61 },
+    { "id": "opponent-02", "attack": 64, "defence": 63, "control": 65 },
+    { "id": "opponent-03", "attack": 65, "defence": 67, "control": 64 },
+    { "id": "opponent-04", "attack": 67, "defence": 66, "control": 68 },
+    { "id": "opponent-05", "attack": 68, "defence": 69, "control": 67 },
+    { "id": "opponent-06", "attack": 70, "defence": 68, "control": 71 },
+    { "id": "opponent-07", "attack": 69, "defence": 72, "control": 70 },
+    { "id": "opponent-08", "attack": 72, "defence": 70, "control": 73 },
+    { "id": "opponent-09", "attack": 71, "defence": 74, "control": 72 },
+    { "id": "opponent-10", "attack": 74, "defence": 73, "control": 75 },
+    { "id": "opponent-11", "attack": 75, "defence": 76, "control": 74 },
+    { "id": "opponent-12", "attack": 77, "defence": 75, "control": 78 },
+    { "id": "opponent-13", "attack": 76, "defence": 79, "control": 77 },
+    { "id": "opponent-14", "attack": 79, "defence": 78, "control": 80 },
+    { "id": "opponent-15", "attack": 81, "defence": 80, "control": 79 },
+    { "id": "opponent-16", "attack": 80, "defence": 82, "control": 83 },
+    { "id": "opponent-17", "attack": 83, "defence": 81, "control": 84 },
+    { "id": "opponent-18", "attack": 85, "defence": 84, "control": 83 },
+    { "id": "opponent-19", "attack": 87, "defence": 86, "control": 88 }
+  ],
+  "schedule": { "matchesPerOpponent": 2, "homeVenueBias": 2, "awayVenueBias": -2 },
+  "outcomeModel": { "deltaScale": 12, "drawBase": -0.35, "drawDeltaScale": 18 }
+}

@@ -1,0 +1,179 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://football11.example/schema/player-catalogue-v1.schema.json",
+  "title": "Football 11 player catalogue v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "contentVersion", "source", "syntheticData", "summary", "teams", "playerSeasons"],
+  "properties": {
+    "schemaVersion": { "const": "football11-player-catalogue-v1" },
+    "contentVersion": { "type": "string", "minLength": 1 },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["provider", "repository", "revision", "competitionId", "competitionName", "countryName", "seasonId", "seasonName", "matchCount", "attribution", "usageNotice"],
+      "properties": {
+        "provider": { "type": "string", "minLength": 1 },
+        "repository": { "type": "string", "format": "uri" },
+        "revision": { "type": "string", "minLength": 1 },
+        "competitionId": { "type": "integer" },
+        "competitionName": { "type": "string", "minLength": 1 },
+        "countryName": { "type": "string", "minLength": 1 },
+        "seasonId": { "type": "integer" },
+        "seasonName": { "type": "string", "minLength": 1 },
+        "matchCount": { "type": "integer", "minimum": 1 },
+        "attribution": { "type": "string", "minLength": 1 },
+        "usageNotice": { "type": "string", "minLength": 1 },
+        "secondaryRepository": { "type": "string", "format": "uri" },
+        "secondaryRevision": { "type": "string", "minLength": 1 },
+        "seasons": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["seasonCode", "teamCount", "matchCount"],
+            "properties": {
+              "seasonCode": { "type": "string", "minLength": 1 },
+              "teamCount": { "type": "integer", "minimum": 1 },
+              "matchCount": { "type": "integer", "minimum": 1 }
+            }
+          }
+        }
+      }
+    },
+    "syntheticData": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["generatorVersion", "seed", "disclaimer"],
+      "properties": {
+        "generatorVersion": { "type": "string", "minLength": 1 },
+        "seed": { "type": "string", "minLength": 1 },
+        "disclaimer": { "type": "string", "minLength": 1 }
+      }
+    },
+    "summary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["teamCount", "playerCount", "excludedPlayersWithoutObservedPosition", "positionCoverage", "playersSha256"],
+      "properties": {
+        "teamCount": { "type": "integer", "minimum": 1 },
+        "playerCount": { "type": "integer", "minimum": 11 },
+        "excludedPlayersWithoutObservedPosition": { "type": "integer", "minimum": 0 },
+        "positionCoverage": { "$ref": "#/$defs/positionCoverage" },
+        "playersSha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+        "seasonCount": { "type": "integer", "minimum": 1 },
+        "matchCount": { "type": "integer", "minimum": 1 },
+        "cardsPerClubSeason": { "type": "integer", "minimum": 11 },
+        "observedHeightCount": { "type": "integer", "minimum": 0 },
+        "modeledHeightCount": { "type": "integer", "minimum": 0 },
+        "unknownBirthYearCount": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "teams": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["sourceTeamId", "clubCode", "displayName"],
+        "properties": {
+          "sourceTeamId": { "type": "integer" },
+          "clubCode": { "type": "string", "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$" },
+          "displayName": { "type": "string", "minLength": 1 },
+          "seasonCodes": {
+            "type": "array",
+            "minItems": 1,
+            "uniqueItems": true,
+            "items": { "type": "string", "minLength": 1 }
+          }
+        }
+      }
+    },
+    "playerSeasons": {
+      "type": "array",
+      "minItems": 11,
+      "items": { "$ref": "#/$defs/playerSeason" }
+    }
+  },
+  "$defs": {
+    "positionCode": { "enum": ["GK", "LB", "CB", "RB", "DM", "CM", "AM", "LW", "CF", "RW"] },
+    "positionCoverage": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["GK", "LB", "CB", "RB", "DM", "CM", "AM", "LW", "CF", "RW"],
+      "properties": {
+        "GK": { "type": "integer", "minimum": 1 }, "LB": { "type": "integer", "minimum": 1 },
+        "CB": { "type": "integer", "minimum": 2 }, "RB": { "type": "integer", "minimum": 1 },
+        "DM": { "type": "integer", "minimum": 1 }, "CM": { "type": "integer", "minimum": 1 },
+        "AM": { "type": "integer", "minimum": 1 }, "LW": { "type": "integer", "minimum": 1 },
+        "CF": { "type": "integer", "minimum": 1 }, "RW": { "type": "integer", "minimum": 1 }
+      }
+    },
+    "boundedRating": { "type": "integer", "minimum": 0, "maximum": 100 },
+    "playerSeason": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "playerIdentityId", "sourcePlayerId", "displayName", "nickname", "country", "clubCode", "clubsObserved", "seasonCode", "eraCode", "ratingsByPosition", "observedStatsBombPositions", "attributes", "tacticalTraits", "leadership", "squadSheetCount", "observedAppearanceCount", "observedStartCount", "dataVersion", "ratingProvenance"],
+      "properties": {
+        "id": { "type": "string", "minLength": 1 },
+        "playerIdentityId": { "type": "string", "minLength": 1 },
+        "sourcePlayerId": { "type": "integer" },
+        "displayName": { "type": "string", "minLength": 1 },
+        "nickname": { "type": ["string", "null"] },
+        "country": { "type": ["string", "null"] },
+        "clubCode": { "type": "string", "minLength": 1 },
+        "clubsObserved": { "type": "array", "minItems": 1 },
+        "seasonCode": { "type": "string", "minLength": 1 },
+        "eraCode": { "type": "string", "minLength": 1 },
+        "ratingsByPosition": {
+          "type": "object", "minProperties": 1, "additionalProperties": false,
+          "properties": { "GK": { "$ref": "#/$defs/boundedRating" }, "LB": { "$ref": "#/$defs/boundedRating" }, "CB": { "$ref": "#/$defs/boundedRating" }, "RB": { "$ref": "#/$defs/boundedRating" }, "DM": { "$ref": "#/$defs/boundedRating" }, "CM": { "$ref": "#/$defs/boundedRating" }, "AM": { "$ref": "#/$defs/boundedRating" }, "LW": { "$ref": "#/$defs/boundedRating" }, "CF": { "$ref": "#/$defs/boundedRating" }, "RW": { "$ref": "#/$defs/boundedRating" } }
+        },
+        "observedStatsBombPositions": {
+          "description": "Legacy v1 compatibility name. Keys identify observed source positions or roles from the provider declared at source.provider; they are not necessarily StatsBomb values.",
+          "type": "object",
+          "minProperties": 1,
+          "additionalProperties": { "type": "integer", "minimum": 1 }
+        },
+        "attributes": {
+          "type": "object", "additionalProperties": false,
+          "required": ["aerialPresence", "ballWinning", "chanceCreation", "defensiveCover", "goalkeeping", "leadership", "pace"],
+          "properties": { "aerialPresence": { "$ref": "#/$defs/boundedRating" }, "ballWinning": { "$ref": "#/$defs/boundedRating" }, "chanceCreation": { "$ref": "#/$defs/boundedRating" }, "defensiveCover": { "$ref": "#/$defs/boundedRating" }, "goalkeeping": { "$ref": "#/$defs/boundedRating" }, "leadership": { "$ref": "#/$defs/boundedRating" }, "pace": { "$ref": "#/$defs/boundedRating" } }
+        },
+        "tacticalTraits": { "type": "object", "additionalProperties": { "$ref": "#/$defs/boundedRating" } },
+        "leadership": { "$ref": "#/$defs/boundedRating" },
+        "squadSheetCount": { "type": "integer", "minimum": 1 },
+        "observedAppearanceCount": { "type": "integer", "minimum": 0 },
+        "observedStartCount": { "type": "integer", "minimum": 0 },
+        "modeledAge": { "type": "integer", "minimum": 16, "maximum": 45 },
+        "modeledHeightCm": { "type": "integer", "minimum": 140, "maximum": 220 },
+        "roleLabel": { "type": "string", "minLength": 1 },
+        "sourceSquadNumber": { "type": "integer", "minimum": 0 },
+        "sourceBirthYear": { "type": ["integer", "null"], "minimum": 1900, "maximum": 2100 },
+        "sourceBroadPosition": { "enum": ["GK", "DF", "MF", "FW"] },
+        "physicalProfileProvenance": { "enum": ["observed-player-record", "modeled-position-population"] },
+        "modelEvidence": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["kind", "matches", "points", "goalsFor", "goalsAgainst", "cleanSheets", "secondHalfGoalDifference"],
+          "properties": {
+            "kind": { "const": "club-season-results" },
+            "matches": { "type": "integer", "minimum": 1 },
+            "points": { "type": "integer", "minimum": 0 },
+            "goalsFor": { "type": "integer", "minimum": 0 },
+            "goalsAgainst": { "type": "integer", "minimum": 0 },
+            "cleanSheets": { "type": "integer", "minimum": 0 },
+            "secondHalfGoalDifference": { "type": "integer" }
+          }
+        },
+        "dataVersion": { "type": "string", "minLength": 1 },
+        "ratingProvenance": {
+          "type": "object", "additionalProperties": false,
+          "required": ["kind", "generatorVersion", "seed", "officialRating"],
+          "properties": { "kind": { "const": "synthetic" }, "generatorVersion": { "type": "string", "minLength": 1 }, "seed": { "type": "string", "minLength": 1 }, "officialRating": { "const": false } }
+        }
+      }
+    }
+  }
+}

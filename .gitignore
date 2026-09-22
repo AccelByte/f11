@@ -1,0 +1,27 @@
+/.cache/
+/artifacts/demo/
+__pycache__/
+*.py[cod]
+node_modules/
+dist/
+coverage/
+*.tsbuildinfo
+/apps/web/.next/
+/apps/web/.vinext/
+/apps/web/.wrangler/
+/apps/web/.dev.vars
+/apps/web/build/
+/.sites-tmp/
+.env*.local
+/.superdesign/tmp/
+.superdesign/
+.env
+.env.*
+!.env.example
+.dev.vars
+.dev.vars.*
+*.pem
+*.key
+
+# Local deployment bindings
+/apps/web/.openai/hosting.json

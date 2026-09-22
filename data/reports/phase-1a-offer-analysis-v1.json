@@ -1,0 +1,254 @@
+{
+  "schemaVersion": "football11-phase1a-offer-analysis-v1",
+  "contentVersion": "openfootball-premier-league-2023-24-named-squads-v2",
+  "rulesVersion": "rules-v2",
+  "draftConfig": {
+    "maxOfferedPlayers": 15,
+    "maxRerolls": 5
+  },
+  "runs": 10000,
+  "completedRuns": 10000,
+  "failures": 0,
+  "firstFailure": null,
+  "offers": 115791,
+  "offerSize": {
+    "minimum": 3,
+    "maximum": 15,
+    "mean": 14.395920235596895
+  },
+  "rerolls": 5791,
+  "maximumRerollsInRun": 5,
+  "rerollUnavailableRate": 0.00023317874446200483,
+  "resultDistribution": {
+    "minimumPoints": 12,
+    "maximumPoints": 79,
+    "meanPoints": 42.2995,
+    "meanWins": 11.8685,
+    "meanDraws": 6.694,
+    "meanLosses": 19.4375,
+    "perfectSeasons": 0,
+    "meanCategories": {
+      "quality": 71.68698099999992,
+      "positioning": 93.34040699999998,
+      "chemistry": 58.95800500000098,
+      "tacticalBalance": 99.30285499999964,
+      "leadership": 71.20397499999848
+    }
+  },
+  "constraints": [
+    {
+      "id": "nottingham-forest::2020s",
+      "count": 5980
+    },
+    {
+      "id": "brighton-and-hove-albion::2020s",
+      "count": 5875
+    },
+    {
+      "id": "west-ham-united::2020s",
+      "count": 5863
+    },
+    {
+      "id": "liverpool::2020s",
+      "count": 5857
+    },
+    {
+      "id": "brentford::2020s",
+      "count": 5827
+    },
+    {
+      "id": "sheffield-united::2020s",
+      "count": 5825
+    },
+    {
+      "id": "everton::2020s",
+      "count": 5816
+    },
+    {
+      "id": "arsenal::2020s",
+      "count": 5813
+    },
+    {
+      "id": "chelsea::2020s",
+      "count": 5805
+    },
+    {
+      "id": "wolverhampton-wanderers::2020s",
+      "count": 5797
+    },
+    {
+      "id": "crystal-palace::2020s",
+      "count": 5792
+    },
+    {
+      "id": "burnley::2020s",
+      "count": 5789
+    },
+    {
+      "id": "manchester-city::2020s",
+      "count": 5782
+    },
+    {
+      "id": "fulham::2020s",
+      "count": 5776
+    },
+    {
+      "id": "newcastle-united::2020s",
+      "count": 5770
+    },
+    {
+      "id": "manchester-united::2020s",
+      "count": 5765
+    },
+    {
+      "id": "tottenham-hotspur::2020s",
+      "count": 5721
+    },
+    {
+      "id": "afc-bournemouth::2020s",
+      "count": 5646
+    },
+    {
+      "id": "aston-villa::2020s",
+      "count": 5646
+    },
+    {
+      "id": "luton-town::2020s",
+      "count": 5646
+    }
+  ],
+  "selectedPositions": [
+    {
+      "id": "AM",
+      "count": 10000
+    },
+    {
+      "id": "CF",
+      "count": 10000
+    },
+    {
+      "id": "CM",
+      "count": 10000
+    },
+    {
+      "id": "DM",
+      "count": 10000
+    },
+    {
+      "id": "GK",
+      "count": 10000
+    },
+    {
+      "id": "LB",
+      "count": 10000
+    },
+    {
+      "id": "LCB",
+      "count": 10000
+    },
+    {
+      "id": "LW",
+      "count": 10000
+    },
+    {
+      "id": "RB",
+      "count": 10000
+    },
+    {
+      "id": "RCB",
+      "count": 10000
+    },
+    {
+      "id": "RW",
+      "count": 10000
+    }
+  ],
+  "playerAppearance": {
+    "distinctPlayers": 1041,
+    "mostFrequent": [
+      {
+        "id": "openfootball-burnley-2023-24-jay-rodriguez-1989",
+        "count": 3214
+      },
+      {
+        "id": "openfootball-afc-bournemouth-2023-24-michael-dacosta-gonzalez-2005",
+        "count": 3177
+      },
+      {
+        "id": "openfootball-burnley-2023-24-lyle-foster-2000",
+        "count": 3165
+      },
+      {
+        "id": "openfootball-afc-bournemouth-2023-24-antoine-semenyo-2000",
+        "count": 3161
+      },
+      {
+        "id": "openfootball-burnley-2023-24-jacob-bruun-larsen-1998",
+        "count": 3160
+      },
+      {
+        "id": "openfootball-burnley-2023-24-datro-fofana-2002",
+        "count": 3143
+      },
+      {
+        "id": "openfootball-burnley-2023-24-wilson-odobert-2004",
+        "count": 3137
+      },
+      {
+        "id": "openfootball-burnley-2023-24-manuel-benson-1997",
+        "count": 3133
+      },
+      {
+        "id": "openfootball-afc-bournemouth-2023-24-justin-kluivert-1999",
+        "count": 3130
+      },
+      {
+        "id": "openfootball-burnley-2023-24-zeki-amdouni-2000",
+        "count": 3128
+      }
+    ],
+    "leastFrequent": [
+      {
+        "id": "openfootball-newcastle-united-2023-24-tyler-jones-2008",
+        "count": 776
+      },
+      {
+        "id": "openfootball-newcastle-united-2023-24-nick-pope-1992",
+        "count": 776
+      },
+      {
+        "id": "openfootball-newcastle-united-2023-24-will-brown-2002",
+        "count": 796
+      },
+      {
+        "id": "openfootball-newcastle-united-2023-24-adrian-janusz-2006",
+        "count": 796
+      },
+      {
+        "id": "openfootball-newcastle-united-2023-24-jude-smith-2003",
+        "count": 797
+      },
+      {
+        "id": "openfootball-newcastle-united-2023-24-mark-gillespie-1992",
+        "count": 798
+      },
+      {
+        "id": "openfootball-newcastle-united-2023-24-will-anderson-unknown",
+        "count": 801
+      },
+      {
+        "id": "openfootball-newcastle-united-2023-24-martin-d-bravka-1989",
+        "count": 805
+      },
+      {
+        "id": "openfootball-newcastle-united-2023-24-aidan-harris-2006",
+        "count": 805
+      },
+      {
+        "id": "openfootball-newcastle-united-2023-24-loris-karius-1993",
+        "count": 813
+      }
+    ]
+  },
+  "durationMs": 186577
+}

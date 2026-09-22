@@ -1,0 +1,12 @@
+{
+  "defaultValue": 0,
+  "description": "Private challenger-only score for Football 11 Saved XI matches.",
+  "incrementOnly": false,
+  "isPublic": false,
+  "minimum": 0,
+  "name": "Football 11 Challenge Score",
+  "setAsGlobal": false,
+  "setBy": "SERVER",
+  "statCode": "football11challengescore",
+  "visibility": "SERVERONLY"
+}

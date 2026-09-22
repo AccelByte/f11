@@ -1,0 +1,10 @@
+{
+  "extends": "../../apps/web/tsconfig.json",
+  "compilerOptions": {
+    "incremental": false,
+    "paths": { "@/*": ["../../apps/web/*"] },
+    "types": ["node"]
+  },
+  "include": ["main.tsx"],
+  "exclude": ["node_modules"]
+}
