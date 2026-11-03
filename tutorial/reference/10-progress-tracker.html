@@ -1,25 +1,41 @@
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Football 11 Progress Tracker · Football 11</title><meta name="description" content="Build Football 11 from offline mechanics to online features. Read the setup guide, six integration stages, and copy-ready prompts."><link rel="stylesheet" href="../tutorial.css"></head>
-<body><a class="skip" href="#tutorial-content">Skip to tutorial</a><header><a class="brand" href="../index.html"><span>11</span> FOOTBALL 11 <small>THE PLAYBOOK</small></a><nav aria-label="Main navigation"><a href="../index.html">Tutorial</a><a class="play" href="https://football-11.workspace-025025.chatgpt.site">Play the game ↗</a></nav></header>
-<div class="layout"><aside><details open><summary>On this page</summary><nav aria-label="Tutorial sections"><a class="level-2" href="#status-rules">Status rules</a>
-<a class="level-2" href="#current-snapshot">Current snapshot</a>
-<a class="level-2" href="#phase-0-â-design-lock">Phase 0 â€” Design lock</a>
-<a class="level-2" href="#phase-1a-â-core-mechanics-engine">Phase 1A â€” Core mechanics engine</a>
-<a class="level-2" href="#phase-1b-â-functional-mvp">Phase 1B â€” Functional MVP</a>
-<a class="level-2" href="#project-communication">Project communication</a>
-<a class="level-2" href="#phase-2-â-ags-foundation">Phase 2 â€” AGS foundation</a>
-<a class="level-2" href="#phase-3-â-sharing-and-daily">Phase 3 â€” Sharing and daily</a>
-<a class="level-2" href="#phase-4-â-friend-rooms">Phase 4 â€” Friend rooms</a>
-<a class="level-2" href="#phase-5-â-saved-xi-competition">Phase 5 â€” Saved-XI competition</a>
-<a class="level-2" href="#phase-6-â-connected-release-hardening">Phase 6 â€” Connected release hardening</a>
-<a class="level-2" href="#update-protocol">Update protocol</a>
-<a class="level-2" href="#shared-tutorial">Shared tutorial</a>
-<a class="level-2" href="#public-source-hygiene">Public source hygiene</a></nav></details><a class="source" href="https://github.com/AccelByte/f11/blob/main/docs/10-progress-tracker.md">View Markdown source ↗</a></aside><main id="tutorial-content"><div class="intro">BUILD YOUR GAME · ONE FEATURE AT A TIME</div><article><h1 id="football-11-progress-tracker">Football 11 Progress Tracker<a class="anchor" href="#football-11-progress-tracker" aria-label="Link to section">#</a></h1>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Football 11 Progress Tracker · Football 11</title><meta name="description" content="Build Football 11 from offline mechanics to online features. Read the setup guide, six integration stages, and copy-ready prompts."><link rel="stylesheet" href="https://accelbyte.github.io/f11/tutorial/tutorial.css"><link rel="canonical" href="https://accelbyte.github.io/f11/tutorial/reference/10-progress-tracker.html"></head>
+<body><a class="skip" href="https://accelbyte.github.io/f11/tutorial/reference/10-progress-tracker.html#tutorial-content">Skip to tutorial</a><header><a class="brand" href="https://accelbyte.github.io/f11/tutorial/index.html"><span>11</span> FOOTBALL 11 <small>THE PLAYBOOK</small></a><nav aria-label="Main navigation"><a href="https://accelbyte.github.io/f11/tutorial/index.html">Tutorial</a><a class="play" href="https://accelbyte.github.io/f11/">Play the game ↗</a></nav></header>
+<div class="layout"><aside><details open><summary>On this page</summary><nav aria-label="Tutorial sections"><a class="level-2" href="https://accelbyte.github.io/f11/tutorial/reference/10-progress-tracker.html#status-rules">Status rules</a>
+<a class="level-2" href="https://accelbyte.github.io/f11/tutorial/reference/10-progress-tracker.html#current-snapshot">Current snapshot</a>
+<a class="level-2" href="https://accelbyte.github.io/f11/tutorial/reference/10-progress-tracker.html#phase-0-%C3%A2-design-lock">Phase 0 â€” Design lock</a>
+<a class="level-2" href="https://accelbyte.github.io/f11/tutorial/reference/10-progress-tracker.html#phase-1a-%C3%A2-core-mechanics-engine">Phase 1A â€” Core mechanics engine</a>
+<a class="level-2" href="https://accelbyte.github.io/f11/tutorial/reference/10-progress-tracker.html#phase-1b-%C3%A2-functional-mvp">Phase 1B â€” Functional MVP</a>
+<a class="level-2" href="https://accelbyte.github.io/f11/tutorial/reference/10-progress-tracker.html#project-communication">Project communication</a>
+<a class="level-2" href="https://accelbyte.github.io/f11/tutorial/reference/10-progress-tracker.html#phase-2-%C3%A2-ags-foundation">Phase 2 â€” AGS foundation</a>
+<a class="level-2" href="https://accelbyte.github.io/f11/tutorial/reference/10-progress-tracker.html#phase-3-%C3%A2-sharing-and-daily">Phase 3 â€” Sharing and daily</a>
+<a class="level-2" href="https://accelbyte.github.io/f11/tutorial/reference/10-progress-tracker.html#phase-4-%C3%A2-friend-rooms">Phase 4 â€” Friend rooms</a>
+<a class="level-2" href="https://accelbyte.github.io/f11/tutorial/reference/10-progress-tracker.html#phase-5-%C3%A2-saved-xi-competition">Phase 5 â€” Saved-XI competition</a>
+<a class="level-2" href="https://accelbyte.github.io/f11/tutorial/reference/10-progress-tracker.html#phase-6-%C3%A2-connected-release-hardening">Phase 6 â€” Connected release hardening</a>
+<a class="level-2" href="https://accelbyte.github.io/f11/tutorial/reference/10-progress-tracker.html#update-protocol">Update protocol</a>
+<a class="level-2" href="https://accelbyte.github.io/f11/tutorial/reference/10-progress-tracker.html#shared-tutorial">Shared tutorial</a>
+<a class="level-2" href="https://accelbyte.github.io/f11/tutorial/reference/10-progress-tracker.html#public-source-hygiene">Public source hygiene</a></nav></details><a class="source" href="https://github.com/AccelByte/f11/blob/main/docs/10-progress-tracker.md">View Markdown source ↗</a></aside><main id="tutorial-content"><div class="intro">BUILD YOUR GAME · ONE FEATURE AT A TIME</div><article><h1 id="football-11-progress-tracker">Football 11 Progress Tracker<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/10-progress-tracker.html#football-11-progress-tracker" aria-label="Link to section">#</a></h1>
 <p><strong>Last updated:</strong> November 3, 2026
 <strong>Status:</strong> Active<br><strong>Current gate:</strong> Decide the content-version leaderboard migration and public-product rights posture, then finish Phase 4 trusted room authority</p>
 <p>This is the single progress ledger for the project. Every implementation or
 design change updates the relevant item in this document.</p>
-<h2 id="status-rules">Status rules<a class="anchor" href="#status-rules" aria-label="Link to section">#</a></h2>
+<h2 id="status-rules">Status rules<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/10-progress-tracker.html#status-rules" aria-label="Link to section">#</a></h2>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Item</th>
+<th>Status</th>
+<th>Evidence / next action</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>DEPLOY-03</td>
+<td>Keep tutorial Play links on the GitHub Pages frontend</td>
+<td>In progress</td>
+<td>User clarified that GitHub Pages remains the player-facing frontend and the new Site supplies services. Next: change generated Play/Back links to the Pages game, republish both tutorial copies, and verify the Pages frontend still calls the new backend. This corrects navigation; it does not block gameplay.</td>
+</tr>
+</tbody></table>
 <table>
 <thead>
 <tr>
@@ -125,7 +141,7 @@ design change updates the relevant item in this document.</p>
 <p>Progress is reported by completed checklist items, not subjective percentages.
 Items differ in size, so the count is a navigation aid rather than an effort or
 schedule forecast.</p>
-<h2 id="current-snapshot">Current snapshot<a class="anchor" href="#current-snapshot" aria-label="Link to section">#</a></h2>
+<h2 id="current-snapshot">Current snapshot<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/10-progress-tracker.html#current-snapshot" aria-label="Link to section">#</a></h2>
 <table>
 <thead>
 <tr>
@@ -168,7 +184,7 @@ schedule forecast.</p>
 </tbody></table>
 <p>Functional MVP tracker: <strong>30 of 31 defined items Done</strong>. This is checklist
 completion, not an effort percentage.</p>
-<h2 id="phase-0-â-design-lock">Phase 0 â€” Design lock<a class="anchor" href="#phase-0-â-design-lock" aria-label="Link to section">#</a></h2>
+<h2 id="phase-0-â-design-lock">Phase 0 â€” Design lock<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/10-progress-tracker.html#phase-0-%C3%A2-design-lock" aria-label="Link to section">#</a></h2>
 <table>
 <thead>
 <tr>
@@ -263,7 +279,7 @@ completion, not an effort percentage.</p>
 <td>Content v2 applies a tested monotonic curve without changing source evidence: median best-position rating 72, 95th percentile 86, 14/1,041 cards at 90+, and maximum 94. Deterministic regeneration, 24 Python tests, 132 TypeScript tests, catalogue validation, typecheck, lint, production build, refreshed golden fixtures, and a 10,000/10,000 complete-draft analysis with all 1,041 cards exposed pass.</td>
 </tr>
 </tbody></table>
-<h2 id="phase-1a-â-core-mechanics-engine">Phase 1A â€” Core mechanics engine<a class="anchor" href="#phase-1a-â-core-mechanics-engine" aria-label="Link to section">#</a></h2>
+<h2 id="phase-1a-â-core-mechanics-engine">Phase 1A â€” Core mechanics engine<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/10-progress-tracker.html#phase-1a-%C3%A2-core-mechanics-engine" aria-label="Link to section">#</a></h2>
 <table>
 <thead>
 <tr>
@@ -334,7 +350,7 @@ completion, not an effort percentage.</p>
 <td>Shared domain configuration caps visible safe cards at 3â€“15 and run-wide rerolls at 0â€“5; the tested initial values are 15 and 5. The <code>rules-v2</code> 10,000-seed report records offer sizes 3â€“15 (mean 14.40), five rerolls reached in a run, 0.02% alternate-team reroll unavailability, and zero dead ends. P2-09 owns the authoritative runtime source.</td>
 </tr>
 </tbody></table>
-<h2 id="phase-1b-â-functional-mvp">Phase 1B â€” Functional MVP<a class="anchor" href="#phase-1b-â-functional-mvp" aria-label="Link to section">#</a></h2>
+<h2 id="phase-1b-â-functional-mvp">Phase 1B â€” Functional MVP<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/10-progress-tracker.html#phase-1b-%C3%A2-functional-mvp" aria-label="Link to section">#</a></h2>
 <table>
 <thead>
 <tr>
@@ -387,7 +403,7 @@ completion, not an effort percentage.</p>
 <td>The public gameplay footer in the current Sites release links both pinned OpenFootball repositories and CC0, separates observed squad and club-result facts from synthetic card fields, and states the player/club/competition rights boundary. Source regression, full tests, production build, and deployment pass.</td>
 </tr>
 </tbody></table>
-<h2 id="project-communication">Project communication<a class="anchor" href="#project-communication" aria-label="Link to section">#</a></h2>
+<h2 id="project-communication">Project communication<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/10-progress-tracker.html#project-communication" aria-label="Link to section">#</a></h2>
 <table>
 <thead>
 <tr>
@@ -554,7 +570,7 @@ completion, not an effort percentage.</p>
 <td><code>tools/demo/capture-friends.mjs</code> and <code>edit-friends.mjs</code> record the public game with two distinct AGS guests and no mocked services. The September 7 capture at <code>artifacts/demo/friends-2026-09-07T06-04-58-351Z/</code> verifies shared membership/readiness/challenge, 22 real picks, complete XIs, matching 56/35-point results, zero page errors, and both guests leaving. Visual slates calibrate the separate video timelines; the edited views were inspected together. MP4: 42.80 seconds, 1920Ã—1080/30 fps. GIF: 642 frames, 1280Ã—720, below 1,000 frames. Script syntax, formatting, and complete media decoding pass. Next: review pacing for the build-story presentation; room comparison remains cooperative Session state, not proof of trusted multiplayer scoring. Artifacts are local and Git-ignored.</td>
 </tr>
 </tbody></table>
-<h2 id="phase-2-â-ags-foundation">Phase 2 â€” AGS foundation<a class="anchor" href="#phase-2-â-ags-foundation" aria-label="Link to section">#</a></h2>
+<h2 id="phase-2-â-ags-foundation">Phase 2 â€” AGS foundation<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/10-progress-tracker.html#phase-2-%C3%A2-ags-foundation" aria-label="Link to section">#</a></h2>
 <table>
 <thead>
 <tr>
@@ -619,7 +635,7 @@ completion, not an effort percentage.</p>
 <td>The server-owned <code>football11_game_config_v1</code> record uses numeric schema <code>1</code>, active revision <code>1</code>, 15 offers, and 5 rerolls. The Confidential Sites client has only <code>m_cloud_save/g_game_records</code> READ. Every solo start and room round now receives a Sites-issued frozen challenge plus private server-owned player receipt; trusted replay binds player, challenge, seed, versions, room, and config and rejects tampering. Environment defaults are removed. Five Game Record tests, 127 total TypeScript tests, 22 Python tests, typecheck, formatter, lint, the 10,000/10,000 analysis, both builds, redacted local-Worker and hosted-route/live-AGS smokes, and Sites version 17 deployment pass.</td>
 </tr>
 </tbody></table>
-<h2 id="phase-3-â-sharing-and-daily">Phase 3 â€” Sharing and daily<a class="anchor" href="#phase-3-â-sharing-and-daily" aria-label="Link to section">#</a></h2>
+<h2 id="phase-3-â-sharing-and-daily">Phase 3 â€” Sharing and daily<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/10-progress-tracker.html#phase-3-%C3%A2-sharing-and-daily" aria-label="Link to section">#</a></h2>
 <table>
 <thead>
 <tr>
@@ -660,7 +676,7 @@ completion, not an effort percentage.</p>
 <td>Use AGS-backed durable history with a bounded browser cache</td>
 </tr>
 </tbody></table>
-<h2 id="phase-4-â-friend-rooms">Phase 4 â€” Friend rooms<a class="anchor" href="#phase-4-â-friend-rooms" aria-label="Link to section">#</a></h2>
+<h2 id="phase-4-â-friend-rooms">Phase 4 â€” Friend rooms<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/10-progress-tracker.html#phase-4-%C3%A2-friend-rooms" aria-label="Link to section">#</a></h2>
 <table>
 <thead>
 <tr>
@@ -713,7 +729,7 @@ completion, not an effort percentage.</p>
 <td>Three isolated origins pass create, discovery/join, 2/8 roster convergence, readiness, <code>CLOSED</code> start, hidden discovery and rejected code join, divergent 11-pick drafts, mid-draft reload, comparison, <code>OPEN</code> countdown discovery, and automatic fresh-ordinal restart in the same session. Desktop and 375px QA show no horizontal overflow. Sites version 17 preserves the verified merged Phase 4/Phase 5 build and server-issued Game Record challenges while promoting the named 2023/24 catalogue. The guarded release build embeds canonical browser-safe AGS connection values, and the Session SDK remains behind hydration. Remaining exit work is the P4-06 recovery matrix and hosted room-context exit verification.</td>
 </tr>
 </tbody></table>
-<h2 id="phase-5-â-saved-xi-competition">Phase 5 â€” Saved-XI competition<a class="anchor" href="#phase-5-â-saved-xi-competition" aria-label="Link to section">#</a></h2>
+<h2 id="phase-5-â-saved-xi-competition">Phase 5 â€” Saved-XI competition<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/10-progress-tracker.html#phase-5-%C3%A2-saved-xi-competition" aria-label="Link to section">#</a></h2>
 <table>
 <thead>
 <tr>
@@ -760,7 +776,7 @@ completion, not an effort percentage.</p>
 <td>Exact version equality, single-use ten-minute tokens, 24-hour same-opponent exclusion, a rolling 20-match/day ceiling, bounded 20-match history, expired/no-opponent states, and retryable pending settlement are enforced. Focused tests, the combined 111-test suite, production build, desktop UI fixture review, and live AGS cooldown readback pass; Phase 4 remains separately unfinished.</td>
 </tr>
 </tbody></table>
-<h2 id="phase-6-â-connected-release-hardening">Phase 6 â€” Connected release hardening<a class="anchor" href="#phase-6-â-connected-release-hardening" aria-label="Link to section">#</a></h2>
+<h2 id="phase-6-â-connected-release-hardening">Phase 6 â€” Connected release hardening<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/10-progress-tracker.html#phase-6-%C3%A2-connected-release-hardening" aria-label="Link to section">#</a></h2>
 <table>
 <thead>
 <tr>
@@ -850,7 +866,7 @@ completion, not an effort percentage.</p>
 </tr>
 </tbody></table>
 <p>| P6-14 | Host the playable frontend on GitHub Pages with the Sites backend | Done | November 3 current deployment acceptance passes: AccelByte/f11 gh-pages commit 966d283 targets the new account&#39;s public Site; functional Sites version 2 uses the newly approved namespace. Roots, assets, tutorial/reference pages, authenticated challenge issuance, trusted replay, ranking, Saved-XI settlement, CORS allow/reject/error handling, and browser save/reload pass. The historical Cloud Save browser warning is resolved through the fixed latest-run backend route (DEPLOY-02). The previous deployment record remains in docs/verification; current evidence is docs/verification/2026-11-03-deployment.md. Next: retain this split when publishing future builds. This optional hosting arrangement does not change the separate connected-release gates. |</p>
-<h2 id="update-protocol">Update protocol<a class="anchor" href="#update-protocol" aria-label="Link to section">#</a></h2>
+<h2 id="update-protocol">Update protocol<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/10-progress-tracker.html#update-protocol" aria-label="Link to section">#</a></h2>
 <p>For each completed work step:</p>
 <ol>
 <li>Change only the affected item statuses.</li>
@@ -860,7 +876,7 @@ deployed behavior.</li>
 <li>Update the current snapshot and <code>Last updated</code> date.</li>
 <li>Commit the tracker with the work it describes.</li>
 </ol>
-<h2 id="shared-tutorial">Shared tutorial<a class="anchor" href="#shared-tutorial" aria-label="Link to section">#</a></h2>
+<h2 id="shared-tutorial">Shared tutorial<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/10-progress-tracker.html#shared-tutorial" aria-label="Link to section">#</a></h2>
 <table>
 <thead>
 <tr>
@@ -877,7 +893,7 @@ deployed behavior.</li>
 <td>The single guide on master includes offline setup, six stages, and service references. Superseded documents are removed and links updated; relative links, stage anchors, fences, and whitespace checks pass. Next: rebase offline-starter onto this documentation update.</td>
 </tr>
 </tbody></table>
-<h2 id="public-source-hygiene">Public source hygiene<a class="anchor" href="#public-source-hygiene" aria-label="Link to section">#</a></h2>
+<h2 id="public-source-hygiene">Public source hygiene<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/10-progress-tracker.html#public-source-hygiene" aria-label="Link to section">#</a></h2>
 <table>
 <thead>
 <tr>
@@ -897,4 +913,4 @@ deployed behavior.</li>
 <p>| REPO-03 | Rename the offline tutorial branch | Done | Local branch is named offline-starter; the tutorial uses the new name. Branch contents are unchanged by the rename and documentation whitespace checks pass. Next: use offline-starter for the tutorial; remote publication remains deferred. |</p>
 <p>| PUB-01 | Publish clean connected and offline source branches | Done | Published connected main as a single root commit and offline-starter as its direct child, with no development ancestry. Both trees match the prepared source; 176 connected files and 110 offline files pass credential/exclusion scans and 107 documentation-link checks each. Atomic push and remote readback passed; gh-pages is unchanged. Next: preserve this source-branch boundary for future updates. |</p>
 <p>| DOC-13 | Restore agent-ready integration plans | Done | Six files under docs/ags-plans provide stage scope, prerequisites, execution checklists, original connected design details, acceptance checks, and direct handoff prompts. Tutorial and indexes link to the plans. All 137 relative documentation links pass; plan fences and credential/private-value checks pass. Historical notes are distinguished from unimplemented starter work. Next: give the Stage 1 plan to the implementing agent. |</p>
-</article><footer>Football 11 · Generated from the repository documentation. <a href="https://football-11.workspace-025025.chatgpt.site">Back to the game</a></footer></main></div></body></html>
+</article><footer>Football 11 · Generated from the repository documentation. <a href="https://accelbyte.github.io/f11/">Back to the game</a></footer></main></div></body></html>

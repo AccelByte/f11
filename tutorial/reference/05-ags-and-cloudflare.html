@@ -1,15 +1,15 @@
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Service Responsibility Map · Football 11</title><meta name="description" content="Build Football 11 from offline mechanics to online features. Read the setup guide, six integration stages, and copy-ready prompts."><link rel="stylesheet" href="../tutorial.css"></head>
-<body><a class="skip" href="#tutorial-content">Skip to tutorial</a><header><a class="brand" href="../index.html"><span>11</span> FOOTBALL 11 <small>THE PLAYBOOK</small></a><nav aria-label="Main navigation"><a href="../index.html">Tutorial</a><a class="play" href="https://football-11.workspace-025025.chatgpt.site">Play the game ↗</a></nav></header>
-<div class="layout"><aside><details open><summary>On this page</summary><nav aria-label="Tutorial sections"><a class="level-2" href="#decision">Decision</a>
-<a class="level-2" href="#local-to-ags-migration">Local-to-AGS migration</a>
-<a class="level-2" href="#why-cloud-save-not-statistics">Why Cloud Save, not Statistics</a>
-<a class="level-2" href="#trust-limitation">Trust limitation</a>
-<a class="level-2" href="#module-growth-path">Module growth path</a>
-<a class="level-2" href="#browser-secret-rules-for-phase-2">Browser secret rules for Phase 2</a></nav></details><a class="source" href="https://github.com/AccelByte/f11/blob/main/docs/05-ags-and-cloudflare.md">View Markdown source ↗</a></aside><main id="tutorial-content"><div class="intro">BUILD YOUR GAME · ONE FEATURE AT A TIME</div><article><h1 id="service-responsibility-map">Service Responsibility Map<a class="anchor" href="#service-responsibility-map" aria-label="Link to section">#</a></h1>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Service Responsibility Map · Football 11</title><meta name="description" content="Build Football 11 from offline mechanics to online features. Read the setup guide, six integration stages, and copy-ready prompts."><link rel="stylesheet" href="https://accelbyte.github.io/f11/tutorial/tutorial.css"><link rel="canonical" href="https://accelbyte.github.io/f11/tutorial/reference/05-ags-and-cloudflare.html"></head>
+<body><a class="skip" href="https://accelbyte.github.io/f11/tutorial/reference/05-ags-and-cloudflare.html#tutorial-content">Skip to tutorial</a><header><a class="brand" href="https://accelbyte.github.io/f11/tutorial/index.html"><span>11</span> FOOTBALL 11 <small>THE PLAYBOOK</small></a><nav aria-label="Main navigation"><a href="https://accelbyte.github.io/f11/tutorial/index.html">Tutorial</a><a class="play" href="https://accelbyte.github.io/f11/">Play the game ↗</a></nav></header>
+<div class="layout"><aside><details open><summary>On this page</summary><nav aria-label="Tutorial sections"><a class="level-2" href="https://accelbyte.github.io/f11/tutorial/reference/05-ags-and-cloudflare.html#decision">Decision</a>
+<a class="level-2" href="https://accelbyte.github.io/f11/tutorial/reference/05-ags-and-cloudflare.html#local-to-ags-migration">Local-to-AGS migration</a>
+<a class="level-2" href="https://accelbyte.github.io/f11/tutorial/reference/05-ags-and-cloudflare.html#why-cloud-save-not-statistics">Why Cloud Save, not Statistics</a>
+<a class="level-2" href="https://accelbyte.github.io/f11/tutorial/reference/05-ags-and-cloudflare.html#trust-limitation">Trust limitation</a>
+<a class="level-2" href="https://accelbyte.github.io/f11/tutorial/reference/05-ags-and-cloudflare.html#module-growth-path">Module growth path</a>
+<a class="level-2" href="https://accelbyte.github.io/f11/tutorial/reference/05-ags-and-cloudflare.html#browser-secret-rules-for-phase-2">Browser secret rules for Phase 2</a></nav></details><a class="source" href="https://github.com/AccelByte/f11/blob/main/docs/05-ags-and-cloudflare.md">View Markdown source ↗</a></aside><main id="tutorial-content"><div class="intro">BUILD YOUR GAME · ONE FEATURE AT A TIME</div><article><h1 id="service-responsibility-map">Service Responsibility Map<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/05-ags-and-cloudflare.html#service-responsibility-map" aria-label="Link to section">#</a></h1>
 <p><strong>Last updated:</strong> September 4, 2026
 <strong>Status:</strong> Connected runtime uses AGS Cloud Save as the sole durable latest-run store; Phase 4 friend rooms development-integrated</p>
-<h2 id="decision">Decision<a class="anchor" href="#decision" aria-label="Link to section">#</a></h2>
+<h2 id="decision">Decision<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/05-ags-and-cloudflare.html#decision" aria-label="Link to section">#</a></h2>
 <p>Use ChatGPT Sites for the React build. Prove the complete game locally in Phase 1B,
 then maximize AGS in Phase 2. Do not make AGS credentials, Cloudflare Worker code,
 or D1 prerequisites for the Functional MVP.</p>
@@ -67,7 +67,7 @@ or D1 prerequisites for the Functional MVP.</p>
 <td>Add only after a documented unmet requirement</td>
 </tr>
 </tbody></table>
-<h2 id="local-to-ags-migration">Local-to-AGS migration<a class="anchor" href="#local-to-ags-migration" aria-label="Link to section">#</a></h2>
+<h2 id="local-to-ags-migration">Local-to-AGS migration<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/05-ags-and-cloudflare.html#local-to-ags-migration" aria-label="Link to section">#</a></h2>
 <p>The Phase 1B adapters establish the contract without coupling screens to storage:</p>
 <pre><code class="language-text">LocalIdentity       -&gt; Phase 2 IAM Device ID implementation
 LocalRunRecordV1    -&gt; Phase 2 CloudRunRecordV1 mapping
@@ -81,14 +81,14 @@ directly to the private Cloud Save record, written, read back, and replay-
 verified. Because the key explicitly represents the latest run, a newer completion
 replaces the previous cloud value, including an obsolete or damaged slot. Reload
 recovery reads the cloud value directly, eliminating local/cloud reconciliation.</p>
-<h2 id="why-cloud-save-not-statistics">Why Cloud Save, not Statistics<a class="anchor" href="#why-cloud-save-not-statistics" aria-label="Link to section">#</a></h2>
+<h2 id="why-cloud-save-not-statistics">Why Cloud Save, not Statistics<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/05-ags-and-cloudflare.html#why-cloud-save-not-statistics" aria-label="Link to section">#</a></h2>
 <p>A run contains seed, version pins, ordered actions, state hashes, XI, assessment,
 38 match outcomes, explanation facts, and the final hash. Cloud Save is the intended
 AGS home for that structured player/game record. Statistics is reserved for small
 trusted numeric values that drive leaderboards, achievements, or progression.</p>
 <p>Phase 2 therefore stores rich game data in Cloud Save and writes Statistics only
 after trusted replay accepts the run.</p>
-<h2 id="trust-limitation">Trust limitation<a class="anchor" href="#trust-limitation" aria-label="Link to section">#</a></h2>
+<h2 id="trust-limitation">Trust limitation<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/05-ags-and-cloudflare.html#trust-limitation" aria-label="Link to section">#</a></h2>
 <p>Phase 1B checksums catch malformed or modified local records but do not stop a player
 from changing browser code and recomputing a checksum. Direct player Cloud Save writes
 will have the same authority limitation. Competitive results require an authenticated
@@ -104,7 +104,7 @@ outweighs keeping the trusted endpoint with the Sites application. A separately
 provisioned Cloudflare Worker is the final runtime fallback. D1 remains excluded unless
 idempotency or another concrete relational/transactional requirement cannot be
 represented safely with the selected AGS records and operations.</p>
-<h2 id="module-growth-path">Module growth path<a class="anchor" href="#module-growth-path" aria-label="Link to section">#</a></h2>
+<h2 id="module-growth-path">Module growth path<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/05-ags-and-cloudflare.html#module-growth-path" aria-label="Link to section">#</a></h2>
 <ol>
 <li><strong>Phase 1B:</strong> local profile + checksummed latest-run persistence.</li>
 <li><strong>Phase 2:</strong> IAM Device ID + Cloud Save + trusted replay + Statistics + Leaderboards.</li>
@@ -118,7 +118,7 @@ through the Phase 2 trusted-boundary work.</li>
 <li><strong>Phase 5:</strong> trusted saved-XI discovery and settlement; add non-AGS storage only
 when evidence proves it necessary.</li>
 </ol>
-<h2 id="browser-secret-rules-for-phase-2">Browser secret rules for Phase 2<a class="anchor" href="#browser-secret-rules-for-phase-2" aria-label="Link to section">#</a></h2>
+<h2 id="browser-secret-rules-for-phase-2">Browser secret rules for Phase 2<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/05-ags-and-cloudflare.html#browser-secret-rules-for-phase-2" aria-label="Link to section">#</a></h2>
 <ul>
 <li>Use an AGS public client in the browser.</li>
 <li>Never ship a confidential client secret in browser JavaScript or client-visible
@@ -128,4 +128,4 @@ Sites configuration; server-only values use hosted Sites secrets.</li>
 <li>Verify exact SDK operations, permissions, Cloud Save limits, and namespace
 configuration against the selected versions before live integration.</li>
 </ul>
-</article><footer>Football 11 · Generated from the repository documentation. <a href="https://football-11.workspace-025025.chatgpt.site">Back to the game</a></footer></main></div></body></html>
+</article><footer>Football 11 · Generated from the repository documentation. <a href="https://accelbyte.github.io/f11/">Back to the game</a></footer></main></div></body></html>

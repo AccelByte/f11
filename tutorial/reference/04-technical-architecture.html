@@ -1,20 +1,20 @@
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Technical Architecture · Football 11</title><meta name="description" content="Build Football 11 from offline mechanics to online features. Read the setup guide, six integration stages, and copy-ready prompts."><link rel="stylesheet" href="../tutorial.css"></head>
-<body><a class="skip" href="#tutorial-content">Skip to tutorial</a><header><a class="brand" href="../index.html"><span>11</span> FOOTBALL 11 <small>THE PLAYBOOK</small></a><nav aria-label="Main navigation"><a href="../index.html">Tutorial</a><a class="play" href="https://football-11.workspace-025025.chatgpt.site">Play the game ↗</a></nav></header>
-<div class="layout"><aside><details open><summary>On this page</summary><nav aria-label="Tutorial sections"><a class="level-2" href="#architecture-goals">Architecture goals</a>
-<a class="level-2" href="#functional-mvp-stack">Functional MVP stack</a>
-<a class="level-3" href="#browser-application">Browser application</a>
-<a class="level-3" href="#local-application-services">Local application services</a>
-<a class="level-2" href="#functional-mvp-flow">Functional MVP flow</a>
-<a class="level-2" href="#phase-2-ags-boundary">Phase 2 AGS boundary</a>
-<a class="level-2" href="#authority-boundary">Authority boundary</a>
-<a class="level-2" href="#package-and-dependency-boundaries">Package and dependency boundaries</a>
-<a class="level-2" href="#browser-state-model">Browser state model</a>
-<a class="level-2" href="#functional-mvp-browser-and-input-baseline">Functional MVP browser and input baseline</a>
-<a class="level-2" href="#security-and-trust-baseline">Security and trust baseline</a></nav></details><a class="source" href="https://github.com/AccelByte/f11/blob/main/docs/04-technical-architecture.md">View Markdown source ↗</a></aside><main id="tutorial-content"><div class="intro">BUILD YOUR GAME · ONE FEATURE AT A TIME</div><article><h1 id="technical-architecture">Technical Architecture<a class="anchor" href="#technical-architecture" aria-label="Link to section">#</a></h1>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Technical Architecture · Football 11</title><meta name="description" content="Build Football 11 from offline mechanics to online features. Read the setup guide, six integration stages, and copy-ready prompts."><link rel="stylesheet" href="https://accelbyte.github.io/f11/tutorial/tutorial.css"><link rel="canonical" href="https://accelbyte.github.io/f11/tutorial/reference/04-technical-architecture.html"></head>
+<body><a class="skip" href="https://accelbyte.github.io/f11/tutorial/reference/04-technical-architecture.html#tutorial-content">Skip to tutorial</a><header><a class="brand" href="https://accelbyte.github.io/f11/tutorial/index.html"><span>11</span> FOOTBALL 11 <small>THE PLAYBOOK</small></a><nav aria-label="Main navigation"><a href="https://accelbyte.github.io/f11/tutorial/index.html">Tutorial</a><a class="play" href="https://accelbyte.github.io/f11/">Play the game ↗</a></nav></header>
+<div class="layout"><aside><details open><summary>On this page</summary><nav aria-label="Tutorial sections"><a class="level-2" href="https://accelbyte.github.io/f11/tutorial/reference/04-technical-architecture.html#architecture-goals">Architecture goals</a>
+<a class="level-2" href="https://accelbyte.github.io/f11/tutorial/reference/04-technical-architecture.html#functional-mvp-stack">Functional MVP stack</a>
+<a class="level-3" href="https://accelbyte.github.io/f11/tutorial/reference/04-technical-architecture.html#browser-application">Browser application</a>
+<a class="level-3" href="https://accelbyte.github.io/f11/tutorial/reference/04-technical-architecture.html#local-application-services">Local application services</a>
+<a class="level-2" href="https://accelbyte.github.io/f11/tutorial/reference/04-technical-architecture.html#functional-mvp-flow">Functional MVP flow</a>
+<a class="level-2" href="https://accelbyte.github.io/f11/tutorial/reference/04-technical-architecture.html#phase-2-ags-boundary">Phase 2 AGS boundary</a>
+<a class="level-2" href="https://accelbyte.github.io/f11/tutorial/reference/04-technical-architecture.html#authority-boundary">Authority boundary</a>
+<a class="level-2" href="https://accelbyte.github.io/f11/tutorial/reference/04-technical-architecture.html#package-and-dependency-boundaries">Package and dependency boundaries</a>
+<a class="level-2" href="https://accelbyte.github.io/f11/tutorial/reference/04-technical-architecture.html#browser-state-model">Browser state model</a>
+<a class="level-2" href="https://accelbyte.github.io/f11/tutorial/reference/04-technical-architecture.html#functional-mvp-browser-and-input-baseline">Functional MVP browser and input baseline</a>
+<a class="level-2" href="https://accelbyte.github.io/f11/tutorial/reference/04-technical-architecture.html#security-and-trust-baseline">Security and trust baseline</a></nav></details><a class="source" href="https://github.com/AccelByte/f11/blob/main/docs/04-technical-architecture.md">View Markdown source ↗</a></aside><main id="tutorial-content"><div class="intro">BUILD YOUR GAME · ONE FEATURE AT A TIME</div><article><h1 id="technical-architecture">Technical Architecture<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/04-technical-architecture.html#technical-architecture" aria-label="Link to section">#</a></h1>
 <p><strong>Last updated:</strong> September 4, 2026
 <strong>Status:</strong> Historical local MVP retained; connected runtime uses AGS Cloud Save as durable run storage</p>
-<h2 id="architecture-goals">Architecture goals<a class="anchor" href="#architecture-goals" aria-label="Link to section">#</a></h2>
+<h2 id="architecture-goals">Architecture goals<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/04-technical-architecture.html#architecture-goals" aria-label="Link to section">#</a></h2>
 <ul>
 <li>Prove the complete draft and simulation loop with the smallest deployable web stack.</li>
 <li>Keep mechanics deterministic, replayable, and testable outside React.</li>
@@ -22,8 +22,8 @@
 <li>Make local identity and persistence replaceable by AGS adapters in Phase 2.</li>
 <li>State the trust limit clearly: browser execution and local checksums are not tamper-proof.</li>
 </ul>
-<h2 id="functional-mvp-stack">Functional MVP stack<a class="anchor" href="#functional-mvp-stack" aria-label="Link to section">#</a></h2>
-<h3 id="browser-application">Browser application<a class="anchor" href="#browser-application" aria-label="Link to section">#</a></h3>
+<h2 id="functional-mvp-stack">Functional MVP stack<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/04-technical-architecture.html#functional-mvp-stack" aria-label="Link to section">#</a></h2>
+<h3 id="browser-application">Browser application<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/04-technical-architecture.html#browser-application" aria-label="Link to section">#</a></h3>
 <ul>
 <li>React and TypeScript with a Sites/vinext production build.</li>
 <li>React DOM, CSS transitions, and accessible pointer, touch, and keyboard controls.</li>
@@ -33,7 +33,7 @@
 </ul>
 <p>ChatGPT Sites is the hosting abstraction. The Functional MVP has no AGS SDK,
 application-owned Cloudflare Worker, D1 database, server secret, or required network call.</p>
-<h3 id="local-application-services">Local application services<a class="anchor" href="#local-application-services" aria-label="Link to section">#</a></h3>
+<h3 id="local-application-services">Local application services<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/04-technical-architecture.html#local-application-services" aria-label="Link to section">#</a></h3>
 <ul>
 <li><code>getOrCreateLocalIdentity</code> creates/restores a random profile without fingerprinting.</li>
 <li><code>createLocalRunRecord</code> serializes seed, versions, actions, state hashes, and result.</li>
@@ -46,7 +46,7 @@ as device-local. It is not account sync, durable cloud persistence, or competiti
 runtime, completed-run persistence has moved fully to AGS Cloud Save; the old
 latest-run browser key is no longer read or written. A legacy value may remain
 on an existing device, but the connected runtime ignores it.</p>
-<h2 id="functional-mvp-flow">Functional MVP flow<a class="anchor" href="#functional-mvp-flow" aria-label="Link to section">#</a></h2>
+<h2 id="functional-mvp-flow">Functional MVP flow<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/04-technical-architecture.html#functional-mvp-flow" aria-label="Link to section">#</a></h2>
 <pre><code class="language-text">ChatGPT Sites-ready React app
   -&gt; obtains or restores a random local guest profile
   -&gt; loads and checksum-verifies the latest local run when present
@@ -55,7 +55,7 @@ on an existing device, but the connected runtime ignores it.</p>
   -&gt; writes the replayable run/result record to versioned browser storage
   -&gt; reads it back, verifies the checksum, and renders the full result
 </code></pre>
-<h2 id="phase-2-ags-boundary">Phase 2 AGS boundary<a class="anchor" href="#phase-2-ags-boundary" aria-label="Link to section">#</a></h2>
+<h2 id="phase-2-ags-boundary">Phase 2 AGS boundary<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/04-technical-architecture.html#phase-2-ags-boundary" aria-label="Link to section">#</a></h2>
 <p>All AGS work begins in Phase 2 — AGS Foundation:</p>
 <ul>
 <li>IAM Device ID replaces the local profile adapter with an AGS guest identity.</li>
@@ -77,7 +77,7 @@ handlers without introducing a separately provisioned Worker. AGS Extend remains
 option only if live verification shows that its tighter AGS integration or a Sites
 runtime limitation materially improves this flow. D1 and a separate application-owned
 Worker remain deferred until a concrete storage or runtime requirement justifies them.</p>
-<h2 id="authority-boundary">Authority boundary<a class="anchor" href="#authority-boundary" aria-label="Link to section">#</a></h2>
+<h2 id="authority-boundary">Authority boundary<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/04-technical-architecture.html#authority-boundary" aria-label="Link to section">#</a></h2>
 <table>
 <thead>
 <tr>
@@ -122,7 +122,7 @@ Worker remain deferred until a concrete storage or runtime requirement justifies
 <td>AGS IAM Device ID plus later account linking</td>
 </tr>
 </tbody></table>
-<h2 id="package-and-dependency-boundaries">Package and dependency boundaries<a class="anchor" href="#package-and-dependency-boundaries" aria-label="Link to section">#</a></h2>
+<h2 id="package-and-dependency-boundaries">Package and dependency boundaries<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/04-technical-architecture.html#package-and-dependency-boundaries" aria-label="Link to section">#</a></h2>
 <pre><code class="language-text">apps/
   web/                 React product client, local adapters, Sites config
 packages/
@@ -136,7 +136,7 @@ docs/                  source design documents
 </code></pre>
 <p><code>packages/domain</code> imports no React, network, storage, AGS SDK, Cloudflare, or D1
 runtime. Every stored run includes the exact versions required for replay.</p>
-<h2 id="browser-state-model">Browser state model<a class="anchor" href="#browser-state-model" aria-label="Link to section">#</a></h2>
+<h2 id="browser-state-model">Browser state model<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/04-technical-architecture.html#browser-state-model" aria-label="Link to section">#</a></h2>
 <pre><code class="language-text">booting
   -&gt; local-profile-ready
   -&gt; ready
@@ -148,7 +148,7 @@ runtime. Every stored run includes the exact versions required for replay.</p>
 </code></pre>
 <p>Domain state is plain serializable data. Presentation state—focus, selected card,
 expanded panels, and animation timing—is never part of replay evidence.</p>
-<h2 id="functional-mvp-browser-and-input-baseline">Functional MVP browser and input baseline<a class="anchor" href="#functional-mvp-browser-and-input-baseline" aria-label="Link to section">#</a></h2>
+<h2 id="functional-mvp-browser-and-input-baseline">Functional MVP browser and input baseline<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/04-technical-architecture.html#functional-mvp-browser-and-input-baseline" aria-label="Link to section">#</a></h2>
 <table>
 <thead>
 <tr>
@@ -185,7 +185,7 @@ expanded panels, and animation timing—is never part of replay evidence.</p>
 <td>Pointer, touch, and keyboard; no hover-only action</td>
 </tr>
 </tbody></table>
-<h2 id="security-and-trust-baseline">Security and trust baseline<a class="anchor" href="#security-and-trust-baseline" aria-label="Link to section">#</a></h2>
+<h2 id="security-and-trust-baseline">Security and trust baseline<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/04-technical-architecture.html#security-and-trust-baseline" aria-label="Link to section">#</a></h2>
 <ul>
 <li>Local profile IDs are random, versioned, and not browser fingerprints.</li>
 <li>A checksum mismatch prevents saved/restored claims but does not create competitive trust.</li>
@@ -205,4 +205,4 @@ trusted replay rejects a substituted revision or limits. Missing, malformed, or
 unavailable configuration fails closed with a retryable start state. Operators
 can change later games by adding and activating a revision without changing a
 game already in progress.</p>
-</article><footer>Football 11 · Generated from the repository documentation. <a href="https://football-11.workspace-025025.chatgpt.site">Back to the game</a></footer></main></div></body></html>
+</article><footer>Football 11 · Generated from the repository documentation. <a href="https://accelbyte.github.io/f11/">Back to the game</a></footer></main></div></body></html>

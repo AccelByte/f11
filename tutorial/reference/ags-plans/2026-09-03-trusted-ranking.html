@@ -1,36 +1,36 @@
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Stage 3: Trusted replay and ranking · Football 11</title><meta name="description" content="Build Football 11 from offline mechanics to online features. Read the setup guide, six integration stages, and copy-ready prompts."><link rel="stylesheet" href="../../tutorial.css"></head>
-<body><a class="skip" href="#tutorial-content">Skip to tutorial</a><header><a class="brand" href="../../index.html"><span>11</span> FOOTBALL 11 <small>THE PLAYBOOK</small></a><nav aria-label="Main navigation"><a href="../../index.html">Tutorial</a><a class="play" href="https://football-11.workspace-025025.chatgpt.site">Play the game ↗</a></nav></header>
-<div class="layout"><aside><details open><summary>On this page</summary><nav aria-label="Tutorial sections"><a class="level-2" href="#prerequisites">Prerequisites</a>
-<a class="level-2" href="#implementation-scope">Implementation scope</a>
-<a class="level-2" href="#acceptance-checks">Acceptance checks</a>
-<a class="level-2" href="#outside-this-step">Outside this step</a>
-<a class="level-2" href="#agent-execution-checklist">Agent execution checklist</a>
-<a class="level-2" href="#connected-design-reference">Connected design reference</a>
-<a class="level-3" href="#player-flow">Player flow</a>
-<a class="level-3" href="#trust-and-authorization">Trust and authorization</a>
-<a class="level-3" href="#namespace-resources">Namespace resources</a>
-<a class="level-3" href="#authorization-preflight">Authorization preflight</a>
-<a class="level-2" href="#agent-handoff-prompt">Agent handoff prompt</a></nav></details><a class="source" href="https://github.com/AccelByte/f11/blob/main/docs/ags-plans/2026-09-03-trusted-ranking.md">View Markdown source ↗</a></aside><main id="tutorial-content"><div class="intro">BUILD YOUR GAME · ONE FEATURE AT A TIME</div><article><h1 id="stage-3-trusted-replay-and-ranking">Stage 3: Trusted replay and ranking<a class="anchor" href="#stage-3-trusted-replay-and-ranking" aria-label="Link to section">#</a></h1>
-<p><a href="../12-accelbyte-integration-guide.html#stage-3">Integration tutorial</a> · <a href="README.html">All plans</a></p>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Stage 3: Trusted replay and ranking · Football 11</title><meta name="description" content="Build Football 11 from offline mechanics to online features. Read the setup guide, six integration stages, and copy-ready prompts."><link rel="stylesheet" href="https://accelbyte.github.io/f11/tutorial/tutorial.css"><link rel="canonical" href="https://accelbyte.github.io/f11/tutorial/reference/ags-plans/2026-09-03-trusted-ranking.html"></head>
+<body><a class="skip" href="https://accelbyte.github.io/f11/tutorial/reference/ags-plans/2026-09-03-trusted-ranking.html#tutorial-content">Skip to tutorial</a><header><a class="brand" href="https://accelbyte.github.io/f11/tutorial/index.html"><span>11</span> FOOTBALL 11 <small>THE PLAYBOOK</small></a><nav aria-label="Main navigation"><a href="https://accelbyte.github.io/f11/tutorial/index.html">Tutorial</a><a class="play" href="https://accelbyte.github.io/f11/">Play the game ↗</a></nav></header>
+<div class="layout"><aside><details open><summary>On this page</summary><nav aria-label="Tutorial sections"><a class="level-2" href="https://accelbyte.github.io/f11/tutorial/reference/ags-plans/2026-09-03-trusted-ranking.html#prerequisites">Prerequisites</a>
+<a class="level-2" href="https://accelbyte.github.io/f11/tutorial/reference/ags-plans/2026-09-03-trusted-ranking.html#implementation-scope">Implementation scope</a>
+<a class="level-2" href="https://accelbyte.github.io/f11/tutorial/reference/ags-plans/2026-09-03-trusted-ranking.html#acceptance-checks">Acceptance checks</a>
+<a class="level-2" href="https://accelbyte.github.io/f11/tutorial/reference/ags-plans/2026-09-03-trusted-ranking.html#outside-this-step">Outside this step</a>
+<a class="level-2" href="https://accelbyte.github.io/f11/tutorial/reference/ags-plans/2026-09-03-trusted-ranking.html#agent-execution-checklist">Agent execution checklist</a>
+<a class="level-2" href="https://accelbyte.github.io/f11/tutorial/reference/ags-plans/2026-09-03-trusted-ranking.html#connected-design-reference">Connected design reference</a>
+<a class="level-3" href="https://accelbyte.github.io/f11/tutorial/reference/ags-plans/2026-09-03-trusted-ranking.html#player-flow">Player flow</a>
+<a class="level-3" href="https://accelbyte.github.io/f11/tutorial/reference/ags-plans/2026-09-03-trusted-ranking.html#trust-and-authorization">Trust and authorization</a>
+<a class="level-3" href="https://accelbyte.github.io/f11/tutorial/reference/ags-plans/2026-09-03-trusted-ranking.html#namespace-resources">Namespace resources</a>
+<a class="level-3" href="https://accelbyte.github.io/f11/tutorial/reference/ags-plans/2026-09-03-trusted-ranking.html#authorization-preflight">Authorization preflight</a>
+<a class="level-2" href="https://accelbyte.github.io/f11/tutorial/reference/ags-plans/2026-09-03-trusted-ranking.html#agent-handoff-prompt">Agent handoff prompt</a></nav></details><a class="source" href="https://github.com/AccelByte/f11/blob/main/docs/ags-plans/2026-09-03-trusted-ranking.md">View Markdown source ↗</a></aside><main id="tutorial-content"><div class="intro">BUILD YOUR GAME · ONE FEATURE AT A TIME</div><article><h1 id="stage-3-trusted-replay-and-ranking">Stage 3: Trusted replay and ranking<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/ags-plans/2026-09-03-trusted-ranking.html#stage-3-trusted-replay-and-ranking" aria-label="Link to section">#</a></h1>
+<p><a href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#stage-3">Integration tutorial</a> · <a href="https://accelbyte.github.io/f11/tutorial/reference/ags-plans/README.html">All plans</a></p>
 <p><strong>Status:</strong> Not started on the offline starter branch.</p>
-<h2 id="prerequisites">Prerequisites<a class="anchor" href="#prerequisites" aria-label="Link to section">#</a></h2>
+<h2 id="prerequisites">Prerequisites<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/ags-plans/2026-09-03-trusted-ranking.html#prerequisites" aria-label="Link to section">#</a></h2>
 <p>Device ID and Cloud Save work. Choose a server runtime and configure confidential credentials only there.</p>
-<h2 id="implementation-scope">Implementation scope<a class="anchor" href="#implementation-scope" aria-label="Link to section">#</a></h2>
+<h2 id="implementation-scope">Implementation scope<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/ags-plans/2026-09-03-trusted-ranking.html#implementation-scope" aria-label="Link to section">#</a></h2>
 <p>Add a small authenticated backend that binds requests to the current player and replays seed/config/actions with packages/domain. Reject invalid or incompatible evidence and ignore client-calculated totals. Store an idempotent private server-owned receipt before updating configured Statistics and Leaderboards. The browser submits evidence and displays verified results and errors.</p>
 <p>Keep <code>apps/web/src/game/session.ts</code> as the adapter around <code>packages/domain</code>;
 preserve the existing draft, reroll, and season behavior. Inspect the actual
 branch and installed SDK signatures before choosing API calls. The online
 reference implementation is on public main (development master); it is not
 present on the offline starter. Inspect only the relevant feature when needed.</p>
-<h2 id="acceptance-checks">Acceptance checks<a class="anchor" href="#acceptance-checks" aria-label="Link to section">#</a></h2>
+<h2 id="acceptance-checks">Acceptance checks<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/ags-plans/2026-09-03-trusted-ranking.html#acceptance-checks" aria-label="Link to section">#</a></h2>
 <p>Legal replay succeeds; forged totals do not affect scores; illegal actions and wrong versions fail; retries do not duplicate writes; a different user cannot claim another result; all secrets remain server-side.</p>
 <p>Run <code>npm run typecheck</code>, <code>npm test</code>, and <code>npm run build</code>. Record automated,
 live-service, and browser evidence separately in the progress tracker. Missing
 credentials or service access are blockers, not successful verification.</p>
-<h2 id="outside-this-step">Outside this step<a class="anchor" href="#outside-this-step" aria-label="Link to section">#</a></h2>
+<h2 id="outside-this-step">Outside this step<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/ags-plans/2026-09-03-trusted-ranking.html#outside-this-step" aria-label="Link to section">#</a></h2>
 <p>Authoritative random challenge issuance is the next stage. Do not call client-chosen seeds cheat-proof; keep this remaining trust boundary explicit.</p>
-<h2 id="agent-execution-checklist">Agent execution checklist<a class="anchor" href="#agent-execution-checklist" aria-label="Link to section">#</a></h2>
+<h2 id="agent-execution-checklist">Agent execution checklist<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/ags-plans/2026-09-03-trusted-ranking.html#agent-execution-checklist" aria-label="Link to section">#</a></h2>
 <ol>
 <li>Read this entire plan, the repository instructions, and the current progress
 tracker. On <code>offline-starter</code> or a learner&#39;s branch, confirm prerequisite
@@ -50,7 +50,7 @@ the acceptance checks, and verify the player-visible flow in the browser.</li>
 and remaining blockers. Mark the stage Done only when its acceptance checks
 pass. Summarize what the next agent can rely on, then stop.</li>
 </ol>
-<h2 id="connected-design-reference">Connected design reference<a class="anchor" href="#connected-design-reference" aria-label="Link to section">#</a></h2>
+<h2 id="connected-design-reference">Connected design reference<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/ags-plans/2026-09-03-trusted-ranking.html#connected-design-reference" aria-label="Link to section">#</a></h2>
 <p>The following detailed design notes are recovered from the original connected
 implementation plans. They explain service choices, data contracts, authority,
 and integration boundaries. Resource names and source paths are examples from
@@ -58,7 +58,7 @@ that implementation; inspect the current branch and namespace before using them.
 Past-tense descriptions are reference behavior, not proof that this stage is
 implemented or verified in the learner&#39;s branch. The scope and acceptance checks
 above govern this stage; defer any later-stage feature mentioned below.</p>
-<h3 id="player-flow">Player flow<a class="anchor" href="#player-flow" aria-label="Link to section">#</a></h3>
+<h3 id="player-flow">Player flow<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/ags-plans/2026-09-03-trusted-ranking.html#player-flow" aria-label="Link to section">#</a></h3>
 <ol>
 <li>A signed-in AGS Device ID guest completes a locally replayable run.</li>
 <li>The result screen offers <strong>Verify and rank this run</strong>; ordinary Cloud Save
@@ -76,7 +76,7 @@ self-healing without requiring D1.</li>
 sanitized rank-range view. The browser shows trusted score, rank, nearby
 entries, and explicit loading, unranked, empty, stale, and retry states.</li>
 </ol>
-<h3 id="trust-and-authorization">Trust and authorization<a class="anchor" href="#trust-and-authorization" aria-label="Link to section">#</a></h3>
+<h3 id="trust-and-authorization">Trust and authorization<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/ags-plans/2026-09-03-trusted-ranking.html#trust-and-authorization" aria-label="Link to section">#</a></h3>
 <ul>
 <li>Browser caller: Public IAM client plus the player&#39;s user access token; no
 client secret is present in browser source, build output, or storage.</li>
@@ -92,7 +92,7 @@ namespace check, and non-empty user ID.</li>
 <li>Input bounds: JSON content type, 64 KB request limit, bounded identifiers and
 seed, and no more than eleven selections plus the configured five rerolls.</li>
 </ul>
-<h3 id="namespace-resources">Namespace resources<a class="anchor" href="#namespace-resources" aria-label="Link to section">#</a></h3>
+<h3 id="namespace-resources">Namespace resources<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/ags-plans/2026-09-03-trusted-ranking.html#namespace-resources" aria-label="Link to section">#</a></h3>
 <ul>
 <li>Confidential client: <code>Football 11 Sites Trusted Replay</code>.</li>
 <li>Statistic: <code>football11bestpoints</code>, public, <code>SERVER</code>-set, 0–114, no cycle. AGS
@@ -103,7 +103,7 @@ score twice and lower scores cannot replace a higher score.</li>
 <li>Leaderboard: <code>football11-best-points</code>, descending, all time.</li>
 <li>Receipt key: <code>football11_trusted_settlement_v1</code>, private and <code>SERVER</code>-set.</li>
 </ul>
-<h3 id="authorization-preflight">Authorization preflight<a class="anchor" href="#authorization-preflight" aria-label="Link to section">#</a></h3>
+<h3 id="authorization-preflight">Authorization preflight<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/ags-plans/2026-09-03-trusted-ranking.html#authorization-preflight" aria-label="Link to section">#</a></h3>
 <pre><code class="language-text">Caller:                browser player + Sites backend service
 Environment:           AGS Shared Cloud
 Environment evidence:  project public config and CLI base URL use gamingservices.accelbyte.io
@@ -116,7 +116,7 @@ Required permissions:  Cloud Save player-record create/read/update; Statistics u
 Shared Cloud groups:   m_cloud_save/g_player_records and m_statistics/g_user_statistics_value, actions 1/2/4
 Verified access:       confidential client and exact groups/actions read back; live local-Worker smoke passed
 </code></pre>
-<h2 id="agent-handoff-prompt">Agent handoff prompt<a class="anchor" href="#agent-handoff-prompt" aria-label="Link to section">#</a></h2>
+<h2 id="agent-handoff-prompt">Agent handoff prompt<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/ags-plans/2026-09-03-trusted-ranking.html#agent-handoff-prompt" aria-label="Link to section">#</a></h2>
 <pre><code class="language-text">Use the AccelByte AGS skill and docs/ags-plans/2026-09-03-trusted-ranking.md as the
 implementation plan for this stage only. Inspect the current branch and completed
 prerequisites first. Resolve any missing environment or authorization settings
@@ -125,4 +125,4 @@ the scoped player flow, and run every acceptance check. Record automated,
 browser, and live-service evidence separately in docs/10-progress-tracker.md.
 Report blockers honestly and stop before the next stage.
 </code></pre>
-</article><footer>Football 11 · Generated from the repository documentation. <a href="https://football-11.workspace-025025.chatgpt.site">Back to the game</a></footer></main></div></body></html>
+</article><footer>Football 11 · Generated from the repository documentation. <a href="https://accelbyte.github.io/f11/">Back to the game</a></footer></main></div></body></html>

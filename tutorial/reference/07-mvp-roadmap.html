@@ -1,31 +1,31 @@
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>MVP Roadmap · Football 11</title><meta name="description" content="Build Football 11 from offline mechanics to online features. Read the setup guide, six integration stages, and copy-ready prompts."><link rel="stylesheet" href="../tutorial.css"></head>
-<body><a class="skip" href="#tutorial-content">Skip to tutorial</a><header><a class="brand" href="../index.html"><span>11</span> FOOTBALL 11 <small>THE PLAYBOOK</small></a><nav aria-label="Main navigation"><a href="../index.html">Tutorial</a><a class="play" href="https://football-11.workspace-025025.chatgpt.site">Play the game ↗</a></nav></header>
-<div class="layout"><aside><details open><summary>On this page</summary><nav aria-label="Tutorial sections"><a class="level-2" href="#functional-mvp-outcome">Functional MVP outcome</a>
-<a class="level-2" href="#functional-mvp-scope">Functional MVP scope</a>
-<a class="level-2" href="#connected-release-scope-after-the-functional-mvp">Connected release scope after the Functional MVP</a>
-<a class="level-2" href="#work-estimate">Work estimate</a>
-<a class="level-2" href="#explicitly-deferred">Explicitly deferred</a>
-<a class="level-2" href="#phase-0--design-lock">Phase 0 — Design lock</a>
-<a class="level-2" href="#phase-1--core-mechanics-and-solo-vertical-slice">Phase 1 — Core mechanics and solo vertical slice</a>
-<a class="level-3" href="#phase-1a--headless-core-mechanics">Phase 1A — Headless core mechanics</a>
-<a class="level-3" href="#phase-1b--local-react-functional-mvp">Phase 1B — Local React Functional MVP</a>
-<a class="level-2" href="#connected-release-phases">Connected release phases</a>
-<a class="level-2" href="#phase-2--ags-foundation">Phase 2 — AGS foundation</a>
-<a class="level-2" href="#phase-3--sharing-and-daily-challenge">Phase 3 — Sharing and daily challenge</a>
-<a class="level-2" href="#phase-4--friend-rooms">Phase 4 — Friend rooms</a>
-<a class="level-2" href="#phase-5--saved-xi-opponent-discovery">Phase 5 — Saved-XI opponent discovery</a>
-<a class="level-2" href="#phase-6--connected-release-hardening">Phase 6 — Connected release hardening</a>
-<a class="level-2" href="#verification-strategy">Verification strategy</a></nav></details><a class="source" href="https://github.com/AccelByte/f11/blob/main/docs/07-mvp-roadmap.md">View Markdown source ↗</a></aside><main id="tutorial-content"><div class="intro">BUILD YOUR GAME · ONE FEATURE AT A TIME</div><article><h1 id="mvp-roadmap">MVP Roadmap<a class="anchor" href="#mvp-roadmap" aria-label="Link to section">#</a></h1>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>MVP Roadmap · Football 11</title><meta name="description" content="Build Football 11 from offline mechanics to online features. Read the setup guide, six integration stages, and copy-ready prompts."><link rel="stylesheet" href="https://accelbyte.github.io/f11/tutorial/tutorial.css"><link rel="canonical" href="https://accelbyte.github.io/f11/tutorial/reference/07-mvp-roadmap.html"></head>
+<body><a class="skip" href="https://accelbyte.github.io/f11/tutorial/reference/07-mvp-roadmap.html#tutorial-content">Skip to tutorial</a><header><a class="brand" href="https://accelbyte.github.io/f11/tutorial/index.html"><span>11</span> FOOTBALL 11 <small>THE PLAYBOOK</small></a><nav aria-label="Main navigation"><a href="https://accelbyte.github.io/f11/tutorial/index.html">Tutorial</a><a class="play" href="https://accelbyte.github.io/f11/">Play the game ↗</a></nav></header>
+<div class="layout"><aside><details open><summary>On this page</summary><nav aria-label="Tutorial sections"><a class="level-2" href="https://accelbyte.github.io/f11/tutorial/reference/07-mvp-roadmap.html#functional-mvp-outcome">Functional MVP outcome</a>
+<a class="level-2" href="https://accelbyte.github.io/f11/tutorial/reference/07-mvp-roadmap.html#functional-mvp-scope">Functional MVP scope</a>
+<a class="level-2" href="https://accelbyte.github.io/f11/tutorial/reference/07-mvp-roadmap.html#connected-release-scope-after-the-functional-mvp">Connected release scope after the Functional MVP</a>
+<a class="level-2" href="https://accelbyte.github.io/f11/tutorial/reference/07-mvp-roadmap.html#work-estimate">Work estimate</a>
+<a class="level-2" href="https://accelbyte.github.io/f11/tutorial/reference/07-mvp-roadmap.html#explicitly-deferred">Explicitly deferred</a>
+<a class="level-2" href="https://accelbyte.github.io/f11/tutorial/reference/07-mvp-roadmap.html#phase-0--design-lock">Phase 0 — Design lock</a>
+<a class="level-2" href="https://accelbyte.github.io/f11/tutorial/reference/07-mvp-roadmap.html#phase-1--core-mechanics-and-solo-vertical-slice">Phase 1 — Core mechanics and solo vertical slice</a>
+<a class="level-3" href="https://accelbyte.github.io/f11/tutorial/reference/07-mvp-roadmap.html#phase-1a--headless-core-mechanics">Phase 1A — Headless core mechanics</a>
+<a class="level-3" href="https://accelbyte.github.io/f11/tutorial/reference/07-mvp-roadmap.html#phase-1b--local-react-functional-mvp">Phase 1B — Local React Functional MVP</a>
+<a class="level-2" href="https://accelbyte.github.io/f11/tutorial/reference/07-mvp-roadmap.html#connected-release-phases">Connected release phases</a>
+<a class="level-2" href="https://accelbyte.github.io/f11/tutorial/reference/07-mvp-roadmap.html#phase-2--ags-foundation">Phase 2 — AGS foundation</a>
+<a class="level-2" href="https://accelbyte.github.io/f11/tutorial/reference/07-mvp-roadmap.html#phase-3--sharing-and-daily-challenge">Phase 3 — Sharing and daily challenge</a>
+<a class="level-2" href="https://accelbyte.github.io/f11/tutorial/reference/07-mvp-roadmap.html#phase-4--friend-rooms">Phase 4 — Friend rooms</a>
+<a class="level-2" href="https://accelbyte.github.io/f11/tutorial/reference/07-mvp-roadmap.html#phase-5--saved-xi-opponent-discovery">Phase 5 — Saved-XI opponent discovery</a>
+<a class="level-2" href="https://accelbyte.github.io/f11/tutorial/reference/07-mvp-roadmap.html#phase-6--connected-release-hardening">Phase 6 — Connected release hardening</a>
+<a class="level-2" href="https://accelbyte.github.io/f11/tutorial/reference/07-mvp-roadmap.html#verification-strategy">Verification strategy</a></nav></details><a class="source" href="https://github.com/AccelByte/f11/blob/main/docs/07-mvp-roadmap.md">View Markdown source ↗</a></aside><main id="tutorial-content"><div class="intro">BUILD YOUR GAME · ONE FEATURE AT A TIME</div><article><h1 id="mvp-roadmap">MVP Roadmap<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/07-mvp-roadmap.html#mvp-roadmap" aria-label="Link to section">#</a></h1>
 <p><strong>Last updated:</strong> September 4, 2026
 <strong>Status:</strong> Functional MVP complete; Phase 2 AGS Foundation is next</p>
-<h2 id="functional-mvp-outcome">Functional MVP outcome<a class="anchor" href="#functional-mvp-outcome" aria-label="Link to section">#</a></h2>
+<h2 id="functional-mvp-outcome">Functional MVP outcome<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/07-mvp-roadmap.html#functional-mvp-outcome" aria-label="Link to section">#</a></h2>
 <p>A player can open the web app, complete one eleven-player random draft, see the
 position ratings used for every choice, and receive an explainable,
 reproducible 38-match season result. A random local profile and checksummed
 browser record preserve the latest run on that device. This milestone ends at
 Phase 1B and proves the game before any online-service dependency.</p>
-<h2 id="functional-mvp-scope">Functional MVP scope<a class="anchor" href="#functional-mvp-scope" aria-label="Link to section">#</a></h2>
+<h2 id="functional-mvp-scope">Functional MVP scope<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/07-mvp-roadmap.html#functional-mvp-scope" aria-label="Link to section">#</a></h2>
 <ul>
 <li>Football only.</li>
 <li>One formation.</li>
@@ -47,7 +47,7 @@ player-authoritative.</li>
 </ul>
 <p>Catalogue size starts from formation coverage and viable-offer needs; 60–80
 cards is a planning estimate rather than an MVP acceptance requirement.</p>
-<h2 id="connected-release-scope-after-the-functional-mvp">Connected release scope after the Functional MVP<a class="anchor" href="#connected-release-scope-after-the-functional-mvp" aria-label="Link to section">#</a></h2>
+<h2 id="connected-release-scope-after-the-functional-mvp">Connected release scope after the Functional MVP<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/07-mvp-roadmap.html#connected-release-scope-after-the-functional-mvp" aria-label="Link to section">#</a></h2>
 <ul>
 <li>AGS IAM Device ID identity and Cloud Save game-data persistence.</li>
 <li>AGS Statistics and Leaderboards.</li>
@@ -59,7 +59,7 @@ optional native session join codes.</li>
 <li>Saved-XI asynchronous competition.</li>
 <li>Production hardening for the integrated journey.</li>
 </ul>
-<h2 id="work-estimate">Work estimate<a class="anchor" href="#work-estimate" aria-label="Link to section">#</a></h2>
+<h2 id="work-estimate">Work estimate<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/07-mvp-roadmap.html#work-estimate" aria-label="Link to section">#</a></h2>
 <p>Assuming one developer/product owner directing agentic AI for implementation,
 tests, documentation, review, and bounded parallel work:</p>
 <table>
@@ -127,7 +127,7 @@ approved by implementation start, the engine uses the same schema with
 placeholder identities and swaps content through a later version. Daily and
 sharing, trusted competition, friend rooms, Saved-XI competition, tuning, and broad
 release hardening remain outside the Functional MVP.</p>
-<h2 id="explicitly-deferred">Explicitly deferred<a class="anchor" href="#explicitly-deferred" aria-label="Link to section">#</a></h2>
+<h2 id="explicitly-deferred">Explicitly deferred<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/07-mvp-roadmap.html#explicitly-deferred" aria-label="Link to section">#</a></h2>
 <ul>
 <li>Phaser.</li>
 <li>Native iOS and Android packaging.</li>
@@ -140,7 +140,7 @@ release hardening remain outside the Functional MVP.</p>
 <li>Voice chat.</li>
 <li>Real player photos and official club logos until licensing is resolved.</li>
 </ul>
-<h2 id="phase-0--design-lock">Phase 0 — Design lock<a class="anchor" href="#phase-0--design-lock" aria-label="Link to section">#</a></h2>
+<h2 id="phase-0--design-lock">Phase 0 — Design lock<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/07-mvp-roadmap.html#phase-0--design-lock" aria-label="Link to section">#</a></h2>
 <p><strong>State:</strong> Complete for Phase 1A. Public-content rights remain a nonblocking
 release decision.</p>
 <ul>
@@ -154,13 +154,13 @@ fields, and keep independent player/club/competition rights as a release gate.</
 <li>Build a small correctness fixture set; record calibration observations for
 later tuning.</li>
 </ul>
-<p>Detailed design: <a href="phases/phase-00-design-lock.html">Phase 0 — Design lock</a>.</p>
+<p>Detailed design: <a href="https://accelbyte.github.io/f11/tutorial/reference/phases/phase-00-design-lock.html">Phase 0 — Design lock</a>.</p>
 <p><strong>Exit criterion:</strong> a paper or data-driven draft can be completed and scored
 without UI-specific assumptions.</p>
-<p>Evidence: <a href="phases/phase-00-content-contract.html">Phase 0 content contract</a> and
-<a href="phases/phase-00-exit-review.html">Phase 0 exit review</a>.</p>
-<h2 id="phase-1--core-mechanics-and-solo-vertical-slice">Phase 1 — Core mechanics and solo vertical slice<a class="anchor" href="#phase-1--core-mechanics-and-solo-vertical-slice" aria-label="Link to section">#</a></h2>
-<h3 id="phase-1a--headless-core-mechanics">Phase 1A — Headless core mechanics<a class="anchor" href="#phase-1a--headless-core-mechanics" aria-label="Link to section">#</a></h3>
+<p>Evidence: <a href="https://accelbyte.github.io/f11/tutorial/reference/phases/phase-00-content-contract.html">Phase 0 content contract</a> and
+<a href="https://accelbyte.github.io/f11/tutorial/reference/phases/phase-00-exit-review.html">Phase 0 exit review</a>.</p>
+<h2 id="phase-1--core-mechanics-and-solo-vertical-slice">Phase 1 — Core mechanics and solo vertical slice<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/07-mvp-roadmap.html#phase-1--core-mechanics-and-solo-vertical-slice" aria-label="Link to section">#</a></h2>
+<h3 id="phase-1a--headless-core-mechanics">Phase 1A — Headless core mechanics<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/07-mvp-roadmap.html#phase-1a--headless-core-mechanics" aria-label="Link to section">#</a></h3>
 <ul>
 <li>Implement a versioned deterministic random source; never use <code>Math.random()</code>
 in mechanics.</li>
@@ -179,12 +179,12 @@ and its visible players.</li>
 UI-integration gate.</li>
 </ul>
 <p>Detailed design:
-<a href="phases/phase-01a-core-mechanics-engine.html">Phase 1A — Core mechanics engine</a>.</p>
+<a href="https://accelbyte.github.io/f11/tutorial/reference/phases/phase-01a-core-mechanics-engine.html">Phase 1A — Core mechanics engine</a>.</p>
 <p><strong>Exit criterion:</strong> the headless engine completes and reproduces thousands of
 seeded drafts without an illegal offer or dead end and always produces bounded,
 valid results. Distribution observations are recorded but do not require
 balance approval before UI integration.</p>
-<h3 id="phase-1b--local-react-functional-mvp">Phase 1B — Local React Functional MVP<a class="anchor" href="#phase-1b--local-react-functional-mvp" aria-label="Link to section">#</a></h3>
+<h3 id="phase-1b--local-react-functional-mvp">Phase 1B — Local React Functional MVP<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/07-mvp-roadmap.html#phase-1b--local-react-functional-mvp" aria-label="Link to section">#</a></h3>
 <ul>
 <li>Build React draft flow.</li>
 <li>Integrate the approved core-mechanics package without duplicating rules.</li>
@@ -194,14 +194,14 @@ balance approval before UI integration.</p>
 <li>Produce a ChatGPT Sites-compatible build; deployment remains user-triggered.</li>
 </ul>
 <p>Detailed design:
-<a href="phases/phase-01-solo-vertical-slice.html">Phase 1B — Solo vertical slice</a>.</p>
+<a href="https://accelbyte.github.io/f11/tutorial/reference/phases/phase-01-solo-vertical-slice.html">Phase 1B — Solo vertical slice</a>.</p>
 <p><strong>Exit criterion:</strong> one full run works from guest entry through a saved,
 reloadable, reproducible result. This closes the Functional MVP; trusted
 competitive authority remains later.</p>
-<h2 id="connected-release-phases">Connected release phases<a class="anchor" href="#connected-release-phases" aria-label="Link to section">#</a></h2>
+<h2 id="connected-release-phases">Connected release phases<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/07-mvp-roadmap.html#connected-release-phases" aria-label="Link to section">#</a></h2>
 <p>Phases 2–6 build on the Functional MVP. They remain designed work, but they are
 not required to prove that the core game works.</p>
-<h2 id="phase-2--ags-foundation">Phase 2 — AGS foundation<a class="anchor" href="#phase-2--ags-foundation" aria-label="Link to section">#</a></h2>
+<h2 id="phase-2--ags-foundation">Phase 2 — AGS foundation<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/07-mvp-roadmap.html#phase-2--ags-foundation" aria-label="Link to section">#</a></h2>
 <ul>
 <li>Complete Slice 2A: React guest identity through AGS IAM Device ID login.</li>
 <li>Complete Slice 2B: rich run/result persistence through AGS Cloud Save.</li>
@@ -211,12 +211,12 @@ Sites managed server runtime unless verification favors AGS Extend.</li>
 <li>Complete Slice 2E: player-facing leaderboard query and presentation.</li>
 </ul>
 <p>Detailed design:
-<a href="phases/phase-02-ags-foundation.html">Phase 2 — AGS foundation</a>.
+<a href="https://accelbyte.github.io/f11/tutorial/reference/phases/phase-02-ags-foundation.html">Phase 2 — AGS foundation</a>.
 The first approval-gated integration plan is
-<a href="12-accelbyte-integration-guide.html#stage-1">Device ID guest login</a>.</p>
+<a href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#stage-1">Device ID guest login</a>.</p>
 <p><strong>Exit criterion:</strong> an authenticated completed run updates a statistic and
 appears in the intended leaderboard through the visible game flow.</p>
-<h2 id="phase-3--sharing-and-daily-challenge">Phase 3 — Sharing and daily challenge<a class="anchor" href="#phase-3--sharing-and-daily-challenge" aria-label="Link to section">#</a></h2>
+<h2 id="phase-3--sharing-and-daily-challenge">Phase 3 — Sharing and daily challenge<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/07-mvp-roadmap.html#phase-3--sharing-and-daily-challenge" aria-label="Link to section">#</a></h2>
 <ul>
 <li>Add daily seed lifecycle after the AGS identity and trust foundation exists.</li>
 <li>Add public result route.</li>
@@ -225,10 +225,10 @@ appears in the intended leaderboard through the visible game flow.</p>
 <li>Add synced result history with a bounded local cache.</li>
 </ul>
 <p>Detailed design:
-<a href="phases/phase-03-sharing-and-daily.html">Phase 3 — Sharing and daily challenge</a>.</p>
+<a href="https://accelbyte.github.io/f11/tutorial/reference/phases/phase-03-sharing-and-daily.html">Phase 3 — Sharing and daily challenge</a>.</p>
 <p><strong>Exit criterion:</strong> a trusted daily result can be reopened and shared at a stable
 public URL with correct result-specific metadata.</p>
-<h2 id="phase-4--friend-rooms">Phase 4 — Friend rooms<a class="anchor" href="#phase-4--friend-rooms" aria-label="Link to section">#</a></h2>
+<h2 id="phase-4--friend-rooms">Phase 4 — Friend rooms<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/07-mvp-roadmap.html#phase-4--friend-rooms" aria-label="Link to section">#</a></h2>
 <p><strong>Current state:</strong> the development create/discover/join/start/draft/reveal/replay
 loop is implemented and live-verified with three isolated browser origins. The
 remaining exit work is trusted server/replay authority plus visible abandon,
@@ -247,12 +247,12 @@ at reveal.</li>
 round without closing the AGS session.</li>
 <li>Handle leave, reconnect, timeout, and host behavior.</li>
 </ul>
-<p>Detailed design: <a href="phases/phase-04-friend-rooms.html">Phase 4 — AGS friend rooms</a>.</p>
+<p>Detailed design: <a href="https://accelbyte.github.io/f11/tutorial/reference/phases/phase-04-friend-rooms.html">Phase 4 — AGS friend rooms</a>.</p>
 <p><strong>Exit criterion:</strong> one to eight browser clients create, discover, or join one
 active room during an open window, cannot join an active draft, complete and
 compare a trusted per-player deterministic round through the intended room UI, and
 automatically advance to a fresh round in the same AGS session.</p>
-<h2 id="phase-5--saved-xi-opponent-discovery">Phase 5 — Saved-XI opponent discovery<a class="anchor" href="#phase-5--saved-xi-opponent-discovery" aria-label="Link to section">#</a></h2>
+<h2 id="phase-5--saved-xi-opponent-discovery">Phase 5 — Saved-XI opponent discovery<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/07-mvp-roadmap.html#phase-5--saved-xi-opponent-discovery" aria-label="Link to section">#</a></h2>
 <ul>
 <li>Save one eligible XI per player or define the replacement policy.</li>
 <li>Query nearby leaderboard entries.</li>
@@ -263,10 +263,10 @@ to AGS.</li>
 <li>Add rematch and version-safety rules.</li>
 </ul>
 <p>Detailed design:
-<a href="phases/phase-05-saved-xi-competition.html">Phase 5 — Saved-XI competition</a>.</p>
+<a href="https://accelbyte.github.io/f11/tutorial/reference/phases/phase-05-saved-xi-competition.html">Phase 5 — Saved-XI competition</a>.</p>
 <p><strong>Exit criterion:</strong> a player can challenge a valid nearby XI and receive a
 reproducible result without an AGS matchmaking ticket.</p>
-<h2 id="phase-6--connected-release-hardening">Phase 6 — Connected release hardening<a class="anchor" href="#phase-6--connected-release-hardening" aria-label="Link to section">#</a></h2>
+<h2 id="phase-6--connected-release-hardening">Phase 6 — Connected release hardening<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/07-mvp-roadmap.html#phase-6--connected-release-hardening" aria-label="Link to section">#</a></h2>
 <ul>
 <li>Freeze release content, rules, and simulation versions.</li>
 <li>Verify secrets, authorization, abuse protection, and privacy boundaries.</li>
@@ -278,11 +278,11 @@ reproducible result without an AGS matchmaking ticket.</p>
 <li>Deploy and approve a production-like release candidate.</li>
 </ul>
 <p>Detailed design:
-<a href="phases/phase-06-mvp-hardening-and-release.html">Phase 6 — Connected release hardening</a>.</p>
+<a href="https://accelbyte.github.io/f11/tutorial/reference/phases/phase-06-mvp-hardening-and-release.html">Phase 6 — Connected release hardening</a>.</p>
 <p><strong>Exit criterion:</strong> the release candidate passes the complete player journey,
 service evidence, security, recovery, accessibility, performance, content, and
 operational gates with no unresolved go/no-go blocker.</p>
-<h2 id="verification-strategy">Verification strategy<a class="anchor" href="#verification-strategy" aria-label="Link to section">#</a></h2>
+<h2 id="verification-strategy">Verification strategy<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/07-mvp-roadmap.html#verification-strategy" aria-label="Link to section">#</a></h2>
 <ul>
 <li>Unit tests for eligibility, rerolls, scoring, and seeded generation.</li>
 <li>Golden fixtures for known teams and expected explanation facts.</li>
@@ -293,4 +293,4 @@ operational gates with no unresolved go/no-go blocker.</p>
 <li>Social-preview checks for Discord, WhatsApp, X, and Slack metadata.</li>
 <li>Abuse tests for modified selections, replayed submissions, and rating farming.</li>
 </ul>
-</article><footer>Football 11 · Generated from the repository documentation. <a href="https://football-11.workspace-025025.chatgpt.site">Back to the game</a></footer></main></div></body></html>
+</article><footer>Football 11 · Generated from the repository documentation. <a href="https://accelbyte.github.io/f11/">Back to the game</a></footer></main></div></body></html>

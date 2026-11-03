@@ -1,16 +1,17 @@
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Tutorial and hosting migration — November 3, 2026 · Football 11</title><meta name="description" content="Build Football 11 from offline mechanics to online features. Read the setup guide, six integration stages, and copy-ready prompts."><link rel="stylesheet" href="../../tutorial.css"></head>
-<body><a class="skip" href="#tutorial-content">Skip to tutorial</a><header><a class="brand" href="../../index.html"><span>11</span> FOOTBALL 11 <small>THE PLAYBOOK</small></a><nav aria-label="Main navigation"><a href="../../index.html">Tutorial</a><a class="play" href="https://football-11.workspace-025025.chatgpt.site">Play the game ↗</a></nav></header>
-<div class="layout"><aside><details open><summary>On this page</summary><nav aria-label="Tutorial sections"><a class="level-2" href="#requested-deployment">Requested deployment</a>
-<a class="level-2" href="#approved-ags-setup">Approved AGS setup</a>
-<a class="level-2" href="#verification">Verification</a>
-<a class="level-2" href="#published-endpoints">Published endpoints</a>
-<a class="level-2" href="#browser-persistence-repair">Browser persistence repair</a></nav></details><a class="source" href="https://github.com/AccelByte/f11/blob/main/docs/verification/2026-11-03-deployment.md">View Markdown source ↗</a></aside><main id="tutorial-content"><div class="intro">BUILD YOUR GAME · ONE FEATURE AT A TIME</div><article><h1 id="tutorial-and-hosting-migration--november-3-2026">Tutorial and hosting migration — November 3, 2026<a class="anchor" href="#tutorial-and-hosting-migration--november-3-2026" aria-label="Link to section">#</a></h1>
-<h2 id="requested-deployment">Requested deployment<a class="anchor" href="#requested-deployment" aria-label="Link to section">#</a></h2>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Tutorial and hosting migration — November 3, 2026 · Football 11</title><meta name="description" content="Build Football 11 from offline mechanics to online features. Read the setup guide, six integration stages, and copy-ready prompts."><link rel="stylesheet" href="https://accelbyte.github.io/f11/tutorial/tutorial.css"><link rel="canonical" href="https://accelbyte.github.io/f11/tutorial/reference/verification/2026-11-03-deployment.html"></head>
+<body><a class="skip" href="https://accelbyte.github.io/f11/tutorial/reference/verification/2026-11-03-deployment.html#tutorial-content">Skip to tutorial</a><header><a class="brand" href="https://accelbyte.github.io/f11/tutorial/index.html"><span>11</span> FOOTBALL 11 <small>THE PLAYBOOK</small></a><nav aria-label="Main navigation"><a href="https://accelbyte.github.io/f11/tutorial/index.html">Tutorial</a><a class="play" href="https://accelbyte.github.io/f11/">Play the game ↗</a></nav></header>
+<div class="layout"><aside><details open><summary>On this page</summary><nav aria-label="Tutorial sections"><a class="level-2" href="https://accelbyte.github.io/f11/tutorial/reference/verification/2026-11-03-deployment.html#requested-deployment">Requested deployment</a>
+<a class="level-2" href="https://accelbyte.github.io/f11/tutorial/reference/verification/2026-11-03-deployment.html#approved-ags-setup">Approved AGS setup</a>
+<a class="level-2" href="https://accelbyte.github.io/f11/tutorial/reference/verification/2026-11-03-deployment.html#verification">Verification</a>
+<a class="level-2" href="https://accelbyte.github.io/f11/tutorial/reference/verification/2026-11-03-deployment.html#published-endpoints">Published endpoints</a>
+<a class="level-2" href="https://accelbyte.github.io/f11/tutorial/reference/verification/2026-11-03-deployment.html#browser-persistence-repair">Browser persistence repair</a></nav></details><a class="source" href="https://github.com/AccelByte/f11/blob/main/docs/verification/2026-11-03-deployment.md">View Markdown source ↗</a></aside><main id="tutorial-content"><div class="intro">BUILD YOUR GAME · ONE FEATURE AT A TIME</div><article><h1 id="tutorial-and-hosting-migration--november-3-2026">Tutorial and hosting migration — November 3, 2026<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/verification/2026-11-03-deployment.html#tutorial-and-hosting-migration--november-3-2026" aria-label="Link to section">#</a></h1>
+<h2 id="requested-deployment">Requested deployment<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/verification/2026-11-03-deployment.html#requested-deployment" aria-label="Link to section">#</a></h2>
 <p>GitHub Pages hosts the generated integration tutorial and links to the game on
-this account&#39;s new ChatGPT Site. The game has a Tutorial menu link. Markdown
+the GitHub Pages game frontend. That frontend uses this account&#39;s new ChatGPT
+Site for backend services. The game has a Tutorial menu link. Markdown
 under <code>docs/</code> remains the source of truth.</p>
-<h2 id="approved-ags-setup">Approved AGS setup<a class="anchor" href="#approved-ags-setup" aria-label="Link to section">#</a></h2>
+<h2 id="approved-ags-setup">Approved AGS setup<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/verification/2026-11-03-deployment.html#approved-ags-setup" aria-label="Link to section">#</a></h2>
 <p>Read-only discovery found the selected namespace and its default public game
 client. Device ID credentials, statistics, leaderboards, and the trusted server
 client are absent. The previous deployment&#39;s server credentials cannot be reused.</p>
@@ -49,7 +50,7 @@ Keep their identifiers and gameplay settings consistent with the connected
 implementation. Do not grant the runtime client configuration-write permissions.</p>
 <p>Write the new deployment&#39;s configuration to a separate ignored environment
 file, preserving the earlier deployment&#39;s local configuration.</p>
-<h2 id="verification">Verification<a class="anchor" href="#verification" aria-label="Link to section">#</a></h2>
+<h2 id="verification">Verification<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/verification/2026-11-03-deployment.html#verification" aria-label="Link to section">#</a></h2>
 <p>The user approved this setup in the current chat. The confidential client was
 created and its type and exact module permissions read back. The Game Record is
 verified <code>SERVER</code>-set. Device ID login, both Statistics, the season Leaderboard,
@@ -66,7 +67,7 @@ idempotency, tamper/version rejection, private server-owned receipts, Statistic
 and Leaderboard readback. Live Saved-XI publication, discovery, single-use tokens,
 duplicate settlement, private history, challenger-only scoring, and cooldown
 checks also pass.</p>
-<h2 id="published-endpoints">Published endpoints<a class="anchor" href="#published-endpoints" aria-label="Link to section">#</a></h2>
+<h2 id="published-endpoints">Published endpoints<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/verification/2026-11-03-deployment.html#published-endpoints" aria-label="Link to section">#</a></h2>
 <table>
 <thead>
 <tr>
@@ -83,7 +84,7 @@ checks also pass.</p>
 <td><a href="https://accelbyte.github.io/f11/tutorial/">https://accelbyte.github.io/f11/tutorial/</a></td>
 </tr>
 <tr>
-<td>Game in this account&#39;s Sites</td>
+<td>Backend services in this account&#39;s Sites</td>
 <td><a href="https://football-11.workspace-025025.chatgpt.site">https://football-11.workspace-025025.chatgpt.site</a></td>
 </tr>
 <tr>
@@ -97,10 +98,10 @@ is published to <code>AccelByte/f11</code> gh-pages as <code>966d283</code>. Sub
 refreshes preserve this verified application behavior. Source history on the
 public main/offline-starter branches was not changed by this deployment.</p>
 <p>Both roots, tutorials, reference pages, and referenced assets return HTTP 200.
-The tutorial&#39;s Play links target the new Site. All supported API preflights
+The tutorial&#39;s Play links target the GitHub Pages game frontend. All supported API preflights
 allow the Pages origin; an unapproved origin receives 403. Missing-session
 latest-run requests return 401 with the correct Pages CORS header.</p>
-<h2 id="browser-persistence-repair">Browser persistence repair<a class="anchor" href="#browser-persistence-repair" aria-label="Link to section">#</a></h2>
+<h2 id="browser-persistence-repair">Browser persistence repair<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/verification/2026-11-03-deployment.html#browser-persistence-repair" aria-label="Link to section">#</a></h2>
 <p>Browser inspection reproduced the earlier saving warning. Direct Cloud Save
 OPTIONS returns 405 without CORS headers, although Node identity/storage checks
 pass. Browser saves now use fixed <code>GET</code>/<code>PUT /api/latest-run</code> routes. The backend
@@ -121,4 +122,4 @@ Both display <strong>Latest result restored</strong> without the earlier saving 
 The separate origins retain separate browser guest identities.</p>
 <p>Existing connected-release authority/recovery and account-linking gates remain
 tracked separately; this hosting migration does not mark those complete.</p>
-</article><footer>Football 11 · Generated from the repository documentation. <a href="https://football-11.workspace-025025.chatgpt.site">Back to the game</a></footer></main></div></body></html>
+</article><footer>Football 11 · Generated from the repository documentation. <a href="https://accelbyte.github.io/f11/">Back to the game</a></footer></main></div></body></html>

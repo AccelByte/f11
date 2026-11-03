@@ -1,40 +1,40 @@
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Stage 4: Server-issued draft configuration · Football 11</title><meta name="description" content="Build Football 11 from offline mechanics to online features. Read the setup guide, six integration stages, and copy-ready prompts."><link rel="stylesheet" href="../../tutorial.css"></head>
-<body><a class="skip" href="#tutorial-content">Skip to tutorial</a><header><a class="brand" href="../../index.html"><span>11</span> FOOTBALL 11 <small>THE PLAYBOOK</small></a><nav aria-label="Main navigation"><a href="../../index.html">Tutorial</a><a class="play" href="https://football-11.workspace-025025.chatgpt.site">Play the game ↗</a></nav></header>
-<div class="layout"><aside><details open><summary>On this page</summary><nav aria-label="Tutorial sections"><a class="level-2" href="#prerequisites">Prerequisites</a>
-<a class="level-2" href="#implementation-scope">Implementation scope</a>
-<a class="level-2" href="#acceptance-checks">Acceptance checks</a>
-<a class="level-2" href="#outside-this-step">Outside this step</a>
-<a class="level-2" href="#agent-execution-checklist">Agent execution checklist</a>
-<a class="level-2" href="#connected-design-reference">Connected design reference</a>
-<a class="level-3" href="#goal">Goal</a>
-<a class="level-3" href="#non-goals">Non-goals</a>
-<a class="level-3" href="#service-selection">Service selection</a>
-<a class="level-3" href="#record-contract">Record contract</a>
-<a class="level-3" href="#player-flow">Player flow</a>
-<a class="level-3" href="#affected-areas">Affected areas</a>
-<a class="level-3" href="#authorization-plan">Authorization plan</a>
-<a class="level-3" href="#residual-risks-and-operating-rules">Residual risks and operating rules</a>
-<a class="level-2" href="#agent-handoff-prompt">Agent handoff prompt</a></nav></details><a class="source" href="https://github.com/AccelByte/f11/blob/main/docs/ags-plans/2026-09-04-game-record-draft-config.md">View Markdown source ↗</a></aside><main id="tutorial-content"><div class="intro">BUILD YOUR GAME · ONE FEATURE AT A TIME</div><article><h1 id="stage-4-server-issued-draft-configuration">Stage 4: Server-issued draft configuration<a class="anchor" href="#stage-4-server-issued-draft-configuration" aria-label="Link to section">#</a></h1>
-<p><a href="../12-accelbyte-integration-guide.html#stage-4">Integration tutorial</a> · <a href="README.html">All plans</a></p>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Stage 4: Server-issued draft configuration · Football 11</title><meta name="description" content="Build Football 11 from offline mechanics to online features. Read the setup guide, six integration stages, and copy-ready prompts."><link rel="stylesheet" href="https://accelbyte.github.io/f11/tutorial/tutorial.css"><link rel="canonical" href="https://accelbyte.github.io/f11/tutorial/reference/ags-plans/2026-09-04-game-record-draft-config.html"></head>
+<body><a class="skip" href="https://accelbyte.github.io/f11/tutorial/reference/ags-plans/2026-09-04-game-record-draft-config.html#tutorial-content">Skip to tutorial</a><header><a class="brand" href="https://accelbyte.github.io/f11/tutorial/index.html"><span>11</span> FOOTBALL 11 <small>THE PLAYBOOK</small></a><nav aria-label="Main navigation"><a href="https://accelbyte.github.io/f11/tutorial/index.html">Tutorial</a><a class="play" href="https://accelbyte.github.io/f11/">Play the game ↗</a></nav></header>
+<div class="layout"><aside><details open><summary>On this page</summary><nav aria-label="Tutorial sections"><a class="level-2" href="https://accelbyte.github.io/f11/tutorial/reference/ags-plans/2026-09-04-game-record-draft-config.html#prerequisites">Prerequisites</a>
+<a class="level-2" href="https://accelbyte.github.io/f11/tutorial/reference/ags-plans/2026-09-04-game-record-draft-config.html#implementation-scope">Implementation scope</a>
+<a class="level-2" href="https://accelbyte.github.io/f11/tutorial/reference/ags-plans/2026-09-04-game-record-draft-config.html#acceptance-checks">Acceptance checks</a>
+<a class="level-2" href="https://accelbyte.github.io/f11/tutorial/reference/ags-plans/2026-09-04-game-record-draft-config.html#outside-this-step">Outside this step</a>
+<a class="level-2" href="https://accelbyte.github.io/f11/tutorial/reference/ags-plans/2026-09-04-game-record-draft-config.html#agent-execution-checklist">Agent execution checklist</a>
+<a class="level-2" href="https://accelbyte.github.io/f11/tutorial/reference/ags-plans/2026-09-04-game-record-draft-config.html#connected-design-reference">Connected design reference</a>
+<a class="level-3" href="https://accelbyte.github.io/f11/tutorial/reference/ags-plans/2026-09-04-game-record-draft-config.html#goal">Goal</a>
+<a class="level-3" href="https://accelbyte.github.io/f11/tutorial/reference/ags-plans/2026-09-04-game-record-draft-config.html#non-goals">Non-goals</a>
+<a class="level-3" href="https://accelbyte.github.io/f11/tutorial/reference/ags-plans/2026-09-04-game-record-draft-config.html#service-selection">Service selection</a>
+<a class="level-3" href="https://accelbyte.github.io/f11/tutorial/reference/ags-plans/2026-09-04-game-record-draft-config.html#record-contract">Record contract</a>
+<a class="level-3" href="https://accelbyte.github.io/f11/tutorial/reference/ags-plans/2026-09-04-game-record-draft-config.html#player-flow">Player flow</a>
+<a class="level-3" href="https://accelbyte.github.io/f11/tutorial/reference/ags-plans/2026-09-04-game-record-draft-config.html#affected-areas">Affected areas</a>
+<a class="level-3" href="https://accelbyte.github.io/f11/tutorial/reference/ags-plans/2026-09-04-game-record-draft-config.html#authorization-plan">Authorization plan</a>
+<a class="level-3" href="https://accelbyte.github.io/f11/tutorial/reference/ags-plans/2026-09-04-game-record-draft-config.html#residual-risks-and-operating-rules">Residual risks and operating rules</a>
+<a class="level-2" href="https://accelbyte.github.io/f11/tutorial/reference/ags-plans/2026-09-04-game-record-draft-config.html#agent-handoff-prompt">Agent handoff prompt</a></nav></details><a class="source" href="https://github.com/AccelByte/f11/blob/main/docs/ags-plans/2026-09-04-game-record-draft-config.md">View Markdown source ↗</a></aside><main id="tutorial-content"><div class="intro">BUILD YOUR GAME · ONE FEATURE AT A TIME</div><article><h1 id="stage-4-server-issued-draft-configuration">Stage 4: Server-issued draft configuration<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/ags-plans/2026-09-04-game-record-draft-config.html#stage-4-server-issued-draft-configuration" aria-label="Link to section">#</a></h1>
+<p><a href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#stage-4">Integration tutorial</a> · <a href="https://accelbyte.github.io/f11/tutorial/reference/ags-plans/README.html">All plans</a></p>
 <p><strong>Status:</strong> Not started on the offline starter branch.</p>
-<h2 id="prerequisites">Prerequisites<a class="anchor" href="#prerequisites" aria-label="Link to section">#</a></h2>
+<h2 id="prerequisites">Prerequisites<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/ags-plans/2026-09-04-game-record-draft-config.html#prerequisites" aria-label="Link to section">#</a></h2>
 <p>Authenticated trusted replay is available.</p>
-<h2 id="implementation-scope">Implementation scope<a class="anchor" href="#implementation-scope" aria-label="Link to section">#</a></h2>
+<h2 id="implementation-scope">Implementation scope<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/ags-plans/2026-09-04-game-record-draft-config.html#implementation-scope" aria-label="Link to section">#</a></h2>
 <p>Read bounded draft settings from a versioned Game Record through the server. Issue an unpredictable challenge tied to the authenticated player, with frozen seed, versions, config, and expiry. Start a browser draft only after issuance succeeds. Submission must match the issued record; do not trust edited browser config.</p>
 <p>Keep <code>apps/web/src/game/session.ts</code> as the adapter around <code>packages/domain</code>;
 preserve the existing draft, reroll, and season behavior. Inspect the actual
 branch and installed SDK signatures before choosing API calls. The online
 reference implementation is on public main (development master); it is not
 present on the offline starter. Inspect only the relevant feature when needed.</p>
-<h2 id="acceptance-checks">Acceptance checks<a class="anchor" href="#acceptance-checks" aria-label="Link to section">#</a></h2>
+<h2 id="acceptance-checks">Acceptance checks<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/ags-plans/2026-09-04-game-record-draft-config.html#acceptance-checks" aria-label="Link to section">#</a></h2>
 <p>Missing/invalid settings fail visibly; changed settings apply to later drafts only; altered seed/config and expired or reused challenges are rejected; valid retries are idempotent.</p>
 <p>Run <code>npm run typecheck</code>, <code>npm test</code>, and <code>npm run build</code>. Record automated,
 live-service, and browser evidence separately in the progress tracker. Missing
 credentials or service access are blockers, not successful verification.</p>
-<h2 id="outside-this-step">Outside this step<a class="anchor" href="#outside-this-step" aria-label="Link to section">#</a></h2>
+<h2 id="outside-this-step">Outside this step<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/ags-plans/2026-09-04-game-record-draft-config.html#outside-this-step" aria-label="Link to section">#</a></h2>
 <p>Friend rooms and changes to the deterministic mechanics.</p>
-<h2 id="agent-execution-checklist">Agent execution checklist<a class="anchor" href="#agent-execution-checklist" aria-label="Link to section">#</a></h2>
+<h2 id="agent-execution-checklist">Agent execution checklist<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/ags-plans/2026-09-04-game-record-draft-config.html#agent-execution-checklist" aria-label="Link to section">#</a></h2>
 <ol>
 <li>Read this entire plan, the repository instructions, and the current progress
 tracker. On <code>offline-starter</code> or a learner&#39;s branch, confirm prerequisite
@@ -54,7 +54,7 @@ the acceptance checks, and verify the player-visible flow in the browser.</li>
 and remaining blockers. Mark the stage Done only when its acceptance checks
 pass. Summarize what the next agent can rely on, then stop.</li>
 </ol>
-<h2 id="connected-design-reference">Connected design reference<a class="anchor" href="#connected-design-reference" aria-label="Link to section">#</a></h2>
+<h2 id="connected-design-reference">Connected design reference<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/ags-plans/2026-09-04-game-record-draft-config.html#connected-design-reference" aria-label="Link to section">#</a></h2>
 <p>The following detailed design notes are recovered from the original connected
 implementation plans. They explain service choices, data contracts, authority,
 and integration boundaries. Resource names and source paths are examples from
@@ -62,13 +62,13 @@ that implementation; inspect the current branch and namespace before using them.
 Past-tense descriptions are reference behavior, not proof that this stage is
 implemented or verified in the learner&#39;s branch. The scope and acceptance checks
 above govern this stage; defer any later-stage feature mentioned below.</p>
-<h3 id="goal">Goal<a class="anchor" href="#goal" aria-label="Link to section">#</a></h3>
+<h3 id="goal">Goal<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/ags-plans/2026-09-04-game-record-draft-config.html#goal" aria-label="Link to section">#</a></h3>
 <p>When a player starts a game, the Sites server reads the active revision from
 AGS, validates it, freezes it into the issued challenge, and returns that
 challenge to the browser. An already-started game keeps its frozen values even
 if an operator activates a later revision. Trusted replay accepts only the
 server-issued configuration bound to that player and challenge.</p>
-<h3 id="non-goals">Non-goals<a class="anchor" href="#non-goals" aria-label="Link to section">#</a></h3>
+<h3 id="non-goals">Non-goals<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/ags-plans/2026-09-04-game-record-draft-config.html#non-goals" aria-label="Link to section">#</a></h3>
 <ul>
 <li>Moving football rules, player ratings, or the catalogue into Game Records.</li>
 <li>Letting the browser read AGS Game Records or hold a Confidential client
@@ -77,7 +77,7 @@ secret.</li>
 missing, unavailable, or malformed.</li>
 <li>Building an in-game administration screen for live configuration.</li>
 </ul>
-<h3 id="service-selection">Service selection<a class="anchor" href="#service-selection" aria-label="Link to section">#</a></h3>
+<h3 id="service-selection">Service selection<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/ags-plans/2026-09-04-game-record-draft-config.html#service-selection" aria-label="Link to section">#</a></h3>
 <ul>
 <li><strong>Selected:</strong> AGS Cloud Save Game Records. The value is namespace-global,
 versioned custom JSON that applies equally to every player and game mode.</li>
@@ -94,7 +94,7 @@ JSON rather than player progression or a ranked numeric value.</li>
 namespace-level configuration and are already available through the installed
 SDK.</li>
 </ul>
-<h3 id="record-contract">Record contract<a class="anchor" href="#record-contract" aria-label="Link to section">#</a></h3>
+<h3 id="record-contract">Record contract<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/ags-plans/2026-09-04-game-record-draft-config.html#record-contract" aria-label="Link to section">#</a></h3>
 <p>Key: <code>football11_game_config_v1</code></p>
 <pre><code class="language-json">{
   &quot;schemaVersion&quot;: 1,
@@ -114,7 +114,7 @@ identifiers are outside this change. Operators add a revision before switching
 available while an issued challenge can still be submitted. Sites rejects
 unknown fields, missing revisions, non-integer values, and values outside the
 domain bounds.</p>
-<h3 id="player-flow">Player flow<a class="anchor" href="#player-flow" aria-label="Link to section">#</a></h3>
+<h3 id="player-flow">Player flow<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/ags-plans/2026-09-04-game-record-draft-config.html#player-flow" aria-label="Link to section">#</a></h3>
 <ol>
 <li>A signed-in player chooses a solo game, or the eligible friend-room leader
 starts a round.</li>
@@ -136,7 +136,7 @@ versions, membership, or action counts.</li>
 <li>Missing, unavailable, or invalid Game Record data fails closed with a visible
 retryable start error. It does not silently use defaults.</li>
 </ol>
-<h3 id="affected-areas">Affected areas<a class="anchor" href="#affected-areas" aria-label="Link to section">#</a></h3>
+<h3 id="affected-areas">Affected areas<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/ags-plans/2026-09-04-game-record-draft-config.html#affected-areas" aria-label="Link to section">#</a></h3>
 <ul>
 <li><code>packages/contracts</code>: issued challenge, friend-room challenge, and trusted
 submission configuration snapshot contracts.</li>
@@ -152,7 +152,7 @@ states.</li>
 draft-limit variables; keep AGS connection values and secrets unchanged.</li>
 <li>Tests, mechanics report, project docs, article, and progress tracker.</li>
 </ul>
-<h3 id="authorization-plan">Authorization plan<a class="anchor" href="#authorization-plan" aria-label="Link to section">#</a></h3>
+<h3 id="authorization-plan">Authorization plan<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/ags-plans/2026-09-04-game-record-draft-config.html#authorization-plan" aria-label="Link to section">#</a></h3>
 <pre><code class="language-text">Caller:                browser player + Sites backend service
 Environment:           AGS Shared Cloud
 Environment evidence:  project config and authenticated CLI target use gamingservices.accelbyte.io; grouped client-permission catalogue is available
@@ -165,7 +165,7 @@ Required permissions:  ADMIN:NAMESPACE:{namespace}:CLOUDSAVE:RECORD [READ], plus
 Shared Cloud groups:   m_cloud_save / g_game_records / action 2 (READ); existing m_cloud_save / g_player_records / actions 1,2,4
 Verified access:       yes — Confidential caller, g_game_records READ only, server-owned record read back with numeric schema 1
 </code></pre>
-<h3 id="residual-risks-and-operating-rules">Residual risks and operating rules<a class="anchor" href="#residual-risks-and-operating-rules" aria-label="Link to section">#</a></h3>
+<h3 id="residual-risks-and-operating-rules">Residual risks and operating rules<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/ags-plans/2026-09-04-game-record-draft-config.html#residual-risks-and-operating-rules" aria-label="Link to section">#</a></h3>
 <ul>
 <li>The active-challenge player-record slot intentionally supports one current
 game per player. Starting a second game invalidates ranking for the older
@@ -178,7 +178,7 @@ challenge lifetime before operators remove them.</li>
 <li>The permission and initial record were provisioned only after approval and
 were read back to verify the exact caller, ownership, key, schema, and values.</li>
 </ul>
-<h2 id="agent-handoff-prompt">Agent handoff prompt<a class="anchor" href="#agent-handoff-prompt" aria-label="Link to section">#</a></h2>
+<h2 id="agent-handoff-prompt">Agent handoff prompt<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/ags-plans/2026-09-04-game-record-draft-config.html#agent-handoff-prompt" aria-label="Link to section">#</a></h2>
 <pre><code class="language-text">Use the AccelByte AGS skill and docs/ags-plans/2026-09-04-game-record-draft-config.md as the
 implementation plan for this stage only. Inspect the current branch and completed
 prerequisites first. Resolve any missing environment or authorization settings
@@ -187,4 +187,4 @@ the scoped player flow, and run every acceptance check. Record automated,
 browser, and live-service evidence separately in docs/10-progress-tracker.md.
 Report blockers honestly and stop before the next stage.
 </code></pre>
-</article><footer>Football 11 · Generated from the repository documentation. <a href="https://football-11.workspace-025025.chatgpt.site">Back to the game</a></footer></main></div></body></html>
+</article><footer>Football 11 · Generated from the repository documentation. <a href="https://accelbyte.github.io/f11/">Back to the game</a></footer></main></div></body></html>

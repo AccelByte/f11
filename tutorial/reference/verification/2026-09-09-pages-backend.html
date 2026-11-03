@@ -1,12 +1,12 @@
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>GitHub Pages / Sites split verification — September 9, 2026 · Football 11</title><meta name="description" content="Build Football 11 from offline mechanics to online features. Read the setup guide, six integration stages, and copy-ready prompts."><link rel="stylesheet" href="../../tutorial.css"></head>
-<body><a class="skip" href="#tutorial-content">Skip to tutorial</a><header><a class="brand" href="../../index.html"><span>11</span> FOOTBALL 11 <small>THE PLAYBOOK</small></a><nav aria-label="Main navigation"><a href="../../index.html">Tutorial</a><a class="play" href="https://football-11.workspace-025025.chatgpt.site">Play the game ↗</a></nav></header>
-<div class="layout"><aside><details open><summary>On this page</summary><nav aria-label="Tutorial sections"><a class="level-2" href="#published-artifacts">Published artifacts</a>
-<a class="level-2" href="#passed-checks">Passed checks</a>
-<a class="level-2" href="#pages-activation-follow-up">Pages activation follow-up</a></nav></details><a class="source" href="https://github.com/AccelByte/f11/blob/main/docs/verification/2026-09-09-pages-backend.md">View Markdown source ↗</a></aside><main id="tutorial-content"><div class="intro">BUILD YOUR GAME · ONE FEATURE AT A TIME</div><article><h1 id="github-pages--sites-split-verification--september-9-2026">GitHub Pages / Sites split verification — September 9, 2026<a class="anchor" href="#github-pages--sites-split-verification--september-9-2026" aria-label="Link to section">#</a></h1>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>GitHub Pages / Sites split verification — September 9, 2026 · Football 11</title><meta name="description" content="Build Football 11 from offline mechanics to online features. Read the setup guide, six integration stages, and copy-ready prompts."><link rel="stylesheet" href="https://accelbyte.github.io/f11/tutorial/tutorial.css"><link rel="canonical" href="https://accelbyte.github.io/f11/tutorial/reference/verification/2026-09-09-pages-backend.html"></head>
+<body><a class="skip" href="https://accelbyte.github.io/f11/tutorial/reference/verification/2026-09-09-pages-backend.html#tutorial-content">Skip to tutorial</a><header><a class="brand" href="https://accelbyte.github.io/f11/tutorial/index.html"><span>11</span> FOOTBALL 11 <small>THE PLAYBOOK</small></a><nav aria-label="Main navigation"><a href="https://accelbyte.github.io/f11/tutorial/index.html">Tutorial</a><a class="play" href="https://accelbyte.github.io/f11/">Play the game ↗</a></nav></header>
+<div class="layout"><aside><details open><summary>On this page</summary><nav aria-label="Tutorial sections"><a class="level-2" href="https://accelbyte.github.io/f11/tutorial/reference/verification/2026-09-09-pages-backend.html#published-artifacts">Published artifacts</a>
+<a class="level-2" href="https://accelbyte.github.io/f11/tutorial/reference/verification/2026-09-09-pages-backend.html#passed-checks">Passed checks</a>
+<a class="level-2" href="https://accelbyte.github.io/f11/tutorial/reference/verification/2026-09-09-pages-backend.html#pages-activation-follow-up">Pages activation follow-up</a></nav></details><a class="source" href="https://github.com/AccelByte/f11/blob/main/docs/verification/2026-09-09-pages-backend.md">View Markdown source ↗</a></aside><main id="tutorial-content"><div class="intro">BUILD YOUR GAME · ONE FEATURE AT A TIME</div><article><h1 id="github-pages--sites-split-verification--september-9-2026">GitHub Pages / Sites split verification — September 9, 2026<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/verification/2026-09-09-pages-backend.html#github-pages--sites-split-verification--september-9-2026" aria-label="Link to section">#</a></h1>
 <p>Tracker: P6-14, <strong>In progress</strong>. The remaining access/setup step does not block
 the existing Functional MVP.</p>
-<h2 id="published-artifacts">Published artifacts<a class="anchor" href="#published-artifacts" aria-label="Link to section">#</a></h2>
+<h2 id="published-artifacts">Published artifacts<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/verification/2026-09-09-pages-backend.html#published-artifacts" aria-label="Link to section">#</a></h2>
 <ul>
 <li>Compiled frontend: <code>damarindraab/f11</code>, <code>main</code>, commit
 <code>bb56a57</code> (normal SSH push succeeded).</li>
@@ -15,7 +15,7 @@ the existing Functional MVP.</p>
 <li>Sites root: HTTP 200. Pages root: initially 404; now HTTP 200 after user activation.</li>
 <li>No access-policy change was needed; the Sites application was already public.</li>
 </ul>
-<h2 id="passed-checks">Passed checks<a class="anchor" href="#passed-checks" aria-label="Link to section">#</a></h2>
+<h2 id="passed-checks">Passed checks<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/verification/2026-09-09-pages-backend.html#passed-checks" aria-label="Link to section">#</a></h2>
 <ul>
 <li>Repository and web typechecks; 138 tests across 26 files; lint with warnings
 and no errors. Static Pages and Sites Worker production builds succeed.</li>
@@ -37,7 +37,7 @@ duplicate idempotency, tampered actions/config rejection, unsupported-version
 rejection, server-owned private receipts, Statistic and Leaderboard readback
 all passed. No player tokens or private configuration were printed.</li>
 </ul>
-<h2 id="pages-activation-follow-up">Pages activation follow-up<a class="anchor" href="#pages-activation-follow-up" aria-label="Link to section">#</a></h2>
+<h2 id="pages-activation-follow-up">Pages activation follow-up<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/verification/2026-09-09-pages-backend.html#pages-activation-follow-up" aria-label="Link to section">#</a></h2>
 <p>The user enabled Pages. The root and referenced JS/CSS now return HTTP 200.
 A browser guest signed in, received a Sites-issued draft, completed eleven
 picks, and verified a 42-point result with leaderboard readback. The browser
@@ -49,4 +49,4 @@ Save and received the expected missing-record 404. Cloud Save preflights allowed
 both Pages and Sites origins. This narrows the remaining issue to the browser
 request path; the root cause is not established. Temporary instrumentation was
 removed and was never uploaded. No further GitHub setting is indicated.</p>
-</article><footer>Football 11 · Generated from the repository documentation. <a href="https://football-11.workspace-025025.chatgpt.site">Back to the game</a></footer></main></div></body></html>
+</article><footer>Football 11 · Generated from the repository documentation. <a href="https://accelbyte.github.io/f11/">Back to the game</a></footer></main></div></body></html>

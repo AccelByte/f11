@@ -1,30 +1,30 @@
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Phase 2 Detailed Plan — AGS Foundation · Football 11</title><meta name="description" content="Build Football 11 from offline mechanics to online features. Read the setup guide, six integration stages, and copy-ready prompts."><link rel="stylesheet" href="../../tutorial.css"></head>
-<body><a class="skip" href="#tutorial-content">Skip to tutorial</a><header><a class="brand" href="../../index.html"><span>11</span> FOOTBALL 11 <small>THE PLAYBOOK</small></a><nav aria-label="Main navigation"><a href="../../index.html">Tutorial</a><a class="play" href="https://football-11.workspace-025025.chatgpt.site">Play the game ↗</a></nav></header>
-<div class="layout"><aside><details open><summary>On this page</summary><nav aria-label="Tutorial sections"><a class="level-2" href="#work-estimate--one-developer-with-agentic-ai">Work estimate — one developer with agentic AI</a>
-<a class="level-2" href="#why-ags-work-starts-here">Why AGS work starts here</a>
-<a class="level-2" href="#phase-outcome">Phase outcome</a>
-<a class="level-2" href="#entry-conditions">Entry conditions</a>
-<a class="level-2" href="#delivery-slices">Delivery slices</a>
-<a class="level-3" href="#current-slice-2a-evidence">Current Slice 2A evidence</a>
-<a class="level-2" href="#slice-2a--react-guest-login-with-ags-device-id">Slice 2A — React guest login with AGS Device ID</a>
-<a class="level-3" href="#player-flow">Player flow</a>
-<a class="level-3" href="#adapter-boundary">Adapter boundary</a>
-<a class="level-3" href="#exit-criterion">Exit criterion</a>
-<a class="level-2" href="#slice-2b--ags-cloud-save-for-game-data">Slice 2B — AGS Cloud Save for game data</a>
-<a class="level-3" href="#exit-criterion-1">Exit criterion</a>
-<a class="level-2" href="#slice-2c--trusted-replay-and-user-binding">Slice 2C — Trusted replay and user binding</a>
-<a class="level-3" href="#exit-criterion-2">Exit criterion</a>
-<a class="level-2" href="#slice-2d--trusted-statistics-update">Slice 2D — Trusted Statistics update</a>
-<a class="level-2" href="#slice-2e--leaderboard-presentation">Slice 2E — Leaderboard presentation</a>
-<a class="level-2" href="#phase-wide-test-matrix">Phase-wide test matrix</a>
-<a class="level-2" href="#phase-exit-checklist">Phase exit checklist</a></nav></details><a class="source" href="https://github.com/AccelByte/f11/blob/main/docs/phases/phase-02-ags-foundation.md">View Markdown source ↗</a></aside><main id="tutorial-content"><div class="intro">BUILD YOUR GAME · ONE FEATURE AT A TIME</div><article><h1 id="phase-2-detailed-plan--ags-foundation">Phase 2 Detailed Plan — AGS Foundation<a class="anchor" href="#phase-2-detailed-plan--ags-foundation" aria-label="Link to section">#</a></h1>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Phase 2 Detailed Plan — AGS Foundation · Football 11</title><meta name="description" content="Build Football 11 from offline mechanics to online features. Read the setup guide, six integration stages, and copy-ready prompts."><link rel="stylesheet" href="https://accelbyte.github.io/f11/tutorial/tutorial.css"><link rel="canonical" href="https://accelbyte.github.io/f11/tutorial/reference/phases/phase-02-ags-foundation.html"></head>
+<body><a class="skip" href="https://accelbyte.github.io/f11/tutorial/reference/phases/phase-02-ags-foundation.html#tutorial-content">Skip to tutorial</a><header><a class="brand" href="https://accelbyte.github.io/f11/tutorial/index.html"><span>11</span> FOOTBALL 11 <small>THE PLAYBOOK</small></a><nav aria-label="Main navigation"><a href="https://accelbyte.github.io/f11/tutorial/index.html">Tutorial</a><a class="play" href="https://accelbyte.github.io/f11/">Play the game ↗</a></nav></header>
+<div class="layout"><aside><details open><summary>On this page</summary><nav aria-label="Tutorial sections"><a class="level-2" href="https://accelbyte.github.io/f11/tutorial/reference/phases/phase-02-ags-foundation.html#work-estimate--one-developer-with-agentic-ai">Work estimate — one developer with agentic AI</a>
+<a class="level-2" href="https://accelbyte.github.io/f11/tutorial/reference/phases/phase-02-ags-foundation.html#why-ags-work-starts-here">Why AGS work starts here</a>
+<a class="level-2" href="https://accelbyte.github.io/f11/tutorial/reference/phases/phase-02-ags-foundation.html#phase-outcome">Phase outcome</a>
+<a class="level-2" href="https://accelbyte.github.io/f11/tutorial/reference/phases/phase-02-ags-foundation.html#entry-conditions">Entry conditions</a>
+<a class="level-2" href="https://accelbyte.github.io/f11/tutorial/reference/phases/phase-02-ags-foundation.html#delivery-slices">Delivery slices</a>
+<a class="level-3" href="https://accelbyte.github.io/f11/tutorial/reference/phases/phase-02-ags-foundation.html#current-slice-2a-evidence">Current Slice 2A evidence</a>
+<a class="level-2" href="https://accelbyte.github.io/f11/tutorial/reference/phases/phase-02-ags-foundation.html#slice-2a--react-guest-login-with-ags-device-id">Slice 2A — React guest login with AGS Device ID</a>
+<a class="level-3" href="https://accelbyte.github.io/f11/tutorial/reference/phases/phase-02-ags-foundation.html#player-flow">Player flow</a>
+<a class="level-3" href="https://accelbyte.github.io/f11/tutorial/reference/phases/phase-02-ags-foundation.html#adapter-boundary">Adapter boundary</a>
+<a class="level-3" href="https://accelbyte.github.io/f11/tutorial/reference/phases/phase-02-ags-foundation.html#exit-criterion">Exit criterion</a>
+<a class="level-2" href="https://accelbyte.github.io/f11/tutorial/reference/phases/phase-02-ags-foundation.html#slice-2b--ags-cloud-save-for-game-data">Slice 2B — AGS Cloud Save for game data</a>
+<a class="level-3" href="https://accelbyte.github.io/f11/tutorial/reference/phases/phase-02-ags-foundation.html#exit-criterion-1">Exit criterion</a>
+<a class="level-2" href="https://accelbyte.github.io/f11/tutorial/reference/phases/phase-02-ags-foundation.html#slice-2c--trusted-replay-and-user-binding">Slice 2C — Trusted replay and user binding</a>
+<a class="level-3" href="https://accelbyte.github.io/f11/tutorial/reference/phases/phase-02-ags-foundation.html#exit-criterion-2">Exit criterion</a>
+<a class="level-2" href="https://accelbyte.github.io/f11/tutorial/reference/phases/phase-02-ags-foundation.html#slice-2d--trusted-statistics-update">Slice 2D — Trusted Statistics update</a>
+<a class="level-2" href="https://accelbyte.github.io/f11/tutorial/reference/phases/phase-02-ags-foundation.html#slice-2e--leaderboard-presentation">Slice 2E — Leaderboard presentation</a>
+<a class="level-2" href="https://accelbyte.github.io/f11/tutorial/reference/phases/phase-02-ags-foundation.html#phase-wide-test-matrix">Phase-wide test matrix</a>
+<a class="level-2" href="https://accelbyte.github.io/f11/tutorial/reference/phases/phase-02-ags-foundation.html#phase-exit-checklist">Phase exit checklist</a></nav></details><a class="source" href="https://github.com/AccelByte/f11/blob/main/docs/phases/phase-02-ags-foundation.md">View Markdown source ↗</a></aside><main id="tutorial-content"><div class="intro">BUILD YOUR GAME · ONE FEATURE AT A TIME</div><article><h1 id="phase-2-detailed-plan--ags-foundation">Phase 2 Detailed Plan — AGS Foundation<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/phases/phase-02-ags-foundation.html#phase-2-detailed-plan--ags-foundation" aria-label="Link to section">#</a></h1>
 <p><strong>Last updated:</strong> September 3, 2026
 <strong>Status:</strong> Complete in development; Slices 2A–2E pass through the public Sites Worker, with account upgrade/linking deferred as a connected-product release gate
-<strong>Parent roadmap:</strong> <a href="../07-mvp-roadmap.html">07 — MVP roadmap</a>
-<strong>Phase index:</strong> <a href="README.html">Detailed delivery plans</a>
-<strong>First AGS slice:</strong> <a href="../12-accelbyte-integration-guide.html#stage-1">Device ID guest login plan</a></p>
-<h2 id="work-estimate--one-developer-with-agentic-ai">Work estimate — one developer with agentic AI<a class="anchor" href="#work-estimate--one-developer-with-agentic-ai" aria-label="Link to section">#</a></h2>
+<strong>Parent roadmap:</strong> <a href="https://accelbyte.github.io/f11/tutorial/reference/07-mvp-roadmap.html">07 — MVP roadmap</a>
+<strong>Phase index:</strong> <a href="https://accelbyte.github.io/f11/tutorial/reference/phases/README.html">Detailed delivery plans</a>
+<strong>First AGS slice:</strong> <a href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#stage-1">Device ID guest login plan</a></p>
+<h2 id="work-estimate--one-developer-with-agentic-ai">Work estimate — one developer with agentic AI<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/phases/phase-02-ags-foundation.html#work-estimate--one-developer-with-agentic-ai" aria-label="Link to section">#</a></h2>
 <ul>
 <li><strong>Effort:</strong> 4–7 builder-days.</li>
 <li><strong>Elapsed time:</strong> 1–1.75 weeks, excluding namespace-access waits.</li>
@@ -32,7 +32,7 @@
 support, Cloud Save limits, namespace configuration, Sites server-to-AGS
 authentication, permissions, and access latency.</li>
 </ul>
-<h2 id="why-ags-work-starts-here">Why AGS work starts here<a class="anchor" href="#why-ags-work-starts-here" aria-label="Link to section">#</a></h2>
+<h2 id="why-ags-work-starts-here">Why AGS work starts here<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/phases/phase-02-ags-foundation.html#why-ags-work-starts-here" aria-label="Link to section">#</a></h2>
 <p>Phases 1A and 1B have proved the standalone game. Phase 2 is the first
 online-service phase and moves every
 AGS concern into one deliberate foundation:</p>
@@ -50,12 +50,12 @@ begins. ChatGPT Sites continues to host the React client and is the first runtim
 evaluate for the trusted server endpoint. D1 is not part of the planned data path,
 while AGS Extend and a separately provisioned Cloudflare Worker remain alternatives
 only if a demonstrated integration or runtime requirement justifies them.</p>
-<h2 id="phase-outcome">Phase outcome<a class="anchor" href="#phase-outcome" aria-label="Link to section">#</a></h2>
+<h2 id="phase-outcome">Phase outcome<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/phases/phase-02-ags-foundation.html#phase-outcome" aria-label="Link to section">#</a></h2>
 <p>A player can enter the React application as an AGS guest, see locally proven
 run data synchronized through Cloud Save, submit replay evidence to a trusted
 server boundary connected to AGS, and see an accepted competitive value in the intended
 leaderboard under the same AGS identity.</p>
-<h2 id="entry-conditions">Entry conditions<a class="anchor" href="#entry-conditions" aria-label="Link to section">#</a></h2>
+<h2 id="entry-conditions">Entry conditions<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/phases/phase-02-ags-foundation.html#entry-conditions" aria-label="Link to section">#</a></h2>
 <ul>
 <li>Phase 1B has a stable local identity adapter and checksummed run-record contract.</li>
 <li>The target AGS Shared Cloud development environment, public browser client,
@@ -67,12 +67,12 @@ the repository lockfile and executable tests.</li>
 preflight before namespace inspection or mutation.</li>
 </ul>
 <p>Slice 2B now has an approved plan at
-<a href="../12-accelbyte-integration-guide.html#stage-2"><code>docs/12-accelbyte-integration-guide.md#stage-2</code></a>.
+<a href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#stage-2"><code>docs/12-accelbyte-integration-guide.md#stage-2</code></a>.
 It selects Cloud Save only for the generic replayable run document, keeps
 competitive values in server-owned Statistics, and defines readback,
 replay, conflict, and visible recovery evidence before completion.</p>
 <p>Slices 2C–2E use the approved trusted-ranking plan at
-<a href="../12-accelbyte-integration-guide.html#stage-3"><code>docs/12-accelbyte-integration-guide.md#stage-3</code></a>.
+<a href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#stage-3"><code>docs/12-accelbyte-integration-guide.md#stage-3</code></a>.
 The implementation packages the Vinext application as a Sites Worker with a
 single ranked-run endpoint. It validates the AGS player, replays only the exact
 supported mechanics/content version, settles a bounded <code>SERVER</code>-set best-points
@@ -82,7 +82,7 @@ against the built Worker proves acceptance, duplicate safety, tamper and version
 rejection, receipt ownership, statistic readback, and rank materialization. The
 same smoke passes through the deployed public Sites route, whose root also
 returns HTTP 200.</p>
-<h2 id="delivery-slices">Delivery slices<a class="anchor" href="#delivery-slices" aria-label="Link to section">#</a></h2>
+<h2 id="delivery-slices">Delivery slices<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/phases/phase-02-ags-foundation.html#delivery-slices" aria-label="Link to section">#</a></h2>
 <table>
 <thead>
 <tr>
@@ -125,7 +125,7 @@ returns HTTP 200.</p>
 </tbody></table>
 <p>Each slice needs both service evidence and a visible player-flow check before
 the next slice begins.</p>
-<h3 id="current-slice-2a-evidence">Current Slice 2A evidence<a class="anchor" href="#current-slice-2a-evidence" aria-label="Link to section">#</a></h3>
+<h3 id="current-slice-2a-evidence">Current Slice 2A evidence<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/phases/phase-02-ags-foundation.html#current-slice-2a-evidence" aria-label="Link to section">#</a></h3>
 <p>The browser implementation has an application-owned AGS config reader, stable
 random Device ID storage, deduplicated login service, SDK adapter, in-memory
 token attachment, authenticated current-user verification, and visible
@@ -143,8 +143,8 @@ Production use still needs account linking/upgrade or an explicit acceptance of
 Device ID account-loss risk; that later release choice does not block the
 Functional MVP or Slice 2B development.</p>
 <hr>
-<h2 id="slice-2a--react-guest-login-with-ags-device-id">Slice 2A — React guest login with AGS Device ID<a class="anchor" href="#slice-2a--react-guest-login-with-ags-device-id" aria-label="Link to section">#</a></h2>
-<h3 id="player-flow">Player flow<a class="anchor" href="#player-flow" aria-label="Link to section">#</a></h3>
+<h2 id="slice-2a--react-guest-login-with-ags-device-id">Slice 2A — React guest login with AGS Device ID<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/phases/phase-02-ags-foundation.html#slice-2a--react-guest-login-with-ags-device-id" aria-label="Link to section">#</a></h2>
+<h3 id="player-flow">Player flow<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/phases/phase-02-ags-foundation.html#player-flow" aria-label="Link to section">#</a></h3>
 <pre><code class="language-text">Open app
   -&gt; read the versioned random device identifier
   -&gt; show Continue as guest on first use
@@ -156,7 +156,7 @@ Functional MVP or Slice 2B development.</p>
 </code></pre>
 <p>“Guest” is product language; Device ID is the AGS mechanism. Never derive the
 identifier from IP, user agent, canvas, hardware, or any other fingerprint.</p>
-<h3 id="adapter-boundary">Adapter boundary<a class="anchor" href="#adapter-boundary" aria-label="Link to section">#</a></h3>
+<h3 id="adapter-boundary">Adapter boundary<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/phases/phase-02-ags-foundation.html#adapter-boundary" aria-label="Link to section">#</a></h3>
 <pre><code class="language-ts">type AuthenticatedPlayer = {
   userId: string;
   displayName?: string;
@@ -175,12 +175,12 @@ variable, JavaScript bundle, repository file, or response.</p>
 <p>Keep tokens in memory or the SDK-supported session mechanism; do not copy them
 into local storage. A failed retry reuses the existing device identifier. Normal
 logout retains it. Destructive guest reset must warn about unrecoverable progress.</p>
-<h3 id="exit-criterion">Exit criterion<a class="anchor" href="#exit-criterion" aria-label="Link to section">#</a></h3>
+<h3 id="exit-criterion">Exit criterion<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/phases/phase-02-ags-foundation.html#exit-criterion" aria-label="Link to section">#</a></h3>
 <p>The visible React action reaches authenticated state, Device ID login returns a
 non-empty AGS user ID/session, a second authenticated IAM lookup succeeds, reload
 restores the same AGS user, and two clean profiles create different users.</p>
 <hr>
-<h2 id="slice-2b--ags-cloud-save-for-game-data">Slice 2B — AGS Cloud Save for game data<a class="anchor" href="#slice-2b--ags-cloud-save-for-game-data" aria-label="Link to section">#</a></h2>
+<h2 id="slice-2b--ags-cloud-save-for-game-data">Slice 2B — AGS Cloud Save for game data<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/phases/phase-02-ags-foundation.html#slice-2b--ags-cloud-save-for-game-data" aria-label="Link to section">#</a></h2>
 <p>Cloud Save becomes the remote implementation of the persistence interface proven
 in Phase 1B. It stores rich, player-owned game data rather than flattening a run
 into Statistics calls.</p>
@@ -213,12 +213,12 @@ upload after login, but a conflict never silently overwrites a different run.</l
 limits require compaction, derive verbose views locally rather than dropping
 versions, actions, or hashes.</li>
 </ol>
-<h3 id="exit-criterion-1">Exit criterion<a class="anchor" href="#exit-criterion-1" aria-label="Link to section">#</a></h3>
+<h3 id="exit-criterion-1">Exit criterion<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/phases/phase-02-ags-foundation.html#exit-criterion-1" aria-label="Link to section">#</a></h3>
 <p>One authenticated player writes a complete run, reads it back in a clean session,
 reproduces the same result/hash, and receives visible recoverable states for
 offline, rejected, malformed, and conflicting records.</p>
 <hr>
-<h2 id="slice-2c--trusted-replay-and-user-binding">Slice 2C — Trusted replay and user binding<a class="anchor" href="#slice-2c--trusted-replay-and-user-binding" aria-label="Link to section">#</a></h2>
+<h2 id="slice-2c--trusted-replay-and-user-binding">Slice 2C — Trusted replay and user binding<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/phases/phase-02-ags-foundation.html#slice-2c--trusted-replay-and-user-binding" aria-label="Link to section">#</a></h2>
 <p>Evaluate a server-backed Sites deployment first. It keeps the authoritative endpoint
 with the existing hosted application while moving validation out of the player-controlled
 browser. The trusted handler must derive the user from validated AGS authentication
@@ -239,12 +239,12 @@ instead only when this verification finds a material AGS-integration or runtime
 advantage; choose a separately provisioned Worker only when neither managed route
 fits. No D1 dependency is planned unless exactly-once settlement or another concrete
 relational/transactional requirement proves it necessary.</p>
-<h3 id="exit-criterion-2">Exit criterion<a class="anchor" href="#exit-criterion-2" aria-label="Link to section">#</a></h3>
+<h3 id="exit-criterion-2">Exit criterion<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/phases/phase-02-ags-foundation.html#exit-criterion-2" aria-label="Link to section">#</a></h3>
 <p>Valid evidence produces one canonical result for the authenticated AGS user;
 missing, expired, wrong-namespace, tampered, duplicate, and unsupported-version
 submissions create no trusted result or competitive mutation.</p>
 <hr>
-<h2 id="slice-2d--trusted-statistics-update">Slice 2D — Trusted Statistics update<a class="anchor" href="#slice-2d--trusted-statistics-update" aria-label="Link to section">#</a></h2>
+<h2 id="slice-2d--trusted-statistics-update">Slice 2D — Trusted Statistics update<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/phases/phase-02-ags-foundation.html#slice-2d--trusted-statistics-update" aria-label="Link to section">#</a></h2>
 <p>Statistics stores only approved numeric aggregates that drive leaderboards or
 progression. The full run remains in Cloud Save.</p>
 <ol>
@@ -257,13 +257,13 @@ progression. The full run remains in Cloud Save.</p>
 <p><strong>Exit criterion:</strong> one accepted run changes the intended statistic exactly once;
 rejected, replayed, or duplicate submissions do not change it.</p>
 <hr>
-<h2 id="slice-2e--leaderboard-presentation">Slice 2E — Leaderboard presentation<a class="anchor" href="#slice-2e--leaderboard-presentation" aria-label="Link to section">#</a></h2>
+<h2 id="slice-2e--leaderboard-presentation">Slice 2E — Leaderboard presentation<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/phases/phase-02-ags-foundation.html#slice-2e--leaderboard-presentation" aria-label="Link to section">#</a></h2>
 <p>Show loading, unranked, ranked, empty, stale, and retryable-error states. Read
 the configured leaderboard after the Statistics update; never display a locally
 predicted rank. Keep leaderboard values separate from full Cloud Save records.</p>
 <p><strong>Exit criterion:</strong> the visible UI shows the exact trusted statistic for the
 signed-in player and resolves the approved around-me or rank-range view.</p>
-<h2 id="phase-wide-test-matrix">Phase-wide test matrix<a class="anchor" href="#phase-wide-test-matrix" aria-label="Link to section">#</a></h2>
+<h2 id="phase-wide-test-matrix">Phase-wide test matrix<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/phases/phase-02-ags-foundation.html#phase-wide-test-matrix" aria-label="Link to section">#</a></h2>
 <table>
 <thead>
 <tr>
@@ -312,7 +312,7 @@ signed-in player and resolves the approved around-me or rank-range view.</p>
 <td>Explicit unranked state, not rank zero</td>
 </tr>
 </tbody></table>
-<h2 id="phase-exit-checklist">Phase exit checklist<a class="anchor" href="#phase-exit-checklist" aria-label="Link to section">#</a></h2>
+<h2 id="phase-exit-checklist">Phase exit checklist<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/phases/phase-02-ags-foundation.html#phase-exit-checklist" aria-label="Link to section">#</a></h2>
 <ul>
 <li><input checked="" disabled="" type="checkbox"> Device ID login and authenticated verification are complete in React.</li>
 <li><input checked="" disabled="" type="checkbox"> Cloud Save write/readback preserves the replayable record under the AGS user.</li>
@@ -336,4 +336,4 @@ deferred unless a later verified requirement selects one of them.</p>
 <p>That development exit is now complete. Account upgrade/linking remains deferred:
 it does not block the Functional MVP or this technical foundation, but it must be
 resolved before an official connected-product release.</p>
-</article><footer>Football 11 · Generated from the repository documentation. <a href="https://football-11.workspace-025025.chatgpt.site">Back to the game</a></footer></main></div></body></html>
+</article><footer>Football 11 · Generated from the repository documentation. <a href="https://accelbyte.github.io/f11/">Back to the game</a></footer></main></div></body></html>

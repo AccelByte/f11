@@ -1,25 +1,25 @@
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Game Design · Football 11</title><meta name="description" content="Build Football 11 from offline mechanics to online features. Read the setup guide, six integration stages, and copy-ready prompts."><link rel="stylesheet" href="../tutorial.css"></head>
-<body><a class="skip" href="#tutorial-content">Skip to tutorial</a><header><a class="brand" href="../index.html"><span>11</span> FOOTBALL 11 <small>THE PLAYBOOK</small></a><nav aria-label="Main navigation"><a href="../index.html">Tutorial</a><a class="play" href="https://football-11.workspace-025025.chatgpt.site">Play the game ↗</a></nav></header>
-<div class="layout"><aside><details open><summary>On this page</summary><nav aria-label="Tutorial sections"><a class="level-2" href="#player-fantasy">Player fantasy</a>
-<a class="level-2" href="#objective">Objective</a>
-<a class="level-2" href="#mvp-formation-and-player-position-model">MVP formation and player-position model</a>
-<a class="level-2" href="#draft-loop">Draft loop</a>
-<a class="level-2" href="#confirmed-rules">Confirmed rules</a>
-<a class="level-2" href="#functional-mvp-content-baseline">Functional MVP content baseline</a>
-<a class="level-2" href="#draft-tension">Draft tension</a>
-<a class="level-2" href="#scoring-dimensions">Scoring dimensions</a>
-<a class="level-2" href="#result-contract">Result contract</a>
-<a class="level-2" href="#session-length-target">Session-length target</a></nav></details><a class="source" href="https://github.com/AccelByte/f11/blob/main/docs/02-game-design.md">View Markdown source ↗</a></aside><main id="tutorial-content"><div class="intro">BUILD YOUR GAME · ONE FEATURE AT A TIME</div><article><h1 id="game-design">Game Design<a class="anchor" href="#game-design" aria-label="Link to section">#</a></h1>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Game Design · Football 11</title><meta name="description" content="Build Football 11 from offline mechanics to online features. Read the setup guide, six integration stages, and copy-ready prompts."><link rel="stylesheet" href="https://accelbyte.github.io/f11/tutorial/tutorial.css"><link rel="canonical" href="https://accelbyte.github.io/f11/tutorial/reference/02-game-design.html"></head>
+<body><a class="skip" href="https://accelbyte.github.io/f11/tutorial/reference/02-game-design.html#tutorial-content">Skip to tutorial</a><header><a class="brand" href="https://accelbyte.github.io/f11/tutorial/index.html"><span>11</span> FOOTBALL 11 <small>THE PLAYBOOK</small></a><nav aria-label="Main navigation"><a href="https://accelbyte.github.io/f11/tutorial/index.html">Tutorial</a><a class="play" href="https://accelbyte.github.io/f11/">Play the game ↗</a></nav></header>
+<div class="layout"><aside><details open><summary>On this page</summary><nav aria-label="Tutorial sections"><a class="level-2" href="https://accelbyte.github.io/f11/tutorial/reference/02-game-design.html#player-fantasy">Player fantasy</a>
+<a class="level-2" href="https://accelbyte.github.io/f11/tutorial/reference/02-game-design.html#objective">Objective</a>
+<a class="level-2" href="https://accelbyte.github.io/f11/tutorial/reference/02-game-design.html#mvp-formation-and-player-position-model">MVP formation and player-position model</a>
+<a class="level-2" href="https://accelbyte.github.io/f11/tutorial/reference/02-game-design.html#draft-loop">Draft loop</a>
+<a class="level-2" href="https://accelbyte.github.io/f11/tutorial/reference/02-game-design.html#confirmed-rules">Confirmed rules</a>
+<a class="level-2" href="https://accelbyte.github.io/f11/tutorial/reference/02-game-design.html#functional-mvp-content-baseline">Functional MVP content baseline</a>
+<a class="level-2" href="https://accelbyte.github.io/f11/tutorial/reference/02-game-design.html#draft-tension">Draft tension</a>
+<a class="level-2" href="https://accelbyte.github.io/f11/tutorial/reference/02-game-design.html#scoring-dimensions">Scoring dimensions</a>
+<a class="level-2" href="https://accelbyte.github.io/f11/tutorial/reference/02-game-design.html#result-contract">Result contract</a>
+<a class="level-2" href="https://accelbyte.github.io/f11/tutorial/reference/02-game-design.html#session-length-target">Session-length target</a></nav></details><a class="source" href="https://github.com/AccelByte/f11/blob/main/docs/02-game-design.md">View Markdown source ↗</a></aside><main id="tutorial-content"><div class="intro">BUILD YOUR GAME · ONE FEATURE AT A TIME</div><article><h1 id="game-design">Game Design<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/02-game-design.html#game-design" aria-label="Link to section">#</a></h1>
 <p><strong>Last updated:</strong> September 4, 2026
 <strong>Status:</strong> Core MVP rules confirmed; scoring configuration pending validation</p>
-<h2 id="player-fantasy">Player fantasy<a class="anchor" href="#player-fantasy" aria-label="Link to section">#</a></h2>
+<h2 id="player-fantasy">Player fantasy<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/02-game-design.html#player-fantasy" aria-label="Link to section">#</a></h2>
 <p>The player is assembling an all-time starting XI under imperfect constraints,
 balancing star power against position coverage, chemistry, and tactical fit.</p>
-<h2 id="objective">Objective<a class="anchor" href="#objective" aria-label="Link to section">#</a></h2>
+<h2 id="objective">Objective<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/02-game-design.html#objective" aria-label="Link to section">#</a></h2>
 <p>Draft an XI capable of completing a 38-match league season undefeated, ideally
 with a perfect or near-perfect points total.</p>
-<h2 id="mvp-formation-and-player-position-model">MVP formation and player-position model<a class="anchor" href="#mvp-formation-and-player-position-model" aria-label="Link to section">#</a></h2>
+<h2 id="mvp-formation-and-player-position-model">MVP formation and player-position model<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/02-game-design.html#mvp-formation-and-player-position-model" aria-label="Link to section">#</a></h2>
 <p>The MVP uses one confirmed 4-3-3 with eleven explicit formation slots:</p>
 <ul>
 <li>Goalkeeper</li>
@@ -58,7 +58,7 @@ it is unavailable in the next two numbered rounds and becomes eligible again
 in the third. Cards discarded by a reroll follow the same cooldown and are also
 excluded from the replacement offer in the current round. Cooldown changes
 availability, never identity uniqueness.</p>
-<h2 id="draft-loop">Draft loop<a class="anchor" href="#draft-loop" aria-label="Link to section">#</a></h2>
+<h2 id="draft-loop">Draft loop<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/02-game-design.html#draft-loop" aria-label="Link to section">#</a></h2>
 <ol>
 <li>Start a random, daily, friend-room, or saved-opponent challenge.</li>
 <li>Receive a deterministic challenge seed and simulation version.</li>
@@ -72,7 +72,7 @@ replace both the club/era constraint and every visible player.</li>
 <li>Receive the simulated 38-match record and explanation.</li>
 <li>Save, compare, replay, or share the result.</li>
 </ol>
-<h2 id="confirmed-rules">Confirmed rules<a class="anchor" href="#confirmed-rules" aria-label="Link to section">#</a></h2>
+<h2 id="confirmed-rules">Confirmed rules<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/02-game-design.html#confirmed-rules" aria-label="Link to section">#</a></h2>
 <ul>
 <li>The starting XI contains eleven players.</li>
 <li>The first version has one formation.</li>
@@ -88,7 +88,7 @@ configuration accepts 3–15 offers and 0–5 rerolls; revision <code>1</code> u
 <li>Position eligibility and rating come from the selected player-season data.</li>
 <li>A selected player-season cannot appear again in that run.</li>
 </ul>
-<h2 id="functional-mvp-content-baseline">Functional MVP content baseline<a class="anchor" href="#functional-mvp-content-baseline" aria-label="Link to section">#</a></h2>
+<h2 id="functional-mvp-content-baseline">Functional MVP content baseline<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/02-game-design.html#functional-mvp-content-baseline" aria-label="Link to section">#</a></h2>
 <p>Each round combines:</p>
 <ul>
 <li>A club.</li>
@@ -107,7 +107,7 @@ missing physical details are sampled from the OpenFootball Players population.
 Every fine-grained position, rating, trait, and attribute remains synthetic and
 non-official. The frozen manifest is never regenerated during a run. Player,
 club, and competition use still requires public-product rights review.</p>
-<h2 id="draft-tension">Draft tension<a class="anchor" href="#draft-tension" aria-label="Link to section">#</a></h2>
+<h2 id="draft-tension">Draft tension<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/02-game-design.html#draft-tension" aria-label="Link to section">#</a></h2>
 <p>Each offer should create at least one real trade-off:</p>
 <ul>
 <li>Best individual versus scarce position.</li>
@@ -118,7 +118,7 @@ club, and competition use still requires public-product rights review.</p>
 </ul>
 <p>If most rounds have an obvious answer, content generation or eligibility rules
 need revision.</p>
-<h2 id="scoring-dimensions">Scoring dimensions<a class="anchor" href="#scoring-dimensions" aria-label="Link to section">#</a></h2>
+<h2 id="scoring-dimensions">Scoring dimensions<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/02-game-design.html#scoring-dimensions" aria-label="Link to section">#</a></h2>
 <p>The result should visibly separate individual power from team fit.</p>
 <table>
 <thead>
@@ -154,12 +154,12 @@ preserve trust, while the design documentation records the proposed formulas
 for review and reproducibility.</p>
 <p>The proposed deterministic formulas, offer-generation rules, dead-end
 prevention, and initial coefficient baseline are specified in
-<a href="phases/phase-01a-core-mechanics-engine.html">Phase 1A — Core mechanics engine</a>.
+<a href="https://accelbyte.github.io/f11/tutorial/reference/phases/phase-01a-core-mechanics-engine.html">Phase 1A — Core mechanics engine</a>.
 They are sufficient for a Functional MVP once they are deterministic,
 versioned, bounded, and capable of producing valid results. Distribution
 quality and competitive calibration are later tuning work and do not block the
 first playable implementation.</p>
-<h2 id="result-contract">Result contract<a class="anchor" href="#result-contract" aria-label="Link to section">#</a></h2>
+<h2 id="result-contract">Result contract<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/02-game-design.html#result-contract" aria-label="Link to section">#</a></h2>
 <p>A result should contain:</p>
 <ul>
 <li>Final XI and formation.</li>
@@ -180,8 +180,8 @@ defensive transition exposed.
 <p>The MVP has no decorative goal or goal-difference output because it has no
 approved goal model. A season with no losses receives the <strong>Invincible</strong> label.
 A 38-win, 114-point season receives the rarer <strong>Perfect</strong> label.</p>
-<h2 id="session-length-target">Session-length target<a class="anchor" href="#session-length-target" aria-label="Link to section">#</a></h2>
+<h2 id="session-length-target">Session-length target<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/02-game-design.html#session-length-target" aria-label="Link to section">#</a></h2>
 <p>The first playtest target is approximately <strong>six minutes</strong>. The full XI must
 feel substantial without becoming repetitive; playtests may still compare
 four- and eight-minute pacing before the target is frozen for release.</p>
-</article><footer>Football 11 · Generated from the repository documentation. <a href="https://football-11.workspace-025025.chatgpt.site">Back to the game</a></footer></main></div></body></html>
+</article><footer>Football 11 · Generated from the repository documentation. <a href="https://accelbyte.github.io/f11/">Back to the game</a></footer></main></div></body></html>

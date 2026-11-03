@@ -1,16 +1,16 @@
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Football 11 Design Documents · Football 11</title><meta name="description" content="Build Football 11 from offline mechanics to online features. Read the setup guide, six integration stages, and copy-ready prompts."><link rel="stylesheet" href="../tutorial.css"></head>
-<body><a class="skip" href="#tutorial-content">Skip to tutorial</a><header><a class="brand" href="../index.html"><span>11</span> FOOTBALL 11 <small>THE PLAYBOOK</small></a><nav aria-label="Main navigation"><a href="../index.html">Tutorial</a><a class="play" href="https://football-11.workspace-025025.chatgpt.site">Play the game ↗</a></nav></header>
-<div class="layout"><aside><details open><summary>On this page</summary><nav aria-label="Tutorial sections"><a class="level-2" href="#document-map">Document map</a>
-<a class="level-2" href="#detailed-delivery-plans">Detailed delivery plans</a>
-<a class="level-2" href="#prepared-prototype-data">Prepared prototype data</a>
-<a class="level-2" href="#status-language">Status language</a>
-<a class="level-2" href="#maintenance-rules">Maintenance rules</a></nav></details><a class="source" href="https://github.com/AccelByte/f11/blob/main/docs/README.md">View Markdown source ↗</a></aside><main id="tutorial-content"><div class="intro">BUILD YOUR GAME · ONE FEATURE AT A TIME</div><article><h1 id="football-11-design-documents">Football 11 Design Documents<a class="anchor" href="#football-11-design-documents" aria-label="Link to section">#</a></h1>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Football 11 Design Documents · Football 11</title><meta name="description" content="Build Football 11 from offline mechanics to online features. Read the setup guide, six integration stages, and copy-ready prompts."><link rel="stylesheet" href="https://accelbyte.github.io/f11/tutorial/tutorial.css"><link rel="canonical" href="https://accelbyte.github.io/f11/tutorial/reference/README.html"></head>
+<body><a class="skip" href="https://accelbyte.github.io/f11/tutorial/reference/README.html#tutorial-content">Skip to tutorial</a><header><a class="brand" href="https://accelbyte.github.io/f11/tutorial/index.html"><span>11</span> FOOTBALL 11 <small>THE PLAYBOOK</small></a><nav aria-label="Main navigation"><a href="https://accelbyte.github.io/f11/tutorial/index.html">Tutorial</a><a class="play" href="https://accelbyte.github.io/f11/">Play the game ↗</a></nav></header>
+<div class="layout"><aside><details open><summary>On this page</summary><nav aria-label="Tutorial sections"><a class="level-2" href="https://accelbyte.github.io/f11/tutorial/reference/README.html#document-map">Document map</a>
+<a class="level-2" href="https://accelbyte.github.io/f11/tutorial/reference/README.html#detailed-delivery-plans">Detailed delivery plans</a>
+<a class="level-2" href="https://accelbyte.github.io/f11/tutorial/reference/README.html#prepared-prototype-data">Prepared prototype data</a>
+<a class="level-2" href="https://accelbyte.github.io/f11/tutorial/reference/README.html#status-language">Status language</a>
+<a class="level-2" href="https://accelbyte.github.io/f11/tutorial/reference/README.html#maintenance-rules">Maintenance rules</a></nav></details><a class="source" href="https://github.com/AccelByte/f11/blob/main/docs/README.md">View Markdown source ↗</a></aside><main id="tutorial-content"><div class="intro">BUILD YOUR GAME · ONE FEATURE AT A TIME</div><article><h1 id="football-11-design-documents">Football 11 Design Documents<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/README.html#football-11-design-documents" aria-label="Link to section">#</a></h1>
 <p><strong>Last updated:</strong> September 22, 2026
 <strong>Status:</strong> Active development</p>
 <p>This directory contains the game design, implementation plans, and verification
 evidence for Football 11.</p>
-<h2 id="document-map">Document map<a class="anchor" href="#document-map" aria-label="Link to section">#</a></h2>
+<h2 id="document-map">Document map<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/README.html#document-map" aria-label="Link to section">#</a></h2>
 <table>
 <thead>
 <tr>
@@ -19,59 +19,59 @@ evidence for Football 11.</p>
 </tr>
 </thead>
 <tbody><tr>
-<td><a href="01-product-brief.html">01 — Product brief</a></td>
+<td><a href="https://accelbyte.github.io/f11/tutorial/reference/01-product-brief.html">01 — Product brief</a></td>
 <td>Product thesis, audience, goals, and success signals</td>
 </tr>
 <tr>
-<td><a href="02-game-design.html">02 — Game design</a></td>
+<td><a href="https://accelbyte.github.io/f11/tutorial/reference/02-game-design.html">02 — Game design</a></td>
 <td>Core loop, draft rules, formation, scoring, and results</td>
 </tr>
 <tr>
-<td><a href="03-game-modes.html">03 — Game modes</a></td>
+<td><a href="https://accelbyte.github.io/f11/tutorial/reference/03-game-modes.html">03 — Game modes</a></td>
 <td>Random, daily, friends, and leaderboard-opponent modes</td>
 </tr>
 <tr>
-<td><a href="04-technical-architecture.html">04 — Technical architecture</a></td>
+<td><a href="https://accelbyte.github.io/f11/tutorial/reference/04-technical-architecture.html">04 — Technical architecture</a></td>
 <td>Frontend, backend, authority boundaries, and deployment</td>
 </tr>
 <tr>
-<td><a href="05-ags-and-cloudflare.html">05 — AGS-first responsibility map</a></td>
+<td><a href="https://accelbyte.github.io/f11/tutorial/reference/05-ags-and-cloudflare.html">05 — AGS-first responsibility map</a></td>
 <td>Sites hosting, AGS storage, and deferred trusted-service boundaries</td>
 </tr>
 <tr>
-<td><a href="06-data-and-simulation.html">06 — Data and simulation</a></td>
+<td><a href="https://accelbyte.github.io/f11/tutorial/reference/06-data-and-simulation.html">06 — Data and simulation</a></td>
 <td>Domain entities, stored records, determinism, and validation</td>
 </tr>
 <tr>
-<td><a href="07-mvp-roadmap.html">07 — MVP roadmap</a></td>
+<td><a href="https://accelbyte.github.io/f11/tutorial/reference/07-mvp-roadmap.html">07 — MVP roadmap</a></td>
 <td>Scope, phases, acceptance criteria, and deferred work</td>
 </tr>
 <tr>
-<td><a href="08-content-legal-and-risks.html">08 — Content, legal, and risks</a></td>
+<td><a href="https://accelbyte.github.io/f11/tutorial/reference/08-content-legal-and-risks.html">08 — Content, legal, and risks</a></td>
 <td>Content strategy, licensing constraints, and product risks</td>
 </tr>
 <tr>
-<td><a href="09-decisions-and-open-questions.html">09 — Decisions and open questions</a></td>
+<td><a href="https://accelbyte.github.io/f11/tutorial/reference/09-decisions-and-open-questions.html">09 — Decisions and open questions</a></td>
 <td>Decision log, assumptions, and unresolved choices</td>
 </tr>
 <tr>
-<td><a href="10-progress-tracker.html">10 — Progress tracker</a></td>
+<td><a href="https://accelbyte.github.io/f11/tutorial/reference/10-progress-tracker.html">10 — Progress tracker</a></td>
 <td>Per-phase items, status, evidence, blockers, and next action</td>
 </tr>
 <tr>
-<td><a href="11-github-pages.html">11 — GitHub Pages deployment</a></td>
+<td><a href="https://accelbyte.github.io/f11/tutorial/reference/11-github-pages.html">11 — GitHub Pages deployment</a></td>
 <td>Build and publish the frontend with the Sites backend</td>
 </tr>
 <tr>
-<td><a href="12-accelbyte-integration-guide.html">12 — AGS and AI-plugin tutorial</a></td>
+<td><a href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html">12 — AGS and AI-plugin tutorial</a></td>
 <td>Explicit signup, plugin installation, MCP sign-in, and copy-ready integration prompts</td>
 </tr>
 <tr>
-<td><a href="12-accelbyte-integration-guide.html#implementation-reference">AGS service references</a></td>
+<td><a href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#implementation-reference">AGS service references</a></td>
 <td>Supporting implementation detail for login, storage, configuration, backend, ranking, sessions, and verification</td>
 </tr>
 </tbody></table>
-<h2 id="detailed-delivery-plans">Detailed delivery plans<a class="anchor" href="#detailed-delivery-plans" aria-label="Link to section">#</a></h2>
+<h2 id="detailed-delivery-plans">Detailed delivery plans<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/README.html#detailed-delivery-plans" aria-label="Link to section">#</a></h2>
 <table>
 <thead>
 <tr>
@@ -80,73 +80,73 @@ evidence for Football 11.</p>
 </tr>
 </thead>
 <tbody><tr>
-<td><a href="phases/README.html">Detailed phase index</a></td>
+<td><a href="https://accelbyte.github.io/f11/tutorial/reference/phases/README.html">Detailed phase index</a></td>
 <td>Functional MVP boundary and ordered connected-release phases</td>
 </tr>
 <tr>
-<td><a href="phases/phase-00-design-lock.html">Phase 0 — Design lock</a></td>
+<td><a href="https://accelbyte.github.io/f11/tutorial/reference/phases/phase-00-design-lock.html">Phase 0 — Design lock</a></td>
 <td>Rules, content, simulation, and architecture gates</td>
 </tr>
 <tr>
-<td><a href="phases/phase-00-content-contract.html">Phase 0 — Content contract</a></td>
+<td><a href="https://accelbyte.github.io/f11/tutorial/reference/phases/phase-00-content-contract.html">Phase 0 — Content contract</a></td>
 <td>Frozen schema, position mapping, scoring configuration, and golden rosters</td>
 </tr>
 <tr>
-<td><a href="phases/phase-00-exit-review.html">Phase 0 — Exit review</a></td>
+<td><a href="https://accelbyte.github.io/f11/tutorial/reference/phases/phase-00-exit-review.html">Phase 0 — Exit review</a></td>
 <td>Evidence and formal handoff into Phase 1A</td>
 </tr>
 <tr>
-<td><a href="phases/phase-01a-core-mechanics-engine.html">Phase 1A — Core mechanics engine</a></td>
+<td><a href="https://accelbyte.github.io/f11/tutorial/reference/phases/phase-01a-core-mechanics-engine.html">Phase 1A — Core mechanics engine</a></td>
 <td>Deterministic offers, dead-end prevention, assessment, simulation, and balance analysis</td>
 </tr>
 <tr>
-<td><a href="phases/phase-01-solo-vertical-slice.html">Phase 1B — Local React Functional MVP</a></td>
+<td><a href="https://accelbyte.github.io/f11/tutorial/reference/phases/phase-01-solo-vertical-slice.html">Phase 1B — Local React Functional MVP</a></td>
 <td>React, local guest identity, checksummed replay storage, and Sites-ready build</td>
 </tr>
 <tr>
-<td><a href="phases/phase-02-ags-foundation.html">Phase 2 — AGS foundation</a></td>
+<td><a href="https://accelbyte.github.io/f11/tutorial/reference/phases/phase-02-ags-foundation.html">Phase 2 — AGS foundation</a></td>
 <td>Device ID, Cloud Save, trusted replay, Statistics, and Leaderboards</td>
 </tr>
 <tr>
-<td><a href="phases/phase-03-sharing-and-daily.html">Phase 3 — Sharing and daily</a></td>
+<td><a href="https://accelbyte.github.io/f11/tutorial/reference/phases/phase-03-sharing-and-daily.html">Phase 3 — Sharing and daily</a></td>
 <td>Daily lifecycle, public results, share assets, and synced history</td>
 </tr>
 <tr>
-<td><a href="phases/phase-04-friend-rooms.html">Phase 4 — Friend rooms</a></td>
+<td><a href="https://accelbyte.github.io/f11/tutorial/reference/phases/phase-04-friend-rooms.html">Phase 4 — Friend rooms</a></td>
 <td>Discoverable AGS Session room with draft-time join closure, optional direct-join code, repeated rounds, and multi-browser comparison</td>
 </tr>
 <tr>
-<td><a href="phases/phase-05-saved-xi-competition.html">Phase 5 — Saved-XI competition</a></td>
+<td><a href="https://accelbyte.github.io/f11/tutorial/reference/phases/phase-05-saved-xi-competition.html">Phase 5 — Saved-XI competition</a></td>
 <td>Leaderboard-driven opponent discovery and settlement without Matchmaking</td>
 </tr>
 <tr>
-<td><a href="phases/phase-06-mvp-hardening-and-release.html">Phase 6 — Connected release hardening</a></td>
+<td><a href="https://accelbyte.github.io/f11/tutorial/reference/phases/phase-06-mvp-hardening-and-release.html">Phase 6 — Connected release hardening</a></td>
 <td>Security, recovery, QA, operations, deployment, and final connected-release gate</td>
 </tr>
 <tr>
-<td><a href="12-accelbyte-integration-guide.html#stage-1">AGS plan — Device ID guest login</a></td>
+<td><a href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#stage-1">AGS plan — Device ID guest login</a></td>
 <td>Approval-gated first AGS integration slice</td>
 </tr>
 <tr>
-<td><a href="12-accelbyte-integration-guide.html#stage-5">AGS evidence — Friend room Session</a></td>
+<td><a href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#stage-5">AGS evidence — Friend room Session</a></td>
 <td>Approved Phase 4 contract, implementation boundary, live service probe, and multi-browser evidence</td>
 </tr>
 </tbody></table>
-<h2 id="prepared-prototype-data">Prepared prototype data<a class="anchor" href="#prepared-prototype-data" aria-label="Link to section">#</a></h2>
+<h2 id="prepared-prototype-data">Prepared prototype data<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/README.html#prepared-prototype-data" aria-label="Link to section">#</a></h2>
 <p>The active reproducible catalogue and regeneration instructions are in
 <a href="https://github.com/AccelByte/f11/blob/main/data/README.md">Football 11 Prototype Data</a>. The public-domain OpenFootball
 Premier League 2023/24 named-squad manifest is used by the app, fixtures, and
 analysis. Cards use observed 2023/24 player names and squad membership, with
 inferred formation positions and synthetic ratings; club/competition rights and
 final football curation remain open.</p>
-<h2 id="status-language">Status language<a class="anchor" href="#status-language" aria-label="Link to section">#</a></h2>
+<h2 id="status-language">Status language<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/README.html#status-language" aria-label="Link to section">#</a></h2>
 <ul>
 <li><strong>Confirmed:</strong> agreed and treated as the current source of truth.</li>
 <li><strong>Proposed:</strong> recommended direction that still needs validation.</li>
 <li><strong>Open:</strong> unresolved and should not be silently assumed.</li>
 <li><strong>Deferred:</strong> intentionally outside the first MVP.</li>
 </ul>
-<h2 id="maintenance-rules">Maintenance rules<a class="anchor" href="#maintenance-rules" aria-label="Link to section">#</a></h2>
+<h2 id="maintenance-rules">Maintenance rules<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/README.html#maintenance-rules" aria-label="Link to section">#</a></h2>
 <ol>
 <li>Update the focused document first; do not turn this index into a second specification.</li>
 <li>Record material changes in the decision log.</li>
@@ -155,6 +155,6 @@ final football curation remain open.</p>
 player-authored MVP records authoritative.</li>
 <li>Do not mark a feature complete until its acceptance criteria are verified.</li>
 </ol>
-<p>Detailed <a href="ags-plans/README.html">agent integration plans</a> provide the implementation
+<p>Detailed <a href="https://accelbyte.github.io/f11/tutorial/reference/ags-plans/README.html">agent integration plans</a> provide the implementation
 contract for each tutorial stage.</p>
-</article><footer>Football 11 · Generated from the repository documentation. <a href="https://football-11.workspace-025025.chatgpt.site">Back to the game</a></footer></main></div></body></html>
+</article><footer>Football 11 · Generated from the repository documentation. <a href="https://accelbyte.github.io/f11/">Back to the game</a></footer></main></div></body></html>

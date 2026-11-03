@@ -1,40 +1,40 @@
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Phase 3 Detailed Plan — Sharing and Daily Challenge · Football 11</title><meta name="description" content="Build Football 11 from offline mechanics to online features. Read the setup guide, six integration stages, and copy-ready prompts."><link rel="stylesheet" href="../../tutorial.css"></head>
-<body><a class="skip" href="#tutorial-content">Skip to tutorial</a><header><a class="brand" href="../../index.html"><span>11</span> FOOTBALL 11 <small>THE PLAYBOOK</small></a><nav aria-label="Main navigation"><a href="../../index.html">Tutorial</a><a class="play" href="https://football-11.workspace-025025.chatgpt.site">Play the game ↗</a></nav></header>
-<div class="layout"><aside><details open><summary>On this page</summary><nav aria-label="Tutorial sections"><a class="level-2" href="#work-estimate--one-developer-with-agentic-ai">Work estimate — one developer with agentic AI</a>
-<a class="level-2" href="#phase-outcome">Phase outcome</a>
-<a class="level-2" href="#entry-conditions">Entry conditions</a>
-<a class="level-2" href="#delivery-slices">Delivery slices</a>
-<a class="level-2" href="#slice-3a--daily-lifecycle">Slice 3A — Daily lifecycle</a>
-<a class="level-2" href="#slice-3b--public-result">Slice 3B — Public result</a>
-<a class="level-2" href="#slice-3c--share-assets">Slice 3C — Share assets</a>
-<a class="level-2" href="#slice-3d--synced-history">Slice 3D — Synced history</a>
-<a class="level-2" href="#suggested-contracts">Suggested contracts</a>
-<a class="level-2" href="#abuse-caching-and-privacy">Abuse, caching, and privacy</a>
-<a class="level-2" href="#verification">Verification</a>
-<a class="level-2" href="#exit-checklist">Exit checklist</a></nav></details><a class="source" href="https://github.com/AccelByte/f11/blob/main/docs/phases/phase-03-sharing-and-daily.md">View Markdown source ↗</a></aside><main id="tutorial-content"><div class="intro">BUILD YOUR GAME · ONE FEATURE AT A TIME</div><article><h1 id="phase-3-detailed-plan--sharing-and-daily-challenge">Phase 3 Detailed Plan — Sharing and Daily Challenge<a class="anchor" href="#phase-3-detailed-plan--sharing-and-daily-challenge" aria-label="Link to section">#</a></h1>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Phase 3 Detailed Plan — Sharing and Daily Challenge · Football 11</title><meta name="description" content="Build Football 11 from offline mechanics to online features. Read the setup guide, six integration stages, and copy-ready prompts."><link rel="stylesheet" href="https://accelbyte.github.io/f11/tutorial/tutorial.css"><link rel="canonical" href="https://accelbyte.github.io/f11/tutorial/reference/phases/phase-03-sharing-and-daily.html"></head>
+<body><a class="skip" href="https://accelbyte.github.io/f11/tutorial/reference/phases/phase-03-sharing-and-daily.html#tutorial-content">Skip to tutorial</a><header><a class="brand" href="https://accelbyte.github.io/f11/tutorial/index.html"><span>11</span> FOOTBALL 11 <small>THE PLAYBOOK</small></a><nav aria-label="Main navigation"><a href="https://accelbyte.github.io/f11/tutorial/index.html">Tutorial</a><a class="play" href="https://accelbyte.github.io/f11/">Play the game ↗</a></nav></header>
+<div class="layout"><aside><details open><summary>On this page</summary><nav aria-label="Tutorial sections"><a class="level-2" href="https://accelbyte.github.io/f11/tutorial/reference/phases/phase-03-sharing-and-daily.html#work-estimate--one-developer-with-agentic-ai">Work estimate — one developer with agentic AI</a>
+<a class="level-2" href="https://accelbyte.github.io/f11/tutorial/reference/phases/phase-03-sharing-and-daily.html#phase-outcome">Phase outcome</a>
+<a class="level-2" href="https://accelbyte.github.io/f11/tutorial/reference/phases/phase-03-sharing-and-daily.html#entry-conditions">Entry conditions</a>
+<a class="level-2" href="https://accelbyte.github.io/f11/tutorial/reference/phases/phase-03-sharing-and-daily.html#delivery-slices">Delivery slices</a>
+<a class="level-2" href="https://accelbyte.github.io/f11/tutorial/reference/phases/phase-03-sharing-and-daily.html#slice-3a--daily-lifecycle">Slice 3A — Daily lifecycle</a>
+<a class="level-2" href="https://accelbyte.github.io/f11/tutorial/reference/phases/phase-03-sharing-and-daily.html#slice-3b--public-result">Slice 3B — Public result</a>
+<a class="level-2" href="https://accelbyte.github.io/f11/tutorial/reference/phases/phase-03-sharing-and-daily.html#slice-3c--share-assets">Slice 3C — Share assets</a>
+<a class="level-2" href="https://accelbyte.github.io/f11/tutorial/reference/phases/phase-03-sharing-and-daily.html#slice-3d--synced-history">Slice 3D — Synced history</a>
+<a class="level-2" href="https://accelbyte.github.io/f11/tutorial/reference/phases/phase-03-sharing-and-daily.html#suggested-contracts">Suggested contracts</a>
+<a class="level-2" href="https://accelbyte.github.io/f11/tutorial/reference/phases/phase-03-sharing-and-daily.html#abuse-caching-and-privacy">Abuse, caching, and privacy</a>
+<a class="level-2" href="https://accelbyte.github.io/f11/tutorial/reference/phases/phase-03-sharing-and-daily.html#verification">Verification</a>
+<a class="level-2" href="https://accelbyte.github.io/f11/tutorial/reference/phases/phase-03-sharing-and-daily.html#exit-checklist">Exit checklist</a></nav></details><a class="source" href="https://github.com/AccelByte/f11/blob/main/docs/phases/phase-03-sharing-and-daily.md">View Markdown source ↗</a></aside><main id="tutorial-content"><div class="intro">BUILD YOUR GAME · ONE FEATURE AT A TIME</div><article><h1 id="phase-3-detailed-plan--sharing-and-daily-challenge">Phase 3 Detailed Plan — Sharing and Daily Challenge<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/phases/phase-03-sharing-and-daily.html#phase-3-detailed-plan--sharing-and-daily-challenge" aria-label="Link to section">#</a></h1>
 <p><strong>Last updated:</strong> September 3, 2026
 <strong>Status:</strong> Deferred until Phase 2 AGS Foundation is complete
-<strong>Parent roadmap:</strong> <a href="../07-mvp-roadmap.html">07 — MVP roadmap</a></p>
-<h2 id="work-estimate--one-developer-with-agentic-ai">Work estimate — one developer with agentic AI<a class="anchor" href="#work-estimate--one-developer-with-agentic-ai" aria-label="Link to section">#</a></h2>
+<strong>Parent roadmap:</strong> <a href="https://accelbyte.github.io/f11/tutorial/reference/07-mvp-roadmap.html">07 — MVP roadmap</a></p>
+<h2 id="work-estimate--one-developer-with-agentic-ai">Work estimate — one developer with agentic AI<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/phases/phase-03-sharing-and-daily.html#work-estimate--one-developer-with-agentic-ai" aria-label="Link to section">#</a></h2>
 <ul>
 <li><strong>Effort:</strong> 2–4 builder-days.</li>
 <li><strong>Elapsed time:</strong> 0.5–1 week.</li>
 <li><strong>Primary uncertainty:</strong> result-specific HTML and images rendering correctly
 across social crawlers and share targets.</li>
 </ul>
-<h2 id="phase-outcome">Phase outcome<a class="anchor" href="#phase-outcome" aria-label="Link to section">#</a></h2>
+<h2 id="phase-outcome">Phase outcome<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/phases/phase-03-sharing-and-daily.html#phase-outcome" aria-label="Link to section">#</a></h2>
 <p>Players receive one version-pinned daily challenge, can reopen recent local
 results, and can share a stable public result whose preview works outside the
 application.</p>
-<h2 id="entry-conditions">Entry conditions<a class="anchor" href="#entry-conditions" aria-label="Link to section">#</a></h2>
+<h2 id="entry-conditions">Entry conditions<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/phases/phase-03-sharing-and-daily.html#entry-conditions" aria-label="Link to section">#</a></h2>
 <ul>
 <li>Phase 1A mechanics, Phase 1B Functional MVP, and Phase 2 AGS Foundation are complete.</li>
 <li>Trusted results are immutable, authenticated, and reproducible from stored evidence.</li>
 <li>Public-safe result fields are distinguished from private/internal fields.</li>
 <li>The content-rights policy identifies which names and imagery may be public.</li>
 </ul>
-<h2 id="delivery-slices">Delivery slices<a class="anchor" href="#delivery-slices" aria-label="Link to section">#</a></h2>
+<h2 id="delivery-slices">Delivery slices<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/phases/phase-03-sharing-and-daily.html#delivery-slices" aria-label="Link to section">#</a></h2>
 <table>
 <thead>
 <tr>
@@ -59,7 +59,7 @@ application.</p>
 <td>The authenticated player can reopen recent result identifiers</td>
 </tr>
 </tbody></table>
-<h2 id="slice-3a--daily-lifecycle">Slice 3A — Daily lifecycle<a class="anchor" href="#slice-3a--daily-lifecycle" aria-label="Link to section">#</a></h2>
+<h2 id="slice-3a--daily-lifecycle">Slice 3A — Daily lifecycle<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/phases/phase-03-sharing-and-daily.html#slice-3a--daily-lifecycle" aria-label="Link to section">#</a></h2>
 <ol>
 <li>Define the challenge period using UTC and record start/end timestamps.</li>
 <li>Pin seed, content version, rules version, and simulation version at creation.</li>
@@ -72,7 +72,7 @@ enabling the Phase 2 leaderboard for daily competition.</li>
 </ol>
 <p>The daily challenge must not change because new content is deployed during its
 active period.</p>
-<h2 id="slice-3b--public-result">Slice 3B — Public result<a class="anchor" href="#slice-3b--public-result" aria-label="Link to section">#</a></h2>
+<h2 id="slice-3b--public-result">Slice 3B — Public result<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/phases/phase-03-sharing-and-daily.html#slice-3b--public-result" aria-label="Link to section">#</a></h2>
 <p>Proposed route: <code>GET /results/{publicResultId}</code>.</p>
 <p>The response must:</p>
 <ul>
@@ -88,7 +88,7 @@ server-rendered metadata unless verification identifies a blocking limitation. R
 the trusted AGS-connected result contract from Phase 2. AGS Extend remains an
 alternative for a demonstrated integration advantage, while a separately provisioned
 Worker remains the final fallback.</p>
-<h2 id="slice-3c--share-assets">Slice 3C — Share assets<a class="anchor" href="#slice-3c--share-assets" aria-label="Link to section">#</a></h2>
+<h2 id="slice-3c--share-assets">Slice 3C — Share assets<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/phases/phase-03-sharing-and-daily.html#slice-3c--share-assets" aria-label="Link to section">#</a></h2>
 <ol>
 <li>Define one landscape Open Graph composition.</li>
 <li>Define one vertical player-export composition.</li>
@@ -101,7 +101,7 @@ explanation without overcrowding.</li>
 </ol>
 <p>If player photos or club marks remain legally unresolved, use the original
 text-first visual system.</p>
-<h2 id="slice-3d--synced-history">Slice 3D — Synced history<a class="anchor" href="#slice-3d--synced-history" aria-label="Link to section">#</a></h2>
+<h2 id="slice-3d--synced-history">Slice 3D — Synced history<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/phases/phase-03-sharing-and-daily.html#slice-3d--synced-history" aria-label="Link to section">#</a></h2>
 <p>Store the durable result index under the authenticated AGS player, with a bounded
 browser cache of public result IDs and lightweight display metadata. The trusted
 public result projection remains the source of truth for shared output.</p>
@@ -111,7 +111,7 @@ public result projection remains the source of truth for shared output.</p>
 <li>Signed-in players can restore the durable history on another session.</li>
 <li>Offline history may show cached entries but must not claim they are freshly synced.</li>
 </ul>
-<h2 id="suggested-contracts">Suggested contracts<a class="anchor" href="#suggested-contracts" aria-label="Link to section">#</a></h2>
+<h2 id="suggested-contracts">Suggested contracts<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/phases/phase-03-sharing-and-daily.html#suggested-contracts" aria-label="Link to section">#</a></h2>
 <ul>
 <li><code>GET /v1/challenges/daily/current</code></li>
 <li><code>GET /v1/results/{resultId}</code> for application data</li>
@@ -122,7 +122,7 @@ result model</li>
 </ul>
 <p>Route names are application-owned proposals and should be finalized with the
 deployment choice.</p>
-<h2 id="abuse-caching-and-privacy">Abuse, caching, and privacy<a class="anchor" href="#abuse-caching-and-privacy" aria-label="Link to section">#</a></h2>
+<h2 id="abuse-caching-and-privacy">Abuse, caching, and privacy<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/phases/phase-03-sharing-and-daily.html#abuse-caching-and-privacy" aria-label="Link to section">#</a></h2>
 <ul>
 <li>Rate-limit image generation and deduplicate concurrent renders.</li>
 <li>Cache immutable result payloads aggressively; version mutable renderer code.</li>
@@ -131,7 +131,7 @@ deployment choice.</p>
 <li>Add a removal/takedown path for content-rights issues.</li>
 <li>Avoid placing raw personal identifiers in public URLs or image metadata.</li>
 </ul>
-<h2 id="verification">Verification<a class="anchor" href="#verification" aria-label="Link to section">#</a></h2>
+<h2 id="verification">Verification<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/phases/phase-03-sharing-and-daily.html#verification" aria-label="Link to section">#</a></h2>
 <ul>
 <li>Two requests for the same daily period return the same challenge and versions.</li>
 <li>A deployment during the day does not mutate the active challenge.</li>
@@ -143,7 +143,7 @@ deployment choice.</p>
 <li>Local history reopens valid results and handles unavailable ones.</li>
 <li>Mobile and desktop sharing affordances remain usable.</li>
 </ul>
-<h2 id="exit-checklist">Exit checklist<a class="anchor" href="#exit-checklist" aria-label="Link to section">#</a></h2>
+<h2 id="exit-checklist">Exit checklist<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/phases/phase-03-sharing-and-daily.html#exit-checklist" aria-label="Link to section">#</a></h2>
 <ul>
 <li><input disabled="" type="checkbox"> Daily period and replay policy are decided.</li>
 <li><input disabled="" type="checkbox"> Exactly one canonical challenge is produced per period.</li>
@@ -155,4 +155,4 @@ deployment choice.</p>
 </ul>
 <p><strong>Exit criterion:</strong> a daily result can be reproduced, reopened, and shared at a
 stable public URL with correct result-specific metadata.</p>
-</article><footer>Football 11 · Generated from the repository documentation. <a href="https://football-11.workspace-025025.chatgpt.site">Back to the game</a></footer></main></div></body></html>
+</article><footer>Football 11 · Generated from the repository documentation. <a href="https://accelbyte.github.io/f11/">Back to the game</a></footer></main></div></body></html>

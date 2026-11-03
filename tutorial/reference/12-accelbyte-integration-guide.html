@@ -1,114 +1,114 @@
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Football 11: from offline mechanics to online features · Football 11</title><meta name="description" content="Build Football 11 from offline mechanics to online features. Read the setup guide, six integration stages, and copy-ready prompts."><link rel="stylesheet" href="../tutorial.css"></head>
-<body><a class="skip" href="#tutorial-content">Skip to tutorial</a><header><a class="brand" href="../index.html"><span>11</span> FOOTBALL 11 <small>THE PLAYBOOK</small></a><nav aria-label="Main navigation"><a href="../index.html">Tutorial</a><a class="play" href="https://football-11.workspace-025025.chatgpt.site">Play the game ↗</a></nav></header>
-<div class="layout"><aside><details open><summary>On this page</summary><nav aria-label="Tutorial sections"><a class="level-2" href="#contents">Contents</a>
-<a class="level-2" href="#run-the-offline-baseline">Run the offline baseline</a>
-<a class="level-2" href="#before-you-start">Before you start</a>
-<a class="level-2" href="#part-1--sign-up-for-ags">Part 1 — Sign up for AGS</a>
-<a class="level-3" href="#step-1-open-the-registration-page">Step 1. Open the registration page</a>
-<a class="level-3" href="#step-2-complete-the-signup-form">Step 2. Complete the signup form</a>
-<a class="level-3" href="#step-3-open-your-games-namespace">Step 3. Open your game&#39;s namespace</a>
-<a class="level-3" href="#step-4-collect-the-connection-information">Step 4. Collect the connection information</a>
-<a class="level-2" href="#part-2--install-and-connect-the-accelbyte-ai-plugin">Part 2 — Install and connect the AccelByte AI plugin</a>
-<a class="level-3" href="#step-5-open-your-project-in-codex">Step 5. Open your project in Codex</a>
-<a class="level-3" href="#step-6-install-accelbyte-ai-plugins">Step 6. Install AccelByte AI Plugins</a>
-<a class="level-3" href="#step-7-verify-that-the-assistant-can-use-the-plugin">Step 7. Verify that the assistant can use the plugin</a>
-<a class="level-3" href="#step-8-configure-the-ags-api-mcp-connection">Step 8. Configure the AGS API MCP connection</a>
-<a class="level-3" href="#step-9-authenticate-and-verify-a-live-read">Step 9. Authenticate and verify a live read</a>
-<a class="level-2" href="#prepare-the-project-connection">Prepare the project connection</a>
-<a class="level-3" href="#step-10-prepare-the-project-connection">Step 10. Prepare the project connection</a>
-<a class="level-2" href="#integration-stages-1">Integration stages</a>
-<a class="level-3" href="#stage-1-device-id-guest-login">Stage 1: Device ID guest login</a>
-<a class="level-3" href="#stage-2-private-cloud-save">Stage 2: Private Cloud Save</a>
-<a class="level-3" href="#stage-3-trusted-replay-and-ranking">Stage 3: Trusted replay and ranking</a>
-<a class="level-3" href="#stage-4-server-issued-draft-configuration">Stage 4: Server-issued draft configuration</a>
-<a class="level-3" href="#stage-5-friend-rooms">Stage 5: Friend rooms</a>
-<a class="level-3" href="#stage-6-asynchronous-saved-xi-competition">Stage 6: Asynchronous Saved-XI competition</a>
-<a class="level-2" href="#debugging-and-completion-1">Debugging and completion</a>
-<a class="level-2" href="#common-setup-problems">Common setup problems</a>
-<a class="level-2" href="#you-have-finished-when">You have finished when</a>
-<a class="level-2" href="#sources-and-verification">Sources and verification</a>
-<a class="level-2" href="#connected-implementation-reference">Connected implementation reference</a>
-<a class="level-3" href="#01--registration-and-setup">01 — Registration and setup</a>
-<a class="level-3" href="#outcome">Outcome</a>
-<a class="level-3" href="#register-and-create-the-namespace">Register and create the namespace</a>
-<a class="level-3" href="#configure-the-oauth-clients">Configure the OAuth clients</a>
-<a class="level-3" href="#configure-the-checkout-and-sdk">Configure the checkout and SDK</a>
-<a class="level-3" href="#troubleshooting-and-acceptance">Troubleshooting and acceptance</a>
-<a class="level-3" href="#02--login-and-identity">02 — Login and identity</a>
-<a class="level-3" href="#outcome-and-prerequisites">Outcome and prerequisites</a>
-<a class="level-3" href="#connect-the-authentication-flow">Connect the authentication flow</a>
-<a class="level-3" href="#identity-and-session-lifetime">Identity and session lifetime</a>
-<a class="level-3" href="#verification">Verification</a>
-<a class="level-3" href="#troubleshooting">Troubleshooting</a>
-<a class="level-3" href="#remaining-account-recovery-work">Remaining account recovery work</a>
-<a class="level-3" href="#03--player-storage-with-cloud-save">03 — Player storage with Cloud Save</a>
-<a class="level-3" href="#outcome-and-prerequisites-1">Outcome and prerequisites</a>
-<a class="level-3" href="#record-ownership-and-configuration">Record ownership and configuration</a>
-<a class="level-3" href="#connect-save-and-restore">Connect save and restore</a>
-<a class="level-3" href="#failure-and-concurrency-behavior">Failure and concurrency behavior</a>
-<a class="level-3" href="#acceptance">Acceptance</a>
-<a class="level-3" href="#04--game-configuration-and-issued-challenges">04 — Game configuration and issued challenges</a>
-<a class="level-3" href="#outcome-and-prerequisites-2">Outcome and prerequisites</a>
-<a class="level-3" href="#configure-the-game-record">Configure the Game Record</a>
-<a class="level-3" href="#connect-challenge-issuance">Connect challenge issuance</a>
-<a class="level-3" href="#change-configuration-safely">Change configuration safely</a>
-<a class="level-3" href="#troubleshooting-and-acceptance-1">Troubleshooting and acceptance</a>
-<a class="level-3" href="#05--trusted-backend-and-protected-writes">05 — Trusted backend and protected writes</a>
-<a class="level-3" href="#outcome-and-prerequisites-3">Outcome and prerequisites</a>
-<a class="level-3" href="#keep-two-authentication-contexts">Keep two authentication contexts</a>
-<a class="level-3" href="#connect-the-trusted-submission">Connect the trusted submission</a>
-<a class="level-3" href="#retry-and-authority-boundaries">Retry and authority boundaries</a>
-<a class="level-3" href="#troubleshooting-and-acceptance-2">Troubleshooting and acceptance</a>
-<a class="level-3" href="#06--statistics-and-leaderboards">06 — Statistics and Leaderboards</a>
-<a class="level-3" href="#outcome-and-prerequisites-4">Outcome and prerequisites</a>
-<a class="level-3" href="#configure-the-resources">Configure the resources</a>
-<a class="level-3" href="#connect-best-points-settlement">Connect best-points settlement</a>
-<a class="level-3" href="#connect-ranking-reads">Connect ranking reads</a>
-<a class="level-3" href="#resolve-content-version-migration">Resolve content-version migration</a>
-<a class="level-3" href="#troubleshooting-and-acceptance-3">Troubleshooting and acceptance</a>
-<a class="level-3" href="#07--sessions-and-lobby">07 — Sessions and Lobby</a>
-<a class="level-3" href="#outcome-and-prerequisites-5">Outcome and prerequisites</a>
-<a class="level-3" href="#configure-the-session-template">Configure the Session template</a>
-<a class="level-3" href="#connect-session-operations">Connect Session operations</a>
-<a class="level-3" href="#connect-lobby-notifications">Connect Lobby notifications</a>
-<a class="level-3" href="#complete-authority-and-recovery-work">Complete authority and recovery work</a>
-<a class="level-3" href="#verification-and-troubleshooting">Verification and troubleshooting</a>
-<a class="level-3" href="#08--saved-xi-discovery-and-settlement">08 — Saved-XI discovery and settlement</a>
-<a class="level-3" href="#outcome-and-prerequisites-6">Outcome and prerequisites</a>
-<a class="level-3" href="#resource-and-route-map">Resource and route map</a>
-<a class="level-3" href="#publish-the-record">Publish the record</a>
-<a class="level-3" href="#discover-and-issue-a-challenge">Discover and issue a challenge</a>
-<a class="level-3" href="#resolve-without-double-applying-a-score">Resolve without double-applying a score</a>
-<a class="level-3" href="#verification-and-troubleshooting-1">Verification and troubleshooting</a>
-<a class="level-3" href="#09--daily-challenges-public-results-and-history">09 — Daily challenges, public results, and history</a>
-<a class="level-3" href="#status-and-prerequisites">Status and prerequisites</a>
-<a class="level-3" href="#establish-the-contracts-first">Establish the contracts first</a>
-<a class="level-3" href="#implement-the-daily-lifecycle">Implement the daily lifecycle</a>
-<a class="level-3" href="#publish-a-trusted-public-projection">Publish a trusted public projection</a>
-<a class="level-3" href="#add-durable-player-history">Add durable player history</a>
-<a class="level-3" href="#acceptance-and-likely-failure-cases">Acceptance and likely failure cases</a>
-<a class="level-3" href="#10--deployment-and-integration-verification">10 — Deployment and integration verification</a>
-<a class="level-3" href="#outcome-1">Outcome</a>
-<a class="level-3" href="#configure-both-runtime-boundaries">Configure both runtime boundaries</a>
-<a class="level-3" href="#run-repository-checks">Run repository checks</a>
-<a class="level-3" href="#run-live-development-checks">Run live development checks</a>
-<a class="level-3" href="#verify-in-the-deployed-browser">Verify in the deployed browser</a>
-<a class="level-3" href="#integration-completion-gates">Integration completion gates</a></nav></details><a class="source" href="https://github.com/AccelByte/f11/blob/main/docs/12-accelbyte-integration-guide.md">View Markdown source ↗</a></aside><main id="tutorial-content"><div class="intro">BUILD YOUR GAME · ONE FEATURE AT A TIME</div><article><h1 id="football-11-from-offline-mechanics-to-online-features">Football 11: from offline mechanics to online features<a class="anchor" href="#football-11-from-offline-mechanics-to-online-features" aria-label="Link to section">#</a></h1>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Football 11: from offline mechanics to online features · Football 11</title><meta name="description" content="Build Football 11 from offline mechanics to online features. Read the setup guide, six integration stages, and copy-ready prompts."><link rel="stylesheet" href="https://accelbyte.github.io/f11/tutorial/tutorial.css"><link rel="canonical" href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html"></head>
+<body><a class="skip" href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#tutorial-content">Skip to tutorial</a><header><a class="brand" href="https://accelbyte.github.io/f11/tutorial/index.html"><span>11</span> FOOTBALL 11 <small>THE PLAYBOOK</small></a><nav aria-label="Main navigation"><a href="https://accelbyte.github.io/f11/tutorial/index.html">Tutorial</a><a class="play" href="https://accelbyte.github.io/f11/">Play the game ↗</a></nav></header>
+<div class="layout"><aside><details open><summary>On this page</summary><nav aria-label="Tutorial sections"><a class="level-2" href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#contents">Contents</a>
+<a class="level-2" href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#run-the-offline-baseline">Run the offline baseline</a>
+<a class="level-2" href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#before-you-start">Before you start</a>
+<a class="level-2" href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#part-1--sign-up-for-ags">Part 1 — Sign up for AGS</a>
+<a class="level-3" href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#step-1-open-the-registration-page">Step 1. Open the registration page</a>
+<a class="level-3" href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#step-2-complete-the-signup-form">Step 2. Complete the signup form</a>
+<a class="level-3" href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#step-3-open-your-games-namespace">Step 3. Open your game&#39;s namespace</a>
+<a class="level-3" href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#step-4-collect-the-connection-information">Step 4. Collect the connection information</a>
+<a class="level-2" href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#part-2--install-and-connect-the-accelbyte-ai-plugin">Part 2 — Install and connect the AccelByte AI plugin</a>
+<a class="level-3" href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#step-5-open-your-project-in-codex">Step 5. Open your project in Codex</a>
+<a class="level-3" href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#step-6-install-accelbyte-ai-plugins">Step 6. Install AccelByte AI Plugins</a>
+<a class="level-3" href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#step-7-verify-that-the-assistant-can-use-the-plugin">Step 7. Verify that the assistant can use the plugin</a>
+<a class="level-3" href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#step-8-configure-the-ags-api-mcp-connection">Step 8. Configure the AGS API MCP connection</a>
+<a class="level-3" href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#step-9-authenticate-and-verify-a-live-read">Step 9. Authenticate and verify a live read</a>
+<a class="level-2" href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#prepare-the-project-connection">Prepare the project connection</a>
+<a class="level-3" href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#step-10-prepare-the-project-connection">Step 10. Prepare the project connection</a>
+<a class="level-2" href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#integration-stages-1">Integration stages</a>
+<a class="level-3" href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#stage-1-device-id-guest-login">Stage 1: Device ID guest login</a>
+<a class="level-3" href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#stage-2-private-cloud-save">Stage 2: Private Cloud Save</a>
+<a class="level-3" href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#stage-3-trusted-replay-and-ranking">Stage 3: Trusted replay and ranking</a>
+<a class="level-3" href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#stage-4-server-issued-draft-configuration">Stage 4: Server-issued draft configuration</a>
+<a class="level-3" href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#stage-5-friend-rooms">Stage 5: Friend rooms</a>
+<a class="level-3" href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#stage-6-asynchronous-saved-xi-competition">Stage 6: Asynchronous Saved-XI competition</a>
+<a class="level-2" href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#debugging-and-completion-1">Debugging and completion</a>
+<a class="level-2" href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#common-setup-problems">Common setup problems</a>
+<a class="level-2" href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#you-have-finished-when">You have finished when</a>
+<a class="level-2" href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#sources-and-verification">Sources and verification</a>
+<a class="level-2" href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#connected-implementation-reference">Connected implementation reference</a>
+<a class="level-3" href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#01--registration-and-setup">01 — Registration and setup</a>
+<a class="level-3" href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#outcome">Outcome</a>
+<a class="level-3" href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#register-and-create-the-namespace">Register and create the namespace</a>
+<a class="level-3" href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#configure-the-oauth-clients">Configure the OAuth clients</a>
+<a class="level-3" href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#configure-the-checkout-and-sdk">Configure the checkout and SDK</a>
+<a class="level-3" href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#troubleshooting-and-acceptance">Troubleshooting and acceptance</a>
+<a class="level-3" href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#02--login-and-identity">02 — Login and identity</a>
+<a class="level-3" href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#outcome-and-prerequisites">Outcome and prerequisites</a>
+<a class="level-3" href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#connect-the-authentication-flow">Connect the authentication flow</a>
+<a class="level-3" href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#identity-and-session-lifetime">Identity and session lifetime</a>
+<a class="level-3" href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#verification">Verification</a>
+<a class="level-3" href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#troubleshooting">Troubleshooting</a>
+<a class="level-3" href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#remaining-account-recovery-work">Remaining account recovery work</a>
+<a class="level-3" href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#03--player-storage-with-cloud-save">03 — Player storage with Cloud Save</a>
+<a class="level-3" href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#outcome-and-prerequisites-1">Outcome and prerequisites</a>
+<a class="level-3" href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#record-ownership-and-configuration">Record ownership and configuration</a>
+<a class="level-3" href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#connect-save-and-restore">Connect save and restore</a>
+<a class="level-3" href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#failure-and-concurrency-behavior">Failure and concurrency behavior</a>
+<a class="level-3" href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#acceptance">Acceptance</a>
+<a class="level-3" href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#04--game-configuration-and-issued-challenges">04 — Game configuration and issued challenges</a>
+<a class="level-3" href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#outcome-and-prerequisites-2">Outcome and prerequisites</a>
+<a class="level-3" href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#configure-the-game-record">Configure the Game Record</a>
+<a class="level-3" href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#connect-challenge-issuance">Connect challenge issuance</a>
+<a class="level-3" href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#change-configuration-safely">Change configuration safely</a>
+<a class="level-3" href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#troubleshooting-and-acceptance-1">Troubleshooting and acceptance</a>
+<a class="level-3" href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#05--trusted-backend-and-protected-writes">05 — Trusted backend and protected writes</a>
+<a class="level-3" href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#outcome-and-prerequisites-3">Outcome and prerequisites</a>
+<a class="level-3" href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#keep-two-authentication-contexts">Keep two authentication contexts</a>
+<a class="level-3" href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#connect-the-trusted-submission">Connect the trusted submission</a>
+<a class="level-3" href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#retry-and-authority-boundaries">Retry and authority boundaries</a>
+<a class="level-3" href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#troubleshooting-and-acceptance-2">Troubleshooting and acceptance</a>
+<a class="level-3" href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#06--statistics-and-leaderboards">06 — Statistics and Leaderboards</a>
+<a class="level-3" href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#outcome-and-prerequisites-4">Outcome and prerequisites</a>
+<a class="level-3" href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#configure-the-resources">Configure the resources</a>
+<a class="level-3" href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#connect-best-points-settlement">Connect best-points settlement</a>
+<a class="level-3" href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#connect-ranking-reads">Connect ranking reads</a>
+<a class="level-3" href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#resolve-content-version-migration">Resolve content-version migration</a>
+<a class="level-3" href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#troubleshooting-and-acceptance-3">Troubleshooting and acceptance</a>
+<a class="level-3" href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#07--sessions-and-lobby">07 — Sessions and Lobby</a>
+<a class="level-3" href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#outcome-and-prerequisites-5">Outcome and prerequisites</a>
+<a class="level-3" href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#configure-the-session-template">Configure the Session template</a>
+<a class="level-3" href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#connect-session-operations">Connect Session operations</a>
+<a class="level-3" href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#connect-lobby-notifications">Connect Lobby notifications</a>
+<a class="level-3" href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#complete-authority-and-recovery-work">Complete authority and recovery work</a>
+<a class="level-3" href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#verification-and-troubleshooting">Verification and troubleshooting</a>
+<a class="level-3" href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#08--saved-xi-discovery-and-settlement">08 — Saved-XI discovery and settlement</a>
+<a class="level-3" href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#outcome-and-prerequisites-6">Outcome and prerequisites</a>
+<a class="level-3" href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#resource-and-route-map">Resource and route map</a>
+<a class="level-3" href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#publish-the-record">Publish the record</a>
+<a class="level-3" href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#discover-and-issue-a-challenge">Discover and issue a challenge</a>
+<a class="level-3" href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#resolve-without-double-applying-a-score">Resolve without double-applying a score</a>
+<a class="level-3" href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#verification-and-troubleshooting-1">Verification and troubleshooting</a>
+<a class="level-3" href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#09--daily-challenges-public-results-and-history">09 — Daily challenges, public results, and history</a>
+<a class="level-3" href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#status-and-prerequisites">Status and prerequisites</a>
+<a class="level-3" href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#establish-the-contracts-first">Establish the contracts first</a>
+<a class="level-3" href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#implement-the-daily-lifecycle">Implement the daily lifecycle</a>
+<a class="level-3" href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#publish-a-trusted-public-projection">Publish a trusted public projection</a>
+<a class="level-3" href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#add-durable-player-history">Add durable player history</a>
+<a class="level-3" href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#acceptance-and-likely-failure-cases">Acceptance and likely failure cases</a>
+<a class="level-3" href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#10--deployment-and-integration-verification">10 — Deployment and integration verification</a>
+<a class="level-3" href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#outcome-1">Outcome</a>
+<a class="level-3" href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#configure-both-runtime-boundaries">Configure both runtime boundaries</a>
+<a class="level-3" href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#run-repository-checks">Run repository checks</a>
+<a class="level-3" href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#run-live-development-checks">Run live development checks</a>
+<a class="level-3" href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#verify-in-the-deployed-browser">Verify in the deployed browser</a>
+<a class="level-3" href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#integration-completion-gates">Integration completion gates</a></nav></details><a class="source" href="https://github.com/AccelByte/f11/blob/main/docs/12-accelbyte-integration-guide.md">View Markdown source ↗</a></aside><main id="tutorial-content"><div class="intro">BUILD YOUR GAME · ONE FEATURE AT A TIME</div><article><h1 id="football-11-from-offline-mechanics-to-online-features">Football 11: from offline mechanics to online features<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#football-11-from-offline-mechanics-to-online-features" aria-label="Link to section">#</a></h1>
 <p>Start with the playable offline game, set up AGS and the AI plugin, then add
 one online feature at a time. This document contains the setup instructions,
 copy-ready handoff prompts and supporting service reference material. Detailed
-implementation plans and acceptance checks live in <a href="ags-plans/README.html">ags-plans</a>. All online stages are <strong>not started</strong> on the offline branch.</p>
-<h2 id="contents">Contents<a class="anchor" href="#contents" aria-label="Link to section">#</a></h2>
+implementation plans and acceptance checks live in <a href="https://accelbyte.github.io/f11/tutorial/reference/ags-plans/README.html">ags-plans</a>. All online stages are <strong>not started</strong> on the offline branch.</p>
+<h2 id="contents">Contents<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#contents" aria-label="Link to section">#</a></h2>
 <ul>
-<li><a href="#offline-baseline">Run the offline baseline</a></li>
-<li><a href="#part-1--sign-up-for-ags">Sign up for AGS</a></li>
-<li><a href="#integration-stages">Integration stages</a></li>
-<li><a href="#debugging-and-completion">Debugging and completion checks</a></li>
-<li><a href="#implementation-reference">Connected implementation reference</a></li>
+<li><a href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#offline-baseline">Run the offline baseline</a></li>
+<li><a href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#part-1--sign-up-for-ags">Sign up for AGS</a></li>
+<li><a href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#integration-stages">Integration stages</a></li>
+<li><a href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#debugging-and-completion">Debugging and completion checks</a></li>
+<li><a href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#implementation-reference">Connected implementation reference</a></li>
 </ul>
 <p><a id="offline-baseline"></a></p>
-<h2 id="run-the-offline-baseline">Run the offline baseline<a class="anchor" href="#run-the-offline-baseline" aria-label="Link to section">#</a></h2>
+<h2 id="run-the-offline-baseline">Run the offline baseline<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#run-the-offline-baseline" aria-label="Link to section">#</a></h2>
 <p>The public <code>main</code> branch contains the connected game. To follow this tutorial from
 the offline baseline, switch to <code>offline-starter</code> and create a working
 branch. Use Node.js 22.13 or newer:</p>
@@ -124,7 +124,7 @@ identity and storage around those boundaries, and reuse the domain code for
 later server replay. Keep the existing mechanics tests passing throughout.</p>
 <p>The following setup uses Codex and a Public Cloud development namespace (also
 called Shared Cloud). A Claude Code installation alternative is included.</p>
-<h2 id="before-you-start">Before you start<a class="anchor" href="#before-you-start" aria-label="Link to section">#</a></h2>
+<h2 id="before-you-start">Before you start<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#before-you-start" aria-label="Link to section">#</a></h2>
 <p>Have the following ready:</p>
 <ul>
 <li>An email address you can access and your game studio&#39;s name.</li>
@@ -158,8 +158,8 @@ actual project before selecting an SDK.</li>
 <p><strong>Commands go in the terminal; prompts go in the Codex conversation.</strong> Replace
 values written as <code>&lt;YOUR_...&gt;</code> before sending a prompt. Enter passwords and
 verification codes directly in the sign-in page, not in the conversation.</p>
-<h2 id="part-1--sign-up-for-ags">Part 1 — Sign up for AGS<a class="anchor" href="#part-1--sign-up-for-ags" aria-label="Link to section">#</a></h2>
-<h3 id="step-1-open-the-registration-page">Step 1. Open the registration page<a class="anchor" href="#step-1-open-the-registration-page" aria-label="Link to section">#</a></h3>
+<h2 id="part-1--sign-up-for-ags">Part 1 — Sign up for AGS<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#part-1--sign-up-for-ags" aria-label="Link to section">#</a></h2>
+<h3 id="step-1-open-the-registration-page">Step 1. Open the registration page<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#step-1-open-the-registration-page" aria-label="Link to section">#</a></h3>
 <ol>
 <li>Open <a href="https://prod.gamingservices.accelbyte.io/auth/register?utm_source=github&amp;utm_medium=source-code&amp;utm_campaign=sa-content&amp;utm_content=2026-09-18-82-0-inspired-prototype">Sign up to AccelByte</a>.</li>
 <li>Check that the page heading says <strong>Sign up to AccelByte</strong>.</li>
@@ -167,7 +167,7 @@ verification codes directly in the sign-in page, not in the conversation.</p>
 for an invitation instead of creating a duplicate studio.</li>
 </ol>
 <p><strong>Expected result:</strong> the signup form is visible.</p>
-<h3 id="step-2-complete-the-signup-form">Step 2. Complete the signup form<a class="anchor" href="#step-2-complete-the-signup-form" aria-label="Link to section">#</a></h3>
+<h3 id="step-2-complete-the-signup-form">Step 2. Complete the signup form<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#step-2-complete-the-signup-form" aria-label="Link to section">#</a></h3>
 <ol>
 <li>Enter your name in <strong>Your name</strong>.</li>
 <li>Enter an address you can access in <strong>Email Address</strong>.</li>
@@ -184,7 +184,7 @@ and sign in with the account you just activated.</li>
 <p><strong>Expected result:</strong> you can access your studio in the Admin Portal. Account
 activation screens may vary; follow their instructions rather than assuming the
 initial form also asks for a password.</p>
-<h3 id="step-3-open-your-games-namespace">Step 3. Open your game&#39;s namespace<a class="anchor" href="#step-3-open-your-games-namespace" aria-label="Link to section">#</a></h3>
+<h3 id="step-3-open-your-games-namespace">Step 3. Open your game&#39;s namespace<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#step-3-open-your-games-namespace" aria-label="Link to section">#</a></h3>
 <p>A namespace is the container for one game&#39;s players, configuration, and services.
 AGS onboarding creates a first game namespace as part of registration. Use that
 namespace if it is the game you want to integrate.</p>
@@ -200,7 +200,7 @@ name can change later; the Game Title ID cannot.</li>
 </ol>
 <p><strong>Expected result:</strong> the portal shows the intended development game. Record the
 actual namespace identifier shown by AGS; do not derive it from the display name.</p>
-<h3 id="step-4-collect-the-connection-information">Step 4. Collect the connection information<a class="anchor" href="#step-4-collect-the-connection-information" aria-label="Link to section">#</a></h3>
+<h3 id="step-4-collect-the-connection-information">Step 4. Collect the connection information<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#step-4-collect-the-connection-information" aria-label="Link to section">#</a></h3>
 <ol>
 <li>Record your Admin Portal URL and game namespace identifier in a private note.</li>
 <li>In the selected game, open <strong>Foundations → Identity &amp; Access → IAM Clients</strong>.</li>
@@ -214,8 +214,8 @@ application needs a <strong>Public</strong> client with no embedded secret. A tr
 may later need a separate Confidential client; its secret stays on the server.</p>
 <p><strong>Expected result:</strong> you know which game and environment the assistant should use.
 You do not need to configure every AGS service before installing the plugin.</p>
-<h2 id="part-2--install-and-connect-the-accelbyte-ai-plugin">Part 2 — Install and connect the AccelByte AI plugin<a class="anchor" href="#part-2--install-and-connect-the-accelbyte-ai-plugin" aria-label="Link to section">#</a></h2>
-<h3 id="step-5-open-your-project-in-codex">Step 5. Open your project in Codex<a class="anchor" href="#step-5-open-your-project-in-codex" aria-label="Link to section">#</a></h3>
+<h2 id="part-2--install-and-connect-the-accelbyte-ai-plugin">Part 2 — Install and connect the AccelByte AI plugin<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#part-2--install-and-connect-the-accelbyte-ai-plugin" aria-label="Link to section">#</a></h2>
+<h3 id="step-5-open-your-project-in-codex">Step 5. Open your project in Codex<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#step-5-open-your-project-in-codex" aria-label="Link to section">#</a></h3>
 <ol>
 <li>Open Codex and select your local game/application project folder.</li>
 <li>Start a conversation associated with that project.</li>
@@ -223,7 +223,7 @@ You do not need to configure every AGS service before installing the plugin.</p>
 </ol>
 <p><strong>Expected result:</strong> the assistant can inspect your project to determine its engine,
 framework, SDK, and existing configuration.</p>
-<h3 id="step-6-install-accelbyte-ai-plugins">Step 6. Install AccelByte AI Plugins<a class="anchor" href="#step-6-install-accelbyte-ai-plugins" aria-label="Link to section">#</a></h3>
+<h3 id="step-6-install-accelbyte-ai-plugins">Step 6. Install AccelByte AI Plugins<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#step-6-install-accelbyte-ai-plugins" aria-label="Link to section">#</a></h3>
 <p>The marketplace source is <code>AccelByte/ai-plugins</code>; the plugin is named
 <code>accelbyte-ai-plugins</code>.</p>
 <ol>
@@ -240,7 +240,7 @@ terminal where the Codex CLI is installed:</p>
 <strong>Adding the marketplace only makes the plugin discoverable; it does not finish
 activation.</strong> The exact plugin-manager layout can differ between Codex versions.</p>
 <p><strong>Expected result:</strong> AccelByte AI Plugins appears as installed and enabled.</p>
-<h4 id="if-your-team-uses-claude-code-instead">If your team uses Claude Code instead<a class="anchor" href="#if-your-team-uses-claude-code-instead" aria-label="Link to section">#</a></h4>
+<h4 id="if-your-team-uses-claude-code-instead">If your team uses Claude Code instead<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#if-your-team-uses-claude-code-instead" aria-label="Link to section">#</a></h4>
 <p>Run these commands in the Claude Code conversation:</p>
 <pre><code class="language-text">/plugin marketplace add AccelByte/ai-plugins
 /plugin install accelbyte-ai-plugins@accelbyte
@@ -248,7 +248,7 @@ activation.</strong> The exact plugin-manager layout can differ between Codex ve
 </code></pre>
 <p>Then use the same natural-language prompts below. For Cursor, Kiro, or OpenCode,
 follow the corresponding section in the <a href="https://github.com/AccelByte/ai-plugins/blob/main/INSTALL.md">official plugin installation guide</a>.</p>
-<h3 id="step-7-verify-that-the-assistant-can-use-the-plugin">Step 7. Verify that the assistant can use the plugin<a class="anchor" href="#step-7-verify-that-the-assistant-can-use-the-plugin" aria-label="Link to section">#</a></h3>
+<h3 id="step-7-verify-that-the-assistant-can-use-the-plugin">Step 7. Verify that the assistant can use the plugin<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#step-7-verify-that-the-assistant-can-use-the-plugin" aria-label="Link to section">#</a></h3>
 <p>Paste this into Codex:</p>
 <pre><code class="language-text">Use the AccelByte AGS skill from AccelByte AI Plugins.
 Confirm that the skill is available, inspect this project&#39;s framework or engine,
@@ -261,7 +261,7 @@ live namespace, because that connection has not been verified yet.</p>
 <p>The plugin supplies instructions and references. An <strong>MCP server</strong> supplies tools
 that let the assistant access a live service. Installing the plugin does not, by
 itself, authenticate the assistant to your AGS account.</p>
-<h3 id="step-8-configure-the-ags-api-mcp-connection">Step 8. Configure the AGS API MCP connection<a class="anchor" href="#step-8-configure-the-ags-api-mcp-connection" aria-label="Link to section">#</a></h3>
+<h3 id="step-8-configure-the-ags-api-mcp-connection">Step 8. Configure the AGS API MCP connection<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#step-8-configure-the-ags-api-mcp-connection" aria-label="Link to section">#</a></h3>
 <p>First obtain the MCP URL for your deployment. The plugin documents this Public/
 Shared Cloud pattern:</p>
 <pre><code class="language-text">https://{studio}-{game}.prod.gamingservices.accelbyte.io/mcp/{studio}-{game}
@@ -291,7 +291,7 @@ me how to authenticate. Do not modify resources in AGS.
 </ol>
 <p><strong>Expected result:</strong> Codex has an AGS API MCP entry for your deployment. A reachable
 URL or a saved config file is not yet proof of authenticated access.</p>
-<h3 id="step-9-authenticate-and-verify-a-live-read">Step 9. Authenticate and verify a live read<a class="anchor" href="#step-9-authenticate-and-verify-a-live-read" aria-label="Link to section">#</a></h3>
+<h3 id="step-9-authenticate-and-verify-a-live-read">Step 9. Authenticate and verify a live read<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#step-9-authenticate-and-verify-a-live-read" aria-label="Link to section">#</a></h3>
 <ol>
 <li><p>Open <strong>Settings → MCP servers</strong> in the desktop client and select
 <strong>Authenticate</strong> for the AGS entry when offered. Alternatively, use the terminal:</p>
@@ -316,12 +316,12 @@ namespace. Do not create or update anything. Do not print credentials or tokens.
 <p><strong>Expected result:</strong> the assistant reports an actual successful authenticated read
 for the intended environment. A generic explanation of namespaces is not sufficient.
 If access is rejected, resolve sign-in or permissions before starting integration.</p>
-<h2 id="prepare-the-project-connection">Prepare the project connection<a class="anchor" href="#prepare-the-project-connection" aria-label="Link to section">#</a></h2>
+<h2 id="prepare-the-project-connection">Prepare the project connection<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#prepare-the-project-connection" aria-label="Link to section">#</a></h2>
 <p>Send one prompt at a time and inspect its result before moving to the next step.
 These examples use plain language, so they do not depend on a host&#39;s slash-command
 syntax. In hosts that expose the plugin commands, <code>/ags init</code> starts clean-slate
 setup and <code>/ags &lt;your request&gt;</code> routes later work.</p>
-<h3 id="step-10-prepare-the-project-connection">Step 10. Prepare the project connection<a class="anchor" href="#step-10-prepare-the-project-connection" aria-label="Link to section">#</a></h3>
+<h3 id="step-10-prepare-the-project-connection">Step 10. Prepare the project connection<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#step-10-prepare-the-project-connection" aria-label="Link to section">#</a></h3>
 <p>Paste this prompt and fill in the values you collected:</p>
 <pre><code class="language-text">Use the AccelByte AGS skill to connect this project to my existing development game.
 
@@ -355,9 +355,9 @@ MCP authentication; do not assume signing in to one signs in to both.</p>
 <p><strong>Expected result:</strong> the correct SDK/configuration is in place, the project checks
 pass, and any missing provider/client access is explicitly identified.</p>
 <p><a id="integration-stages"></a></p>
-<h2 id="integration-stages-1">Integration stages<a class="anchor" href="#integration-stages-1" aria-label="Link to section">#</a></h2>
+<h2 id="integration-stages-1">Integration stages<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#integration-stages-1" aria-label="Link to section">#</a></h2>
 <p>Complete and verify one stage before starting the next. The detailed plans are in
-<a href="ags-plans/README.html">docs/ags-plans</a>; each stage below provides its agent handoff.</p>
+<a href="https://accelbyte.github.io/f11/tutorial/reference/ags-plans/README.html">docs/ags-plans</a>; each stage below provides its agent handoff.</p>
 <table>
 <thead>
 <tr>
@@ -367,32 +367,32 @@ pass, and any missing provider/client access is explicitly identified.</p>
 </thead>
 <tbody><tr>
 <td>1</td>
-<td><a href="#stage-1">Device ID guest login</a></td>
+<td><a href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#stage-1">Device ID guest login</a></td>
 </tr>
 <tr>
 <td>2</td>
-<td><a href="#stage-2">Private Cloud Save</a></td>
+<td><a href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#stage-2">Private Cloud Save</a></td>
 </tr>
 <tr>
 <td>3</td>
-<td><a href="#stage-3">Trusted replay and ranking</a></td>
+<td><a href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#stage-3">Trusted replay and ranking</a></td>
 </tr>
 <tr>
 <td>4</td>
-<td><a href="#stage-4">Server-issued draft configuration</a></td>
+<td><a href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#stage-4">Server-issued draft configuration</a></td>
 </tr>
 <tr>
 <td>5</td>
-<td><a href="#stage-5">Friend rooms</a></td>
+<td><a href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#stage-5">Friend rooms</a></td>
 </tr>
 <tr>
 <td>6</td>
-<td><a href="#stage-6">Asynchronous Saved-XI competition</a></td>
+<td><a href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#stage-6">Asynchronous Saved-XI competition</a></td>
 </tr>
 </tbody></table>
 <p><a id="stage-1"></a></p>
-<h3 id="stage-1-device-id-guest-login">Stage 1: Device ID guest login<a class="anchor" href="#stage-1-device-id-guest-login" aria-label="Link to section">#</a></h3>
-<p>Use the <a href="ags-plans/2026-09-02-device-id-login.html">detailed agent plan</a> for prerequisites,
+<h3 id="stage-1-device-id-guest-login">Stage 1: Device ID guest login<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#stage-1-device-id-guest-login" aria-label="Link to section">#</a></h3>
+<p>Use the <a href="https://accelbyte.github.io/f11/tutorial/reference/ags-plans/2026-09-02-device-id-login.html">detailed agent plan</a> for prerequisites,
 implementation scope, design details, and acceptance checks.</p>
 <pre><code class="language-text">Use the AccelByte AGS skill and docs/ags-plans/2026-09-02-device-id-login.md as the
 implementation plan for this stage only. Inspect the current branch and completed
@@ -403,8 +403,8 @@ browser, and live-service evidence separately in docs/10-progress-tracker.md.
 Report blockers honestly and stop before the next stage.
 </code></pre>
 <p><a id="stage-2"></a></p>
-<h3 id="stage-2-private-cloud-save">Stage 2: Private Cloud Save<a class="anchor" href="#stage-2-private-cloud-save" aria-label="Link to section">#</a></h3>
-<p>Use the <a href="ags-plans/2026-09-03-cloud-save-run-sync.html">detailed agent plan</a> for prerequisites,
+<h3 id="stage-2-private-cloud-save">Stage 2: Private Cloud Save<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#stage-2-private-cloud-save" aria-label="Link to section">#</a></h3>
+<p>Use the <a href="https://accelbyte.github.io/f11/tutorial/reference/ags-plans/2026-09-03-cloud-save-run-sync.html">detailed agent plan</a> for prerequisites,
 implementation scope, design details, and acceptance checks.</p>
 <pre><code class="language-text">Use the AccelByte AGS skill and docs/ags-plans/2026-09-03-cloud-save-run-sync.md as the
 implementation plan for this stage only. Inspect the current branch and completed
@@ -415,8 +415,8 @@ browser, and live-service evidence separately in docs/10-progress-tracker.md.
 Report blockers honestly and stop before the next stage.
 </code></pre>
 <p><a id="stage-3"></a></p>
-<h3 id="stage-3-trusted-replay-and-ranking">Stage 3: Trusted replay and ranking<a class="anchor" href="#stage-3-trusted-replay-and-ranking" aria-label="Link to section">#</a></h3>
-<p>Use the <a href="ags-plans/2026-09-03-trusted-ranking.html">detailed agent plan</a> for prerequisites,
+<h3 id="stage-3-trusted-replay-and-ranking">Stage 3: Trusted replay and ranking<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#stage-3-trusted-replay-and-ranking" aria-label="Link to section">#</a></h3>
+<p>Use the <a href="https://accelbyte.github.io/f11/tutorial/reference/ags-plans/2026-09-03-trusted-ranking.html">detailed agent plan</a> for prerequisites,
 implementation scope, design details, and acceptance checks.</p>
 <pre><code class="language-text">Use the AccelByte AGS skill and docs/ags-plans/2026-09-03-trusted-ranking.md as the
 implementation plan for this stage only. Inspect the current branch and completed
@@ -427,8 +427,8 @@ browser, and live-service evidence separately in docs/10-progress-tracker.md.
 Report blockers honestly and stop before the next stage.
 </code></pre>
 <p><a id="stage-4"></a></p>
-<h3 id="stage-4-server-issued-draft-configuration">Stage 4: Server-issued draft configuration<a class="anchor" href="#stage-4-server-issued-draft-configuration" aria-label="Link to section">#</a></h3>
-<p>Use the <a href="ags-plans/2026-09-04-game-record-draft-config.html">detailed agent plan</a> for prerequisites,
+<h3 id="stage-4-server-issued-draft-configuration">Stage 4: Server-issued draft configuration<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#stage-4-server-issued-draft-configuration" aria-label="Link to section">#</a></h3>
+<p>Use the <a href="https://accelbyte.github.io/f11/tutorial/reference/ags-plans/2026-09-04-game-record-draft-config.html">detailed agent plan</a> for prerequisites,
 implementation scope, design details, and acceptance checks.</p>
 <pre><code class="language-text">Use the AccelByte AGS skill and docs/ags-plans/2026-09-04-game-record-draft-config.md as the
 implementation plan for this stage only. Inspect the current branch and completed
@@ -439,8 +439,8 @@ browser, and live-service evidence separately in docs/10-progress-tracker.md.
 Report blockers honestly and stop before the next stage.
 </code></pre>
 <p><a id="stage-5"></a></p>
-<h3 id="stage-5-friend-rooms">Stage 5: Friend rooms<a class="anchor" href="#stage-5-friend-rooms" aria-label="Link to section">#</a></h3>
-<p>Use the <a href="ags-plans/2026-09-03-friend-room-session.html">detailed agent plan</a> for prerequisites,
+<h3 id="stage-5-friend-rooms">Stage 5: Friend rooms<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#stage-5-friend-rooms" aria-label="Link to section">#</a></h3>
+<p>Use the <a href="https://accelbyte.github.io/f11/tutorial/reference/ags-plans/2026-09-03-friend-room-session.html">detailed agent plan</a> for prerequisites,
 implementation scope, design details, and acceptance checks.</p>
 <pre><code class="language-text">Use the AccelByte AGS skill and docs/ags-plans/2026-09-03-friend-room-session.md as the
 implementation plan for this stage only. Inspect the current branch and completed
@@ -451,8 +451,8 @@ browser, and live-service evidence separately in docs/10-progress-tracker.md.
 Report blockers honestly and stop before the next stage.
 </code></pre>
 <p><a id="stage-6"></a></p>
-<h3 id="stage-6-asynchronous-saved-xi-competition">Stage 6: Asynchronous Saved-XI competition<a class="anchor" href="#stage-6-asynchronous-saved-xi-competition" aria-label="Link to section">#</a></h3>
-<p>Use the <a href="ags-plans/2026-09-03-saved-xi-head-to-head.html">detailed agent plan</a> for prerequisites,
+<h3 id="stage-6-asynchronous-saved-xi-competition">Stage 6: Asynchronous Saved-XI competition<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#stage-6-asynchronous-saved-xi-competition" aria-label="Link to section">#</a></h3>
+<p>Use the <a href="https://accelbyte.github.io/f11/tutorial/reference/ags-plans/2026-09-03-saved-xi-head-to-head.html">detailed agent plan</a> for prerequisites,
 implementation scope, design details, and acceptance checks.</p>
 <pre><code class="language-text">Use the AccelByte AGS skill and docs/ags-plans/2026-09-03-saved-xi-head-to-head.md as the
 implementation plan for this stage only. Inspect the current branch and completed
@@ -463,7 +463,7 @@ browser, and live-service evidence separately in docs/10-progress-tracker.md.
 Report blockers honestly and stop before the next stage.
 </code></pre>
 <p><a id="debugging-and-completion"></a></p>
-<h2 id="debugging-and-completion-1">Debugging and completion<a class="anchor" href="#debugging-and-completion-1" aria-label="Link to section">#</a></h2>
+<h2 id="debugging-and-completion-1">Debugging and completion<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#debugging-and-completion-1" aria-label="Link to section">#</a></h2>
 <p>If a step fails, paste a redacted error and describe the expected behavior:</p>
 <pre><code class="language-text">Use the AccelByte AGS skill to diagnose this integration failure.
 Feature: &lt;LOGIN_OR_STORAGE_OR_SESSION&gt;
@@ -478,7 +478,7 @@ fix and the check that would prove it worked. Do not broaden permissions blindly
 </code></pre>
 <p><strong>Expected result:</strong> a diagnosis tied to an operation and evidence, followed by a
 specific fix and verification—not a replacement of the entire integration.</p>
-<h2 id="common-setup-problems">Common setup problems<a class="anchor" href="#common-setup-problems" aria-label="Link to section">#</a></h2>
+<h2 id="common-setup-problems">Common setup problems<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#common-setup-problems" aria-label="Link to section">#</a></h2>
 <table>
 <thead>
 <tr>
@@ -519,7 +519,7 @@ specific fix and verification—not a replacement of the entire integration.</p>
 <td>Restate one feature, its boundaries, and its acceptance checks</td>
 </tr>
 </tbody></table>
-<h2 id="you-have-finished-when">You have finished when<a class="anchor" href="#you-have-finished-when" aria-label="Link to section">#</a></h2>
+<h2 id="you-have-finished-when">You have finished when<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#you-have-finished-when" aria-label="Link to section">#</a></h2>
 <ul>
 <li>You can sign in to the AGS Admin Portal and select your development game.</li>
 <li>AccelByte AI Plugins is installed, enabled, and recognized by the assistant.</li>
@@ -530,7 +530,7 @@ the resulting evidence.</li>
 <p>Use the implementation reference below when a stage needs more service detail.
 For each completed stage, record local, browser, and live-service evidence
 separately. Unverified stages remain open.</p>
-<h2 id="sources-and-verification">Sources and verification<a class="anchor" href="#sources-and-verification" aria-label="Link to section">#</a></h2>
+<h2 id="sources-and-verification">Sources and verification<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#sources-and-verification" aria-label="Link to section">#</a></h2>
 <p>The signup form and official namespace/client documentation were inspected on
 September 17, 2026. Plugin installation and MCP URL instructions were checked
 against the installed AccelByte AI Plugins <strong>0.6.13</strong> documentation; use the
@@ -547,17 +547,17 @@ plugin installation or live AGS authentication was performed to write this tutor
 <li><a href="https://learn.chatgpt.com/docs/extend/mcp">OpenAI: MCP configuration and authentication</a></li>
 </ul>
 <p><a id="implementation-reference"></a></p>
-<h2 id="connected-implementation-reference">Connected implementation reference<a class="anchor" href="#connected-implementation-reference" aria-label="Link to section">#</a></h2>
+<h2 id="connected-implementation-reference">Connected implementation reference<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#connected-implementation-reference" aria-label="Link to section">#</a></h2>
 <p>These reference notes describe the connected project. Its source paths and
 completed verification claims are background, not features implemented in the
 offline starter. Follow the stages above to build your own integration.</p>
 <p><a id="reference-1"></a></p>
-<h3 id="01--registration-and-setup">01 — Registration and setup<a class="anchor" href="#01--registration-and-setup" aria-label="Link to section">#</a></h3>
-<h3 id="outcome">Outcome<a class="anchor" href="#outcome" aria-label="Link to section">#</a></h3>
+<h3 id="01--registration-and-setup">01 — Registration and setup<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#01--registration-and-setup" aria-label="Link to section">#</a></h3>
+<h3 id="outcome">Outcome<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#outcome" aria-label="Link to section">#</a></h3>
 <p>You have a development game namespace, separate browser and server OAuth clients,
 and a local checkout configured to use them. This is developer onboarding; player
 login is covered in the next chapter.</p>
-<h3 id="register-and-create-the-namespace">Register and create the namespace<a class="anchor" href="#register-and-create-the-namespace" aria-label="Link to section">#</a></h3>
+<h3 id="register-and-create-the-namespace">Register and create the namespace<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#register-and-create-the-namespace" aria-label="Link to section">#</a></h3>
 <ol>
 <li>Follow the <a href="https://docs.accelbyte.io/gaming-services/getting-started/">official getting-started guide</a>
 to register a developer account, verify it, and complete studio onboarding.
@@ -574,7 +574,7 @@ in private configuration. Keep server secrets in a separate secret store.</li>
 before configuring permissions. Shared Cloud uses module/group grants; Private
 Cloud/BYOC may use resource/action grants. A custom hostname alone does not prove
 the model; inspect the environment&#39;s permission catalogue.</p>
-<h3 id="configure-the-oauth-clients">Configure the OAuth clients<a class="anchor" href="#configure-the-oauth-clients" aria-label="Link to section">#</a></h3>
+<h3 id="configure-the-oauth-clients">Configure the OAuth clients<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#configure-the-oauth-clients" aria-label="Link to section">#</a></h3>
 <p>Create a Public client for browser login and a Confidential client for the trusted
 backend. Configure the Public client&#39;s redirect URI to match the application.
 Device ID login does not navigate an OAuth callback; a future redirect-based
@@ -610,7 +610,7 @@ Discover other exact grants from current API metadata and the permission catalog
 service names alone do not establish group IDs.</p>
 <p>Public clients still require player tokens for authenticated resource calls.
 Successful login does not prove Cloud Save, Session, or server Statistics access.</p>
-<h3 id="configure-the-checkout-and-sdk">Configure the checkout and SDK<a class="anchor" href="#configure-the-checkout-and-sdk" aria-label="Link to section">#</a></h3>
+<h3 id="configure-the-checkout-and-sdk">Configure the checkout and SDK<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#configure-the-checkout-and-sdk" aria-label="Link to section">#</a></h3>
 <p>Use Node.js 22.13 or newer. From the repository root:</p>
 <pre><code class="language-powershell">npm ci
 if (-not (Test-Path -LiteralPath apps/web/.env.local)) {
@@ -692,7 +692,7 @@ files, browser storage, screenshots, and published diagnostics.</p>
 <p>Start with <code>npm run dev --workspace @football-11/web</code>. The UI-only preview does
 not provide trusted API routes. Complete the resource chapters before expecting
 all connected features to work in a new namespace.</p>
-<h3 id="troubleshooting-and-acceptance">Troubleshooting and acceptance<a class="anchor" href="#troubleshooting-and-acceptance" aria-label="Link to section">#</a></h3>
+<h3 id="troubleshooting-and-acceptance">Troubleshooting and acceptance<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#troubleshooting-and-acceptance" aria-label="Link to section">#</a></h3>
 <table>
 <thead>
 <tr>
@@ -725,13 +725,13 @@ service access evidence as each later chapter is completed.</p>
 browser configuration (connected-branch path: <code>../../apps/web/src/services/ags/config.ts</code>), and
 server configuration (connected-branch path: <code>../../apps/web/src/server/agsServerGateway.ts</code>).</p>
 <p><a id="reference-2"></a></p>
-<h3 id="02--login-and-identity">02 — Login and identity<a class="anchor" href="#02--login-and-identity" aria-label="Link to section">#</a></h3>
-<h3 id="outcome-and-prerequisites">Outcome and prerequisites<a class="anchor" href="#outcome-and-prerequisites" aria-label="Link to section">#</a></h3>
+<h3 id="02--login-and-identity">02 — Login and identity<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#02--login-and-identity" aria-label="Link to section">#</a></h3>
+<h3 id="outcome-and-prerequisites">Outcome and prerequisites<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#outcome-and-prerequisites" aria-label="Link to section">#</a></h3>
 <p>Guest sign-in returns an authenticated AGS player; reloading the same browser
 origin restores that identity. Complete the Public client and Device ID setup in
-<a href="#reference-1">chapter 01</a>. Guest login is implemented; account
+<a href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#reference-1">chapter 01</a>. Guest login is implemented; account
 upgrade/linking is not.</p>
-<h3 id="connect-the-authentication-flow">Connect the authentication flow<a class="anchor" href="#connect-the-authentication-flow" aria-label="Link to section">#</a></h3>
+<h3 id="connect-the-authentication-flow">Connect the authentication flow<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#connect-the-authentication-flow" aria-label="Link to section">#</a></h3>
 <ol>
 <li>Read <code>football11.ags-device.v1</code> from browser storage. If absent, generate and
 store a random UUID with <code>crypto.randomUUID()</code>. It is not an AGS user ID or fingerprint.</li>
@@ -752,7 +752,7 @@ application API, send the current access token in <code>Authorization: Bearer ..
 <code>GET /iam/v3/public/users/me</code>. The first obtains a token; the second requires it.
 Development evidence required no additional Shared Cloud permission group for
 these public operations. Verify provider/client behavior in your own namespace.</p>
-<h3 id="identity-and-session-lifetime">Identity and session lifetime<a class="anchor" href="#identity-and-session-lifetime" aria-label="Link to section">#</a></h3>
+<h3 id="identity-and-session-lifetime">Identity and session lifetime<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#identity-and-session-lifetime" aria-label="Link to section">#</a></h3>
 <table>
 <thead>
 <tr>
@@ -784,7 +784,7 @@ GitHub Pages does not transfer browser identity automatically.</p>
 is not proof that every long-running Session/Lobby recovery case works; test those
 separately. Keep the <code>DeviceGuestAuth</code> instance stable so its request guard survives
 ordinary UI rerenders.</p>
-<h3 id="verification">Verification<a class="anchor" href="#verification" aria-label="Link to section">#</a></h3>
+<h3 id="verification">Verification<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#verification" aria-label="Link to section">#</a></h3>
 <pre><code class="language-sh">npm run ags:auth:smoke
 </code></pre>
 <p>This creates development identities. Confirm token minting, current-user lookup,
@@ -796,7 +796,7 @@ same-device restoration, and different-device separation. In the actual browser:
 <li><input disabled="" type="checkbox"> Failed login leaves a retryable state.</li>
 <li><input disabled="" type="checkbox"> Browser storage contains no access or refresh token.</li>
 </ul>
-<h3 id="troubleshooting">Troubleshooting<a class="anchor" href="#troubleshooting" aria-label="Link to section">#</a></h3>
+<h3 id="troubleshooting">Troubleshooting<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#troubleshooting" aria-label="Link to section">#</a></h3>
 <table>
 <thead>
 <tr>
@@ -825,7 +825,7 @@ same-device restoration, and different-device separation. In the actual browser:
 <td>Same authenticated SDK or current bearer token reaches that call</td>
 </tr>
 </tbody></table>
-<h3 id="remaining-account-recovery-work">Remaining account recovery work<a class="anchor" href="#remaining-account-recovery-work" aria-label="Link to section">#</a></h3>
+<h3 id="remaining-account-recovery-work">Remaining account recovery work<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#remaining-account-recovery-work" aria-label="Link to section">#</a></h3>
 <p>Choose a supported durable provider, implement upgrade/linking to the existing
 guest identity, and prove that the same AGS user and saves return on another device.
 Alternatively, explicitly accept and communicate unrecoverable guest accounts
@@ -833,17 +833,17 @@ before connected-product release. Developer registration does not provide player
 <p>Sources: auth gateway (connected-branch path: <code>../../apps/web/src/services/ags/authGateway.ts</code>),
 request deduplication (connected-branch path: <code>../../apps/web/src/services/ags/deviceAuth.ts</code>),
 Device ID storage (connected-branch path: <code>../../apps/web/src/services/ags/deviceIdentity.ts</code>), and
-<a href="#stage-1">login evidence</a>.</p>
+<a href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#stage-1">login evidence</a>.</p>
 <p><a id="reference-3"></a></p>
-<h3 id="03--player-storage-with-cloud-save">03 — Player storage with Cloud Save<a class="anchor" href="#03--player-storage-with-cloud-save" aria-label="Link to section">#</a></h3>
-<h3 id="outcome-and-prerequisites-1">Outcome and prerequisites<a class="anchor" href="#outcome-and-prerequisites-1" aria-label="Link to section">#</a></h3>
+<h3 id="03--player-storage-with-cloud-save">03 — Player storage with Cloud Save<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#03--player-storage-with-cloud-save" aria-label="Link to section">#</a></h3>
+<h3 id="outcome-and-prerequisites-1">Outcome and prerequisites<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#outcome-and-prerequisites-1" aria-label="Link to section">#</a></h3>
 <p>An authenticated player can save a completed run, verify readback, and restore it
-after reload. Finish <a href="#reference-2">login</a> first. Ordinary saves use
+after reload. Finish <a href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#reference-2">login</a> first. Ordinary saves use
 the player&#39;s token and do not need a Confidential client.</p>
 <p>Cloud Save is the durable latest-run store. Despite its <code>services/local</code> path,
 <code>runStore.ts</code> now maps and validates records rather than persisting completed runs
 in browser storage. The older local/cloud reconciliation plan is historical.</p>
-<h3 id="record-ownership-and-configuration">Record ownership and configuration<a class="anchor" href="#record-ownership-and-configuration" aria-label="Link to section">#</a></h3>
+<h3 id="record-ownership-and-configuration">Record ownership and configuration<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#record-ownership-and-configuration" aria-label="Link to section">#</a></h3>
 <p>The application creates Player Records as needed. Do not seed empty placeholders
 that fail validation. The namespace Game Record in chapter 04 is created by an operator.</p>
 <table>
@@ -887,7 +887,7 @@ that fail validation. The namespace Game Record in chapter 04 is created by an o
 </tbody></table>
 <p>Visibility and authority are separate: public Saved XIs remain <code>SERVER</code>-owned.
 Private player-written saves do not become trusted competitive results.</p>
-<h3 id="connect-save-and-restore">Connect save and restore<a class="anchor" href="#connect-save-and-restore" aria-label="Link to section">#</a></h3>
+<h3 id="connect-save-and-restore">Connect save and restore<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#connect-save-and-restore" aria-label="Link to section">#</a></h3>
 <ol>
 <li>Convert the in-memory completion with <code>createCloudRunRecord</code>, binding its owner
 to the authenticated AGS user. Reject mismatched ownership.</li>
@@ -914,14 +914,14 @@ player-written save. The HTTP route accepts at most 128 KiB per request.</p>
 <code>updateRecord_ByUserId_ByKey</code> on the authenticated SDK. A read returning <code>404</code>
 means no save yet. A checksum catches corruption, but a modified browser can
 recompute it; protected results still require trusted server validation.</p>
-<h3 id="failure-and-concurrency-behavior">Failure and concurrency behavior<a class="anchor" href="#failure-and-concurrency-behavior" aria-label="Link to section">#</a></h3>
+<h3 id="failure-and-concurrency-behavior">Failure and concurrency behavior<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#failure-and-concurrency-behavior" aria-label="Link to section">#</a></h3>
 <p>After a failed save, the result remains in the current tab for retry. It is not a
 durable offline backup; reloading can lose the unsaved result. Legacy locally
 persisted latest-run values are ignored.</p>
 <p>This is one latest slot, not history or multi-device merging. The current path
 does not use optimistic-concurrency writes. Concurrent different completions can
 overwrite one another; readback detects mismatches but does not provide transactional
-history. Design durable history separately in <a href="#reference-9">chapter 09</a>.</p>
+history. Design durable history separately in <a href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#reference-9">chapter 09</a>.</p>
 <table>
 <thead>
 <tr>
@@ -950,7 +950,7 @@ history. Design durable history separately in <a href="#reference-9">chapter 09<
 <td>Reproduce on the deployed origin; Node does not enforce browser CORS</td>
 </tr>
 </tbody></table>
-<h3 id="acceptance">Acceptance<a class="anchor" href="#acceptance" aria-label="Link to section">#</a></h3>
+<h3 id="acceptance">Acceptance<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#acceptance" aria-label="Link to section">#</a></h3>
 <pre><code class="language-sh">npm run ags:cloud-save:smoke
 </code></pre>
 <p>The smoke uses a separate development test-record key. Also verify the real latest
@@ -966,17 +966,17 @@ deployed save/reload evidence before declaring that deployment complete.</p>
 <p>Sources: record mapping/validation (connected-branch path: <code>../../apps/web/src/services/local/runStore.ts</code>),
 Cloud Save gateway (connected-branch path: <code>../../apps/web/src/services/ags/authGateway.ts</code>),
 contracts (connected-branch path: <code>../../packages/contracts/src/index.ts</code>), and
-<a href="05-ags-and-cloudflare.html">current storage responsibility</a>.</p>
+<a href="https://accelbyte.github.io/f11/tutorial/reference/05-ags-and-cloudflare.html">current storage responsibility</a>.</p>
 <p><a id="reference-4"></a></p>
-<h3 id="04--game-configuration-and-issued-challenges">04 — Game configuration and issued challenges<a class="anchor" href="#04--game-configuration-and-issued-challenges" aria-label="Link to section">#</a></h3>
-<h3 id="outcome-and-prerequisites-2">Outcome and prerequisites<a class="anchor" href="#outcome-and-prerequisites-2" aria-label="Link to section">#</a></h3>
+<h3 id="04--game-configuration-and-issued-challenges">04 — Game configuration and issued challenges<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#04--game-configuration-and-issued-challenges" aria-label="Link to section">#</a></h3>
+<h3 id="outcome-and-prerequisites-2">Outcome and prerequisites<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#outcome-and-prerequisites-2" aria-label="Link to section">#</a></h3>
 <p>The backend reads shared configuration from an AGS Game Record and freezes it into
 each issued challenge. Existing challenges retain their original revision when an
 operator changes the active configuration. This integration is implemented.</p>
 <p>You need player login, the trusted backend&#39;s Confidential client, permission to
 read Game Records, and permission to create/read/update server-owned Player Records.
 The next chapter explains the backend&#39;s authentication boundary.</p>
-<h3 id="configure-the-game-record">Configure the Game Record<a class="anchor" href="#configure-the-game-record" aria-label="Link to section">#</a></h3>
+<h3 id="configure-the-game-record">Configure the Game Record<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#configure-the-game-record" aria-label="Link to section">#</a></h3>
 <p>Create <code>football11_game_config_v1</code> in the game namespace as a server-owned Game
 Record. The value must match this exact schema:</p>
 <pre><code class="language-json">{
@@ -998,7 +998,7 @@ levels rather than silently using defaults.</p>
 edit configuration. Operators use their own authorized administration access to
 create or activate revisions. Recorded Shared Cloud access is
 <code>m_cloud_save/g_game_records</code> <strong>READ</strong>.</p>
-<h3 id="connect-challenge-issuance">Connect challenge issuance<a class="anchor" href="#connect-challenge-issuance" aria-label="Link to section">#</a></h3>
+<h3 id="connect-challenge-issuance">Connect challenge issuance<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#connect-challenge-issuance" aria-label="Link to section">#</a></h3>
 <ol>
 <li>The authenticated browser posts a request to <code>/api/draft-challenges</code>. Reuse
 the existing request builder and <code>IssueDraftChallengeRequestV1</code> contract.</li>
@@ -1017,10 +1017,10 @@ its seed, versions, revision, and configuration against the stored receipt.</li>
 <p>Solo issuance stores one player&#39;s receipt. Room issuance additionally reads the
 canonical Session, validates the leader/start conditions, identifies eligible
 participants, and writes their challenge receipts. This does not finish the room
-mutation-authority work described in <a href="#reference-7">chapter 07</a>.</p>
+mutation-authority work described in <a href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#reference-7">chapter 07</a>.</p>
 <p>There is one active-challenge record per player. Starting a different challenge
 supersedes the previous unfinished challenge. It is not a queue of outstanding runs.</p>
-<h3 id="change-configuration-safely">Change configuration safely<a class="anchor" href="#change-configuration-safely" aria-label="Link to section">#</a></h3>
+<h3 id="change-configuration-safely">Change configuration safely<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#change-configuration-safely" aria-label="Link to section">#</a></h3>
 <ol>
 <li>Add a new revision with valid values before selecting it as active.</li>
 <li>Change <code>activeRevision</code> to that revision using operator access.</li>
@@ -1030,7 +1030,7 @@ supersedes the previous unfinished challenge. It is not a queue of outstanding r
 </ol>
 <p>The backend must fail visibly when configuration is absent or invalid. A browser
 fallback would bypass the server-issued contract and should not be added.</p>
-<h3 id="troubleshooting-and-acceptance-1">Troubleshooting and acceptance<a class="anchor" href="#troubleshooting-and-acceptance-1" aria-label="Link to section">#</a></h3>
+<h3 id="troubleshooting-and-acceptance-1">Troubleshooting and acceptance<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#troubleshooting-and-acceptance-1" aria-label="Link to section">#</a></h3>
 <table>
 <thead>
 <tr>
@@ -1065,20 +1065,20 @@ fallback would bypass the server-issued contract and should not be added.</p>
 <li><input disabled="" type="checkbox"> A retry with the same request identity returns the existing challenge.</li>
 <li><input disabled="" type="checkbox"> Revision changes affect new challenges; forged snapshots fail trusted submission.</li>
 </ul>
-<p>Sources: <a href="#stage-4">configuration plan and schema</a>,
+<p>Sources: <a href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#stage-4">configuration plan and schema</a>,
 issuance service (connected-branch path: <code>../../apps/web/src/server/draftChallenges.ts</code>),
 HTTP route (connected-branch path: <code>../../apps/web/app/api/draft-challenges/route.ts</code>), and
 browser adapter (connected-branch path: <code>../../apps/web/src/services/ags/draftChallenges.ts</code>).</p>
 <p><a id="reference-5"></a></p>
-<h3 id="05--trusted-backend-and-protected-writes">05 — Trusted backend and protected writes<a class="anchor" href="#05--trusted-backend-and-protected-writes" aria-label="Link to section">#</a></h3>
-<h3 id="outcome-and-prerequisites-3">Outcome and prerequisites<a class="anchor" href="#outcome-and-prerequisites-3" aria-label="Link to section">#</a></h3>
+<h3 id="05--trusted-backend-and-protected-writes">05 — Trusted backend and protected writes<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#05--trusted-backend-and-protected-writes" aria-label="Link to section">#</a></h3>
+<h3 id="outcome-and-prerequisites-3">Outcome and prerequisites<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#outcome-and-prerequisites-3" aria-label="Link to section">#</a></h3>
 <p>The application derives the player from AGS authentication, validates submitted
 evidence outside the browser, and writes competitive data using server credentials.
 Trusted ranking and Saved-XI settlement are implemented; full room mutation and
 comparison authority remain unfinished.</p>
 <p>Complete setup, login, and Game Record configuration. A running server is required;
 the static preview alone cannot provide trusted endpoints.</p>
-<h3 id="keep-two-authentication-contexts">Keep two authentication contexts<a class="anchor" href="#keep-two-authentication-contexts" aria-label="Link to section">#</a></h3>
+<h3 id="keep-two-authentication-contexts">Keep two authentication contexts<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#keep-two-authentication-contexts" aria-label="Link to section">#</a></h3>
 <table>
 <thead>
 <tr>
@@ -1106,7 +1106,7 @@ the expected namespace.</p>
 Base URL, namespace, and Public client ID can use the public configuration fallback;
 the source also supports server-side <code>ACCELBYTE_BASE_URL</code>, <code>ACCELBYTE_NAMESPACE</code>,
 and <code>ACCELBYTE_PUBLIC_CLIENT_ID</code> overrides. Keep both contexts on the intended environment.</p>
-<h3 id="connect-the-trusted-submission">Connect the trusted submission<a class="anchor" href="#connect-the-trusted-submission" aria-label="Link to section">#</a></h3>
+<h3 id="connect-the-trusted-submission">Connect the trusted submission<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#connect-the-trusted-submission" aria-label="Link to section">#</a></h3>
 <p>The implemented route is <code>POST /api/runs/submit</code>. Use the request contract and
 browser adapter rather than posting a displayed score or a user ID.</p>
 <ol>
@@ -1131,19 +1131,19 @@ return a sanitized ranking view.</li>
 <p>The browser receives <code>{ ok: true, data: ... }</code> or
 <code>{ ok: false, error: { code, message, details } }</code>. Responses use <code>no-store</code>.
 Treat a failed protected submission separately from ordinary Cloud Save status.</p>
-<h3 id="retry-and-authority-boundaries">Retry and authority boundaries<a class="anchor" href="#retry-and-authority-boundaries" aria-label="Link to section">#</a></h3>
+<h3 id="retry-and-authority-boundaries">Retry and authority boundaries<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#retry-and-authority-boundaries" aria-label="Link to section">#</a></h3>
 <p>Best-points settlement uses <code>MAX</code> before storing its receipt. If the statistic write
 succeeds but the receipt fails, retrying the same accepted result cannot inflate
 the best score. The receipt records the result hash and binds duplicate handling
 to that result. This is the implemented recovery pattern, not a multi-resource
 database transaction.</p>
 <p>Saved-XI Challenge Score uses a different pattern: pending history and an absolute
-score write. Follow <a href="#reference-8">chapter 08</a>; do not replace it with
+score write. Follow <a href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#reference-8">chapter 08</a>; do not replace it with
 an additive retry.</p>
 <p>Keep server credentials outside browser bundles. Do not trust a submitted owner,
 an unverified decoded token, a display name, or a <code>trusted</code> label stored by a player.
 Server-owned AGS metadata and server validation establish the protected write path.</p>
-<h3 id="troubleshooting-and-acceptance-2">Troubleshooting and acceptance<a class="anchor" href="#troubleshooting-and-acceptance-2" aria-label="Link to section">#</a></h3>
+<h3 id="troubleshooting-and-acceptance-2">Troubleshooting and acceptance<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#troubleshooting-and-acceptance-2" aria-label="Link to section">#</a></h3>
 <table>
 <thead>
 <tr>
@@ -1186,18 +1186,18 @@ Server-owned AGS metadata and server validation establish the protected write pa
 <p>Sources: trusted route (connected-branch path: <code>../../apps/web/app/api/runs/submit/route.ts</code>),
 replay service (connected-branch path: <code>../../apps/web/src/server/trustedReplay.ts</code>),
 AGS gateway (connected-branch path: <code>../../apps/web/src/server/agsServerGateway.ts</code>), and
-<a href="#stage-3">trusted ranking evidence</a>.</p>
+<a href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#stage-3">trusted ranking evidence</a>.</p>
 <p><a id="reference-6"></a></p>
-<h3 id="06--statistics-and-leaderboards">06 — Statistics and Leaderboards<a class="anchor" href="#06--statistics-and-leaderboards" aria-label="Link to section">#</a></h3>
-<h3 id="outcome-and-prerequisites-4">Outcome and prerequisites<a class="anchor" href="#outcome-and-prerequisites-4" aria-label="Link to section">#</a></h3>
+<h3 id="06--statistics-and-leaderboards">06 — Statistics and Leaderboards<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#06--statistics-and-leaderboards" aria-label="Link to section">#</a></h3>
+<h3 id="outcome-and-prerequisites-4">Outcome and prerequisites<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#outcome-and-prerequisites-4" aria-label="Link to section">#</a></h3>
 <p>Accepted results update server-owned numeric values, and players can read the
-associated ranking. Complete the <a href="#reference-5">trusted backend</a> first.
+associated ranking. Complete the <a href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#reference-5">trusted backend</a> first.
 The integration is implemented, but fair ranking across the content-version
 migration remains a release decision.</p>
 <p>Statistics stores numeric values; Cloud Save stores structured evidence. The
 application uses <code>@accelbyte/sdk-social</code> for Statistics APIs and
 <code>@accelbyte/sdk-leaderboard</code> for ranking reads.</p>
-<h3 id="configure-the-resources">Configure the resources<a class="anchor" href="#configure-the-resources" aria-label="Link to section">#</a></h3>
+<h3 id="configure-the-resources">Configure the resources<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#configure-the-resources" aria-label="Link to section">#</a></h3>
 <p>Create these resources in the same game namespace:</p>
 <table>
 <thead>
@@ -1263,7 +1263,7 @@ when creating that Statistic. The runtime uses <code>MAX</code> for best points 
 for Challenge Score; these are update strategies chosen per server operation.
 Verify Confidential-client access to create/read/update user values and player-token
 access to ranking reads using the environment&#39;s actual permission metadata.</p>
-<h3 id="connect-best-points-settlement">Connect best-points settlement<a class="anchor" href="#connect-best-points-settlement" aria-label="Link to section">#</a></h3>
+<h3 id="connect-best-points-settlement">Connect best-points settlement<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#connect-best-points-settlement" aria-label="Link to section">#</a></h3>
 <ol>
 <li>After trusted replay, obtain the authenticated user ID and server-derived points.</li>
 <li>Call <code>UserStatisticAdminApi.updateStatitemValueBulk_v2</code> with the Statistic code,
@@ -1277,7 +1277,7 @@ finite value at least as high as the accepted points.</li>
 <p>Lower results cannot replace a higher best, and repeating the same value cannot
 inflate it. Challenge Score can decrease, so its settlement uses the separate
 pending-history/absolute-value workflow in chapter 08.</p>
-<h3 id="connect-ranking-reads">Connect ranking reads<a class="anchor" href="#connect-ranking-reads" aria-label="Link to section">#</a></h3>
+<h3 id="connect-ranking-reads">Connect ranking reads<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#connect-ranking-reads" aria-label="Link to section">#</a></h3>
 <p>The server&#39;s read path uses a player-token SDK context:</p>
 <ol>
 <li>Read the user&#39;s all-time rank with
@@ -1292,13 +1292,13 @@ hidden entries, and project only the fields needed by the application.</li>
 same instant. Keep a stale/pending state and retry reads; do not resubmit an additive
 score to force a refresh. This project uses sanitized display labels, so adding
 profile enrichment would require separately verified IAM calls and permissions.</p>
-<h3 id="resolve-content-version-migration">Resolve content-version migration<a class="anchor" href="#resolve-content-version-migration" aria-label="Link to section">#</a></h3>
+<h3 id="resolve-content-version-migration">Resolve content-version migration<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#resolve-content-version-migration" aria-label="Link to section">#</a></h3>
 <p>The current catalogue recalibration changes the score distribution. Choose a new
 Statistic/Leaderboard pair or an explicit reset/migration before treating old and
 new scores as comparable. A resource-code change requires updates to
 <code>TRUSTED_POINTS_STAT_CODE</code>, <code>TRUSTED_LEADERBOARD_CODE</code>, smoke checks, and Saved-XI
 discovery. Rehearse it in development before production; this guide performs no reset.</p>
-<h3 id="troubleshooting-and-acceptance-3">Troubleshooting and acceptance<a class="anchor" href="#troubleshooting-and-acceptance-3" aria-label="Link to section">#</a></h3>
+<h3 id="troubleshooting-and-acceptance-3">Troubleshooting and acceptance<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#troubleshooting-and-acceptance-3" aria-label="Link to section">#</a></h3>
 <table>
 <thead>
 <tr>
@@ -1330,17 +1330,17 @@ tracked migration decision before marking ranking ready for connected release.</
 <p>Sources: gateway calls (connected-branch path: <code>../../apps/web/src/server/agsServerGateway.ts</code>),
 resource constants (connected-branch path: <code>../../apps/web/src/server/trustedReplay.ts</code>),
 ranking client (connected-branch path: <code>../../apps/web/src/services/ags/trustedRanking.ts</code>), and
-<a href="#stage-3">ranking plan</a>.</p>
+<a href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#stage-3">ranking plan</a>.</p>
 <p><a id="reference-7"></a></p>
-<h3 id="07--sessions-and-lobby">07 — Sessions and Lobby<a class="anchor" href="#07--sessions-and-lobby" aria-label="Link to section">#</a></h3>
-<h3 id="outcome-and-prerequisites-5">Outcome and prerequisites<a class="anchor" href="#outcome-and-prerequisites-5" aria-label="Link to section">#</a></h3>
+<h3 id="07--sessions-and-lobby">07 — Sessions and Lobby<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#07--sessions-and-lobby" aria-label="Link to section">#</a></h3>
+<h3 id="outcome-and-prerequisites-5">Outcome and prerequisites<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#outcome-and-prerequisites-5" aria-label="Link to section">#</a></h3>
 <p>Authenticated players create, discover, join, and leave a shared room. Membership
 and room state converge through canonical Session reads, accelerated by Lobby
 notifications. The development loop is implemented; trusted room authority and
 the full recovery matrix remain unfinished.</p>
 <p>Complete login, Game Records, and the trusted backend first. Session owns the room;
 Lobby supplies notifications. This flow needs no Matchmaking, AMS, or dedicated server.</p>
-<h3 id="configure-the-session-template">Configure the Session template<a class="anchor" href="#configure-the-session-template" aria-label="Link to section">#</a></h3>
+<h3 id="configure-the-session-template">Configure the Session template<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#configure-the-session-template" aria-label="Link to section">#</a></h3>
 <p>Create the template in the application&#39;s game namespace:</p>
 <table>
 <thead>
@@ -1417,7 +1417,7 @@ the relevant evidence. Do not replace that with an assumed grant list.</p>
 <td>Integer 3–300</td>
 </tr>
 </tbody></table>
-<h3 id="connect-session-operations">Connect Session operations<a class="anchor" href="#connect-session-operations" aria-label="Link to section">#</a></h3>
+<h3 id="connect-session-operations">Connect Session operations<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#connect-session-operations" aria-label="Link to section">#</a></h3>
 <p>Create <code>AgsSessionGateway</code> from the shared SDK only after login has installed its
 token. Keep Session initialization behind the browser/hydration boundary.</p>
 <table>
@@ -1471,7 +1471,7 @@ keep replaying a stale version. The adapter currently permits four attempts.</p>
 Challenge issuance goes through the trusted backend, which stores player-bound
 receipts. The Session snapshot carries the canonical room challenge used by trusted
 submission checks.</p>
-<h3 id="connect-lobby-notifications">Connect Lobby notifications<a class="anchor" href="#connect-lobby-notifications" aria-label="Link to section">#</a></h3>
+<h3 id="connect-lobby-notifications">Connect Lobby notifications<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#connect-lobby-notifications" aria-label="Link to section">#</a></h3>
 <ol>
 <li>Create <code>Lobby.WebSocket</code> from the authenticated SDK.</li>
 <li>Call <code>connect()</code> before registering callbacks: the installed SDK creates its
@@ -1486,7 +1486,7 @@ applying the message payload as authoritative state.</li>
 <p>The TypeScript adapter receives raw envelopes and tolerates missing session IDs.
 Notification delivery alone is not proof of state convergence; compare canonical
 snapshots on separate clients.</p>
-<h3 id="complete-authority-and-recovery-work">Complete authority and recovery work<a class="anchor" href="#complete-authority-and-recovery-work" aria-label="Link to section">#</a></h3>
+<h3 id="complete-authority-and-recovery-work">Complete authority and recovery work<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#complete-authority-and-recovery-work" aria-label="Link to section">#</a></h3>
 <p>Existing cooperative browser guards do not stop a modified member client from
 altering the room aggregate. Finish these items before competitive acceptance:</p>
 <ol>
@@ -1499,7 +1499,7 @@ member-written result summaries from Session attributes.</li>
 </ol>
 <p>Ranked room replay already checks canonical membership and challenge context.
 That protection does not make every room update or displayed comparison trusted.</p>
-<h3 id="verification-and-troubleshooting">Verification and troubleshooting<a class="anchor" href="#verification-and-troubleshooting" aria-label="Link to section">#</a></h3>
+<h3 id="verification-and-troubleshooting">Verification and troubleshooting<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#verification-and-troubleshooting" aria-label="Link to section">#</a></h3>
 <pre><code class="language-sh">node --env-file=apps/web/.env.local tools/ags/smoke-friend-room.mjs
 </code></pre>
 <p>This creates test identities/sessions against AGS. Also use two isolated browser
@@ -1538,17 +1538,17 @@ plus completion of the authority items above. The tracker still marks those exit
 <p>Sources: Session adapter (connected-branch path: <code>../../apps/web/src/services/ags/sessionGateway.ts</code>),
 Lobby adapter (connected-branch path: <code>../../apps/web/src/services/ags/lobbyGateway.ts</code>),
 room state (connected-branch path: <code>../../apps/web/src/state/friendRoomMachine.ts</code>), and
-<a href="#stage-5">Session evidence</a>.</p>
+<a href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#stage-5">Session evidence</a>.</p>
 <p><a id="reference-8"></a></p>
-<h3 id="08--saved-xi-discovery-and-settlement">08 — Saved-XI discovery and settlement<a class="anchor" href="#08--saved-xi-discovery-and-settlement" aria-label="Link to section">#</a></h3>
-<h3 id="outcome-and-prerequisites-6">Outcome and prerequisites<a class="anchor" href="#outcome-and-prerequisites-6" aria-label="Link to section">#</a></h3>
+<h3 id="08--saved-xi-discovery-and-settlement">08 — Saved-XI discovery and settlement<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#08--saved-xi-discovery-and-settlement" aria-label="Link to section">#</a></h3>
+<h3 id="outcome-and-prerequisites-6">Outcome and prerequisites<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#outcome-and-prerequisites-6" aria-label="Link to section">#</a></h3>
 <p>The backend publishes an eligible record, selects a compatible opponent from AGS
 ranking data, and settles a challenge into private AGS state. This integration is
 implemented and uses no Matchmaking queue or shared live Session.</p>
 <p>Complete trusted replay, best-points ranking, and the private Challenge Score
 Statistic in chapters 05–06. At least two compatible published records are needed
 to verify successful opponent discovery; an empty candidate set is a valid outcome.</p>
-<h3 id="resource-and-route-map">Resource and route map<a class="anchor" href="#resource-and-route-map" aria-label="Link to section">#</a></h3>
+<h3 id="resource-and-route-map">Resource and route map<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#resource-and-route-map" aria-label="Link to section">#</a></h3>
 <table>
 <thead>
 <tr>
@@ -1605,7 +1605,7 @@ the resource definition (connected-branch path: <code>../../tools/ags/resources/
 </tbody></table>
 <p>All routes require the player&#39;s bearer token. They are application-owned routes,
 not native AGS endpoint names.</p>
-<h3 id="publish-the-record">Publish the record<a class="anchor" href="#publish-the-record" aria-label="Link to section">#</a></h3>
+<h3 id="publish-the-record">Publish the record<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#publish-the-record" aria-label="Link to section">#</a></h3>
 <ol>
 <li>Authenticate the requesting player through IAM.</li>
 <li>Replay the submitted run and read that player&#39;s trusted settlement receipt.</li>
@@ -1618,7 +1618,7 @@ explicit replacement updates this one slot; it does not create unlimited entries
 <p>Public records contain the data required for discovery, including their owner
 identity. The application&#39;s public-facing response is a separate sanitized
 projection; do not claim the underlying public AGS record is anonymous.</p>
-<h3 id="discover-and-issue-a-challenge">Discover and issue a challenge<a class="anchor" href="#discover-and-issue-a-challenge" aria-label="Link to section">#</a></h3>
+<h3 id="discover-and-issue-a-challenge">Discover and issue a challenge<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#discover-and-issue-a-challenge" aria-label="Link to section">#</a></h3>
 <ol>
 <li>Load the requesting player&#39;s Saved XI, private history, and existing challenge.</li>
 <li>Refuse new issuance while a settlement is pending or the rolling daily limit is reached.</li>
@@ -1633,7 +1633,7 @@ the server-owned challenge record. Return an opaque token and sanitized preview.
 <p>Current limits are a ten-minute token lifetime, 24-hour same-opponent exclusion,
 20 matches in a rolling 24 hours, and at most 20 stored history entries. These are
 application rules enforced by the backend, not generic AGS defaults.</p>
-<h3 id="resolve-without-double-applying-a-score">Resolve without double-applying a score<a class="anchor" href="#resolve-without-double-applying-a-score" aria-label="Link to section">#</a></h3>
+<h3 id="resolve-without-double-applying-a-score">Resolve without double-applying a score<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#resolve-without-double-applying-a-score" aria-label="Link to section">#</a></h3>
 <ol>
 <li>Authenticate, load the issued challenge, and require the exact token.</li>
 <li>If history already contains its match, return the settled result or repair the
@@ -1649,7 +1649,7 @@ and mark the history entry settled.</li>
 partial failure without applying the change again. This documented retry behavior
 does not imply cross-record transactional isolation under arbitrary concurrent
 requests; concurrency/abuse review remains part of release hardening.</p>
-<h3 id="verification-and-troubleshooting-1">Verification and troubleshooting<a class="anchor" href="#verification-and-troubleshooting-1" aria-label="Link to section">#</a></h3>
+<h3 id="verification-and-troubleshooting-1">Verification and troubleshooting<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#verification-and-troubleshooting-1" aria-label="Link to section">#</a></h3>
 <p>Run <code>npm run ags:saved-xi:smoke</code> with the backend and namespace configured as in
 chapter 10. The smoke creates two development players and changes test data.</p>
 <ul>
@@ -1691,17 +1691,17 @@ chapter 10. The smoke creates two development players and changes test data.</p>
 <p>Sources: competition service (connected-branch path: <code>../../apps/web/src/server/savedXiCompetition.ts</code>),
 AGS gateway (connected-branch path: <code>../../apps/web/src/server/agsServerGateway.ts</code>),
 browser adapter (connected-branch path: <code>../../apps/web/src/services/ags/savedXiCompetition.ts</code>), and
-<a href="#stage-6">recorded evidence</a>.</p>
+<a href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#stage-6">recorded evidence</a>.</p>
 <p><a id="reference-9"></a></p>
-<h3 id="09--daily-challenges-public-results-and-history">09 — Daily challenges, public results, and history<a class="anchor" href="#09--daily-challenges-public-results-and-history" aria-label="Link to section">#</a></h3>
-<h3 id="status-and-prerequisites">Status and prerequisites<a class="anchor" href="#status-and-prerequisites" aria-label="Link to section">#</a></h3>
+<h3 id="09--daily-challenges-public-results-and-history">09 — Daily challenges, public results, and history<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#09--daily-challenges-public-results-and-history" aria-label="Link to section">#</a></h3>
+<h3 id="status-and-prerequisites">Status and prerequisites<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#status-and-prerequisites" aria-label="Link to section">#</a></h3>
 <p>These integrations remain planned. This chapter describes the implementation work
 needed to complete the guide&#39;s scope; none of the proposed resources or routes
 below should be assumed to exist.</p>
 <p>Reuse authenticated identity, server-issued challenges, trusted result receipts,
 and AGS-backed storage from the earlier chapters. A latest-run slot and a bounded
 Saved-XI match history do not constitute general result history.</p>
-<h3 id="establish-the-contracts-first">Establish the contracts first<a class="anchor" href="#establish-the-contracts-first" aria-label="Link to section">#</a></h3>
+<h3 id="establish-the-contracts-first">Establish the contracts first<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#establish-the-contracts-first" aria-label="Link to section">#</a></h3>
 <table>
 <thead>
 <tr>
@@ -1737,7 +1737,7 @@ Saved-XI match history do not constitute general result history.</p>
 <p>Choose final record keys and API contracts when implementing. Verify the target
 Cloud Save operations and concurrency guarantees before choosing how canonical
 creation works; a single read-then-write check is not proof of uniqueness.</p>
-<h3 id="implement-the-daily-lifecycle">Implement the daily lifecycle<a class="anchor" href="#implement-the-daily-lifecycle" aria-label="Link to section">#</a></h3>
+<h3 id="implement-the-daily-lifecycle">Implement the daily lifecycle<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#implement-the-daily-lifecycle" aria-label="Link to section">#</a></h3>
 <ol>
 <li>Use server time to determine the active UTC period.</li>
 <li>Create or return one canonical challenge for that period and category.</li>
@@ -1752,7 +1752,7 @@ categories separate from random-run ranking unless comparability is explicitly e
 <p>The current Game Record supports shared configuration. An AGS Game Record is a
 candidate for canonical daily data, but the final storage/concurrency design is
 still to be implemented and verified.</p>
-<h3 id="publish-a-trusted-public-projection">Publish a trusted public projection<a class="anchor" href="#publish-a-trusted-public-projection" aria-label="Link to section">#</a></h3>
+<h3 id="publish-a-trusted-public-projection">Publish a trusted public projection<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#publish-a-trusted-public-projection" aria-label="Link to section">#</a></h3>
 <ol>
 <li>Start from an accepted server result and retain its immutable evidence privately.</li>
 <li>Generate an opaque public result identifier, separate from the private player key.</li>
@@ -1765,7 +1765,7 @@ a removal path for published data.</li>
 <p>The Phase 3 plan proposes <code>/results/{publicResultId}</code> and related data routes;
 they are not implemented endpoints. Share-image design is outside this integration
 guide, but any downstream renderer must consume the same approved public projection.</p>
-<h3 id="add-durable-player-history">Add durable player history<a class="anchor" href="#add-durable-player-history" aria-label="Link to section">#</a></h3>
+<h3 id="add-durable-player-history">Add durable player history<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#add-durable-player-history" aria-label="Link to section">#</a></h3>
 <p>Store a durable history index under the authenticated AGS user. Define a bounded
 size or pagination before choosing record layout. Write references only after the
 associated result is safely stored, and design retry/reconciliation for partial failures.</p>
@@ -1773,7 +1773,7 @@ associated result is safely stored, and design retry/reconciliation for partial 
 After identity restoration, retrieve the authoritative AGS index and handle removed
 or unavailable results. Cross-device history depends on the recovery/linking work
 in chapter 02; a fresh Device ID does not recover a previous guest&#39;s records.</p>
-<h3 id="acceptance-and-likely-failure-cases">Acceptance and likely failure cases<a class="anchor" href="#acceptance-and-likely-failure-cases" aria-label="Link to section">#</a></h3>
+<h3 id="acceptance-and-likely-failure-cases">Acceptance and likely failure cases<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#acceptance-and-likely-failure-cases" aria-label="Link to section">#</a></h3>
 <ul>
 <li><input disabled="" type="checkbox"> Concurrent requests for one UTC period return the same canonical challenge.</li>
 <li><input disabled="" type="checkbox"> Midnight rollover produces a new challenge without altering the old one.</li>
@@ -1786,16 +1786,16 @@ in chapter 02; a fresh Device ID does not recover a previous guest&#39;s records
 <p>Investigate duplicate daily challenges as a concurrency problem, changed challenges
 as a version-freezing problem, and lost history as an identity or durable-index
 problem. Do not mask any of them by rebuilding authoritative state from browser storage.</p>
-<p>Source: <a href="phases/phase-03-sharing-and-daily.html">Phase 3 contracts and exit criteria</a>.
-Keep P3-01 through P3-05 in the <a href="10-progress-tracker.html">tracker</a> open until their
+<p>Source: <a href="https://accelbyte.github.io/f11/tutorial/reference/phases/phase-03-sharing-and-daily.html">Phase 3 contracts and exit criteria</a>.
+Keep P3-01 through P3-05 in the <a href="https://accelbyte.github.io/f11/tutorial/reference/10-progress-tracker.html">tracker</a> open until their
 implementation and acceptance evidence exists.</p>
 <p><a id="reference-10"></a></p>
-<h3 id="10--deployment-and-integration-verification">10 — Deployment and integration verification<a class="anchor" href="#10--deployment-and-integration-verification" aria-label="Link to section">#</a></h3>
-<h3 id="outcome-1">Outcome<a class="anchor" href="#outcome-1" aria-label="Link to section">#</a></h3>
+<h3 id="10--deployment-and-integration-verification">10 — Deployment and integration verification<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#10--deployment-and-integration-verification" aria-label="Link to section">#</a></h3>
+<h3 id="outcome-1">Outcome<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#outcome-1" aria-label="Link to section">#</a></h3>
 <p>The intended deployment can authenticate players, persist/recover data, run trusted
 operations, and recover room/settlement state. Passing local tests or creating AGS
 resources alone does not establish this outcome.</p>
-<h3 id="configure-both-runtime-boundaries">Configure both runtime boundaries<a class="anchor" href="#configure-both-runtime-boundaries" aria-label="Link to section">#</a></h3>
+<h3 id="configure-both-runtime-boundaries">Configure both runtime boundaries<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#configure-both-runtime-boundaries" aria-label="Link to section">#</a></h3>
 <ol>
 <li>Supply browser-safe AGS values before building the frontend. Its bundle needs
 the correct base URL, game namespace, and Public client ID.</li>
@@ -1817,7 +1817,7 @@ frontend URL/base-path configuration, not the API backend.</p>
 <p>Register callback URLs when using redirect-based login. The current Device ID flow
 does not redirect. Browser identity is scoped to the frontend origin, so moving
 origins may create a new guest even when both deployments use the same namespace.</p>
-<h3 id="run-repository-checks">Run repository checks<a class="anchor" href="#run-repository-checks" aria-label="Link to section">#</a></h3>
+<h3 id="run-repository-checks">Run repository checks<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#run-repository-checks" aria-label="Link to section">#</a></h3>
 <pre><code class="language-sh">npm ci
 npm run verify
 </code></pre>
@@ -1828,7 +1828,7 @@ It does not prove live AGS access. For static Pages output also run:</p>
 <p>Inspect public output for private configuration before publishing. For this
 documentation change, no application tests or live smokes were rerun; the commands
 here are the verification procedure for an actual integration/deployment.</p>
-<h3 id="run-live-development-checks">Run live development checks<a class="anchor" href="#run-live-development-checks" aria-label="Link to section">#</a></h3>
+<h3 id="run-live-development-checks">Run live development checks<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#run-live-development-checks" aria-label="Link to section">#</a></h3>
 <p>These commands create test identities/records, sessions, and Statistic values.
 Use a development namespace, keep credentials in the ignored environment file,
 and retain redacted output rather than tokens or raw identity dumps.</p>
@@ -1876,7 +1876,7 @@ route URL does not change their AGS namespace automatically.</p>
 <td>Two-player discovery, protected record metadata, duplicate resolution, unchanged opponent score</td>
 </tr>
 </tbody></table>
-<h3 id="verify-in-the-deployed-browser">Verify in the deployed browser<a class="anchor" href="#verify-in-the-deployed-browser" aria-label="Link to section">#</a></h3>
+<h3 id="verify-in-the-deployed-browser">Verify in the deployed browser<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#verify-in-the-deployed-browser" aria-label="Link to section">#</a></h3>
 <ul>
 <li><input disabled="" type="checkbox"> Same-guest login and reload work on the real frontend origin.</li>
 <li><input disabled="" type="checkbox"> Latest-run Cloud Save reports success, then restores after reload.</li>
@@ -1890,7 +1890,7 @@ headers; errors retain appropriate CORS headers; unapproved origins are rejected
 <p>A Node smoke cannot validate browser CORS. The existing Pages Cloud Save warning
 must be closed with actual deployed save/reload evidence. Likewise, Lobby notification
 delivery does not replace multi-client Session convergence checks.</p>
-<h3 id="integration-completion-gates">Integration completion gates<a class="anchor" href="#integration-completion-gates" aria-label="Link to section">#</a></h3>
+<h3 id="integration-completion-gates">Integration completion gates<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/12-accelbyte-integration-guide.html#integration-completion-gates" aria-label="Link to section">#</a></h3>
 <table>
 <thead>
 <tr>
@@ -1928,14 +1928,14 @@ delivery does not replace multi-client Session convergence checks.</p>
 </tr>
 </tbody></table>
 <p>Record namespace/environment labels, build/version, test date, expected/observed
-outcome, and redacted evidence in the <a href="10-progress-tracker.html">progress tracker</a>.
+outcome, and redacted evidence in the <a href="https://accelbyte.github.io/f11/tutorial/reference/10-progress-tracker.html">progress tracker</a>.
 Mark a feature complete only after its acceptance passes. Unresolved AGS integration
 gates do not retroactively invalidate the standalone Functional MVP.</p>
 <p>This guide covers integration completion. The project&#39;s separate rights and product
-release gates remain in the <a href="phases/phase-06-mvp-hardening-and-release.html">connected-release checklist</a>.</p>
-<p>Sources: <a href="11-github-pages.html">hosting guide</a>,
+release gates remain in the <a href="https://accelbyte.github.io/f11/tutorial/reference/phases/phase-06-mvp-hardening-and-release.html">connected-release checklist</a>.</p>
+<p>Sources: <a href="https://accelbyte.github.io/f11/tutorial/reference/11-github-pages.html">hosting guide</a>,
 API URL adapter (connected-branch path: <code>../../apps/web/src/services/apiUrl.ts</code>),
 Pages build configuration (connected-branch path: <code>../../apps/web/vite.preview.config.ts</code>),
 CORS policy (connected-branch path: <code>../../apps/web/src/server/apiCors.ts</code>), and
 smoke scripts (connected-branch path: <code>../../tools/ags/</code>).</p>
-</article><footer>Football 11 · Generated from the repository documentation. <a href="https://football-11.workspace-025025.chatgpt.site">Back to the game</a></footer></main></div></body></html>
+</article><footer>Football 11 · Generated from the repository documentation. <a href="https://accelbyte.github.io/f11/">Back to the game</a></footer></main></div></body></html>

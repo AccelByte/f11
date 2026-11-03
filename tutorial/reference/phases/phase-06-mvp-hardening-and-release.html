@@ -1,38 +1,38 @@
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Phase 6 Detailed Plan — Connected Release Hardening · Football 11</title><meta name="description" content="Build Football 11 from offline mechanics to online features. Read the setup guide, six integration stages, and copy-ready prompts."><link rel="stylesheet" href="../../tutorial.css"></head>
-<body><a class="skip" href="#tutorial-content">Skip to tutorial</a><header><a class="brand" href="../../index.html"><span>11</span> FOOTBALL 11 <small>THE PLAYBOOK</small></a><nav aria-label="Main navigation"><a href="../../index.html">Tutorial</a><a class="play" href="https://football-11.workspace-025025.chatgpt.site">Play the game ↗</a></nav></header>
-<div class="layout"><aside><details open><summary>On this page</summary><nav aria-label="Tutorial sections"><a class="level-2" href="#work-estimate--one-developer-with-agentic-ai">Work estimate — one developer with agentic AI</a>
-<a class="level-2" href="#phase-outcome">Phase outcome</a>
-<a class="level-2" href="#entry-conditions">Entry conditions</a>
-<a class="level-2" href="#workstreams">Workstreams</a>
-<a class="level-3" href="#6a--release-configuration-and-secrets">6A — Release configuration and secrets</a>
-<a class="level-3" href="#6b--data-migration-and-recovery">6B — Data migration and recovery</a>
-<a class="level-3" href="#6c--security-and-abuse-review">6C — Security and abuse review</a>
-<a class="level-3" href="#6d--integrated-player-flow-regression">6D — Integrated player-flow regression</a>
-<a class="level-3" href="#6e--browser-accessibility-and-responsive-qa">6E — Browser, accessibility, and responsive QA</a>
-<a class="level-3" href="#6f--performance-and-resilience">6F — Performance and resilience</a>
-<a class="level-3" href="#6g--content-and-legal-release-gate">6G — Content and legal release gate</a>
-<a class="level-3" href="#6h--operations-and-observability">6H — Operations and observability</a>
-<a class="level-3" href="#6i--deployment-and-rollback-rehearsal">6I — Deployment and rollback rehearsal</a>
-<a class="level-2" href="#release-evidence-matrix">Release evidence matrix</a>
-<a class="level-2" href="#production-device-id-gate">Production Device ID gate</a>
-<a class="level-2" href="#gono-go-blockers">Go/no-go blockers</a>
-<a class="level-2" href="#exit-checklist">Exit checklist</a></nav></details><a class="source" href="https://github.com/AccelByte/f11/blob/main/docs/phases/phase-06-mvp-hardening-and-release.md">View Markdown source ↗</a></aside><main id="tutorial-content"><div class="intro">BUILD YOUR GAME · ONE FEATURE AT A TIME</div><article><h1 id="phase-6-detailed-plan--connected-release-hardening">Phase 6 Detailed Plan — Connected Release Hardening<a class="anchor" href="#phase-6-detailed-plan--connected-release-hardening" aria-label="Link to section">#</a></h1>
-<p><strong>Last updated:</strong> September 2, 2026<br><strong>Status:</strong> Proposed final release gate<br><strong>Parent roadmap:</strong> <a href="../07-mvp-roadmap.html">07 — MVP roadmap</a></p>
-<h2 id="work-estimate--one-developer-with-agentic-ai">Work estimate — one developer with agentic AI<a class="anchor" href="#work-estimate--one-developer-with-agentic-ai" aria-label="Link to section">#</a></h2>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Phase 6 Detailed Plan — Connected Release Hardening · Football 11</title><meta name="description" content="Build Football 11 from offline mechanics to online features. Read the setup guide, six integration stages, and copy-ready prompts."><link rel="stylesheet" href="https://accelbyte.github.io/f11/tutorial/tutorial.css"><link rel="canonical" href="https://accelbyte.github.io/f11/tutorial/reference/phases/phase-06-mvp-hardening-and-release.html"></head>
+<body><a class="skip" href="https://accelbyte.github.io/f11/tutorial/reference/phases/phase-06-mvp-hardening-and-release.html#tutorial-content">Skip to tutorial</a><header><a class="brand" href="https://accelbyte.github.io/f11/tutorial/index.html"><span>11</span> FOOTBALL 11 <small>THE PLAYBOOK</small></a><nav aria-label="Main navigation"><a href="https://accelbyte.github.io/f11/tutorial/index.html">Tutorial</a><a class="play" href="https://accelbyte.github.io/f11/">Play the game ↗</a></nav></header>
+<div class="layout"><aside><details open><summary>On this page</summary><nav aria-label="Tutorial sections"><a class="level-2" href="https://accelbyte.github.io/f11/tutorial/reference/phases/phase-06-mvp-hardening-and-release.html#work-estimate--one-developer-with-agentic-ai">Work estimate — one developer with agentic AI</a>
+<a class="level-2" href="https://accelbyte.github.io/f11/tutorial/reference/phases/phase-06-mvp-hardening-and-release.html#phase-outcome">Phase outcome</a>
+<a class="level-2" href="https://accelbyte.github.io/f11/tutorial/reference/phases/phase-06-mvp-hardening-and-release.html#entry-conditions">Entry conditions</a>
+<a class="level-2" href="https://accelbyte.github.io/f11/tutorial/reference/phases/phase-06-mvp-hardening-and-release.html#workstreams">Workstreams</a>
+<a class="level-3" href="https://accelbyte.github.io/f11/tutorial/reference/phases/phase-06-mvp-hardening-and-release.html#6a--release-configuration-and-secrets">6A — Release configuration and secrets</a>
+<a class="level-3" href="https://accelbyte.github.io/f11/tutorial/reference/phases/phase-06-mvp-hardening-and-release.html#6b--data-migration-and-recovery">6B — Data migration and recovery</a>
+<a class="level-3" href="https://accelbyte.github.io/f11/tutorial/reference/phases/phase-06-mvp-hardening-and-release.html#6c--security-and-abuse-review">6C — Security and abuse review</a>
+<a class="level-3" href="https://accelbyte.github.io/f11/tutorial/reference/phases/phase-06-mvp-hardening-and-release.html#6d--integrated-player-flow-regression">6D — Integrated player-flow regression</a>
+<a class="level-3" href="https://accelbyte.github.io/f11/tutorial/reference/phases/phase-06-mvp-hardening-and-release.html#6e--browser-accessibility-and-responsive-qa">6E — Browser, accessibility, and responsive QA</a>
+<a class="level-3" href="https://accelbyte.github.io/f11/tutorial/reference/phases/phase-06-mvp-hardening-and-release.html#6f--performance-and-resilience">6F — Performance and resilience</a>
+<a class="level-3" href="https://accelbyte.github.io/f11/tutorial/reference/phases/phase-06-mvp-hardening-and-release.html#6g--content-and-legal-release-gate">6G — Content and legal release gate</a>
+<a class="level-3" href="https://accelbyte.github.io/f11/tutorial/reference/phases/phase-06-mvp-hardening-and-release.html#6h--operations-and-observability">6H — Operations and observability</a>
+<a class="level-3" href="https://accelbyte.github.io/f11/tutorial/reference/phases/phase-06-mvp-hardening-and-release.html#6i--deployment-and-rollback-rehearsal">6I — Deployment and rollback rehearsal</a>
+<a class="level-2" href="https://accelbyte.github.io/f11/tutorial/reference/phases/phase-06-mvp-hardening-and-release.html#release-evidence-matrix">Release evidence matrix</a>
+<a class="level-2" href="https://accelbyte.github.io/f11/tutorial/reference/phases/phase-06-mvp-hardening-and-release.html#production-device-id-gate">Production Device ID gate</a>
+<a class="level-2" href="https://accelbyte.github.io/f11/tutorial/reference/phases/phase-06-mvp-hardening-and-release.html#gono-go-blockers">Go/no-go blockers</a>
+<a class="level-2" href="https://accelbyte.github.io/f11/tutorial/reference/phases/phase-06-mvp-hardening-and-release.html#exit-checklist">Exit checklist</a></nav></details><a class="source" href="https://github.com/AccelByte/f11/blob/main/docs/phases/phase-06-mvp-hardening-and-release.md">View Markdown source ↗</a></aside><main id="tutorial-content"><div class="intro">BUILD YOUR GAME · ONE FEATURE AT A TIME</div><article><h1 id="phase-6-detailed-plan--connected-release-hardening">Phase 6 Detailed Plan — Connected Release Hardening<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/phases/phase-06-mvp-hardening-and-release.html#phase-6-detailed-plan--connected-release-hardening" aria-label="Link to section">#</a></h1>
+<p><strong>Last updated:</strong> September 2, 2026<br><strong>Status:</strong> Proposed final release gate<br><strong>Parent roadmap:</strong> <a href="https://accelbyte.github.io/f11/tutorial/reference/07-mvp-roadmap.html">07 — MVP roadmap</a></p>
+<h2 id="work-estimate--one-developer-with-agentic-ai">Work estimate — one developer with agentic AI<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/phases/phase-06-mvp-hardening-and-release.html#work-estimate--one-developer-with-agentic-ai" aria-label="Link to section">#</a></h2>
 <ul>
 <li><strong>Effort:</strong> 4–7 builder-days.</li>
 <li><strong>Elapsed time:</strong> 1–1.75 weeks.</li>
 <li><strong>Primary uncertainty:</strong> security findings, supported-browser failures,
 recovery rehearsal, operational readiness, and final human sign-off.</li>
 </ul>
-<h2 id="phase-outcome">Phase outcome<a class="anchor" href="#phase-outcome" aria-label="Link to section">#</a></h2>
+<h2 id="phase-outcome">Phase outcome<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/phases/phase-06-mvp-hardening-and-release.html#phase-outcome" aria-label="Link to section">#</a></h2>
 <p>The complete connected release is deployable, secure, recoverable, operable, accessible, and
 verified through its intended player journeys in a production-like environment.</p>
 <p>Feature implementation is not enough to close this phase. The release needs
 evidence, rollback instructions, configuration ownership, and an explicit
 decision about Device ID account-loss risk.</p>
-<h2 id="entry-conditions">Entry conditions<a class="anchor" href="#entry-conditions" aria-label="Link to section">#</a></h2>
+<h2 id="entry-conditions">Entry conditions<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/phases/phase-06-mvp-hardening-and-release.html#entry-conditions" aria-label="Link to section">#</a></h2>
 <ul>
 <li>Phases 0–5 meet their feature exit criteria in development.</li>
 <li>Content and simulation versions are pinned for the release candidate.</li>
@@ -41,8 +41,8 @@ decision about Device ID account-loss risk.</p>
 <li>No unresolved issue can silently corrupt identity, competitive state, or
 reproducibility.</li>
 </ul>
-<h2 id="workstreams">Workstreams<a class="anchor" href="#workstreams" aria-label="Link to section">#</a></h2>
-<h3 id="6a--release-configuration-and-secrets">6A — Release configuration and secrets<a class="anchor" href="#6a--release-configuration-and-secrets" aria-label="Link to section">#</a></h3>
+<h2 id="workstreams">Workstreams<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/phases/phase-06-mvp-hardening-and-release.html#workstreams" aria-label="Link to section">#</a></h2>
+<h3 id="6a--release-configuration-and-secrets">6A — Release configuration and secrets<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/phases/phase-06-mvp-hardening-and-release.html#6a--release-configuration-and-secrets" aria-label="Link to section">#</a></h3>
 <ol>
 <li>Inventory browser-safe configuration separately from secrets.</li>
 <li>Confirm the browser build contains only the AGS public client ID.</li>
@@ -54,7 +54,7 @@ mixed accidentally.</li>
 <li>Add startup/configuration checks that fail visibly without logging secrets.</li>
 <li>Record credential rotation ownership and procedure.</li>
 </ol>
-<h3 id="6b--data-migration-and-recovery">6B — Data migration and recovery<a class="anchor" href="#6b--data-migration-and-recovery" aria-label="Link to section">#</a></h3>
+<h3 id="6b--data-migration-and-recovery">6B — Data migration and recovery<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/phases/phase-06-mvp-hardening-and-release.html#6b--data-migration-and-recovery" aria-label="Link to section">#</a></h3>
 <ol>
 <li>Test every Cloud Save schema/version migration from an empty account and the
 previous supported record version.</li>
@@ -64,7 +64,7 @@ previous supported record version.</li>
 <li>Add reconciliation for pending AGS Statistics settlements.</li>
 <li>Test restore procedures in a non-production environment.</li>
 </ol>
-<h3 id="6c--security-and-abuse-review">6C — Security and abuse review<a class="anchor" href="#6c--security-and-abuse-review" aria-label="Link to section">#</a></h3>
+<h3 id="6c--security-and-abuse-review">6C — Security and abuse review<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/phases/phase-06-mvp-hardening-and-release.html#6c--security-and-abuse-review" aria-label="Link to section">#</a></h3>
 <ol>
 <li>Recheck every browser/trusted-service boundary.</li>
 <li>Verify AGS caller type, token source, IAM client type, operations,
@@ -77,7 +77,7 @@ requests, expired tokens, and wrong-namespace tokens.</li>
 <li>Review public-result privacy, sanitization, and takedown behavior.</li>
 <li>Ensure errors expose support references rather than raw internals.</li>
 </ol>
-<h3 id="6d--integrated-player-flow-regression">6D — Integrated player-flow regression<a class="anchor" href="#6d--integrated-player-flow-regression" aria-label="Link to section">#</a></h3>
+<h3 id="6d--integrated-player-flow-regression">6D — Integrated player-flow regression<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/phases/phase-06-mvp-hardening-and-release.html#6d--integrated-player-flow-regression" aria-label="Link to section">#</a></h3>
 <p>Verify these journeys from clean browser profiles:</p>
 <ol>
 <li>Guest login, reload, logout, and same-identity return.</li>
@@ -90,7 +90,7 @@ requests, expired tokens, and wrong-namespace tokens.</li>
 </ol>
 <p>Record service evidence and player-flow evidence separately for every AGS
 journey.</p>
-<h3 id="6e--browser-accessibility-and-responsive-qa">6E — Browser, accessibility, and responsive QA<a class="anchor" href="#6e--browser-accessibility-and-responsive-qa" aria-label="Link to section">#</a></h3>
+<h3 id="6e--browser-accessibility-and-responsive-qa">6E — Browser, accessibility, and responsive QA<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/phases/phase-06-mvp-hardening-and-release.html#6e--browser-accessibility-and-responsive-qa" aria-label="Link to section">#</a></h3>
 <ul>
 <li>Test the approved desktop and mobile browser matrix.</li>
 <li>Test narrow, standard, and wide layouts.</li>
@@ -101,7 +101,7 @@ announcements, contrast, reduced motion, and zoom.</li>
 <li>Verify share pages and essential game states remain understandable when
 animations fail or reduced motion is enabled.</li>
 </ul>
-<h3 id="6f--performance-and-resilience">6F — Performance and resilience<a class="anchor" href="#6f--performance-and-resilience" aria-label="Link to section">#</a></h3>
+<h3 id="6f--performance-and-resilience">6F — Performance and resilience<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/phases/phase-06-mvp-hardening-and-release.html#6f--performance-and-resilience" aria-label="Link to section">#</a></h3>
 <ol>
 <li>Establish recorded budgets for initial application load, interaction
 responsiveness, challenge creation, submission, result load, and share image
@@ -114,7 +114,7 @@ versions.</li>
 <li>Confirm retry behavior does not duplicate runs, rooms, matches, or statistic
 effects.</li>
 </ol>
-<h3 id="6g--content-and-legal-release-gate">6G — Content and legal release gate<a class="anchor" href="#6g--content-and-legal-release-gate" aria-label="Link to section">#</a></h3>
+<h3 id="6g--content-and-legal-release-gate">6G — Content and legal release gate<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/phases/phase-06-mvp-hardening-and-release.html#6g--content-and-legal-release-gate" aria-label="Link to section">#</a></h3>
 <ul>
 <li>Freeze the release content manifest and provenance record.</li>
 <li>Confirm approved use of player names and all visual assets.</li>
@@ -123,7 +123,7 @@ effects.</li>
 <li>Document correction, removal, and takedown paths.</li>
 <li>Confirm legal and product owners accept the remaining content risk.</li>
 </ul>
-<h3 id="6h--operations-and-observability">6H — Operations and observability<a class="anchor" href="#6h--operations-and-observability" aria-label="Link to section">#</a></h3>
+<h3 id="6h--operations-and-observability">6H — Operations and observability<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/phases/phase-06-mvp-hardening-and-release.html#6h--operations-and-observability" aria-label="Link to section">#</a></h3>
 <p>Product Analytics remains deferred, but operational visibility is required.</p>
 <p>Record and monitor:</p>
 <ul>
@@ -138,7 +138,7 @@ logging tokens;</li>
 <p>Create runbooks for auth outage, AGS permission failure, daily challenge
 creation failure, stuck room, pending Statistics settlement, bad content
 release, and Cloud Save schema/recovery failure.</p>
-<h3 id="6i--deployment-and-rollback-rehearsal">6I — Deployment and rollback rehearsal<a class="anchor" href="#6i--deployment-and-rollback-rehearsal" aria-label="Link to section">#</a></h3>
+<h3 id="6i--deployment-and-rollback-rehearsal">6I — Deployment and rollback rehearsal<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/phases/phase-06-mvp-hardening-and-release.html#6i--deployment-and-rollback-rehearsal" aria-label="Link to section">#</a></h3>
 <ol>
 <li>Deploy the release candidate to staging from the same build pipeline intended
 for production.</li>
@@ -148,7 +148,7 @@ for production.</li>
 <li>Verify old public results still render after rollback or forward deploy.</li>
 <li>Record the production go/no-go owners and communication path.</li>
 </ol>
-<h2 id="release-evidence-matrix">Release evidence matrix<a class="anchor" href="#release-evidence-matrix" aria-label="Link to section">#</a></h2>
+<h2 id="release-evidence-matrix">Release evidence matrix<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/phases/phase-06-mvp-hardening-and-release.html#release-evidence-matrix" aria-label="Link to section">#</a></h2>
 <table>
 <thead>
 <tr>
@@ -213,7 +213,7 @@ for production.</li>
 <td>Staging rehearsal preserves or recovers required state</td>
 </tr>
 </tbody></table>
-<h2 id="production-device-id-gate">Production Device ID gate<a class="anchor" href="#production-device-id-gate" aria-label="Link to section">#</a></h2>
+<h2 id="production-device-id-gate">Production Device ID gate<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/phases/phase-06-mvp-hardening-and-release.html#production-device-id-gate" aria-label="Link to section">#</a></h2>
 <p>Before public release, choose exactly one documented policy:</p>
 <ol>
 <li>Implement and verify an account-upgrade/linking path that attaches a durable
@@ -223,7 +223,7 @@ guest progress unrecoverable, communicate this before competitive/social
 use, and provide an appropriate reset/support experience.</li>
 </ol>
 <p>Silence is not an acceptable policy.</p>
-<h2 id="gono-go-blockers">Go/no-go blockers<a class="anchor" href="#gono-go-blockers" aria-label="Link to section">#</a></h2>
+<h2 id="gono-go-blockers">Go/no-go blockers<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/phases/phase-06-mvp-hardening-and-release.html#gono-go-blockers" aria-label="Link to section">#</a></h2>
 <ul>
 <li>Any confidential secret appears in a browser build or public repository.</li>
 <li>AGS operations or required permissions remain unknown or unverified.</li>
@@ -236,7 +236,7 @@ use, and provide an appropriate reset/support experience.</li>
 <li>Migration or rollback procedures have not been rehearsed.</li>
 <li>Device ID production risk has no approved policy.</li>
 </ul>
-<h2 id="exit-checklist">Exit checklist<a class="anchor" href="#exit-checklist" aria-label="Link to section">#</a></h2>
+<h2 id="exit-checklist">Exit checklist<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/phases/phase-06-mvp-hardening-and-release.html#exit-checklist" aria-label="Link to section">#</a></h2>
 <ul>
 <li><input disabled="" type="checkbox"> All Phase 0–5 exit checklists are complete.</li>
 <li><input disabled="" type="checkbox"> Release configuration and secrets are reviewed.</li>
@@ -252,4 +252,4 @@ use, and provide an appropriate reset/support experience.</li>
 <p><strong>Exit criterion:</strong> the production release candidate passes the complete player
 journey, service evidence, security, recovery, accessibility, performance,
 content, and operational gates with no unresolved go/no-go blocker.</p>
-</article><footer>Football 11 · Generated from the repository documentation. <a href="https://football-11.workspace-025025.chatgpt.site">Back to the game</a></footer></main></div></body></html>
+</article><footer>Football 11 · Generated from the repository documentation. <a href="https://accelbyte.github.io/f11/">Back to the game</a></footer></main></div></body></html>

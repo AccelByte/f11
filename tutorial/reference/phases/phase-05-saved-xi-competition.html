@@ -1,27 +1,27 @@
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Phase 5 Detailed Plan — Saved-XI Competition · Football 11</title><meta name="description" content="Build Football 11 from offline mechanics to online features. Read the setup guide, six integration stages, and copy-ready prompts."><link rel="stylesheet" href="../../tutorial.css"></head>
-<body><a class="skip" href="#tutorial-content">Skip to tutorial</a><header><a class="brand" href="../../index.html"><span>11</span> FOOTBALL 11 <small>THE PLAYBOOK</small></a><nav aria-label="Main navigation"><a href="../../index.html">Tutorial</a><a class="play" href="https://football-11.workspace-025025.chatgpt.site">Play the game ↗</a></nav></header>
-<div class="layout"><aside><details open><summary>On this page</summary><nav aria-label="Tutorial sections"><a class="level-2" href="#work-estimate--one-developer-with-agentic-ai">Work estimate — one developer with agentic AI</a>
-<a class="level-2" href="#phase-outcome">Phase outcome</a>
-<a class="level-2" href="#entry-conditions">Entry conditions</a>
-<a class="level-2" href="#delivery-slices">Delivery slices</a>
-<a class="level-2" href="#approved-v1-product-decisions">Approved v1 product decisions</a>
-<a class="level-2" href="#approved-head-to-head-mechanics-contract">Approved head-to-head mechanics contract</a>
-<a class="level-2" href="#slice-5a--eligible-saved-xi">Slice 5A — Eligible Saved XI</a>
-<a class="level-2" href="#slice-5b--nearby-opponent-discovery">Slice 5B — Nearby opponent discovery</a>
-<a class="level-2" href="#slice-5c--match-resolution">Slice 5C — Match resolution</a>
-<a class="level-2" href="#slice-5d--competitive-statistics">Slice 5D — Competitive Statistics</a>
-<a class="level-2" href="#application-api">Application API</a>
-<a class="level-2" href="#abuse-controls">Abuse controls</a>
-<a class="level-2" href="#authorization-plan">Authorization plan</a>
-<a class="level-2" href="#failure-behavior">Failure behavior</a>
-<a class="level-2" href="#verification">Verification</a>
-<a class="level-2" href="#exit-checklist">Exit checklist</a>
-<a class="level-2" href="#verification-result">Verification result</a></nav></details><a class="source" href="https://github.com/AccelByte/f11/blob/main/docs/phases/phase-05-saved-xi-competition.md">View Markdown source ↗</a></aside><main id="tutorial-content"><div class="intro">BUILD YOUR GAME · ONE FEATURE AT A TIME</div><article><h1 id="phase-5-detailed-plan--saved-xi-competition">Phase 5 Detailed Plan — Saved-XI Competition<a class="anchor" href="#phase-5-detailed-plan--saved-xi-competition" aria-label="Link to section">#</a></h1>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Phase 5 Detailed Plan — Saved-XI Competition · Football 11</title><meta name="description" content="Build Football 11 from offline mechanics to online features. Read the setup guide, six integration stages, and copy-ready prompts."><link rel="stylesheet" href="https://accelbyte.github.io/f11/tutorial/tutorial.css"><link rel="canonical" href="https://accelbyte.github.io/f11/tutorial/reference/phases/phase-05-saved-xi-competition.html"></head>
+<body><a class="skip" href="https://accelbyte.github.io/f11/tutorial/reference/phases/phase-05-saved-xi-competition.html#tutorial-content">Skip to tutorial</a><header><a class="brand" href="https://accelbyte.github.io/f11/tutorial/index.html"><span>11</span> FOOTBALL 11 <small>THE PLAYBOOK</small></a><nav aria-label="Main navigation"><a href="https://accelbyte.github.io/f11/tutorial/index.html">Tutorial</a><a class="play" href="https://accelbyte.github.io/f11/">Play the game ↗</a></nav></header>
+<div class="layout"><aside><details open><summary>On this page</summary><nav aria-label="Tutorial sections"><a class="level-2" href="https://accelbyte.github.io/f11/tutorial/reference/phases/phase-05-saved-xi-competition.html#work-estimate--one-developer-with-agentic-ai">Work estimate — one developer with agentic AI</a>
+<a class="level-2" href="https://accelbyte.github.io/f11/tutorial/reference/phases/phase-05-saved-xi-competition.html#phase-outcome">Phase outcome</a>
+<a class="level-2" href="https://accelbyte.github.io/f11/tutorial/reference/phases/phase-05-saved-xi-competition.html#entry-conditions">Entry conditions</a>
+<a class="level-2" href="https://accelbyte.github.io/f11/tutorial/reference/phases/phase-05-saved-xi-competition.html#delivery-slices">Delivery slices</a>
+<a class="level-2" href="https://accelbyte.github.io/f11/tutorial/reference/phases/phase-05-saved-xi-competition.html#approved-v1-product-decisions">Approved v1 product decisions</a>
+<a class="level-2" href="https://accelbyte.github.io/f11/tutorial/reference/phases/phase-05-saved-xi-competition.html#approved-head-to-head-mechanics-contract">Approved head-to-head mechanics contract</a>
+<a class="level-2" href="https://accelbyte.github.io/f11/tutorial/reference/phases/phase-05-saved-xi-competition.html#slice-5a--eligible-saved-xi">Slice 5A — Eligible Saved XI</a>
+<a class="level-2" href="https://accelbyte.github.io/f11/tutorial/reference/phases/phase-05-saved-xi-competition.html#slice-5b--nearby-opponent-discovery">Slice 5B — Nearby opponent discovery</a>
+<a class="level-2" href="https://accelbyte.github.io/f11/tutorial/reference/phases/phase-05-saved-xi-competition.html#slice-5c--match-resolution">Slice 5C — Match resolution</a>
+<a class="level-2" href="https://accelbyte.github.io/f11/tutorial/reference/phases/phase-05-saved-xi-competition.html#slice-5d--competitive-statistics">Slice 5D — Competitive Statistics</a>
+<a class="level-2" href="https://accelbyte.github.io/f11/tutorial/reference/phases/phase-05-saved-xi-competition.html#application-api">Application API</a>
+<a class="level-2" href="https://accelbyte.github.io/f11/tutorial/reference/phases/phase-05-saved-xi-competition.html#abuse-controls">Abuse controls</a>
+<a class="level-2" href="https://accelbyte.github.io/f11/tutorial/reference/phases/phase-05-saved-xi-competition.html#authorization-plan">Authorization plan</a>
+<a class="level-2" href="https://accelbyte.github.io/f11/tutorial/reference/phases/phase-05-saved-xi-competition.html#failure-behavior">Failure behavior</a>
+<a class="level-2" href="https://accelbyte.github.io/f11/tutorial/reference/phases/phase-05-saved-xi-competition.html#verification">Verification</a>
+<a class="level-2" href="https://accelbyte.github.io/f11/tutorial/reference/phases/phase-05-saved-xi-competition.html#exit-checklist">Exit checklist</a>
+<a class="level-2" href="https://accelbyte.github.io/f11/tutorial/reference/phases/phase-05-saved-xi-competition.html#verification-result">Verification result</a></nav></details><a class="source" href="https://github.com/AccelByte/f11/blob/main/docs/phases/phase-05-saved-xi-competition.md">View Markdown source ↗</a></aside><main id="tutorial-content"><div class="intro">BUILD YOUR GAME · ONE FEATURE AT A TIME</div><article><h1 id="phase-5-detailed-plan--saved-xi-competition">Phase 5 Detailed Plan — Saved-XI Competition<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/phases/phase-05-saved-xi-competition.html#phase-5-detailed-plan--saved-xi-competition" aria-label="Link to section">#</a></h1>
 <p><strong>Last updated:</strong> September 4, 2026
 <strong>Status:</strong> Done
-<strong>Parent roadmap:</strong> <a href="../07-mvp-roadmap.html">07 — MVP roadmap</a></p>
-<h2 id="work-estimate--one-developer-with-agentic-ai">Work estimate — one developer with agentic AI<a class="anchor" href="#work-estimate--one-developer-with-agentic-ai" aria-label="Link to section">#</a></h2>
+<strong>Parent roadmap:</strong> <a href="https://accelbyte.github.io/f11/tutorial/reference/07-mvp-roadmap.html">07 — MVP roadmap</a></p>
+<h2 id="work-estimate--one-developer-with-agentic-ai">Work estimate — one developer with agentic AI<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/phases/phase-05-saved-xi-competition.html#work-estimate--one-developer-with-agentic-ai" aria-label="Link to section">#</a></h2>
 <ul>
 <li><strong>Effort:</strong> 4–7 builder-days.</li>
 <li><strong>Elapsed time:</strong> 1–1.75 weeks.</li>
@@ -29,13 +29,13 @@
 authenticated player token, while private storage and Statistics settlement
 use the existing confidential client.</li>
 </ul>
-<h2 id="phase-outcome">Phase outcome<a class="anchor" href="#phase-outcome" aria-label="Link to section">#</a></h2>
+<h2 id="phase-outcome">Phase outcome<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/phases/phase-05-saved-xi-competition.html#phase-outcome" aria-label="Link to section">#</a></h2>
 <p>An authenticated player can save one eligible XI, request a nearby ranked
 opponent, play a deterministic asynchronous matchup, and receive an
 authoritative stored result with controlled competitive-statistic effects.</p>
 <p>This is leaderboard-driven opponent discovery, not AGS Matchmaking. It uses no
 ticket, match pool, realtime opponent, game session, or dedicated server.</p>
-<h2 id="entry-conditions">Entry conditions<a class="anchor" href="#entry-conditions" aria-label="Link to section">#</a></h2>
+<h2 id="entry-conditions">Entry conditions<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/phases/phase-05-saved-xi-competition.html#entry-conditions" aria-label="Link to section">#</a></h2>
 <ul>
 <li>Phase 1 simulation and replay contracts are stable.</li>
 <li>Phase 2 identity, trusted replay, Statistics, and Leaderboards are complete.</li>
@@ -44,7 +44,7 @@ Score, and rematch rules are approved.</li>
 <li>Required leaderboard, profile enrichment, Statistics write, and readback
 operations are discovered and authorized.</li>
 </ul>
-<h2 id="delivery-slices">Delivery slices<a class="anchor" href="#delivery-slices" aria-label="Link to section">#</a></h2>
+<h2 id="delivery-slices">Delivery slices<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/phases/phase-05-saved-xi-competition.html#delivery-slices" aria-label="Link to section">#</a></h2>
 <table>
 <thead>
 <tr>
@@ -73,7 +73,7 @@ operations are discovered and authorized.</li>
 <td>Players can understand prior outcomes and cooldowns</td>
 </tr>
 </tbody></table>
-<h2 id="approved-v1-product-decisions">Approved v1 product decisions<a class="anchor" href="#approved-v1-product-decisions" aria-label="Link to section">#</a></h2>
+<h2 id="approved-v1-product-decisions">Approved v1 product decisions<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/phases/phase-05-saved-xi-competition.html#approved-v1-product-decisions" aria-label="Link to section">#</a></h2>
 <ul>
 <li>The challenger uses one explicitly published trusted personal-best XI.</li>
 <li>Publishing or replacing an eligible XI requires confirmation; it is never
@@ -91,7 +91,7 @@ an opponent faced by that challenger during the previous 24 hours.</li>
 <li>If no candidate survives filtering and one expansion, return an honest
 no-opponent state without a statistic effect.</li>
 </ul>
-<h2 id="approved-head-to-head-mechanics-contract">Approved head-to-head mechanics contract<a class="anchor" href="#approved-head-to-head-mechanics-contract" aria-label="Link to section">#</a></h2>
+<h2 id="approved-head-to-head-mechanics-contract">Approved head-to-head mechanics contract<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/phases/phase-05-saved-xi-competition.html#approved-head-to-head-mechanics-contract" aria-label="Link to section">#</a></h2>
 <p><code>head-to-head-v1</code> is separate from the 38-match league model. It gives equal
 weight to the challenger&#39;s attack against the opponent&#39;s defence and the
 challenger&#39;s defence against the opponent&#39;s attack: each duel contributes
@@ -104,7 +104,7 @@ Draws remain possible. The stored evidence pins the matchup version, canonical
 identifiers, seed, roll, probabilities, outcome, and Challenge Score delta.</p>
 <p>The headless contract is implemented with golden, symmetry, replay, score-floor,
 and 10,000-seed distribution tests before any AGS Statistics connection.</p>
-<h2 id="slice-5a--eligible-saved-xi">Slice 5A — Eligible Saved XI<a class="anchor" href="#slice-5a--eligible-saved-xi" aria-label="Link to section">#</a></h2>
+<h2 id="slice-5a--eligible-saved-xi">Slice 5A — Eligible Saved XI<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/phases/phase-05-saved-xi-competition.html#slice-5a--eligible-saved-xi" aria-label="Link to section">#</a></h2>
 <p>The Worker creates or replaces a Saved XI only after replaying the submission,
 matching it to the authenticated player&#39;s trusted receipt, and proving that its
 points equal the current personal best. It stores:</p>
@@ -119,7 +119,7 @@ points equal the current personal best. It stores:</p>
 <p>The browser cannot upload an arbitrary XI or mark it eligible without Worker
 validation. An issued challenge embeds both authoritative XI snapshots, so an
 explicit later replacement cannot change a match that has already been issued.</p>
-<h2 id="slice-5b--nearby-opponent-discovery">Slice 5B — Nearby opponent discovery<a class="anchor" href="#slice-5b--nearby-opponent-discovery" aria-label="Link to section">#</a></h2>
+<h2 id="slice-5b--nearby-opponent-discovery">Slice 5B — Nearby opponent discovery<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/phases/phase-05-saved-xi-competition.html#slice-5b--nearby-opponent-discovery" aria-label="Link to section">#</a></h2>
 <p>Implemented sequence:</p>
 <pre><code class="language-text">Player selects Challenge nearby XI
   -&gt; trusted application boundary validates caller identity against AGS
@@ -135,7 +135,7 @@ submit the opponent candidate list used for authoritative selection.</p>
 <p>Treat display-name/profile enrichment as a separate AGS operation and
 permission. If enrichment fails, use a safe anonymous label without blocking a
 valid competitive result.</p>
-<h2 id="slice-5c--match-resolution">Slice 5C — Match resolution<a class="anchor" href="#slice-5c--match-resolution" aria-label="Link to section">#</a></h2>
+<h2 id="slice-5c--match-resolution">Slice 5C — Match resolution<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/phases/phase-05-saved-xi-competition.html#slice-5c--match-resolution" aria-label="Link to section">#</a></h2>
 <ol>
 <li>Load both authoritative Saved XI records.</li>
 <li>Validate eligibility and version compatibility again at resolution time.</li>
@@ -149,7 +149,7 @@ private seed evidence and raw opponent user ID from browser projections.</li>
 </ol>
 <p>The challenge token must expire or become single-use according to the approved
 anti-farming policy.</p>
-<h2 id="slice-5d--competitive-statistics">Slice 5D — Competitive Statistics<a class="anchor" href="#slice-5d--competitive-statistics" aria-label="Link to section">#</a></h2>
+<h2 id="slice-5d--competitive-statistics">Slice 5D — Competitive Statistics<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/phases/phase-05-saved-xi-competition.html#slice-5d--competitive-statistics" aria-label="Link to section">#</a></h2>
 <ul>
 <li>Store one native AGS Challenge Score statistic for the challenger only. Start
 at zero; apply win <code>+3</code>, draw <code>0</code>, and loss <code>-2</code>, with a zero minimum.</li>
@@ -167,7 +167,7 @@ index.</li>
 </ul>
 <p>Direct score posting to AGS Leaderboards is not the ingestion path; rankings
 follow the configured Statistics values.</p>
-<h2 id="application-api">Application API<a class="anchor" href="#application-api" aria-label="Link to section">#</a></h2>
+<h2 id="application-api">Application API<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/phases/phase-05-saved-xi-competition.html#application-api" aria-label="Link to section">#</a></h2>
 <ul>
 <li><code>PUT /api/saved-xi</code> explicitly publishes or replaces an eligible trusted result.</li>
 <li><code>GET /api/saved-xi</code> returns the caller&#39;s Saved XI, Challenge Score, active or
@@ -180,7 +180,7 @@ repairs the same pending settlement when its token is replayed.</li>
 </ul>
 <p>Payloads must carry opaque identifiers and are validated through shared
 contracts.</p>
-<h2 id="abuse-controls">Abuse controls<a class="anchor" href="#abuse-controls" aria-label="Link to section">#</a></h2>
+<h2 id="abuse-controls">Abuse controls<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/phases/phase-05-saved-xi-competition.html#abuse-controls" aria-label="Link to section">#</a></h2>
 <ul>
 <li>Server-derived player and opponent identities.</li>
 <li>Expiring or single-use challenge tokens.</li>
@@ -194,7 +194,7 @@ challenges.</li>
 <li>A repair path for a stored match whose Statistics settlement temporarily
 failed.</li>
 </ul>
-<h2 id="authorization-plan">Authorization plan<a class="anchor" href="#authorization-plan" aria-label="Link to section">#</a></h2>
+<h2 id="authorization-plan">Authorization plan<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/phases/phase-05-saved-xi-competition.html#authorization-plan" aria-label="Link to section">#</a></h2>
 <pre><code class="language-text">Browser caller:         authenticated web game/browser UI
 Browser token:          AGS user access token
 Worker caller:          backend service
@@ -207,7 +207,7 @@ Required permissions:   player public Cloud Save read; confidential Cloud Save
                         player-record and Statistics user-value create/read/update
 Verified access:        yes; redacted two-player local-Worker/live-AGS smoke passes
 </code></pre>
-<h2 id="failure-behavior">Failure behavior<a class="anchor" href="#failure-behavior" aria-label="Link to section">#</a></h2>
+<h2 id="failure-behavior">Failure behavior<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/phases/phase-05-saved-xi-competition.html#failure-behavior" aria-label="Link to section">#</a></h2>
 <table>
 <thead>
 <tr>
@@ -244,7 +244,7 @@ Verified access:        yes; redacted two-player local-Worker/live-AGS smoke pas
 <td>Return original result or reject without new stat effects</td>
 </tr>
 </tbody></table>
-<h2 id="verification">Verification<a class="anchor" href="#verification" aria-label="Link to section">#</a></h2>
+<h2 id="verification">Verification<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/phases/phase-05-saved-xi-competition.html#verification" aria-label="Link to section">#</a></h2>
 <ul>
 <li>Saved XI can only originate from a validated owned run.</li>
 <li>Rank-window filtering removes self, recent, private, invalid, and incompatible
@@ -258,7 +258,7 @@ continues to supply discovery candidates.</li>
 <li>UI covers loading, unranked, no opponent, preview, resolving, result,
 settlement pending, and retryable error.</li>
 </ul>
-<h2 id="exit-checklist">Exit checklist<a class="anchor" href="#exit-checklist" aria-label="Link to section">#</a></h2>
+<h2 id="exit-checklist">Exit checklist<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/phases/phase-05-saved-xi-competition.html#exit-checklist" aria-label="Link to section">#</a></h2>
 <ul>
 <li><input checked="" disabled="" type="checkbox"> Saved-XI eligibility and replacement rules are approved.</li>
 <li><input checked="" disabled="" type="checkbox"> Exact-version compatibility and Challenge Score rules are approved.</li>
@@ -270,7 +270,7 @@ valid discovery candidates.</li>
 <li><input checked="" disabled="" type="checkbox"> Anti-farming, cooldown, replay, and repair paths are verified.</li>
 <li><input checked="" disabled="" type="checkbox"> No AGS Matchmaking or AMS resource is involved.</li>
 </ul>
-<h2 id="verification-result">Verification result<a class="anchor" href="#verification-result" aria-label="Link to section">#</a></h2>
+<h2 id="verification-result">Verification result<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/phases/phase-05-saved-xi-competition.html#verification-result" aria-label="Link to section">#</a></h2>
 <p>The final local suite passes 94 tests, type-checking, lint review of the changed
 surface, and the Vinext production build. A desktop browser fixture verified the
 loaded competition hierarchy, opponent preview, score, resolve action, and
@@ -283,4 +283,4 @@ and same-opponent cooldown. No user IDs, tokens, client secret, or private match
 seed are printed by the smoke result.</p>
 <p><strong>Exit criterion:</strong> a player can challenge a valid nearby ranked XI and receive
 a reproducible authoritative result with exactly-once competitive settlement.</p>
-</article><footer>Football 11 · Generated from the repository documentation. <a href="https://football-11.workspace-025025.chatgpt.site">Back to the game</a></footer></main></div></body></html>
+</article><footer>Football 11 · Generated from the repository documentation. <a href="https://accelbyte.github.io/f11/">Back to the game</a></footer></main></div></body></html>

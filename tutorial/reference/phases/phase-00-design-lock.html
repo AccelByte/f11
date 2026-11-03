@@ -1,47 +1,47 @@
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Phase 0 Detailed Plan — Design Lock · Football 11</title><meta name="description" content="Build Football 11 from offline mechanics to online features. Read the setup guide, six integration stages, and copy-ready prompts."><link rel="stylesheet" href="../../tutorial.css"></head>
-<body><a class="skip" href="#tutorial-content">Skip to tutorial</a><header><a class="brand" href="../../index.html"><span>11</span> FOOTBALL 11 <small>THE PLAYBOOK</small></a><nav aria-label="Main navigation"><a href="../../index.html">Tutorial</a><a class="play" href="https://football-11.workspace-025025.chatgpt.site">Play the game ↗</a></nav></header>
-<div class="layout"><aside><details open><summary>On this page</summary><nav aria-label="Tutorial sections"><a class="level-2" href="#work-estimate--one-developer-with-agentic-ai">Work estimate — one developer with agentic AI</a>
-<a class="level-2" href="#phase-outcome">Phase outcome</a>
-<a class="level-2" href="#entry-conditions">Entry conditions</a>
-<a class="level-2" href="#required-decisions">Required decisions</a>
-<a class="level-3" href="#product-and-session">Product and session</a>
-<a class="level-3" href="#formation-and-eligibility-baseline">Formation and eligibility baseline</a>
-<a class="level-3" href="#content">Content</a>
-<a class="level-3" href="#simulation">Simulation</a>
-<a class="level-2" href="#work-sequence">Work sequence</a>
-<a class="level-3" href="#0a--lock-the-paper-rules">0A — Lock the paper rules</a>
-<a class="level-3" href="#0b--define-the-player-season-contract">0B — Define the player-season contract</a>
-<a class="level-3" href="#0c--prove-deterministic-generation">0C — Prove deterministic generation</a>
-<a class="level-3" href="#0d--prove-assessment-and-simulation">0D — Prove assessment and simulation</a>
-<a class="level-3" href="#0e--lock-implementation-boundaries">0E — Lock implementation boundaries</a>
-<a class="level-2" href="#deliverables">Deliverables</a>
-<a class="level-2" href="#verification">Verification</a>
-<a class="level-2" href="#risks-and-stop-conditions">Risks and stop conditions</a>
-<a class="level-2" href="#exit-checklist">Exit checklist</a></nav></details><a class="source" href="https://github.com/AccelByte/f11/blob/main/docs/phases/phase-00-design-lock.md">View Markdown source ↗</a></aside><main id="tutorial-content"><div class="intro">BUILD YOUR GAME · ONE FEATURE AT A TIME</div><article><h1 id="phase-0-detailed-plan--design-lock">Phase 0 Detailed Plan — Design Lock<a class="anchor" href="#phase-0-detailed-plan--design-lock" aria-label="Link to section">#</a></h1>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Phase 0 Detailed Plan — Design Lock · Football 11</title><meta name="description" content="Build Football 11 from offline mechanics to online features. Read the setup guide, six integration stages, and copy-ready prompts."><link rel="stylesheet" href="https://accelbyte.github.io/f11/tutorial/tutorial.css"><link rel="canonical" href="https://accelbyte.github.io/f11/tutorial/reference/phases/phase-00-design-lock.html"></head>
+<body><a class="skip" href="https://accelbyte.github.io/f11/tutorial/reference/phases/phase-00-design-lock.html#tutorial-content">Skip to tutorial</a><header><a class="brand" href="https://accelbyte.github.io/f11/tutorial/index.html"><span>11</span> FOOTBALL 11 <small>THE PLAYBOOK</small></a><nav aria-label="Main navigation"><a href="https://accelbyte.github.io/f11/tutorial/index.html">Tutorial</a><a class="play" href="https://accelbyte.github.io/f11/">Play the game ↗</a></nav></header>
+<div class="layout"><aside><details open><summary>On this page</summary><nav aria-label="Tutorial sections"><a class="level-2" href="https://accelbyte.github.io/f11/tutorial/reference/phases/phase-00-design-lock.html#work-estimate--one-developer-with-agentic-ai">Work estimate — one developer with agentic AI</a>
+<a class="level-2" href="https://accelbyte.github.io/f11/tutorial/reference/phases/phase-00-design-lock.html#phase-outcome">Phase outcome</a>
+<a class="level-2" href="https://accelbyte.github.io/f11/tutorial/reference/phases/phase-00-design-lock.html#entry-conditions">Entry conditions</a>
+<a class="level-2" href="https://accelbyte.github.io/f11/tutorial/reference/phases/phase-00-design-lock.html#required-decisions">Required decisions</a>
+<a class="level-3" href="https://accelbyte.github.io/f11/tutorial/reference/phases/phase-00-design-lock.html#product-and-session">Product and session</a>
+<a class="level-3" href="https://accelbyte.github.io/f11/tutorial/reference/phases/phase-00-design-lock.html#formation-and-eligibility-baseline">Formation and eligibility baseline</a>
+<a class="level-3" href="https://accelbyte.github.io/f11/tutorial/reference/phases/phase-00-design-lock.html#content">Content</a>
+<a class="level-3" href="https://accelbyte.github.io/f11/tutorial/reference/phases/phase-00-design-lock.html#simulation">Simulation</a>
+<a class="level-2" href="https://accelbyte.github.io/f11/tutorial/reference/phases/phase-00-design-lock.html#work-sequence">Work sequence</a>
+<a class="level-3" href="https://accelbyte.github.io/f11/tutorial/reference/phases/phase-00-design-lock.html#0a--lock-the-paper-rules">0A — Lock the paper rules</a>
+<a class="level-3" href="https://accelbyte.github.io/f11/tutorial/reference/phases/phase-00-design-lock.html#0b--define-the-player-season-contract">0B — Define the player-season contract</a>
+<a class="level-3" href="https://accelbyte.github.io/f11/tutorial/reference/phases/phase-00-design-lock.html#0c--prove-deterministic-generation">0C — Prove deterministic generation</a>
+<a class="level-3" href="https://accelbyte.github.io/f11/tutorial/reference/phases/phase-00-design-lock.html#0d--prove-assessment-and-simulation">0D — Prove assessment and simulation</a>
+<a class="level-3" href="https://accelbyte.github.io/f11/tutorial/reference/phases/phase-00-design-lock.html#0e--lock-implementation-boundaries">0E — Lock implementation boundaries</a>
+<a class="level-2" href="https://accelbyte.github.io/f11/tutorial/reference/phases/phase-00-design-lock.html#deliverables">Deliverables</a>
+<a class="level-2" href="https://accelbyte.github.io/f11/tutorial/reference/phases/phase-00-design-lock.html#verification">Verification</a>
+<a class="level-2" href="https://accelbyte.github.io/f11/tutorial/reference/phases/phase-00-design-lock.html#risks-and-stop-conditions">Risks and stop conditions</a>
+<a class="level-2" href="https://accelbyte.github.io/f11/tutorial/reference/phases/phase-00-design-lock.html#exit-checklist">Exit checklist</a></nav></details><a class="source" href="https://github.com/AccelByte/f11/blob/main/docs/phases/phase-00-design-lock.md">View Markdown source ↗</a></aside><main id="tutorial-content"><div class="intro">BUILD YOUR GAME · ONE FEATURE AT A TIME</div><article><h1 id="phase-0-detailed-plan--design-lock">Phase 0 Detailed Plan — Design Lock<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/phases/phase-00-design-lock.html#phase-0-detailed-plan--design-lock" aria-label="Link to section">#</a></h1>
 <p><strong>Last updated:</strong> September 3, 2026
 <strong>Status:</strong> Complete for Phase 1A; public-content rights carried separately
-<strong>Parent roadmap:</strong> <a href="../07-mvp-roadmap.html">07 — MVP roadmap</a></p>
-<h2 id="work-estimate--one-developer-with-agentic-ai">Work estimate — one developer with agentic AI<a class="anchor" href="#work-estimate--one-developer-with-agentic-ai" aria-label="Link to section">#</a></h2>
+<strong>Parent roadmap:</strong> <a href="https://accelbyte.github.io/f11/tutorial/reference/07-mvp-roadmap.html">07 — MVP roadmap</a></p>
+<h2 id="work-estimate--one-developer-with-agentic-ai">Work estimate — one developer with agentic AI<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/phases/phase-00-design-lock.html#work-estimate--one-developer-with-agentic-ai" aria-label="Link to section">#</a></h2>
 <ul>
 <li><strong>Effort:</strong> 1–2 builder-days.</li>
 <li><strong>Elapsed time:</strong> Completed September 2, 2026.</li>
 <li><strong>Carried uncertainty:</strong> public-product rights and final release curation do
 not block private mechanics implementation.</li>
 </ul>
-<h2 id="phase-outcome">Phase outcome<a class="anchor" href="#phase-outcome" aria-label="Link to section">#</a></h2>
+<h2 id="phase-outcome">Phase outcome<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/phases/phase-00-design-lock.html#phase-outcome" aria-label="Link to section">#</a></h2>
 <p>The football rules, content boundary, data contracts, simulation behavior, and
 technical boundaries are specific enough that independent implementations can
 build the same game without filling gaps differently.</p>
-<h2 id="entry-conditions">Entry conditions<a class="anchor" href="#entry-conditions" aria-label="Link to section">#</a></h2>
+<h2 id="entry-conditions">Entry conditions<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/phases/phase-00-design-lock.html#entry-conditions" aria-label="Link to section">#</a></h2>
 <ul>
 <li>Product thesis and web-first direction are accepted.</li>
 <li>React, the framework-free domain package, local persistence, and ChatGPT Sites
 form the Functional MVP stack; AGS begins in Phase 2.</li>
 <li>The team accepts a curated, text-first prototype while licensing is reviewed.</li>
 </ul>
-<h2 id="required-decisions">Required decisions<a class="anchor" href="#required-decisions" aria-label="Link to section">#</a></h2>
-<h3 id="product-and-session">Product and session<a class="anchor" href="#product-and-session" aria-label="Link to section">#</a></h3>
+<h2 id="required-decisions">Required decisions<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/phases/phase-00-design-lock.html#required-decisions" aria-label="Link to section">#</a></h2>
+<h3 id="product-and-session">Product and session<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/phases/phase-00-design-lock.html#product-and-session" aria-label="Link to section">#</a></h3>
 <ul>
 <li>Working product name and public one-line objective.</li>
 <li>Initial geography and language assumption.</li>
@@ -50,7 +50,7 @@ form the Functional MVP stack; AGS begins in Phase 2.</li>
 <p>The first draft-duration target is six minutes. <strong>Invincible</strong> means zero
 losses; <strong>Perfect</strong> means 38 wins and 114 points. The MVP result does not show
 goals or goal difference until a goal model is approved.</p>
-<h3 id="formation-and-eligibility-baseline">Formation and eligibility baseline<a class="anchor" href="#formation-and-eligibility-baseline" aria-label="Link to section">#</a></h3>
+<h3 id="formation-and-eligibility-baseline">Formation and eligibility baseline<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/phases/phase-00-design-lock.html#formation-and-eligibility-baseline" aria-label="Link to section">#</a></h3>
 <ul>
 <li>Use <code>GK</code>, <code>LB</code>, two <code>CB</code>, <code>RB</code>, <code>DM</code>, <code>CM</code>, <code>AM</code>, <code>LW</code>, <code>CF</code>, and <code>RW</code>.</li>
 <li>Store each legal position and its rating on the player-season record; an
@@ -67,7 +67,7 @@ from the replacement offer in the current round.</li>
 </ul>
 <p>Before the mechanics version is frozen, the content fixtures must supply every
 approved position rating and prove the formation has adequate coverage.</p>
-<h3 id="content">Content<a class="anchor" href="#content" aria-label="Link to section">#</a></h3>
+<h3 id="content">Content<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/phases/phase-00-design-lock.html#content" aria-label="Link to section">#</a></h3>
 <ul>
 <li>Evaluate the prepared OpenFootball Premier League 2023/24 named-squad catalogue,
 pinned to the England and Players revisions recorded in the manifest.</li>
@@ -81,7 +81,7 @@ generator version, then store the resulting content manifest.</li>
 <li>Public-product rights decision for club and competition names/marks, with a
 replacement-identifier fallback if approval is not available.</li>
 </ul>
-<h3 id="simulation">Simulation<a class="anchor" href="#simulation" aria-label="Link to section">#</a></h3>
+<h3 id="simulation">Simulation<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/phases/phase-00-design-lock.html#simulation" aria-label="Link to section">#</a></h3>
 <ul>
 <li>Inputs for Quality, Positioning, Chemistry, Tactical balance, and Leadership.</li>
 <li>Score ranges and normalization rules.</li>
@@ -92,8 +92,8 @@ replacement-identifier fallback if approval is not available.</li>
 <li>Initial sanity ranges for weak, average, strong, and elite fixture XIs.
 Competitive target bands and tuning are post-Functional-MVP work.</li>
 </ul>
-<h2 id="work-sequence">Work sequence<a class="anchor" href="#work-sequence" aria-label="Link to section">#</a></h2>
-<h3 id="0a--lock-the-paper-rules">0A — Lock the paper rules<a class="anchor" href="#0a--lock-the-paper-rules" aria-label="Link to section">#</a></h3>
+<h2 id="work-sequence">Work sequence<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/phases/phase-00-design-lock.html#work-sequence" aria-label="Link to section">#</a></h2>
+<h3 id="0a--lock-the-paper-rules">0A — Lock the paper rules<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/phases/phase-00-design-lock.html#0a--lock-the-paper-rules" aria-label="Link to section">#</a></h3>
 <ol>
 <li>Write the eleven slot definitions and an eligibility matrix.</li>
 <li>Walk through at least one draft without UI assumptions.</li>
@@ -101,7 +101,7 @@ Competitive target bands and tuning are post-Functional-MVP work.</li>
 reroll near the end, and an offer with multiple valid placements.</li>
 <li>Record every unresolved judgment as a rule or explicit rejection.</li>
 </ol>
-<h3 id="0b--define-the-player-season-contract">0B — Define the player-season contract<a class="anchor" href="#0b--define-the-player-season-contract" aria-label="Link to section">#</a></h3>
+<h3 id="0b--define-the-player-season-contract">0B — Define the player-season contract<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/phases/phase-00-design-lock.html#0b--define-the-player-season-contract" aria-label="Link to section">#</a></h3>
 <ol>
 <li>Finalize stable identifiers and source provenance.</li>
 <li>Define position, trait, quality, leadership, and teammate-overlap fields.</li>
@@ -110,7 +110,7 @@ reroll near the end, and an offer with multiple valid placements.</li>
 for reproducible synthetic-data generation.</li>
 <li>Create representative fixtures for every position and major tactical trait.</li>
 </ol>
-<h3 id="0c--prove-deterministic-generation">0C — Prove deterministic generation<a class="anchor" href="#0c--prove-deterministic-generation" aria-label="Link to section">#</a></h3>
+<h3 id="0c--prove-deterministic-generation">0C — Prove deterministic generation<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/phases/phase-00-design-lock.html#0c--prove-deterministic-generation" aria-label="Link to section">#</a></h3>
 <ol>
 <li>Specify exactly which inputs affect an offer.</li>
 <li>Define stable sorting before seeded choice so database order cannot change a
@@ -120,7 +120,7 @@ result.</li>
 diagnosable content error.</li>
 <li>Record golden seeds with their expected offer sequences.</li>
 </ol>
-<h3 id="0d--prove-assessment-and-simulation">0D — Prove assessment and simulation<a class="anchor" href="#0d--prove-assessment-and-simulation" aria-label="Link to section">#</a></h3>
+<h3 id="0d--prove-assessment-and-simulation">0D — Prove assessment and simulation<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/phases/phase-00-design-lock.html#0d--prove-assessment-and-simulation" aria-label="Link to section">#</a></h3>
 <ol>
 <li>Score a deliberately strong balanced XI.</li>
 <li>Score a star-heavy but structurally poor XI.</li>
@@ -130,7 +130,7 @@ diagnosable content error.</li>
 <li>Record distribution observations and tuning hypotheses without blocking the
 Functional MVP on competitive calibration.</li>
 </ol>
-<h3 id="0e--lock-implementation-boundaries">0E — Lock implementation boundaries<a class="anchor" href="#0e--lock-implementation-boundaries" aria-label="Link to section">#</a></h3>
+<h3 id="0e--lock-implementation-boundaries">0E — Lock implementation boundaries<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/phases/phase-00-design-lock.html#0e--lock-implementation-boundaries" aria-label="Link to section">#</a></h3>
 <ol>
 <li>Use <code>apps/web/</code> as the React product client.</li>
 <li>Confirm the <code>apps/web</code>, <code>apps/worker</code>, and shared-package layout or record an
@@ -139,7 +139,7 @@ equivalent layout.</li>
 <li>Define environment names and configuration ownership without adding secrets.</li>
 <li>Record the initial browser and viewport support matrix.</li>
 </ol>
-<h2 id="deliverables">Deliverables<a class="anchor" href="#deliverables" aria-label="Link to section">#</a></h2>
+<h2 id="deliverables">Deliverables<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/phases/phase-00-design-lock.html#deliverables" aria-label="Link to section">#</a></h2>
 <ul>
 <li>Final 4-3-3 slot and per-player position-rating table.</li>
 <li>Versioned <code>PlayerSeason</code>, <code>Challenge</code>, <code>DraftRun</code>, and <code>SimulationResult</code>
@@ -152,9 +152,9 @@ schemas in design form.</li>
 <li>Updated decision log with every closed question.</li>
 </ul>
 <p>Frozen artifacts and evidence are recorded in the
-<a href="phase-00-content-contract.html">Phase 0 content and scoring contract</a>. The formal
-gate result is in the <a href="phase-00-exit-review.html">Phase 0 exit review</a>.</p>
-<h2 id="verification">Verification<a class="anchor" href="#verification" aria-label="Link to section">#</a></h2>
+<a href="https://accelbyte.github.io/f11/tutorial/reference/phases/phase-00-content-contract.html">Phase 0 content and scoring contract</a>. The formal
+gate result is in the <a href="https://accelbyte.github.io/f11/tutorial/reference/phases/phase-00-exit-review.html">Phase 0 exit review</a>.</p>
+<h2 id="verification">Verification<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/phases/phase-00-design-lock.html#verification" aria-label="Link to section">#</a></h2>
 <ul>
 <li>A complete eleven-round draft can be executed from the rules alone.</li>
 <li>Golden seeds always yield the expected offers.</li>
@@ -163,7 +163,7 @@ gate result is in the <a href="phase-00-exit-review.html">Phase 0 exit review</a
 <li>Every content record passes schema and position-coverage validation.</li>
 <li>A reviewer can identify which system owns every stored value.</li>
 </ul>
-<h2 id="risks-and-stop-conditions">Risks and stop conditions<a class="anchor" href="#risks-and-stop-conditions" aria-label="Link to section">#</a></h2>
+<h2 id="risks-and-stop-conditions">Risks and stop conditions<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/phases/phase-00-design-lock.html#risks-and-stop-conditions" aria-label="Link to section">#</a></h2>
 <ul>
 <li>Stop implementation if a legal review prohibits the proposed prototype
 content representation.</li>
@@ -174,7 +174,7 @@ block a mechanically correct Functional MVP.</li>
 <li>Do not begin UI implementation while the deterministic contract can still
 change shape substantially.</li>
 </ul>
-<h2 id="exit-checklist">Exit checklist<a class="anchor" href="#exit-checklist" aria-label="Link to section">#</a></h2>
+<h2 id="exit-checklist">Exit checklist<a class="anchor" href="https://accelbyte.github.io/f11/tutorial/reference/phases/phase-00-design-lock.html#exit-checklist" aria-label="Link to section">#</a></h2>
 <ul>
 <li><input checked="" disabled="" type="checkbox"> Product objective and initial audience assumption are recorded.</li>
 <li><input checked="" disabled="" type="checkbox"> Formation, eligibility, duplicates, and rerolls are decided.</li>
@@ -189,7 +189,7 @@ two-round cooldown cases.</li>
 <li><input checked="" disabled="" type="checkbox"> No blocking question remains for the headless mechanics phase.</li>
 </ul>
 <p>Next implementation gate:
-<a href="phase-01a-core-mechanics-engine.html">Phase 1A — Core mechanics engine</a>.</p>
+<a href="https://accelbyte.github.io/f11/tutorial/reference/phases/phase-01a-core-mechanics-engine.html">Phase 1A — Core mechanics engine</a>.</p>
 <p><strong>Exit criterion:</strong> a paper or data-driven draft can be completed, validated,
 scored, explained, and reproduced without UI-specific assumptions.</p>
-</article><footer>Football 11 · Generated from the repository documentation. <a href="https://football-11.workspace-025025.chatgpt.site">Back to the game</a></footer></main></div></body></html>
+</article><footer>Football 11 · Generated from the repository documentation. <a href="https://accelbyte.github.io/f11/">Back to the game</a></footer></main></div></body></html>
