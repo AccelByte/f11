@@ -1,0 +1,286 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Phase 5 Detailed Plan — Saved-XI Competition · Football 11</title><meta name="description" content="Build Football 11 from offline mechanics to online features. Read the setup guide, six integration stages, and copy-ready prompts."><link rel="stylesheet" href="../../tutorial.css"></head>
+<body><a class="skip" href="#tutorial-content">Skip to tutorial</a><header><a class="brand" href="../../index.html"><span>11</span> FOOTBALL 11 <small>THE PLAYBOOK</small></a><nav aria-label="Main navigation"><a href="../../index.html">Tutorial</a><a class="play" href="https://football-11.workspace-025025.chatgpt.site">Play the game ↗</a></nav></header>
+<div class="layout"><aside><details open><summary>On this page</summary><nav aria-label="Tutorial sections"><a class="level-2" href="#work-estimate--one-developer-with-agentic-ai">Work estimate — one developer with agentic AI</a>
+<a class="level-2" href="#phase-outcome">Phase outcome</a>
+<a class="level-2" href="#entry-conditions">Entry conditions</a>
+<a class="level-2" href="#delivery-slices">Delivery slices</a>
+<a class="level-2" href="#approved-v1-product-decisions">Approved v1 product decisions</a>
+<a class="level-2" href="#approved-head-to-head-mechanics-contract">Approved head-to-head mechanics contract</a>
+<a class="level-2" href="#slice-5a--eligible-saved-xi">Slice 5A — Eligible Saved XI</a>
+<a class="level-2" href="#slice-5b--nearby-opponent-discovery">Slice 5B — Nearby opponent discovery</a>
+<a class="level-2" href="#slice-5c--match-resolution">Slice 5C — Match resolution</a>
+<a class="level-2" href="#slice-5d--competitive-statistics">Slice 5D — Competitive Statistics</a>
+<a class="level-2" href="#application-api">Application API</a>
+<a class="level-2" href="#abuse-controls">Abuse controls</a>
+<a class="level-2" href="#authorization-plan">Authorization plan</a>
+<a class="level-2" href="#failure-behavior">Failure behavior</a>
+<a class="level-2" href="#verification">Verification</a>
+<a class="level-2" href="#exit-checklist">Exit checklist</a>
+<a class="level-2" href="#verification-result">Verification result</a></nav></details><a class="source" href="https://github.com/AccelByte/f11/blob/main/docs/phases/phase-05-saved-xi-competition.md">View Markdown source ↗</a></aside><main id="tutorial-content"><div class="intro">BUILD YOUR GAME · ONE FEATURE AT A TIME</div><article><h1 id="phase-5-detailed-plan--saved-xi-competition">Phase 5 Detailed Plan — Saved-XI Competition<a class="anchor" href="#phase-5-detailed-plan--saved-xi-competition" aria-label="Link to section">#</a></h1>
+<p><strong>Last updated:</strong> September 4, 2026
+<strong>Status:</strong> Done
+<strong>Parent roadmap:</strong> <a href="../07-mvp-roadmap.html">07 — MVP roadmap</a></p>
+<h2 id="work-estimate--one-developer-with-agentic-ai">Work estimate — one developer with agentic AI<a class="anchor" href="#work-estimate--one-developer-with-agentic-ai" aria-label="Link to section">#</a></h2>
+<ul>
+<li><strong>Effort:</strong> 4–7 builder-days.</li>
+<li><strong>Elapsed time:</strong> 1–1.75 weeks.</li>
+<li><strong>Resolved uncertainty:</strong> public cross-player Saved-XI lookup uses the
+authenticated player token, while private storage and Statistics settlement
+use the existing confidential client.</li>
+</ul>
+<h2 id="phase-outcome">Phase outcome<a class="anchor" href="#phase-outcome" aria-label="Link to section">#</a></h2>
+<p>An authenticated player can save one eligible XI, request a nearby ranked
+opponent, play a deterministic asynchronous matchup, and receive an
+authoritative stored result with controlled competitive-statistic effects.</p>
+<p>This is leaderboard-driven opponent discovery, not AGS Matchmaking. It uses no
+ticket, match pool, realtime opponent, game session, or dedicated server.</p>
+<h2 id="entry-conditions">Entry conditions<a class="anchor" href="#entry-conditions" aria-label="Link to section">#</a></h2>
+<ul>
+<li>Phase 1 simulation and replay contracts are stable.</li>
+<li>Phase 2 identity, trusted replay, Statistics, and Leaderboards are complete.</li>
+<li>Saved-XI replacement, visibility, exact-version compatibility, Challenge
+Score, and rematch rules are approved.</li>
+<li>Required leaderboard, profile enrichment, Statistics write, and readback
+operations are discovered and authorized.</li>
+</ul>
+<h2 id="delivery-slices">Delivery slices<a class="anchor" href="#delivery-slices" aria-label="Link to section">#</a></h2>
+<table>
+<thead>
+<tr>
+<th>Slice</th>
+<th>Outcome</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>5A — Eligible Saved XI</td>
+<td>One authoritative XI is available under the approved replacement policy</td>
+</tr>
+<tr>
+<td>5B — Nearby discovery</td>
+<td>Worker obtains and filters a rank window without trusting browser candidates</td>
+</tr>
+<tr>
+<td>5C — Match resolution</td>
+<td>Compatible XIs produce one deterministic authoritative result</td>
+</tr>
+<tr>
+<td>5D — Competitive update</td>
+<td>Approved statistics change exactly once</td>
+</tr>
+<tr>
+<td>5E — History and rematch policy</td>
+<td>Players can understand prior outcomes and cooldowns</td>
+</tr>
+</tbody></table>
+<h2 id="approved-v1-product-decisions">Approved v1 product decisions<a class="anchor" href="#approved-v1-product-decisions" aria-label="Link to section">#</a></h2>
+<ul>
+<li>The challenger uses one explicitly published trusted personal-best XI.</li>
+<li>Publishing or replacing an eligible XI requires confirmation; it is never
+replaced silently.</li>
+<li>The existing best-season-points Leaderboard supplies nearby discovery. Search
+approximately ten ranks in either direction and expand once to fifty when
+filtering leaves no candidate.</li>
+<li>Challenge Score is challenger-only personal progress, not an Elo rating or a
+v1 leaderboard. A win adds 3, a draw adds 0, and a loss subtracts 2 without
+allowing the score to fall below zero. The opponent&#39;s value never changes.</li>
+<li>A challenge is one neutral match and may end in a draw.</li>
+<li>Only exact mechanics-version matches compete in v1.</li>
+<li>Challenge tokens are single-use, expire after ten minutes, and cannot select
+an opponent faced by that challenger during the previous 24 hours.</li>
+<li>If no candidate survives filtering and one expansion, return an honest
+no-opponent state without a statistic effect.</li>
+</ul>
+<h2 id="approved-head-to-head-mechanics-contract">Approved head-to-head mechanics contract<a class="anchor" href="#approved-head-to-head-mechanics-contract" aria-label="Link to section">#</a></h2>
+<p><code>head-to-head-v1</code> is separate from the 38-match league model. It gives equal
+weight to the challenger&#39;s attack against the opponent&#39;s defence and the
+challenger&#39;s defence against the opponent&#39;s attack: each duel contributes
+42.5%, while the control difference contributes 15%. This makes the probability
+vector symmetric when the XIs are reversed.</p>
+<p>The trusted boundary supplies one match seed. The domain function canonicalizes
+the Saved-XI identifiers before deriving its random stream, so reversing caller
+roles preserves the underlying sampled match and only inverts win and loss.
+Draws remain possible. The stored evidence pins the matchup version, canonical
+identifiers, seed, roll, probabilities, outcome, and Challenge Score delta.</p>
+<p>The headless contract is implemented with golden, symmetry, replay, score-floor,
+and 10,000-seed distribution tests before any AGS Statistics connection.</p>
+<h2 id="slice-5a--eligible-saved-xi">Slice 5A — Eligible Saved XI<a class="anchor" href="#slice-5a--eligible-saved-xi" aria-label="Link to section">#</a></h2>
+<p>The Worker creates or replaces a Saved XI only after replaying the submission,
+matching it to the authenticated player&#39;s trusted receipt, and proving that its
+points equal the current personal best. It stores:</p>
+<ul>
+<li>owner AGS user ID from validated identity;</li>
+<li>source run and immutable result ID;</li>
+<li>formation and ordered slot assignments;</li>
+<li>content, rules, and simulation versions;</li>
+<li>competitive summary fields needed for discovery;</li>
+<li>publication timestamp and exact mechanics versions.</li>
+</ul>
+<p>The browser cannot upload an arbitrary XI or mark it eligible without Worker
+validation. An issued challenge embeds both authoritative XI snapshots, so an
+explicit later replacement cannot change a match that has already been issued.</p>
+<h2 id="slice-5b--nearby-opponent-discovery">Slice 5B — Nearby opponent discovery<a class="anchor" href="#slice-5b--nearby-opponent-discovery" aria-label="Link to section">#</a></h2>
+<p>Implemented sequence:</p>
+<pre><code class="language-text">Player selects Challenge nearby XI
+  -&gt; trusted application boundary validates caller identity against AGS
+  -&gt; trusted boundary resolves current rank or approved fallback band
+  -&gt; trusted boundary queries an AGS around-me or rank-range window
+  -&gt; trusted boundary removes self, incompatible, private, blocked, invalid, and recent opponents
+  -&gt; trusted boundary expands the window only under the approved rule
+  -&gt; trusted boundary selects one candidate using an auditable random/rotation rule
+  -&gt; trusted boundary returns a public opponent preview and opaque challenge token
+</code></pre>
+<p>The browser may display the Phase 2 leaderboard directly, but it must not
+submit the opponent candidate list used for authoritative selection.</p>
+<p>Treat display-name/profile enrichment as a separate AGS operation and
+permission. If enrichment fails, use a safe anonymous label without blocking a
+valid competitive result.</p>
+<h2 id="slice-5c--match-resolution">Slice 5C — Match resolution<a class="anchor" href="#slice-5c--match-resolution" aria-label="Link to section">#</a></h2>
+<ol>
+<li>Load both authoritative Saved XI records.</li>
+<li>Validate eligibility and version compatibility again at resolution time.</li>
+<li>Pin matchup rules and simulation version.</li>
+<li>Generate a private deterministic match seed and record its input evidence.</li>
+<li>Simulate in the trusted application boundary connected to AGS; never accept a
+browser outcome.</li>
+<li>Store the asynchronous match before applying statistics.</li>
+<li>Return outcome, probability, score, and settlement fields while removing the
+private seed evidence and raw opponent user ID from browser projections.</li>
+</ol>
+<p>The challenge token must expire or become single-use according to the approved
+anti-farming policy.</p>
+<h2 id="slice-5d--competitive-statistics">Slice 5D — Competitive Statistics<a class="anchor" href="#slice-5d--competitive-statistics" aria-label="Link to section">#</a></h2>
+<ul>
+<li>Store one native AGS Challenge Score statistic for the challenger only. Start
+at zero; apply win <code>+3</code>, draw <code>0</code>, and loss <code>-2</code>, with a zero minimum.</li>
+<li>Keep the full match, XIs, explanation, and version evidence in AGS Cloud Save.</li>
+<li>Use the private, <code>SERVER</code>-set <code>football11challengescore</code> definition with a zero
+minimum. Settlement computes the floored absolute value in trusted code and
+writes it with <code>OVERRIDE</code> for retry safety.</li>
+<li>The opponent&#39;s statistic never changes in v1.</li>
+<li>Apply one idempotency record or settlement state so retries cannot double
+count.</li>
+<li>Read back the challenger&#39;s resulting Challenge Score. It does not feed a v1
+Leaderboard; the existing best-season-points Leaderboard remains the discovery
+index.</li>
+<li>Treat configuration changes to tied statistics as migration-sensitive.</li>
+</ul>
+<p>Direct score posting to AGS Leaderboards is not the ingestion path; rankings
+follow the configured Statistics values.</p>
+<h2 id="application-api">Application API<a class="anchor" href="#application-api" aria-label="Link to section">#</a></h2>
+<ul>
+<li><code>PUT /api/saved-xi</code> explicitly publishes or replaces an eligible trusted result.</li>
+<li><code>GET /api/saved-xi</code> returns the caller&#39;s Saved XI, Challenge Score, active or
+repairable challenge, and bounded history.</li>
+<li><code>POST /api/opponents/nearby</code> selects one eligible opponent in the trusted
+application boundary connected to AGS.</li>
+<li><code>POST /api/asynchronous-matches</code> resolves one issued challenge or idempotently
+repairs the same pending settlement when its token is replayed.</li>
+<li><code>GET /api/asynchronous-matches</code> returns the same authenticated status projection.</li>
+</ul>
+<p>Payloads must carry opaque identifiers and are validated through shared
+contracts.</p>
+<h2 id="abuse-controls">Abuse controls<a class="anchor" href="#abuse-controls" aria-label="Link to section">#</a></h2>
+<ul>
+<li>Server-derived player and opponent identities.</li>
+<li>Expiring or single-use challenge tokens.</li>
+<li>Rematch cooldown and recent-opponent exclusion.</li>
+<li>A rolling limit of 20 challenges per 24 hours, aligned with the bounded
+20-match history that proves rematch exclusion.</li>
+<li>Idempotent match creation and statistic settlement.</li>
+<li>No statistic update for incompatible, invalid, replayed, or abandoned
+challenges.</li>
+<li>Audit fields for selection window, exclusions, seed, versions, and settlement.</li>
+<li>A repair path for a stored match whose Statistics settlement temporarily
+failed.</li>
+</ul>
+<h2 id="authorization-plan">Authorization plan<a class="anchor" href="#authorization-plan" aria-label="Link to section">#</a></h2>
+<pre><code class="language-text">Browser caller:         authenticated web game/browser UI
+Browser token:          AGS user access token
+Worker caller:          backend service
+Worker token:           service token
+Worker IAM client:      confidential; secret in Cloudflare secret storage
+AGS calls:              all-time Leaderboard window, public bulk player records,
+                        private/admin player records, Statistics update/readback
+Permission discovery:   installed SDK contracts, AGS CLI describe, and live probes
+Required permissions:   player public Cloud Save read; confidential Cloud Save
+                        player-record and Statistics user-value create/read/update
+Verified access:        yes; redacted two-player local-Worker/live-AGS smoke passes
+</code></pre>
+<h2 id="failure-behavior">Failure behavior<a class="anchor" href="#failure-behavior" aria-label="Link to section">#</a></h2>
+<table>
+<thead>
+<tr>
+<th>Condition</th>
+<th>Expected result</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Player is unranked</td>
+<td>Use the approved unranked pool or explain how to qualify</td>
+</tr>
+<tr>
+<td>No candidate survives filtering</td>
+<td>Expand once by rule or return no-opponent state</td>
+</tr>
+<tr>
+<td>Candidate XI was replaced</td>
+<td>Revalidate token against preserved version or select again</td>
+</tr>
+<tr>
+<td>Versions are incompatible</td>
+<td>Do not simulate or update Statistics</td>
+</tr>
+<tr>
+<td>Match storage succeeds but stat update fails</td>
+<td>Mark settlement pending and retry idempotently</td>
+</tr>
+<tr>
+<td>Profile enrichment fails</td>
+<td>Show safe fallback label; retain valid match</td>
+</tr>
+<tr>
+<td>Challenge is replayed</td>
+<td>Return original result or reject without new stat effects</td>
+</tr>
+</tbody></table>
+<h2 id="verification">Verification<a class="anchor" href="#verification" aria-label="Link to section">#</a></h2>
+<ul>
+<li>Saved XI can only originate from a validated owned run.</li>
+<li>Rank-window filtering removes self, recent, private, invalid, and incompatible
+candidates.</li>
+<li>Selection is auditable and cannot be overridden by the browser.</li>
+<li>Replaying the same match evidence reproduces the same outcome.</li>
+<li>Duplicate submission creates one match and one settlement effect.</li>
+<li>Challenge Score is read back after settlement, while the existing Leaderboard
+continues to supply discovery candidates.</li>
+<li>Tampered IDs, tokens, versions, and challenge tokens fail safely.</li>
+<li>UI covers loading, unranked, no opponent, preview, resolving, result,
+settlement pending, and retryable error.</li>
+</ul>
+<h2 id="exit-checklist">Exit checklist<a class="anchor" href="#exit-checklist" aria-label="Link to section">#</a></h2>
+<ul>
+<li><input checked="" disabled="" type="checkbox"> Saved-XI eligibility and replacement rules are approved.</li>
+<li><input checked="" disabled="" type="checkbox"> Exact-version compatibility and Challenge Score rules are approved.</li>
+<li><input checked="" disabled="" type="checkbox"> Worker-owned nearby discovery is implemented.</li>
+<li><input checked="" disabled="" type="checkbox"> Match resolution is deterministic and stored with complete evidence.</li>
+<li><input checked="" disabled="" type="checkbox"> Competitive Statistics settle exactly once and read back correctly.</li>
+<li><input checked="" disabled="" type="checkbox"> Challenge Score readback is correct and the existing Leaderboard supplies
+valid discovery candidates.</li>
+<li><input checked="" disabled="" type="checkbox"> Anti-farming, cooldown, replay, and repair paths are verified.</li>
+<li><input checked="" disabled="" type="checkbox"> No AGS Matchmaking or AMS resource is involved.</li>
+</ul>
+<h2 id="verification-result">Verification result<a class="anchor" href="#verification-result" aria-label="Link to section">#</a></h2>
+<p>The final local suite passes 94 tests, type-checking, lint review of the changed
+surface, and the Vinext production build. A desktop browser fixture verified the
+loaded competition hierarchy, opponent preview, score, resolve action, and
+history in the shipped CSS; the layout collapses to one column at 780px and to
+two-column XI facts at 480px. The redacted two-player smoke then exercised the
+real Worker routes against Shared Cloud and read back trusted publication,
+public discovery, duplicate resolution, private seed projection, challenger-only
+score, zero floor, <code>SERVER</code>-owned Cloud Save records, settled immutable history,
+and same-opponent cooldown. No user IDs, tokens, client secret, or private match
+seed are printed by the smoke result.</p>
+<p><strong>Exit criterion:</strong> a player can challenge a valid nearby ranked XI and receive
+a reproducible authoritative result with exactly-once competitive settlement.</p>
+</article><footer>Football 11 · Generated from the repository documentation. <a href="https://football-11.workspace-025025.chatgpt.site">Back to the game</a></footer></main></div></body></html>

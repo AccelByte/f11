@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Content, Legal, and Product Risks · Football 11</title><meta name="description" content="Build Football 11 from offline mechanics to online features. Read the setup guide, six integration stages, and copy-ready prompts."><link rel="stylesheet" href="../tutorial.css"></head>
+<body><a class="skip" href="#tutorial-content">Skip to tutorial</a><header><a class="brand" href="../index.html"><span>11</span> FOOTBALL 11 <small>THE PLAYBOOK</small></a><nav aria-label="Main navigation"><a href="../index.html">Tutorial</a><a class="play" href="https://football-11.workspace-025025.chatgpt.site">Play the game ↗</a></nav></header>
+<div class="layout"><aside><details open><summary>On this page</summary><nav aria-label="Tutorial sections"><a class="level-2" href="#content-strategy">Content strategy</a>
+<a class="level-2" href="#openfootball-public-domain-source">OpenFootball public-domain source</a>
+<a class="level-2" href="#football-dataorg-assessment">football-data.org assessment</a>
+<a class="level-2" href="#rights-requiring-validation">Rights requiring validation</a>
+<a class="level-2" href="#primary-product-risks">Primary product risks</a>
+<a class="level-2" href="#technical-risks">Technical risks</a>
+<a class="level-2" href="#playtest-questions">Playtest questions</a></nav></details><a class="source" href="https://github.com/AccelByte/f11/blob/main/docs/08-content-legal-and-risks.md">View Markdown source ↗</a></aside><main id="tutorial-content"><div class="intro">BUILD YOUR GAME · ONE FEATURE AT A TIME</div><article><h1 id="content-legal-and-product-risks">Content, Legal, and Product Risks<a class="anchor" href="#content-legal-and-product-risks" aria-label="Link to section">#</a></h1>
+<p><strong>Last updated:</strong> September 4, 2026
+<strong>Status:</strong> Risk register</p>
+<h2 id="content-strategy">Content strategy<a class="anchor" href="#content-strategy" aria-label="Link to section">#</a></h2>
+<p>The mechanics MVP uses the complete validated 2023/24 OpenFootball named-squad
+catalogue so offer analysis can measure scarcity and viability without
+guessing. A public release can later curate the pool based on offer-analysis
+evidence and approved rights. Every retained card needs enough structured
+information to create meaningful draft choices.</p>
+<p><strong>Prepared Functional MVP candidate:</strong></p>
+<ul>
+<li>OpenFootball England Premier League results and squads for 2023/24,
+pinned to revision <code>0690446f794fde748ea4b994244def699c6a65b2</code>.</li>
+<li>OpenFootball Players population data pinned to revision
+<code>125d20f7cc06cac7e758b40df535a7695632680a</code>.</li>
+<li>380 matches, 20 clubs, and 1,041 named squad cards.</li>
+<li>The complete 1,041-card pool for mechanics analysis; the earlier 60–80 figure
+is only a possible later release-curation estimate.</li>
+<li>Deterministically generated synthetic position ratings and attributes stored
+in a versioned manifest and clearly described as non-official.</li>
+<li>Text-first presentation.</li>
+<li>Original UI and branding.</li>
+</ul>
+<p>Do not regenerate synthetic ratings at runtime. Record the source metadata,
+reuse terms, generator version, seed, and output manifest so every run remains
+reproducible and the source can be replaced without changing old results.</p>
+<p>OpenFootball supplies match results, squad identities, broad positions, and
+available birth years. It does not supply individual performance evidence for
+official ratings. The prepared manifest and every player-facing prototype must
+separate those observed facts from inferred formation positions, missing
+physical profiles, ratings, attributes, tactical traits, and leadership, which
+are deterministic, synthetic, and non-official.</p>
+<h2 id="openfootball-public-domain-source">OpenFootball public-domain source<a class="anchor" href="#openfootball-public-domain-source" aria-label="Link to section">#</a></h2>
+<p>The OpenFootball England and Players repositories describe their data as free,
+open, and public domain. The catalogue records exact commit revisions and keeps
+links to both repositories and the CC0 1.0 public-domain dedication for clear
+provenance even though attribution is not imposed like CC BY.</p>
+<p>Public-domain dataset status does not resolve publicity/personality rights for
+commercial use of player identities or trademark rights in league and club
+names and branding. P0-05 therefore remains a player/club/competition release
+decision, not a Functional MVP blocker.</p>
+<h2 id="football-dataorg-assessment">football-data.org assessment<a class="anchor" href="#football-dataorg-assessment" aria-label="Link to section">#</a></h2>
+<p>football-data.org is a subscription API, not an openly licensed dataset. The
+terms displayed during registration require one API key per application,
+visible <code>Football data provided by the Football-Data.org API</code> attribution, and
+state that API-derived fixtures, results, tables, player/squad data, and scorers
+may no longer be referenced after subscription cancellation. The service also
+states in its published commercial-use note that free access is non-commercial
+and asks commercial users to negotiate a solution.</p>
+<p>Conclusion: do not ingest football-data.org into the checked-in catalogue under
+the free tier. Reconsider it only for live operational data after obtaining
+written commercial terms that cover caching, derived data, termination, and the
+intended game application.</p>
+<h2 id="rights-requiring-validation">Rights requiring validation<a class="anchor" href="#rights-requiring-validation" aria-label="Link to section">#</a></h2>
+<ul>
+<li>Player names and likenesses.</li>
+<li>Player photographs.</li>
+<li>Club, league, competition, and federation logos.</li>
+<li>Official kits and visual trade dress.</li>
+<li>Statistical datasets and API terms.</li>
+<li>Generated artwork derived from protected source material.</li>
+</ul>
+<p>Until rights are confirmed, prefer text, original graphic systems, generic club
+identifiers where necessary, and properly licensed or original media.</p>
+<p>This document is a product-risk record, not legal advice.</p>
+<h2 id="primary-product-risks">Primary product risks<a class="anchor" href="#primary-product-risks" aria-label="Link to section">#</a></h2>
+<table>
+<thead>
+<tr>
+<th>Risk</th>
+<th>Why it matters</th>
+<th>Early mitigation</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Eleven rounds feel too long</td>
+<td>Players abandon before the shareable outcome</td>
+<td>Time playtests and improve reveal pacing</td>
+</tr>
+<tr>
+<td>Choices are obvious</td>
+<td>Draft loses tension and replay value</td>
+<td>Tune offer generation around trade-offs</td>
+</tr>
+<tr>
+<td>Simulation feels arbitrary</td>
+<td>Fans reject results rather than debate them</td>
+<td>Show categories and evidence-based explanations</td>
+</tr>
+<tr>
+<td>Dataset is too small</td>
+<td>Runs repeat quickly</td>
+<td>Measure repetition before expanding curation</td>
+</tr>
+<tr>
+<td>Dataset is too large too early</td>
+<td>Schema changes become expensive</td>
+<td>Start with the smallest set that passes coverage and completion checks</td>
+</tr>
+<tr>
+<td>Public-domain data is mistaken for a grant of league or club rights</td>
+<td>Dataset reuse is open but names or marks can create separate claims</td>
+<td>Preserve provenance; separately review competition and club naming/trademark use</td>
+</tr>
+<tr>
+<td>Modeled values are mistaken for observed player ability</td>
+<td>The source has named squads but no individual performance evidence</td>
+<td>Separate observed identity fields from inferred positions and synthetic ratings; never call them official ratings</td>
+</tr>
+<tr>
+<td>Public-domain source status is treated as resolving player publicity rights</td>
+<td>Dataset reuse and commercial identity use are different legal questions</td>
+<td>Require explicit player, club, and competition rights review before an official public release</td>
+</tr>
+<tr>
+<td>A football-data.org API subscription is treated as a reusable data license</td>
+<td>Cached or derived data remains after cancellation or crosses applications</td>
+<td>Do not use it as catalogue input without written commercial caching and post-termination rights</td>
+</tr>
+<tr>
+<td>Synthetic ratings are mistaken for official data</td>
+<td>Players distrust the game or infer unsupported claims</td>
+<td>Label them clearly and keep provenance and generator versions</td>
+</tr>
+<tr>
+<td>Position eligibility causes arguments</td>
+<td>Football roles are subjective</td>
+<td>Publish consistent eligibility rules</td>
+</tr>
+<tr>
+<td>Famous names dominate all logic</td>
+<td>Tactical balance becomes cosmetic</td>
+<td>Keep quality and team fit visibly separate</td>
+</tr>
+<tr>
+<td>Friend rooms add complexity before solo loop is fun</td>
+<td>Online polish cannot rescue weak drafting</td>
+<td>Validate solo vertical slice first</td>
+</tr>
+<tr>
+<td>Ranking can be manipulated</td>
+<td>Competitive value collapses</td>
+<td>Server authority, replay protection, opponent cooldown</td>
+</tr>
+<tr>
+<td>Old and new simulation versions compete unfairly</td>
+<td>Leaderboard trust erodes</td>
+<td>Define immutable and compatibility policies</td>
+</tr>
+<tr>
+<td>Social previews fail</td>
+<td>Viral loop breaks outside the app</td>
+<td>Serve result-specific HTML and preview images</td>
+</tr>
+</tbody></table>
+<h2 id="technical-risks">Technical risks<a class="anchor" href="#technical-risks" aria-label="Link to section">#</a></h2>
+<ul>
+<li>Browser storage loss for anonymous identities.</li>
+<li>AGS token lifecycle and reconnect behavior.</li>
+<li>Public versus confidential IAM client separation.</li>
+<li>Trusted-service-to-AGS permission gaps.</li>
+<li>Cloud Save record limits, conflicts, versioning, and recovery strategy.</li>
+<li>Session progress notification behavior.</li>
+<li>Share-image generation latency.</li>
+<li>Deterministic output drifting across runtime or content versions.</li>
+</ul>
+<p>Exact SDK behavior, permissions, and namespace configuration must be verified
+during the relevant AGS integration slice rather than assumed from this design.</p>
+<h2 id="playtest-questions">Playtest questions<a class="anchor" href="#playtest-questions" aria-label="Link to section">#</a></h2>
+<ul>
+<li>Can a new player explain the goal after one screen?</li>
+<li>Does every third draft round contain a difficult choice?</li>
+<li>Can players predict how a selection changes team fit?</li>
+<li>Do players understand why the final XI dropped points?</li>
+<li>Is completing eleven rounds worth the reveal?</li>
+<li>Do players immediately want to send the result to someone?</li>
+<li>Does the live room feel meaningfully more social than sharing a daily link?</li>
+</ul>
+</article><footer>Football 11 · Generated from the repository documentation. <a href="https://football-11.workspace-025025.chatgpt.site">Back to the game</a></footer></main></div></body></html>

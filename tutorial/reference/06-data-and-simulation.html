@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Data and Simulation · Football 11</title><meta name="description" content="Build Football 11 from offline mechanics to online features. Read the setup guide, six integration stages, and copy-ready prompts."><link rel="stylesheet" href="../tutorial.css"></head>
+<body><a class="skip" href="#tutorial-content">Skip to tutorial</a><header><a class="brand" href="../index.html"><span>11</span> FOOTBALL 11 <small>THE PLAYBOOK</small></a><nav aria-label="Main navigation"><a href="../index.html">Tutorial</a><a class="play" href="https://football-11.workspace-025025.chatgpt.site">Play the game ↗</a></nav></header>
+<div class="layout"><aside><details open><summary>On this page</summary><nav aria-label="Tutorial sections"><a class="level-2" href="#design-principles">Design principles</a>
+<a class="level-2" href="#core-entities">Core entities</a>
+<a class="level-3" href="#player-season">Player-season</a>
+<a class="level-3" href="#challenge">Challenge</a>
+<a class="level-3" href="#draft-run">Draft run</a>
+<a class="level-3" href="#saved-xi">Saved XI</a>
+<a class="level-3" href="#simulation-result">Simulation result</a>
+<a class="level-3" href="#asynchronous-match">Asynchronous match</a>
+<a class="level-2" href="#deterministic-challenge-contract">Deterministic challenge contract</a>
+<a class="level-2" href="#submission-and-validation">Submission and validation</a>
+<a class="level-2" href="#candidate-ags-statistics">Candidate AGS statistics</a>
+<a class="level-2" href="#simulation-layers">Simulation layers</a>
+<a class="level-3" href="#layer-1-roster-assessment">Layer 1: roster assessment</a>
+<a class="level-3" href="#layer-2-season-model">Layer 2: season model</a>
+<a class="level-3" href="#layer-3-explanation">Layer 3: explanation</a>
+<a class="level-2" href="#version-compatibility">Version compatibility</a></nav></details><a class="source" href="https://github.com/AccelByte/f11/blob/main/docs/06-data-and-simulation.md">View Markdown source ↗</a></aside><main id="tutorial-content"><div class="intro">BUILD YOUR GAME · ONE FEATURE AT A TIME</div><article><h1 id="data-and-simulation">Data and Simulation<a class="anchor" href="#data-and-simulation" aria-label="Link to section">#</a></h1>
+<p><strong>Last updated:</strong> September 4, 2026
+<strong>Status:</strong> Initial domain contract</p>
+<h2 id="design-principles">Design principles<a class="anchor" href="#design-principles" aria-label="Link to section">#</a></h2>
+<ul>
+<li>Store enough evidence to reproduce every competitive result.</li>
+<li>Version content generation and simulation independently when useful.</li>
+<li>Keep rich football records in the domain database.</li>
+<li>Store only ranking/progression values in AGS Statistics.</li>
+<li>Never trust a score calculated by the browser.</li>
+</ul>
+<h2 id="core-entities">Core entities<a class="anchor" href="#core-entities" aria-label="Link to section">#</a></h2>
+<h3 id="player-season">Player-season<a class="anchor" href="#player-season" aria-label="Link to section">#</a></h3>
+<ul>
+<li>Stable identifier.</li>
+<li>Player display name.</li>
+<li>Club.</li>
+<li>Season or era.</li>
+<li>Position-specific ratings for every legal formation position.</li>
+<li>Quality attributes.</li>
+<li>Tactical traits.</li>
+<li>Leadership value.</li>
+<li>Teammate-overlap references or derivable career history.</li>
+<li>Content and licensing status.</li>
+<li>Data version.</li>
+</ul>
+<p>The active catalogue is derived from the 380 OpenFootball English Premier
+League results and all 20 club squad tables for 2023/24. It contains 1,041 named
+squad entries. Player names, clubs, shirt numbers, broad positions, and
+available birth years are observed rather than invented. OpenFootball does not
+supply player performance histories, so the game keeps appearances at zero and
+does not assign unsupported event statistics to the named players.</p>
+<p>Observed points, goals, defensive record, clean sheets, goal difference,
+second-half results, away performance, and consistency become within-season
+club indices. Position-specific weights turn those indices into a club-role
+baseline. The source <code>GK</code>, <code>DF</code>, <code>MF</code>, and <code>FW</code> values are deterministically
+mapped to formation positions. Birth year provides age where available;
+unambiguous OpenFootball Players matches provide 538 heights, while missing
+physical values use position-population samples. Position templates and a
+small seeded variation produce raw attributes and ratings. A monotonic
+piecewise-linear calibration preserves the 55-point floor and median while
+stretching only the upper tail into an elite band. In content v2, the median
+best-position rating is 72, the 95th percentile is 86, 14 of 1,041 cards reach
+90 or higher, and the maximum is 94. Generation tests enforce those gates.
+These modeled values remain synthetic, non-official gameplay constructs.</p>
+<p>The active catalogue lives at
+<code>data/content/openfootball-pl-2023-24-named-squads-v2.json</code>. It stores both
+pinned source revisions, the generation seed and version, a player-record hash,
+and explicit observed-versus-modeled provenance. Runtime code reads this frozen
+manifest and never invents ratings per request. The source repositories describe
+their data as public domain; club, competition, and mark rights remain a release
+review, including the real-player publicity implications of a public release.</p>
+<p>Each named player card has a unique <code>playerIdentityId</code>.
+The position map uses placeable formation codes such as <code>RW</code>, <code>CF</code>, and <code>LW</code>;
+broad labels such as <code>FW</code> may be search tags but are not formation slots.</p>
+<p>Current modeled-position coverage is: <code>GK</code> 131, <code>LB</code> 343, <code>CB</code> 343, <code>RB</code> 343,
+<code>DM</code> 361, <code>CM</code> 361, <code>AM</code> 361, <code>LW</code> 206, <code>CF</code> 206, and <code>RW</code> 206. The 2020s
+club/era grouping and forward-feasibility checks passed 10,000 complete seeded
+drafts. Content v2 changes ratings only and preserves the analyzed identities,
+clubs, eras, and legal-position maps, but this remains mechanics and calibration
+evidence rather than validation of real player ability.</p>
+<h3 id="challenge">Challenge<a class="anchor" href="#challenge" aria-label="Link to section">#</a></h3>
+<ul>
+<li>Challenge identifier.</li>
+<li>Mode.</li>
+<li>Seed.</li>
+<li>Content version.</li>
+<li>Rules version.</li>
+<li>Simulation version.</li>
+<li>Formation.</li>
+<li>Reroll allowance.</li>
+<li>Active period for daily challenges.</li>
+<li>Optional AGS session identifier for friend rooms.</li>
+</ul>
+<h3 id="draft-run">Draft run<a class="anchor" href="#draft-run" aria-label="Link to section">#</a></h3>
+<ul>
+<li>Run identifier.</li>
+<li>Challenge identifier.</li>
+<li>AGS user identifier.</li>
+<li>Offered choices for every round.</li>
+<li>Selected player and roster slot for every round.</li>
+<li>Rerolls used.</li>
+<li>Submission timestamp.</li>
+<li>Validation outcome.</li>
+<li>Final result identifier.</li>
+</ul>
+<h3 id="saved-xi">Saved XI<a class="anchor" href="#saved-xi" aria-label="Link to section">#</a></h3>
+<ul>
+<li>Owner AGS user identifier.</li>
+<li>Formation and slot assignments.</li>
+<li>Source run identifier.</li>
+<li>Public visibility state.</li>
+<li>Content and simulation versions.</li>
+<li>Quality, chemistry, and balance summary.</li>
+<li>Creation and replacement timestamps.</li>
+</ul>
+<h3 id="simulation-result">Simulation result<a class="anchor" href="#simulation-result" aria-label="Link to section">#</a></h3>
+<ul>
+<li>Result identifier.</li>
+<li>Source run and XI.</li>
+<li>Input checksum.</li>
+<li>Simulation version.</li>
+<li>Category scores.</li>
+<li>Wins, draws, losses, points, and optional Invincible or Perfect label.</li>
+<li>Explanation facts and rendered summary.</li>
+<li>Creation timestamp.</li>
+</ul>
+<h3 id="asynchronous-match">Asynchronous match<a class="anchor" href="#asynchronous-match" aria-label="Link to section">#</a></h3>
+<ul>
+<li>Match identifier.</li>
+<li>Challenger and opponent XI identifiers.</li>
+<li>Selection-window evidence.</li>
+<li>Rules and simulation versions.</li>
+<li>Outcome.</li>
+<li>Statistic updates.</li>
+<li>Creation timestamp.</li>
+</ul>
+<h2 id="deterministic-challenge-contract">Deterministic challenge contract<a class="anchor" href="#deterministic-challenge-contract" aria-label="Link to section">#</a></h2>
+<p>Given the same:</p>
+<ul>
+<li>Seed.</li>
+<li>Content version.</li>
+<li>Rules version.</li>
+<li>Formation.</li>
+<li>Maximum offered players and initial reroll allowance.</li>
+<li>Prior selections.</li>
+<li>Reroll decisions.</li>
+</ul>
+<p>the generator must produce the same eligible offers.</p>
+<p>Determinism enables daily fairness, friend comparison, bug reproduction, and
+auditable disputes.</p>
+<p>The implementation algorithm—including derived RNG streams, constraint and
+offer selection, maximum-matching feasibility, rerolls, assessment formulas,
+and the 38-match model—is defined in
+<a href="phases/phase-01a-core-mechanics-engine.html">Phase 1A — Core mechanics engine</a>.</p>
+<h2 id="submission-and-validation">Submission and validation<a class="anchor" href="#submission-and-validation" aria-label="Link to section">#</a></h2>
+<p>The browser submits:</p>
+<ul>
+<li>Challenge identifier.</li>
+<li>Selected player identifiers and slots.</li>
+<li>Reroll actions.</li>
+<li>A replay or sequence token if required.</li>
+</ul>
+<p>The Worker:</p>
+<ol>
+<li>Loads the authoritative challenge.</li>
+<li>Reconstructs every offer.</li>
+<li>Confirms that each selected player was eligible.</li>
+<li>Confirms formation, uniqueness, slot compatibility, and reroll limits.</li>
+<li>Computes category scores.</li>
+<li>Runs the versioned simulation.</li>
+<li>Stores the full result.</li>
+<li>Updates only trusted aggregates in AGS Statistics.</li>
+</ol>
+<h2 id="candidate-ags-statistics">Candidate AGS statistics<a class="anchor" href="#candidate-ags-statistics" aria-label="Link to section">#</a></h2>
+<p>These are proposals, not namespace configuration:</p>
+<ul>
+<li>Runs played.</li>
+<li>Best season points.</li>
+<li>Daily season points.</li>
+<li>Invincible seasons, meaning zero losses.</li>
+<li>Perfect seasons, meaning 38 wins and 114 points.</li>
+<li>Saved-XI rating or asynchronous wins, once the rating model is approved.</li>
+</ul>
+<p>Avoid one AGS statistic per tactical coefficient. The full breakdown belongs in
+the domain result record.</p>
+<h2 id="simulation-layers">Simulation layers<a class="anchor" href="#simulation-layers" aria-label="Link to section">#</a></h2>
+<h3 id="layer-1-roster-assessment">Layer 1: roster assessment<a class="anchor" href="#layer-1-roster-assessment" aria-label="Link to section">#</a></h3>
+<ul>
+<li>Quality.</li>
+<li>Positioning.</li>
+<li>Chemistry.</li>
+<li>Tactical balance.</li>
+<li>Leadership.</li>
+</ul>
+<h3 id="layer-2-season-model">Layer 2: season model<a class="anchor" href="#layer-2-season-model" aria-label="Link to section">#</a></h3>
+<p>Translate the assessment into a distribution of wins, draws, and losses using a
+seeded deterministic process. The versioned baseline formula is documented in
+<a href="phases/phase-01a-core-mechanics-engine.html">Phase 1A</a> and executed only by the
+trusted mechanics path.</p>
+<h3 id="layer-3-explanation">Layer 3: explanation<a class="anchor" href="#layer-3-explanation" aria-label="Link to section">#</a></h3>
+<p>Generate explanations from structured facts, not unconstrained prose. Every
+sentence should correspond to an actual scoring signal.</p>
+<h2 id="version-compatibility">Version compatibility<a class="anchor" href="#version-compatibility" aria-label="Link to section">#</a></h2>
+<p>Old results remain immutable. A rebalance creates a new simulation version.
+Saved-XI opponent rules must explicitly choose whether to:</p>
+<ul>
+<li>Preserve historical outcomes.</li>
+<li>Re-simulate both XIs under the newest compatible version.</li>
+<li>Restrict competition to equal versions.</li>
+</ul>
+<p>That choice is open and must be resolved before public ranked competition.</p>
+</article><footer>Football 11 · Generated from the repository documentation. <a href="https://football-11.workspace-025025.chatgpt.site">Back to the game</a></footer></main></div></body></html>

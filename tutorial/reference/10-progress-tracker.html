@@ -1,0 +1,884 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Football 11 Progress Tracker · Football 11</title><meta name="description" content="Build Football 11 from offline mechanics to online features. Read the setup guide, six integration stages, and copy-ready prompts."><link rel="stylesheet" href="../tutorial.css"></head>
+<body><a class="skip" href="#tutorial-content">Skip to tutorial</a><header><a class="brand" href="../index.html"><span>11</span> FOOTBALL 11 <small>THE PLAYBOOK</small></a><nav aria-label="Main navigation"><a href="../index.html">Tutorial</a><a class="play" href="https://football-11.workspace-025025.chatgpt.site">Play the game ↗</a></nav></header>
+<div class="layout"><aside><details open><summary>On this page</summary><nav aria-label="Tutorial sections"><a class="level-2" href="#status-rules">Status rules</a>
+<a class="level-2" href="#current-snapshot">Current snapshot</a>
+<a class="level-2" href="#phase-0-â-design-lock">Phase 0 â€” Design lock</a>
+<a class="level-2" href="#phase-1a-â-core-mechanics-engine">Phase 1A â€” Core mechanics engine</a>
+<a class="level-2" href="#phase-1b-â-functional-mvp">Phase 1B â€” Functional MVP</a>
+<a class="level-2" href="#project-communication">Project communication</a>
+<a class="level-2" href="#phase-2-â-ags-foundation">Phase 2 â€” AGS foundation</a>
+<a class="level-2" href="#phase-3-â-sharing-and-daily">Phase 3 â€” Sharing and daily</a>
+<a class="level-2" href="#phase-4-â-friend-rooms">Phase 4 â€” Friend rooms</a>
+<a class="level-2" href="#phase-5-â-saved-xi-competition">Phase 5 â€” Saved-XI competition</a>
+<a class="level-2" href="#phase-6-â-connected-release-hardening">Phase 6 â€” Connected release hardening</a>
+<a class="level-2" href="#update-protocol">Update protocol</a>
+<a class="level-2" href="#shared-tutorial">Shared tutorial</a>
+<a class="level-2" href="#public-source-hygiene">Public source hygiene</a></nav></details><a class="source" href="https://github.com/AccelByte/f11/blob/main/docs/10-progress-tracker.md">View Markdown source ↗</a></aside><main id="tutorial-content"><div class="intro">BUILD YOUR GAME · ONE FEATURE AT A TIME</div><article><h1 id="football-11-progress-tracker">Football 11 Progress Tracker<a class="anchor" href="#football-11-progress-tracker" aria-label="Link to section">#</a></h1>
+<p><strong>Last updated:</strong> November 3, 2026
+<strong>Status:</strong> Active<br><strong>Current gate:</strong> Decide the content-version leaderboard migration and public-product rights posture, then finish Phase 4 trusted room authority</p>
+<p>This is the single progress ledger for the project. Every implementation or
+design change updates the relevant item in this document.</p>
+<h2 id="status-rules">Status rules<a class="anchor" href="#status-rules" aria-label="Link to section">#</a></h2>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Item</th>
+<th>Status</th>
+<th>Evidence / next action</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>DEPLOY-01</td>
+<td>Publish the tutorial and migrate the game to this account&#39;s Sites and new AGS namespace</td>
+<td>In progress</td>
+<td>Deployment requested November 3. AGS CLI authentication is valid against the newly selected environment; this Sites account has no Football 11 project. Next: generate HTML from the integration guide, expose it in the game menu, verify the new namespace configuration, publish a new Site, and update GitHub Pages links. Hosting migration does not block the existing Functional MVP.</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Item</th>
+<th>Status</th>
+<th>Evidence / next action</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>DOC-14</td>
+<td>Attribute registration links to the source-code campaign</td>
+<td>Done</td>
+<td>Both tutorial registration links use the supplied URL with all four UTM parameters. Exact URL checks, relative documentation links, and whitespace checks pass. Documentation-only; the game has no registration CTA. Next: preserve this campaign attribution in future registration links.</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Item</th>
+<th>Status</th>
+<th>Evidence / next action</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>ANALYTICS-01</td>
+<td>Track visits to the GitHub Pages demo with PostHog</td>
+<td>In progress</td>
+<td>Connected source now initializes PostHog asynchronously only at the configured Pages URL, labels the first explicit pageview, and disables unrelated collection. Public project key is supplied through ignored local build configuration. Typecheck, 143 tests including three analytics regressions, and the Pages build pass; focused tests and build passed again after tightening collection settings. The built bundle contains the supplied public key and tracking configuration. Changed code passes formatting and targeted lint; full lint has warnings only, while full formatting reports 59 untouched existing files. A read-only ingestion preflight returns HTTP 200 and permits the Pages origin, POST, and content-type. See docs/11-github-pages.md for release acceptance. Source and compiled Pages snapshots are now published; see docs/verification/2026-09-22-posthog-pages.md. Next: trigger or inspect the pending Pages deployment, verify an actual browser event in the receiving project, and configure the dashboard insight. The live root still served the previous build at the post-push check. This does not block the Functional MVP.</td>
+</tr>
+<tr>
+<td>PUB-03</td>
+<td>Publish PostHog source and Pages snapshots without development history</td>
+<td>In progress</td>
+<td>Scanned 185 source files and seven compiled assets, then atomically published parentless main and gh-pages commits with exact remote-head leases. Remote readback and one-commit ancestry checks pass; offline-starter is unchanged. Pages commit 7a793eb is published, but no new Pages workflow or check run was visible and the live root still served the previous build. Next: inspect or trigger Pages using an authenticated repository-admin session, then verify the hosted game and pageview request. This optional analytics release does not block the Functional MVP.</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th>Status</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Done</td>
+<td>Evidence exists and the item&#39;s acceptance check passed</td>
+</tr>
+<tr>
+<td>In progress</td>
+<td>Work has started and has a concrete partial artifact</td>
+</tr>
+<tr>
+<td>Next</td>
+<td>The next queued item on the current critical path</td>
+</tr>
+<tr>
+<td>Needs decision</td>
+<td>A product, football, legal, or technical choice is required</td>
+</tr>
+<tr>
+<td>Not started</td>
+<td>Defined but no implementation artifact exists yet</td>
+</tr>
+<tr>
+<td>Deferred</td>
+<td>Intentionally outside the current Functional MVP path</td>
+</tr>
+</tbody></table>
+<p>Progress is reported by completed checklist items, not subjective percentages.
+Items differ in size, so the count is a navigation aid rather than an effort or
+schedule forecast.</p>
+<h2 id="current-snapshot">Current snapshot<a class="anchor" href="#current-snapshot" aria-label="Link to section">#</a></h2>
+<table>
+<thead>
+<tr>
+<th>Milestone</th>
+<th>State</th>
+<th align="right">Completed items</th>
+<th>Immediate next action</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Phase 0 â€” Design lock</td>
+<td>In progress</td>
+<td align="right">13 / 14</td>
+<td>Decide the player, club, and competition public-product rights posture</td>
+</tr>
+<tr>
+<td>Phase 1A â€” Core mechanics</td>
+<td>Done</td>
+<td align="right">10 / 10</td>
+<td>Validated per-game offer/reroll limits passed the 10,000-seed gate</td>
+</tr>
+<tr>
+<td>Phase 1B â€” Functional MVP</td>
+<td>Done</td>
+<td align="right">7 / 7</td>
+<td>Gameplay, persistence, attribution, and the hosted release are verified</td>
+</tr>
+<tr>
+<td>Project communication</td>
+<td>In progress</td>
+<td align="right">9 / 10</td>
+<td>Verify source-repository visibility; the signup, AI-plugin setup, and prompting tutorial is complete</td>
+</tr>
+<tr>
+<td>Phases 2â€“6 â€” Connected releases</td>
+<td>In progress</td>
+<td align="right">17 / 37</td>
+<td>Decide content-version leaderboard migration, finish Phase 4 trust work, and optimize catalogue delivery</td>
+</tr>
+</tbody></table>
+<p>Functional MVP tracker: <strong>30 of 31 defined items Done</strong>. This is checklist
+completion, not an effort percentage.</p>
+<h2 id="phase-0-â-design-lock">Phase 0 â€” Design lock<a class="anchor" href="#phase-0-â-design-lock" aria-label="Link to section">#</a></h2>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Item</th>
+<th>Status</th>
+<th>Evidence / next action</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>P0-01</td>
+<td>Confirm 4-3-3 slots and per-player position ratings</td>
+<td>Done</td>
+<td><code>docs/02-game-design.md</code> defines the slot and eligibility contract</td>
+</tr>
+<tr>
+<td>P0-02</td>
+<td>Confirm duplicate, virtual-deck, reroll, and cooldown rules</td>
+<td>Done</td>
+<td>Selected cards leave the run; a <code>rules-v2</code> reroll changes to a different playable club/era and replaces every visible player, while passed/rerolled cards receive two-round cooldowns</td>
+</tr>
+<tr>
+<td>P0-03</td>
+<td>Prepare the first reproducible data candidate</td>
+<td>Done</td>
+<td>Historical StatsBomb and Wyscout candidates proved the replacement boundary; OpenFootball is now the active source</td>
+</tr>
+<tr>
+<td>P0-04</td>
+<td>Review inferred positions and curate the first playable pool</td>
+<td>Done</td>
+<td>The 1,041 named 2023/24 squad cards use observed broad roles plus deterministic formation-position inference and pass coverage and completion analysis; later release curation remains optional</td>
+</tr>
+<tr>
+<td>P0-05</td>
+<td>Decide player/club/competition public-product rights posture</td>
+<td>Needs decision</td>
+<td>Public-domain source reuse does not independently settle player publicity or club/competition name and mark rights. Review all three before an official public-product release; this does not block the Functional MVP.</td>
+</tr>
+<tr>
+<td>P0-06</td>
+<td>Freeze the player/content schema and validator</td>
+<td>Done</td>
+<td>JSON Schema plus cross-record validation covers identity, positions, ranges, provenance, counts, coverage, and hash integrity</td>
+</tr>
+<tr>
+<td>P0-07</td>
+<td>Create minimum scoring configuration and golden fixture XIs</td>
+<td>Done</td>
+<td><code>assessment-v1</code>, <code>league-profile-v1</code>, three valid roster vectors, duplicate rejection, draft/cooldown cases, and match-probability cases</td>
+</tr>
+<tr>
+<td>P0-08</td>
+<td>Confirm source layout and supported browser matrix</td>
+<td>Done</td>
+<td>npm workspace package boundaries, React DOM choice, input model, browsers, and viewports recorded in technical architecture</td>
+</tr>
+<tr>
+<td>P0-09</td>
+<td>Run the Phase 0 exit review</td>
+<td>Done</td>
+<td>Exit review passed for Phase 1A; public rights and final curation are explicitly nonblocking</td>
+</tr>
+<tr>
+<td>P0-10</td>
+<td>Prepare the CC BY 4.0 Wyscout data candidate</td>
+<td>Done</td>
+<td>Historical 2017/18 candidate passed its acceptance checks before being superseded and retired by P0-12</td>
+</tr>
+<tr>
+<td>P0-11</td>
+<td>Promote Wyscout/Figshare to the active content version</td>
+<td>Done</td>
+<td>Historical content promotion passed its acceptance checks before <code>openfootball-premier-league-2020-2025-club-role-v1</code> replaced it</td>
+</tr>
+<tr>
+<td>P0-12</td>
+<td>Replace Wyscout with five-season OpenFootball content</td>
+<td>Done</td>
+<td>Pinned 2020/21â€“2024/25 sources yield 1,900 matches, 27 clubs, and 2,400 fictional role cards. Deterministic regeneration, Python and TypeScript suites, role/age/source-copy checks, 10,000/10,000 complete drafts, all-card exposure, and both production builds pass; ratings 55â€“87, current mean season points 39.12. Obsolete Wyscout data/tools are removed.</td>
+</tr>
+<tr>
+<td>P0-13</td>
+<td>Promote named OpenFootball 2023/24 Premier League squads</td>
+<td>Done</td>
+<td>The active catalogue contains 380 matches, 20 clubs, and 1,041 named squad cards. Observed identities and broad roles remain separate from inferred formation positions and synthetic ratings. Regeneration, 22 Python tests, 127 TypeScript tests, both production builds, the 10,000/10,000 draft analysis, local Worker/live-AGS verification, and the hosted version 17 trusted-route/live-AGS smoke pass.</td>
+</tr>
+<tr>
+<td>P0-14</td>
+<td>Recalibrate synthetic player ratings</td>
+<td>Done</td>
+<td>Content v2 applies a tested monotonic curve without changing source evidence: median best-position rating 72, 95th percentile 86, 14/1,041 cards at 90+, and maximum 94. Deterministic regeneration, 24 Python tests, 132 TypeScript tests, catalogue validation, typecheck, lint, production build, refreshed golden fixtures, and a 10,000/10,000 complete-draft analysis with all 1,041 cards exposed pass.</td>
+</tr>
+</tbody></table>
+<h2 id="phase-1a-â-core-mechanics-engine">Phase 1A â€” Core mechanics engine<a class="anchor" href="#phase-1a-â-core-mechanics-engine" aria-label="Link to section">#</a></h2>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Item</th>
+<th>Status</th>
+<th>Evidence / next action</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>P1A-01</td>
+<td>Create framework-free domain package and types</td>
+<td>Done</td>
+<td>Strict workspace contains domain, contracts, content, and fixture packages; format, lint, typecheck, 2 tests, build, and production audit pass</td>
+</tr>
+<tr>
+<td>P1A-02</td>
+<td>Implement stable deterministic RNG streams</td>
+<td>Done</td>
+<td>xmur3 + sfc32, derived streams, unbiased bounded integers, shuffle, four golden-vector cases, and source guard pass in 9 RNG tests</td>
+</tr>
+<tr>
+<td>P1A-03</td>
+<td>Implement club/era constraint and bounded offers</td>
+<td>Done</td>
+<td>Stable profiles and derived streams produce 3â€“15 constraint-matching safe cards according to validated configuration; ordering, cap, exclusion, and unsatisfiable cases pass</td>
+</tr>
+<tr>
+<td>P1A-04</td>
+<td>Implement selected-card removal, rerolls, and cooldowns</td>
+<td>Done</td>
+<td><code>rules-v2</code> state-machine and integration tests prove that each reroll changes the club/era and players, preserves same-round rejection and two-round cooldown, consumes only on success, and remains deterministic through trusted replay; all 132 tests and the full repository verification pass</td>
+</tr>
+<tr>
+<td>P1A-05</td>
+<td>Implement forward-feasibility/dead-end prevention</td>
+<td>Done</td>
+<td>Identity-level maximum matching and safe-slot checks pass; 10,000 randomized complete drafts with 5,791 alternate-team rerolls produced zero dead ends</td>
+</tr>
+<tr>
+<td>P1A-06</td>
+<td>Implement five-category assessment</td>
+<td>Done</td>
+<td>Three Phase 0 XI vectors reproduce exact category, axis, composite, and attack/defence/control unit scores; duplicate identity is rejected</td>
+</tr>
+<tr>
+<td>P1A-07</td>
+<td>Implement deterministic 38-match season simulation</td>
+<td>Done</td>
+<td>Three probability vectors and one exact 38-outcome golden season pass; W/D/L and points invariants are bounded</td>
+</tr>
+<tr>
+<td>P1A-08</td>
+<td>Implement structured explanation facts</td>
+<td>Done</td>
+<td>Deterministic strongest/weakest/context facts and exact rendered text pass traceability tests</td>
+</tr>
+<tr>
+<td>P1A-09</td>
+<td>Pass golden, invariant, replay, and 10,000-seed checks</td>
+<td>Done</td>
+<td>The <code>rules-v2</code> named-pool report records 10,000/10,000 completions, zero failures, points 12â€“78 (mean 41.40), and all 1,041 cards appearing.</td>
+</tr>
+<tr>
+<td>P1A-10</td>
+<td>Accept validated per-game offer and reroll limits</td>
+<td>Done</td>
+<td>Shared domain configuration caps visible safe cards at 3â€“15 and run-wide rerolls at 0â€“5; the tested initial values are 15 and 5. The <code>rules-v2</code> 10,000-seed report records offer sizes 3â€“15 (mean 14.40), five rerolls reached in a run, 0.02% alternate-team reroll unavailability, and zero dead ends. P2-09 owns the authoritative runtime source.</td>
+</tr>
+</tbody></table>
+<h2 id="phase-1b-â-functional-mvp">Phase 1B â€” Functional MVP<a class="anchor" href="#phase-1b-â-functional-mvp" aria-label="Link to section">#</a></h2>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Item</th>
+<th>Status</th>
+<th>Evidence / next action</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>P1B-01</td>
+<td>Build the React draft and formation flow</td>
+<td>Done</td>
+<td>Browser flow completed all 11 rounds after a reroll; configured offers, legal slots, exact ratings, roster state, round, and rerolls were visible at desktop, 390Ã—844, and 360Ã—640</td>
+</tr>
+<tr>
+<td>P1B-02</td>
+<td>Integrate the shared mechanics without duplicating rules</td>
+<td>Done</td>
+<td><code>apps/web/src/game/session.ts</code> calls <code>createDraft</code>, <code>applyDraftAction</code>, and <code>resolveRun</code> directly; two integration tests pass and a browser run reached the result</td>
+</tr>
+<tr>
+<td>P1B-03</td>
+<td>Add stable local guest identity</td>
+<td>Done</td>
+<td><code>getOrCreateLocalIdentity</code> creates/restores a versioned random profile without fingerprinting; adapter tests pass</td>
+</tr>
+<tr>
+<td>P1B-04</td>
+<td>Store and reload a checksummed local run</td>
+<td>Done</td>
+<td>Full seed, versions, 11 actions, 12 state hashes, result, and authority round-trip; tampering is rejected in adapter tests</td>
+</tr>
+<tr>
+<td>P1B-05</td>
+<td>Build the result XI, record, and explanation screen</td>
+<td>Done</td>
+<td>Browser result showed the final pitch XI, 14â€“6â€“18/48-point record, five dimensions, units, explanation facts, and player-authoritative replay hash</td>
+</tr>
+<tr>
+<td>P1B-06</td>
+<td>Pass end-to-end checks and deploy the Sites build</td>
+<td>Done</td>
+<td>52 tests pass with format, lint, typecheck, vinext verification, and a dedicated static Vite SPA bundle; the existing public Site is live at <code>football-11-play.damar-indra.chatgpt.site</code>, and the Phase 2A build includes branded Open Graph and X preview metadata. The browser-only artifact avoids a Worker for this client-owned identity slice, supplies an explicit <code>index.html</code> with SPA fallback, and returns local HTTP 200 checks for the root, fallback route, and social image</td>
+</tr>
+<tr>
+<td>P1B-08</td>
+<td>Publish gameplay data credits and license notice</td>
+<td>Done</td>
+<td>The public gameplay footer in the current Sites release links both pinned OpenFootball repositories and CC0, separates observed squad and club-result facts from synthetic card fields, and states the player/club/competition rights boundary. Source regression, full tests, production build, and deployment pass.</td>
+</tr>
+</tbody></table>
+<h2 id="project-communication">Project communication<a class="anchor" href="#project-communication" aria-label="Link to section">#</a></h2>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Item</th>
+<th>Status</th>
+<th>Evidence / next action</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>DOC-10</td>
+<td>Clean documentation for the next public source update</td>
+<td>Done</td>
+<td>Removed the retired documentation application, its local archive, and related instructions/references. Updated the document index, current catalogue description, portable GitHub SSH URL, and checklist counts. Typecheck, whitespace checks, configuration JSON parsing, and relative Markdown links pass. Targeted scan of 196 retained tracked files found no recognized credential patterns or configured private values; this is not a full security audit. Keep apps/web/.openai/hosting.json excluded from the later public mirror. No root software license is selected; that remains an author decision. Next: mirror the reviewed source when requested; no remote or hosted deployment was changed.</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Item</th>
+<th>Status</th>
+<th>Evidence / next action</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>REPO-02</td>
+<td>Commit the accumulated development checkout changes</td>
+<td>Done</td>
+<td>Local master checkpoint includes the accumulated deployment, demo, and documentation changes across 46 files. Staged whitespace checks passed and the post-commit working tree was clean. No push performed. Next: continue development from the checkpoint; publish through the appropriate separate branch when requested.</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Item</th>
+<th>Status</th>
+<th>Evidence / next action</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>REPO-01</td>
+<td>Expose the public repository remote in the development checkout</td>
+<td>Done</td>
+<td><code>git remote -v</code> verifies accelbyte points to AccelByte/f11 via the supplied SSH alias and origin remains the personal development repository. September 22 fetch succeeded; <code>git branch -r</code> lists accelbyte/main and accelbyte/gh-pages, with accelbyte/HEAD pointing to main. Current master still tracks origin/master. Accumulated changes were checkpointed in REPO-02. Next: use a branch based on accelbyte/main for public updates to preserve the clean history; do not push development master over public main.</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Item</th>
+<th>Status</th>
+<th>Evidence / next action</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>DOC-09</td>
+<td>Deliver the team&#39;s AGS signup, AI-plugin setup, and prompting tutorial</td>
+<td>Done</td>
+<td><code>docs/12-accelbyte-integration-guide.md</code> is a 14-step tutorial covering the actual signup fields/button, game namespace selection, Codex plugin installation, deployment-specific MCP configuration/authentication, and copy-ready setup/login/storage/session/debug prompts with expected results. Public signup and official namespace/client/OpenAI MCP pages were inspected; plugin commands and URL patterns were checked against installed AccelByte AI Plugins 0.6.13 docs. Twelve tutorial/reference documents pass 81 relative-link checks, ordered-step, fence, and whitespace checks. Prior service chapters remain supplementary references under <code>docs/12-accelbyte-integration-guide.md#implementation-reference</code>; README and document index point to the tutorial. No account creation, installation, or live AGS authentication was performed. Next: use the walkthrough for a reader-run onboarding session; project integration blockers remain tracked separately.</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Item</th>
+<th>Status</th>
+<th>Evidence / next action</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>DOC-08</td>
+<td>Expand the integration guide into detailed service chapters</td>
+<td>Done</td>
+<td>Ten focused chapters now consolidated in <code>docs/12-accelbyte-integration-guide.md#implementation-reference</code> cover setup, login, Player Records, Game Records, trusted backend, Statistics/Leaderboards, Session/Lobby, Saved-XI, planned daily/history, and deployment verification. Chapters include prerequisites, configuration, source-backed flows, troubleshooting, and acceptance checks. Resource names, SDK calls, route methods, settings, and smoke commands were checked against source; links, fences, and whitespace pass. DOC-09 repositions these as supplementary references indexed by <code>docs/12-accelbyte-integration-guide.md#implementation-reference</code>. Documentation-only; no live verification or service changes. Next: consult these references after the onboarding tutorial and complete separately tracked integration/release gaps.</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Item</th>
+<th>Status</th>
+<th>Evidence / next action</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>DOC-07</td>
+<td>Write an AccelByte integration guide from registration to completion</td>
+<td>Done</td>
+<td><code>docs/12-accelbyte-integration-guide.md</code> covers registration, namespaces/clients, SDK configuration, IAM, Cloud Save, trusted Statistics/Leaderboards, Session/Lobby, Saved-XI challenges, remaining daily/history work, and completion checks without gameplay instructions. Resource names and smoke commands were checked against source/plans; all guide relative links resolve and documentation whitespace checks pass. The document index links to the guide. Documentation-only; no fresh live verification or backend changes. Next: follow the guide for a new namespace and close the separately tracked integration/release gaps.</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Item</th>
+<th>Status</th>
+<th>Evidence / next action</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>DOC-06</td>
+<td>Trim public-facing documentation</td>
+<td>Done</td>
+<td>Reviewed README: removed snapshot/exclusion/history notes and license-selection commentary; retained setup and data attribution, added the live game link, and kept deployment prose focused on verified behavior. Documentation-only diff passes whitespace checks.</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Item</th>
+<th>Status</th>
+<th>Evidence / next action</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>DOC-05</td>
+<td>Deploy AccelByte Pages from a separate compiled branch</td>
+<td>Done</td>
+<td><code>docs/verification/2026-09-10-accelbyte-pages.md</code>: gh-pages commit 478c541 serves the compiled game at <a href="https://accelbyte.github.io/f11/">https://accelbyte.github.io/f11/</a>; remote main remains 8bb7cb0. Sites version 21 is deployed. Typecheck, 140 tests, both builds, static private-value scan, fourteen hosted preflights, auth preservation, and unapproved-origin rejection pass. Browser guest sign-in and Sites-issued first-round draft pass; the rendered draft screen was visually reviewed. Next: use the deployment branch for later frontend releases; the separate prior Cloud Save investigation remains open.</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Item</th>
+<th>Status</th>
+<th>Evidence / next action</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>DOC-04</td>
+<td>Publish a clean public source repository</td>
+<td>In progress</td>
+<td><code>README.md</code> and <code>docs/verification/2026-09-10-public-source.md</code> describe the separate source export. All 138 existing tests pass; the export scan found no configured private values or recognized credential patterns. One parentless commit contains 182 files with excluded paths absent. The user supplied AccelByte/f11; SSH confirms an accessible empty remote, but the unauthenticated GitHub API returns 404. Push succeeded; remote HEAD and main match the single root commit 8bb7cb0. Next: verify or enable public visibility before marking Done. The visibility/access issue does not block the Functional MVP.</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Item</th>
+<th>Status</th>
+<th>Evidence / next action</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>DOC-02</td>
+<td>Repeatable draft demonstration and edited trial video</td>
+<td>Done</td>
+<td><code>tools/demo/</code> provides a fixed-seed local harness, Playwright capture, timing cues, and FFmpeg editing. The September 7 trial at <code>artifacts/demo/2026-09-07T05-21-40-233Z/</code> verified 11 UI placements, a complete XI, no page errors, and no external requests; screenshots and edited contact sheet were visually reviewed. <code>draft-demo.mp4</code> is 23.37 seconds at 1920Ã—1080/30 fps, with selection zoom, 3Ã— remaining draft, and lineup hold. App/demo typechecks, five session tests, the production build, and full MP4 decoding pass. The companion <code>draft-demo.gif</code> is verified at 351 frames, 1280Ã—720, approximately 15 fps, and 23.39 seconds, meeting the requested fewer-than-1,000-frame limit. Video artifacts are local and Git-ignored; next: review pacing, then scope a separate live AGS recording. This presentation work does not block the Functional MVP.</td>
+</tr>
+<tr>
+<td>DOC-03</td>
+<td>Record a live two-player friend-room demonstration</td>
+<td>Done</td>
+<td><code>tools/demo/capture-friends.mjs</code> and <code>edit-friends.mjs</code> record the public game with two distinct AGS guests and no mocked services. The September 7 capture at <code>artifacts/demo/friends-2026-09-07T06-04-58-351Z/</code> verifies shared membership/readiness/challenge, 22 real picks, complete XIs, matching 56/35-point results, zero page errors, and both guests leaving. Visual slates calibrate the separate video timelines; the edited views were inspected together. MP4: 42.80 seconds, 1920Ã—1080/30 fps. GIF: 642 frames, 1280Ã—720, below 1,000 frames. Script syntax, formatting, and complete media decoding pass. Next: review pacing for the build-story presentation; room comparison remains cooperative Session state, not proof of trusted multiplayer scoring. Artifacts are local and Git-ignored.</td>
+</tr>
+</tbody></table>
+<h2 id="phase-2-â-ags-foundation">Phase 2 â€” AGS foundation<a class="anchor" href="#phase-2-â-ags-foundation" aria-label="Link to section">#</a></h2>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Item</th>
+<th>Status</th>
+<th>Evidence / next action</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>P2-01</td>
+<td>Replace local guest identity with AGS Device ID</td>
+<td>Done</td>
+<td><code>@accelbyte/sdk</code> 4.3.3 and <code>@accelbyte/sdk-iam</code> 6.3.6 are pinned; the development Device ID provider is active; Sites records the browser-safe base URL, namespace, and public client ID as non-secret environment values. The Sites release build now fails before packaging when those public values are absent, preventing a deployable bundle from silently losing AGS browser configuration while the confidential client secret remains server-only. The redacted live smoke verifies token minting, authenticated current-user lookup, same-device restoration, and clean-device separation; browser QA verifies first-use login, draft enablement, visible retry, same-guest reload, and isolated-origin separation. Focused adapter tests and the full verification suite pass, with tokens retained only in SDK memory.</td>
+</tr>
+<tr>
+<td>P2-02</td>
+<td>Sync replayable game data through AGS Cloud Save</td>
+<td>Done</td>
+<td><code>@accelbyte/sdk-cloudsave</code> is integrated behind a stable private player-record key with schema/owner/version/checksum/replay validation, 250 KB guard, readback-before-success, restore, retry, and visible recovery states. A redacted live smoke proved write/readback, same-device restored-session readback, deterministic replay, and an 8,661-byte payload in the development namespace</td>
+</tr>
+<tr>
+<td>P2-03</td>
+<td>Add trusted replay and authenticated user binding</td>
+<td>Done</td>
+<td>The Sites Worker validates the AGS current user and namespace, accepts an exact 64 KB-bounded seed/version/action contract, replays through shared domain/content code, rejects illegal or unsupported evidence, ignores client totals, and stores a private <code>SERVER</code> Cloud Save receipt. Focused tests and redacted local-Worker and hosted-route smokes pass; the public root returns HTTP 200, legal replay is accepted, duplicate replay is idempotent, and tampered or unsupported evidence is rejected</td>
+</tr>
+<tr>
+<td>P2-04</td>
+<td>Server-owned AGS Statistics updates</td>
+<td>Done</td>
+<td>The live <code>football11bestpoints</code> definition is public, <code>SERVER</code>-set, bounded 0â€“114, and feeds retry-safe <code>MAX</code> settlement. Confidential-client permissions remain limited to Cloud Save player records and Statistics user values; the hosted smoke verifies settlement/readback, duplicate handling, rejection without mutation, and the private <code>SERVER</code> receipt</td>
+</tr>
+<tr>
+<td>P2-05</td>
+<td>Player-facing AGS Leaderboard query and UI</td>
+<td>Done</td>
+<td>The live descending all-time <code>football11-best-points</code> leaderboard is tied to the trusted statistic. Authenticated player reads return a sanitized nearby view, and the UI covers loading, ranked, unranked, empty, stale, success, and retryable-error states. The public Sites route returns the materialized AGS value, rank, and nearby view in the hosted end-to-end smoke</td>
+</tr>
+<tr>
+<td>P2-06</td>
+<td>Decide production guest upgrade and account-loss policy</td>
+<td>Deferred</td>
+<td>Account upgrade/linking is explicitly deferred. Device ID remains development-only, and the unrecoverable account-loss warning remains visible. This does not block the Functional MVP or the completed Phase 2 technical foundation, but it blocks an official connected-product release until account linking is implemented or the account-loss risk is explicitly accepted</td>
+</tr>
+<tr>
+<td>P2-07</td>
+<td>Retire durable local run saving</td>
+<td>Done</td>
+<td>Completed runs now remain only in memory while the client writes the private AGS Cloud Save latest-record slot and verifies its readback. New completions replace or repair the prior cloud latest value, reload recovery reads Cloud Save directly, and legacy local-run values are ignored. All 110 tests, typecheck, lint, the product build pass. The aggregate <code>verify</code> wrapper remains blocked only by 23 pre-existing formatting mismatches outside this change.</td>
+</tr>
+<tr>
+<td>P2-08</td>
+<td>Isolate rankings across the content-version migration</td>
+<td>Needs decision</td>
+<td>OpenFootball recalibration changes draft offers and season-point distribution (12â€“73 versus the retired version&#39;s 22â€“93), so existing <code>football11bestpoints</code> values are not comparable. Choose a new Statistic/Leaderboard or a deliberate reset/migration before publishing the replacement; this blocks fair connected ranking, not the standalone Functional MVP.</td>
+</tr>
+<tr>
+<td>P2-09</td>
+<td>Resolve draft configuration from an AGS Game Record</td>
+<td>Done</td>
+<td>The server-owned <code>football11_game_config_v1</code> record uses numeric schema <code>1</code>, active revision <code>1</code>, 15 offers, and 5 rerolls. The Confidential Sites client has only <code>m_cloud_save/g_game_records</code> READ. Every solo start and room round now receives a Sites-issued frozen challenge plus private server-owned player receipt; trusted replay binds player, challenge, seed, versions, room, and config and rejects tampering. Environment defaults are removed. Five Game Record tests, 127 total TypeScript tests, 22 Python tests, typecheck, formatter, lint, the 10,000/10,000 analysis, both builds, redacted local-Worker and hosted-route/live-AGS smokes, and Sites version 17 deployment pass.</td>
+</tr>
+</tbody></table>
+<h2 id="phase-3-â-sharing-and-daily">Phase 3 â€” Sharing and daily<a class="anchor" href="#phase-3-â-sharing-and-daily" aria-label="Link to section">#</a></h2>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Item</th>
+<th>Status</th>
+<th>Evidence / next action</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>P3-01</td>
+<td>Daily seed lifecycle</td>
+<td>Deferred</td>
+<td>Begins after the Phase 2 AGS identity/trust foundation</td>
+</tr>
+<tr>
+<td>P3-02</td>
+<td>Public immutable result route</td>
+<td>Deferred</td>
+<td>Project only trusted public-safe result fields from Phase 2 records</td>
+</tr>
+<tr>
+<td>P3-03</td>
+<td>Landscape social preview</td>
+<td>Deferred</td>
+<td>Render result-specific metadata and imagery from the trusted public projection</td>
+</tr>
+<tr>
+<td>P3-04</td>
+<td>Vertical share card</td>
+<td>Deferred</td>
+<td>Use the same approved public result contract as the landscape preview</td>
+</tr>
+<tr>
+<td>P3-05</td>
+<td>Synced result history</td>
+<td>Deferred</td>
+<td>Use AGS-backed durable history with a bounded browser cache</td>
+</tr>
+</tbody></table>
+<h2 id="phase-4-â-friend-rooms">Phase 4 â€” Friend rooms<a class="anchor" href="#phase-4-â-friend-rooms" aria-label="Link to section">#</a></h2>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Item</th>
+<th>Status</th>
+<th>Evidence / next action</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>P4-01</td>
+<td>Create AGS game session</td>
+<td>Done</td>
+<td>The <code>football11-friend-room-v1</code> template reads back as no-server <code>NONE</code>, nonpersistent, <code>OPEN</code>, minimum 1, maximum 8, 24-hour TTL, and code-enabled. A Device user creates, restores, and leaves the visible room; Session 5.3.6 is instantiated only after the shared SDK token is installed. The full repository verification and redacted live lifecycle probe pass.</td>
+</tr>
+<tr>
+<td>P4-02</td>
+<td>Discover/join open session; retain optional native code</td>
+<td>Done</td>
+<td>Isolated browser users discover only compatible non-full <code>OPEN</code> rooms and join by the displayed room action/session ID. The live probe passes join-by-ID, join-by-code, revoke, regenerate, reopen, and closed rejection. Browser QA proves the room disappears while <code>CLOSED</code>, reappears during <code>COUNTDOWN</code>, and reports a safe combined closed/permission 403 message.</td>
+</tr>
+<tr>
+<td>P4-03</td>
+<td>Membership, readiness, and start rules</td>
+<td>In progress</td>
+<td>Two Device users converge to 2/8 through Lobby <code>messageSessionNotif</code> refresh hints plus four-second polling, ready independently, and the leader locks the participant set by changing AGS joinability to <code>CLOSED</code>. Unreal SDK source confirms <code>OnSessionJoined</code>, <code>OnSessionMembersChanged</code>, <code>OnGameSessionUpdated</code>, and <code>OnSessionEnded</code>; the TypeScript SDK exposes the raw envelope. The cooperative browser guards pass; next route leader/start mutations through the completed P2-03 trusted boundary.</td>
+</tr>
+<tr>
+<td>P4-04</td>
+<td>Per-player deterministic simultaneous drafting</td>
+<td>In progress</td>
+<td>New rounds publish one immutable challenge ID/base-seed/version bundle plus <code>per-player-v1</code>; each client derives a compact deterministic seed from that base, challenge ID, and authenticated AGS user ID. Cloud Save records and in-memory submissions retain optional room context, and ranked room submissions now bind to a canonical AGS Session read: the Sites server checks namespace/template, active membership, locked participation, challenge, versions, and its own player-seed derivation before replay. Tests cover different-player offers, reconnect and next-cycle stability, wrong seeds/members, legacy shared seeds, Cloud Save restore, safe legacy-draft migration, incompatible future strategies, and Phase 5 interoperability. Hosted room-context verification remains before this item can be called done.</td>
+</tr>
+<tr>
+<td>P4-05</td>
+<td>Progress, comparison, and automatic next round</td>
+<td>In progress</td>
+<td>Browser QA shows private counts converging to 11/11, a deterministic 68-point/62-point comparison, <code>OPEN</code> reveal/countdown, and automatic round 2â†’3 replay in the same session. Each new ordinal creates a fresh random base seed before deriving a new stream for every participant. Ranked room replay is now player/session-bound, but comparison still reads the compact Session-attribute development aggregate; any member with update permission can alter that aggregate, so comparison must consume trusted receipts before competitive acceptance.</td>
+</tr>
+<tr>
+<td>P4-06</td>
+<td>Leave, reconnect, timeout, and host behavior</td>
+<td>In progress</td>
+<td>Mid-draft reload restores the accepted prefix, Lobby reconnection reaches <code>CONNECTED</code>, polling covers missed events, and the live probe passes native leader migration plus leave cleanup. Unit tests cover deadline/terminal transitions. Explicit abandon, timeout, and host-loss behavior still need visible browser exit evidence; this does not invalidate the working primary flow.</td>
+</tr>
+<tr>
+<td>P4-07</td>
+<td>Multi-browser room verification</td>
+<td>In progress</td>
+<td>Three isolated origins pass create, discovery/join, 2/8 roster convergence, readiness, <code>CLOSED</code> start, hidden discovery and rejected code join, divergent 11-pick drafts, mid-draft reload, comparison, <code>OPEN</code> countdown discovery, and automatic fresh-ordinal restart in the same session. Desktop and 375px QA show no horizontal overflow. Sites version 17 preserves the verified merged Phase 4/Phase 5 build and server-issued Game Record challenges while promoting the named 2023/24 catalogue. The guarded release build embeds canonical browser-safe AGS connection values, and the Session SDK remains behind hydration. Remaining exit work is the P4-06 recovery matrix and hosted room-context exit verification.</td>
+</tr>
+</tbody></table>
+<h2 id="phase-5-â-saved-xi-competition">Phase 5 â€” Saved-XI competition<a class="anchor" href="#phase-5-â-saved-xi-competition" aria-label="Link to section">#</a></h2>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Item</th>
+<th>Status</th>
+<th>Evidence / next action</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>P5-01</td>
+<td>Save and replace an eligible XI</td>
+<td>Done</td>
+<td>The Worker replays the exact submission, binds it to the authenticated AGS user and trusted receipt, requires equality with current best points, and explicitly creates or replaces one public <code>SERVER</code>-owned Saved XI. Unit tests cover first publish, replacement, and rejection; the redacted live smoke reads the published record back from AGS.</td>
+</tr>
+<tr>
+<td>P5-02</td>
+<td>Query nearby leaderboard entries</td>
+<td>Done</td>
+<td>Trusted discovery reads the existing <code>football11-best-points</code> all-time Leaderboard at Â±10 ranks, expands once to Â±50, and bulk-loads only public Saved XIs with the authenticated player token. The browser never supplies the authoritative candidate set; focused filtering tests and the two-player live smoke pass.</td>
+</tr>
+<tr>
+<td>P5-03</td>
+<td>Select a valid opponent through the trusted application boundary</td>
+<td>Done</td>
+<td>The Worker excludes self, recent, absent, invalid, and incompatible records, selects from the surviving trusted set, stores a private seed and full XI snapshots, and returns only an anonymous preview plus opaque ten-minute token. The live flow reaches discovery and exposes neither raw opponent user ID nor seed.</td>
+</tr>
+<tr>
+<td>P5-04</td>
+<td>Define and implement head-to-head simulation</td>
+<td>Done</td>
+<td><code>head-to-head-v1</code> implements a symmetric neutral match, canonical deterministic sampling, draws, and <code>+3/0/-2</code> zero-floor Challenge Score; golden, reversal, replay, and 10,000-seed distribution tests pass. Public match projections remove the private simulation evidence.</td>
+</tr>
+<tr>
+<td>P5-05</td>
+<td>Store settlement and update approved statistic</td>
+<td>Done</td>
+<td>The live private <code>football11challengescore</code> definition is <code>SERVER</code>-set with a zero minimum and no Leaderboard. Resolution stores pending immutable history before an absolute <code>OVERRIDE</code>, reads the result back, finalizes history, and repairs the same settlement idempotently after failure or reload. The live smoke proves duplicate replay and that the selected opponent&#39;s score is unchanged.</td>
+</tr>
+<tr>
+<td>P5-06</td>
+<td>Add anti-farming and version-safety rules</td>
+<td>Done</td>
+<td>Exact version equality, single-use ten-minute tokens, 24-hour same-opponent exclusion, a rolling 20-match/day ceiling, bounded 20-match history, expired/no-opponent states, and retryable pending settlement are enforced. Focused tests, the combined 111-test suite, production build, desktop UI fixture review, and live AGS cooldown readback pass; Phase 4 remains separately unfinished.</td>
+</tr>
+</tbody></table>
+<h2 id="phase-6-â-connected-release-hardening">Phase 6 â€” Connected release hardening<a class="anchor" href="#phase-6-â-connected-release-hardening" aria-label="Link to section">#</a></h2>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Item</th>
+<th>Status</th>
+<th>Evidence / next action</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>P6-01</td>
+<td>Freeze release content, rules, and simulation versions</td>
+<td>Deferred</td>
+<td>Release work</td>
+</tr>
+<tr>
+<td>P6-02</td>
+<td>Security and permission review</td>
+<td>Deferred</td>
+<td>The merged September 3 dependency audit reports 22 advisories: 1 critical, 16 high, 4 moderate, and 1 low. Triage, upgrade without a forced breaking rewrite, and re-audit before public release. This does not block the Functional MVP or Phase 4 development verification.</td>
+</tr>
+<tr>
+<td>P6-03</td>
+<td>Migration, backup, and rollback rehearsal</td>
+<td>Deferred</td>
+<td>Release work</td>
+</tr>
+<tr>
+<td>P6-04</td>
+<td>Accessibility and supported-browser verification</td>
+<td>Deferred</td>
+<td>Release work</td>
+</tr>
+<tr>
+<td>P6-05</td>
+<td>Performance and budget verification</td>
+<td>Deferred</td>
+<td>The production client build passes but reports a chunk over 500 KB; measure and code-split before the connected public release</td>
+</tr>
+<tr>
+<td>P6-06</td>
+<td>Operations, monitoring, and incident ownership</td>
+<td>Deferred</td>
+<td>Release work</td>
+</tr>
+<tr>
+<td>P6-07</td>
+<td>Production go/no-go review</td>
+<td>Deferred</td>
+<td>Final release gate</td>
+</tr>
+<tr>
+<td>P6-08</td>
+<td>Replace development-facing gameplay copy</td>
+<td>Done</td>
+<td>The player-facing <code>apps/web</code> UI now removes the development footer, backend product labels, replay hashes, raw room states, session diagnostics, and settlement jargon while preserving the guest account-loss warning and data credits. Unexpected authentication, save, ranking, and competition errors no longer pass service messages through to players. A three-surface source regression plus the updated error-sanitization tests pass within all 114 tests; the changed-file format check, typecheck, lint, and production build also pass.</td>
+</tr>
+<tr>
+<td>P6-09</td>
+<td>Restore the repository-wide formatter baseline</td>
+<td>Done</td>
+<td>The previously reported 20-file drift was normalized while integrating the Game Record work. Repository-wide <code>format:check</code> and the complete <code>npm run verify</code> release wrapper now pass.</td>
+</tr>
+<tr>
+<td>P6-10</td>
+<td>Optimize catalogue delivery</td>
+<td>Next</td>
+<td>The OpenFootball catalogue still triggers the production build&#39;s &gt;500 kB chunk warning. Measure transfer/parse cost and move catalogue loading behind a split or server boundary before performance-sensitive release; this does not block the Functional MVP.</td>
+</tr>
+<tr>
+<td>P6-11</td>
+<td>Simplify and align the player UI with AccelByte&#39;s theme</td>
+<td>Done</td>
+<td>Approved Superdesign hybrid draft <code>05d39d3d-545d-49ce-b9b1-0300e7305f18</code> version 2 is implemented in <code>apps/web</code>: the original dark-green/lime shell, pitch, and panels remain, while the card grid is now a compact vertical fifteen-entry selector. Every legal-position rating remains visible; <code>orderOfferCardsForSelection</code> uses their arithmetic mean only as a descending presentation sort key, never renders it, preserves source order for ties, and does not mutate the domain offer. Two focused ordering tests pass within all 129 tests; web and repository typechecks, changed-file formatting, lint, and the production build pass. Headless Chrome QA at 1440Ã—1100 and 390Ã—844 confirms 15 rows, correct order, no public average text, no horizontal overflow, visible ratings, and a clear selected-row/legal-slot state.</td>
+</tr>
+<tr>
+<td>P6-12</td>
+<td>Emphasize ratings in the primary selector line</td>
+<td>Done</td>
+<td>The approved selector revision is implemented in <code>apps/web</code>: team/season metadata is removed from each row, player names stay left aligned, and every exact position rating is right aligned in a compact rounded badge. Forward, midfield, defender, and goalkeeper badges use distinct role colors with explicit selected-row contrast; the ordering average remains undisclosed. All 132 tests, web and repository typechecks, changed-file formatting, lint, and the production build pass. Compiled-CSS browser QA at 1280Ã—720 and 390Ã—844 confirms right alignment, all role treatments, no team/season text, no horizontal overflow, and readable active-state badges.</td>
+</tr>
+<tr>
+<td>P6-13</td>
+<td>Make delayed actions visible and duplicate-safe</td>
+<td>Done</td>
+<td>The full player-control audit distinguishes immediate local actions from delayed guest initialization/login, draft start/restart, Cloud Save retry, trusted ranking, friend-room discovery/create/join/refresh/readiness/start/code/leave operations, clipboard copy, and Saved-XI load/publish/search/resolve actions. Delayed controls now expose action-specific labels, spinners, disabled and <code>aria-busy</code> state, while synchronous refs reject repeat entry before React rerenders; background room refreshes no longer clear a foreground action. A focused regression passes within all 133 tests, full repository verification passes, and browser QA at desktop and 390Ã—844 confirms visible Cloud Save and room-refresh progress with no horizontal overflow. Sites version 19 is deployed from commit <code>e622106d5ac50f51874e27eb234fb6306eda78f4</code>, and the public root returns HTTP 200.</td>
+</tr>
+</tbody></table>
+<p>| P6-14 | Host the playable frontend on GitHub Pages with the Sites backend | In progress | Static release <code>bb56a57</code> is pushed to <code>damarindraab/f11</code> main. Both builds, typecheck, all 138 tests, and lint (warnings only) pass. Built-Worker checks pass for all seven method/preflight combinations across five API paths, same-origin root HTTP 200, and cross-origin JSON errors. Public bundle private-value scan passes. Sites version 20 is deployed from <code>074172b40e7c4f6d31fc8a556693cb64b20caeaf</code>. Hosted preflights, same-origin compatibility, unapproved-origin rejection, and the redacted full trusted-replay smoke with the Pages Origin all pass, including idempotency, tamper rejection, private receipts, Statistic, and Leaderboard readback. The user enabled Pages; root and JS/CSS assets return 200. Browser guest login, Sites-issued draft, eleven selections, and trusted 42-point result/ranking pass. A Cloud Save warning appeared before and after drafting; local diagnostics reproduce an Axios Network Error without an HTTP response, while Node reaches the service and both origin preflights pass. Next: diagnose the browser Cloud Save request and verify saving/reload before closing acceptance. That personal-account deployment is separate from AccelByte/f11. Initial September 10 browser inspection found the source README at <a href="https://accelbyte.github.io/f11/">https://accelbyte.github.io/f11/</a>. DOC-05 subsequently completed the AccelByte deployment: compiled gh-pages publication, URL configuration, Sites version 21 CORS support, and browser guest/draft-start verification pass. See <code>docs/11-github-pages.md</code> and <code>docs/verification/2026-09-09-pages-backend.md</code>. This optional hosting split does not block the Functional MVP. |</p>
+<h2 id="update-protocol">Update protocol<a class="anchor" href="#update-protocol" aria-label="Link to section">#</a></h2>
+<p>For each completed work step:</p>
+<ol>
+<li>Change only the affected item statuses.</li>
+<li>Replace planned text with concrete evidence: file, test, build, decision, or
+deployed behavior.</li>
+<li>Promote exactly the next critical-path item to <code>Next</code> when useful.</li>
+<li>Update the current snapshot and <code>Last updated</code> date.</li>
+<li>Commit the tracker with the work it describes.</li>
+</ol>
+<h2 id="shared-tutorial">Shared tutorial<a class="anchor" href="#shared-tutorial" aria-label="Link to section">#</a></h2>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Item</th>
+<th>Status</th>
+<th>Evidence / next action</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>DOC-11</td>
+<td>Share the consolidated integration tutorial</td>
+<td>Done</td>
+<td>The single guide on master includes offline setup, six stages, and service references. Superseded documents are removed and links updated; relative links, stage anchors, fences, and whitespace checks pass. Next: rebase offline-starter onto this documentation update.</td>
+</tr>
+</tbody></table>
+<h2 id="public-source-hygiene">Public source hygiene<a class="anchor" href="#public-source-hygiene" aria-label="Link to section">#</a></h2>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Item</th>
+<th>Status</th>
+<th>Evidence / next action</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>DOC-12</td>
+<td>Review public-source contents</td>
+<td>Done</td>
+<td>Removed obsolete narrative documents and references, updated repository instructions, and untracked local deployment bindings with an ignore rule. Scanned 176 retained tracked files for recognizable credentials and two configured private values: no matches. Reviewed URL hosts; retained public deployment URLs, official references, and examples. All 107 relative documentation links and whitespace checks pass. This targeted scan covers current source, not Git history. Next: rebase the offline starter; public mirroring remains deferred.</td>
+</tr>
+</tbody></table>
+<p>| REPO-03 | Rename the offline tutorial branch | Done | Local branch is named offline-starter; the tutorial uses the new name. Branch contents are unchanged by the rename and documentation whitespace checks pass. Next: use offline-starter for the tutorial; remote publication remains deferred. |</p>
+<p>| PUB-01 | Publish clean connected and offline source branches | Done | Published connected main as a single root commit and offline-starter as its direct child, with no development ancestry. Both trees match the prepared source; 176 connected files and 110 offline files pass credential/exclusion scans and 107 documentation-link checks each. Atomic push and remote readback passed; gh-pages is unchanged. Next: preserve this source-branch boundary for future updates. |</p>
+<p>| DOC-13 | Restore agent-ready integration plans | Done | Six files under docs/ags-plans provide stage scope, prerequisites, execution checklists, original connected design details, acceptance checks, and direct handoff prompts. Tutorial and indexes link to the plans. All 137 relative documentation links pass; plan fences and credential/private-value checks pass. Historical notes are distinguished from unimplemented starter work. Next: give the Stage 1 plan to the implementing agent. |</p>
+</article><footer>Football 11 · Generated from the repository documentation. <a href="https://football-11.workspace-025025.chatgpt.site">Back to the game</a></footer></main></div></body></html>

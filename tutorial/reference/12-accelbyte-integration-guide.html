@@ -1,0 +1,1934 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Football 11: from offline mechanics to online features · Football 11</title><meta name="description" content="Build Football 11 from offline mechanics to online features. Read the setup guide, six integration stages, and copy-ready prompts."><link rel="stylesheet" href="../tutorial.css"></head>
+<body><a class="skip" href="#tutorial-content">Skip to tutorial</a><header><a class="brand" href="../index.html"><span>11</span> FOOTBALL 11 <small>THE PLAYBOOK</small></a><nav aria-label="Main navigation"><a href="../index.html">Tutorial</a><a class="play" href="https://football-11.workspace-025025.chatgpt.site">Play the game ↗</a></nav></header>
+<div class="layout"><aside><details open><summary>On this page</summary><nav aria-label="Tutorial sections"><a class="level-2" href="#contents">Contents</a>
+<a class="level-2" href="#run-the-offline-baseline">Run the offline baseline</a>
+<a class="level-2" href="#before-you-start">Before you start</a>
+<a class="level-2" href="#part-1--sign-up-for-ags">Part 1 — Sign up for AGS</a>
+<a class="level-3" href="#step-1-open-the-registration-page">Step 1. Open the registration page</a>
+<a class="level-3" href="#step-2-complete-the-signup-form">Step 2. Complete the signup form</a>
+<a class="level-3" href="#step-3-open-your-games-namespace">Step 3. Open your game&#39;s namespace</a>
+<a class="level-3" href="#step-4-collect-the-connection-information">Step 4. Collect the connection information</a>
+<a class="level-2" href="#part-2--install-and-connect-the-accelbyte-ai-plugin">Part 2 — Install and connect the AccelByte AI plugin</a>
+<a class="level-3" href="#step-5-open-your-project-in-codex">Step 5. Open your project in Codex</a>
+<a class="level-3" href="#step-6-install-accelbyte-ai-plugins">Step 6. Install AccelByte AI Plugins</a>
+<a class="level-3" href="#step-7-verify-that-the-assistant-can-use-the-plugin">Step 7. Verify that the assistant can use the plugin</a>
+<a class="level-3" href="#step-8-configure-the-ags-api-mcp-connection">Step 8. Configure the AGS API MCP connection</a>
+<a class="level-3" href="#step-9-authenticate-and-verify-a-live-read">Step 9. Authenticate and verify a live read</a>
+<a class="level-2" href="#prepare-the-project-connection">Prepare the project connection</a>
+<a class="level-3" href="#step-10-prepare-the-project-connection">Step 10. Prepare the project connection</a>
+<a class="level-2" href="#integration-stages-1">Integration stages</a>
+<a class="level-3" href="#stage-1-device-id-guest-login">Stage 1: Device ID guest login</a>
+<a class="level-3" href="#stage-2-private-cloud-save">Stage 2: Private Cloud Save</a>
+<a class="level-3" href="#stage-3-trusted-replay-and-ranking">Stage 3: Trusted replay and ranking</a>
+<a class="level-3" href="#stage-4-server-issued-draft-configuration">Stage 4: Server-issued draft configuration</a>
+<a class="level-3" href="#stage-5-friend-rooms">Stage 5: Friend rooms</a>
+<a class="level-3" href="#stage-6-asynchronous-saved-xi-competition">Stage 6: Asynchronous Saved-XI competition</a>
+<a class="level-2" href="#debugging-and-completion-1">Debugging and completion</a>
+<a class="level-2" href="#common-setup-problems">Common setup problems</a>
+<a class="level-2" href="#you-have-finished-when">You have finished when</a>
+<a class="level-2" href="#sources-and-verification">Sources and verification</a>
+<a class="level-2" href="#connected-implementation-reference">Connected implementation reference</a>
+<a class="level-3" href="#01--registration-and-setup">01 — Registration and setup</a>
+<a class="level-3" href="#outcome">Outcome</a>
+<a class="level-3" href="#register-and-create-the-namespace">Register and create the namespace</a>
+<a class="level-3" href="#configure-the-oauth-clients">Configure the OAuth clients</a>
+<a class="level-3" href="#configure-the-checkout-and-sdk">Configure the checkout and SDK</a>
+<a class="level-3" href="#troubleshooting-and-acceptance">Troubleshooting and acceptance</a>
+<a class="level-3" href="#02--login-and-identity">02 — Login and identity</a>
+<a class="level-3" href="#outcome-and-prerequisites">Outcome and prerequisites</a>
+<a class="level-3" href="#connect-the-authentication-flow">Connect the authentication flow</a>
+<a class="level-3" href="#identity-and-session-lifetime">Identity and session lifetime</a>
+<a class="level-3" href="#verification">Verification</a>
+<a class="level-3" href="#troubleshooting">Troubleshooting</a>
+<a class="level-3" href="#remaining-account-recovery-work">Remaining account recovery work</a>
+<a class="level-3" href="#03--player-storage-with-cloud-save">03 — Player storage with Cloud Save</a>
+<a class="level-3" href="#outcome-and-prerequisites-1">Outcome and prerequisites</a>
+<a class="level-3" href="#record-ownership-and-configuration">Record ownership and configuration</a>
+<a class="level-3" href="#connect-save-and-restore">Connect save and restore</a>
+<a class="level-3" href="#failure-and-concurrency-behavior">Failure and concurrency behavior</a>
+<a class="level-3" href="#acceptance">Acceptance</a>
+<a class="level-3" href="#04--game-configuration-and-issued-challenges">04 — Game configuration and issued challenges</a>
+<a class="level-3" href="#outcome-and-prerequisites-2">Outcome and prerequisites</a>
+<a class="level-3" href="#configure-the-game-record">Configure the Game Record</a>
+<a class="level-3" href="#connect-challenge-issuance">Connect challenge issuance</a>
+<a class="level-3" href="#change-configuration-safely">Change configuration safely</a>
+<a class="level-3" href="#troubleshooting-and-acceptance-1">Troubleshooting and acceptance</a>
+<a class="level-3" href="#05--trusted-backend-and-protected-writes">05 — Trusted backend and protected writes</a>
+<a class="level-3" href="#outcome-and-prerequisites-3">Outcome and prerequisites</a>
+<a class="level-3" href="#keep-two-authentication-contexts">Keep two authentication contexts</a>
+<a class="level-3" href="#connect-the-trusted-submission">Connect the trusted submission</a>
+<a class="level-3" href="#retry-and-authority-boundaries">Retry and authority boundaries</a>
+<a class="level-3" href="#troubleshooting-and-acceptance-2">Troubleshooting and acceptance</a>
+<a class="level-3" href="#06--statistics-and-leaderboards">06 — Statistics and Leaderboards</a>
+<a class="level-3" href="#outcome-and-prerequisites-4">Outcome and prerequisites</a>
+<a class="level-3" href="#configure-the-resources">Configure the resources</a>
+<a class="level-3" href="#connect-best-points-settlement">Connect best-points settlement</a>
+<a class="level-3" href="#connect-ranking-reads">Connect ranking reads</a>
+<a class="level-3" href="#resolve-content-version-migration">Resolve content-version migration</a>
+<a class="level-3" href="#troubleshooting-and-acceptance-3">Troubleshooting and acceptance</a>
+<a class="level-3" href="#07--sessions-and-lobby">07 — Sessions and Lobby</a>
+<a class="level-3" href="#outcome-and-prerequisites-5">Outcome and prerequisites</a>
+<a class="level-3" href="#configure-the-session-template">Configure the Session template</a>
+<a class="level-3" href="#connect-session-operations">Connect Session operations</a>
+<a class="level-3" href="#connect-lobby-notifications">Connect Lobby notifications</a>
+<a class="level-3" href="#complete-authority-and-recovery-work">Complete authority and recovery work</a>
+<a class="level-3" href="#verification-and-troubleshooting">Verification and troubleshooting</a>
+<a class="level-3" href="#08--saved-xi-discovery-and-settlement">08 — Saved-XI discovery and settlement</a>
+<a class="level-3" href="#outcome-and-prerequisites-6">Outcome and prerequisites</a>
+<a class="level-3" href="#resource-and-route-map">Resource and route map</a>
+<a class="level-3" href="#publish-the-record">Publish the record</a>
+<a class="level-3" href="#discover-and-issue-a-challenge">Discover and issue a challenge</a>
+<a class="level-3" href="#resolve-without-double-applying-a-score">Resolve without double-applying a score</a>
+<a class="level-3" href="#verification-and-troubleshooting-1">Verification and troubleshooting</a>
+<a class="level-3" href="#09--daily-challenges-public-results-and-history">09 — Daily challenges, public results, and history</a>
+<a class="level-3" href="#status-and-prerequisites">Status and prerequisites</a>
+<a class="level-3" href="#establish-the-contracts-first">Establish the contracts first</a>
+<a class="level-3" href="#implement-the-daily-lifecycle">Implement the daily lifecycle</a>
+<a class="level-3" href="#publish-a-trusted-public-projection">Publish a trusted public projection</a>
+<a class="level-3" href="#add-durable-player-history">Add durable player history</a>
+<a class="level-3" href="#acceptance-and-likely-failure-cases">Acceptance and likely failure cases</a>
+<a class="level-3" href="#10--deployment-and-integration-verification">10 — Deployment and integration verification</a>
+<a class="level-3" href="#outcome-1">Outcome</a>
+<a class="level-3" href="#configure-both-runtime-boundaries">Configure both runtime boundaries</a>
+<a class="level-3" href="#run-repository-checks">Run repository checks</a>
+<a class="level-3" href="#run-live-development-checks">Run live development checks</a>
+<a class="level-3" href="#verify-in-the-deployed-browser">Verify in the deployed browser</a>
+<a class="level-3" href="#integration-completion-gates">Integration completion gates</a></nav></details><a class="source" href="https://github.com/AccelByte/f11/blob/main/docs/12-accelbyte-integration-guide.md">View Markdown source ↗</a></aside><main id="tutorial-content"><div class="intro">BUILD YOUR GAME · ONE FEATURE AT A TIME</div><article><h1 id="football-11-from-offline-mechanics-to-online-features">Football 11: from offline mechanics to online features<a class="anchor" href="#football-11-from-offline-mechanics-to-online-features" aria-label="Link to section">#</a></h1>
+<p>Start with the playable offline game, set up AGS and the AI plugin, then add
+one online feature at a time. This document contains the setup instructions,
+copy-ready handoff prompts and supporting service reference material. Detailed
+implementation plans and acceptance checks live in <a href="ags-plans/README.html">ags-plans</a>. All online stages are <strong>not started</strong> on the offline branch.</p>
+<h2 id="contents">Contents<a class="anchor" href="#contents" aria-label="Link to section">#</a></h2>
+<ul>
+<li><a href="#offline-baseline">Run the offline baseline</a></li>
+<li><a href="#part-1--sign-up-for-ags">Sign up for AGS</a></li>
+<li><a href="#integration-stages">Integration stages</a></li>
+<li><a href="#debugging-and-completion">Debugging and completion checks</a></li>
+<li><a href="#implementation-reference">Connected implementation reference</a></li>
+</ul>
+<p><a id="offline-baseline"></a></p>
+<h2 id="run-the-offline-baseline">Run the offline baseline<a class="anchor" href="#run-the-offline-baseline" aria-label="Link to section">#</a></h2>
+<p>The public <code>main</code> branch contains the connected game. To follow this tutorial from
+the offline baseline, switch to <code>offline-starter</code> and create a working
+branch. Use Node.js 22.13 or newer:</p>
+<pre><code class="language-sh">npm ci
+npm run dev
+</code></pre>
+<p>Open the URL printed by Vite. Complete eleven picks, try a reroll, and inspect
+the season result. No environment file, account, or backend is needed. Runs stay
+in memory until reload. Create your own working branch before adding features.</p>
+<p>The mechanics live in <code>packages/domain</code>; <code>apps/web/src/game/session.ts</code> owns the
+local run and action transitions; <code>apps/web/app/page.tsx</code> renders the game. Add
+identity and storage around those boundaries, and reuse the domain code for
+later server replay. Keep the existing mechanics tests passing throughout.</p>
+<p>The following setup uses Codex and a Public Cloud development namespace (also
+called Shared Cloud). A Claude Code installation alternative is included.</p>
+<h2 id="before-you-start">Before you start<a class="anchor" href="#before-you-start" aria-label="Link to section">#</a></h2>
+<p>Have the following ready:</p>
+<ul>
+<li>An email address you can access and your game studio&#39;s name.</li>
+<li>Codex installed and signed in. If you need to install it, use the
+<a href="https://learn.chatgpt.com/docs">official Codex documentation</a>.</li>
+<li>A local game/application project folder that Codex can open. Football 11 uses
+React and TypeScript; the prompts below also tell the assistant to inspect your
+actual project before selecting an SDK.</li>
+</ul>
+<p>You will use three places during this tutorial:</p>
+<table>
+<thead>
+<tr>
+<th>Place</th>
+<th>What you do there</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>AGS Admin Portal in your browser</td>
+<td>Register, select a game, and view its configuration</td>
+</tr>
+<tr>
+<td>Codex</td>
+<td>Install the plugin, connect tools, and send the example prompts</td>
+</tr>
+<tr>
+<td>Terminal</td>
+<td>Run explicitly labeled commands, if using a command-line setup</td>
+</tr>
+</tbody></table>
+<p><strong>Commands go in the terminal; prompts go in the Codex conversation.</strong> Replace
+values written as <code>&lt;YOUR_...&gt;</code> before sending a prompt. Enter passwords and
+verification codes directly in the sign-in page, not in the conversation.</p>
+<h2 id="part-1--sign-up-for-ags">Part 1 — Sign up for AGS<a class="anchor" href="#part-1--sign-up-for-ags" aria-label="Link to section">#</a></h2>
+<h3 id="step-1-open-the-registration-page">Step 1. Open the registration page<a class="anchor" href="#step-1-open-the-registration-page" aria-label="Link to section">#</a></h3>
+<ol>
+<li>Open <a href="https://prod.gamingservices.accelbyte.io/auth/register?utm_source=github&amp;utm_medium=source-code&amp;utm_campaign=sa-content&amp;utm_content=2026-09-18-82-0-inspired-prototype">Sign up to AccelByte</a>.</li>
+<li>Check that the page heading says <strong>Sign up to AccelByte</strong>.</li>
+<li>If your studio already has an account, use <strong>Sign in</strong> or ask its administrator
+for an invitation instead of creating a duplicate studio.</li>
+</ol>
+<p><strong>Expected result:</strong> the signup form is visible.</p>
+<h3 id="step-2-complete-the-signup-form">Step 2. Complete the signup form<a class="anchor" href="#step-2-complete-the-signup-form" aria-label="Link to section">#</a></h3>
+<ol>
+<li>Enter your name in <strong>Your name</strong>.</li>
+<li>Enter an address you can access in <strong>Email Address</strong>.</li>
+<li>Enter your studio name in <strong>Game studio name</strong>.</li>
+<li>Read the linked <strong>Terms Of Services</strong> and <strong>Privacy Policy</strong>. If you agree,
+select the agreement checkbox.</li>
+<li>Click <strong>Get started for FREE</strong>.</li>
+<li>Complete the account-activation instructions AGS displays and sends to your
+email. If a verification email is requested but missing, check spam and use
+the resend option if offered.</li>
+<li>Open the <a href="https://prod.gamingservices.accelbyte.io/admin">AGS Admin Portal</a>
+and sign in with the account you just activated.</li>
+</ol>
+<p><strong>Expected result:</strong> you can access your studio in the Admin Portal. Account
+activation screens may vary; follow their instructions rather than assuming the
+initial form also asks for a password.</p>
+<h3 id="step-3-open-your-games-namespace">Step 3. Open your game&#39;s namespace<a class="anchor" href="#step-3-open-your-games-namespace" aria-label="Link to section">#</a></h3>
+<p>A namespace is the container for one game&#39;s players, configuration, and services.
+AGS onboarding creates a first game namespace as part of registration. Use that
+namespace if it is the game you want to integrate.</p>
+<p>To create a separate development game:</p>
+<ol>
+<li>Open <strong>Your Titles</strong>. If you are inside a namespace and see the sidebar, open
+the upper-left <strong>NAMESPACE</strong> dropdown and choose <strong>View All</strong>.</li>
+<li>On <strong>Your Titles</strong>, click <strong>+ CREATE</strong>.</li>
+<li>On <strong>New Game Setup</strong>, enter a <strong>Game Name</strong>, such as <code>Football 11 Dev</code>.</li>
+<li>Review the generated <strong>Game Title ID</strong> before completing the form. The display
+name can change later; the Game Title ID cannot.</li>
+<li>Complete the form and open the resulting game namespace.</li>
+</ol>
+<p><strong>Expected result:</strong> the portal shows the intended development game. Record the
+actual namespace identifier shown by AGS; do not derive it from the display name.</p>
+<h3 id="step-4-collect-the-connection-information">Step 4. Collect the connection information<a class="anchor" href="#step-4-collect-the-connection-information" aria-label="Link to section">#</a></h3>
+<ol>
+<li>Record your Admin Portal URL and game namespace identifier in a private note.</li>
+<li>In the selected game, open <strong>Foundations → Identity &amp; Access → IAM Clients</strong>.</li>
+<li>If an appropriate game client already exists, choose <strong>View</strong> and note its
+<strong>Client ID</strong>, <strong>Namespace</strong>, <strong>Redirect URI</strong>, and <strong>Base URL</strong>.</li>
+<li>If no game client exists, leave Client ID blank for now. The setup prompt in
+Part 3 will help create the right client for your project.</li>
+</ol>
+<p>Keep the <strong>Base URL</strong> supplied by AGS distinct from the Admin Portal URL. A browser
+application needs a <strong>Public</strong> client with no embedded secret. A trusted backend
+may later need a separate Confidential client; its secret stays on the server.</p>
+<p><strong>Expected result:</strong> you know which game and environment the assistant should use.
+You do not need to configure every AGS service before installing the plugin.</p>
+<h2 id="part-2--install-and-connect-the-accelbyte-ai-plugin">Part 2 — Install and connect the AccelByte AI plugin<a class="anchor" href="#part-2--install-and-connect-the-accelbyte-ai-plugin" aria-label="Link to section">#</a></h2>
+<h3 id="step-5-open-your-project-in-codex">Step 5. Open your project in Codex<a class="anchor" href="#step-5-open-your-project-in-codex" aria-label="Link to section">#</a></h3>
+<ol>
+<li>Open Codex and select your local game/application project folder.</li>
+<li>Start a conversation associated with that project.</li>
+<li>Confirm that it is the application source folder, not a downloaded plugin folder.</li>
+</ol>
+<p><strong>Expected result:</strong> the assistant can inspect your project to determine its engine,
+framework, SDK, and existing configuration.</p>
+<h3 id="step-6-install-accelbyte-ai-plugins">Step 6. Install AccelByte AI Plugins<a class="anchor" href="#step-6-install-accelbyte-ai-plugins" aria-label="Link to section">#</a></h3>
+<p>The marketplace source is <code>AccelByte/ai-plugins</code>; the plugin is named
+<code>accelbyte-ai-plugins</code>.</p>
+<ol>
+<li>In Codex, open the plugin manager using <code>/plugins</code> where available.</li>
+<li>Choose <strong>Add Marketplace</strong>, enter <code>AccelByte/ai-plugins</code>, and confirm.</li>
+<li>Find <strong>accelbyte-ai-plugins</strong> in that marketplace and install or enable it.</li>
+<li>Restart/reload Codex and reopen your project conversation.</li>
+</ol>
+<p>If your version does not expose <strong>Add Marketplace</strong>, register the source from a
+terminal where the Codex CLI is installed:</p>
+<pre><code class="language-sh">codex plugin marketplace add AccelByte/ai-plugins
+</code></pre>
+<p>Then restart/reload Codex, open its plugin manager, and install/enable the plugin.
+<strong>Adding the marketplace only makes the plugin discoverable; it does not finish
+activation.</strong> The exact plugin-manager layout can differ between Codex versions.</p>
+<p><strong>Expected result:</strong> AccelByte AI Plugins appears as installed and enabled.</p>
+<h4 id="if-your-team-uses-claude-code-instead">If your team uses Claude Code instead<a class="anchor" href="#if-your-team-uses-claude-code-instead" aria-label="Link to section">#</a></h4>
+<p>Run these commands in the Claude Code conversation:</p>
+<pre><code class="language-text">/plugin marketplace add AccelByte/ai-plugins
+/plugin install accelbyte-ai-plugins@accelbyte
+/reload-plugins
+</code></pre>
+<p>Then use the same natural-language prompts below. For Cursor, Kiro, or OpenCode,
+follow the corresponding section in the <a href="https://github.com/AccelByte/ai-plugins/blob/main/INSTALL.md">official plugin installation guide</a>.</p>
+<h3 id="step-7-verify-that-the-assistant-can-use-the-plugin">Step 7. Verify that the assistant can use the plugin<a class="anchor" href="#step-7-verify-that-the-assistant-can-use-the-plugin" aria-label="Link to section">#</a></h3>
+<p>Paste this into Codex:</p>
+<pre><code class="language-text">Use the AccelByte AGS skill from AccelByte AI Plugins.
+Confirm that the skill is available, inspect this project&#39;s framework or engine,
+and explain which AGS SDK fits it. Do not change files or contact a live
+namespace yet. If the skill is unavailable, say so instead of answering from memory.
+</code></pre>
+<p><strong>Expected result:</strong> the assistant identifies the available skill and your project,
+then gives a grounded SDK recommendation. It should not claim to have checked your
+live namespace, because that connection has not been verified yet.</p>
+<p>The plugin supplies instructions and references. An <strong>MCP server</strong> supplies tools
+that let the assistant access a live service. Installing the plugin does not, by
+itself, authenticate the assistant to your AGS account.</p>
+<h3 id="step-8-configure-the-ags-api-mcp-connection">Step 8. Configure the AGS API MCP connection<a class="anchor" href="#step-8-configure-the-ags-api-mcp-connection" aria-label="Link to section">#</a></h3>
+<p>First obtain the MCP URL for your deployment. The plugin documents this Public/
+Shared Cloud pattern:</p>
+<pre><code class="language-text">https://{studio}-{game}.prod.gamingservices.accelbyte.io/mcp/{studio}-{game}
+</code></pre>
+<p>Both occurrences must contain the actual AGS namespace/host values for your
+environment. Do not insert the human-readable studio/game names or use the generic
+registration host. If you cannot match this pattern to your environment, ask your
+studio administrator or AccelByte support for its AGS API MCP URL.</p>
+<p>Send this prompt with your confirmed values:</p>
+<pre><code class="language-text">Use the AccelByte AGS skill to set up the AGS API MCP connection for this project.
+
+AI tool: Codex
+Deployment: Public/Shared Cloud development environment
+Game namespace: &lt;YOUR_GAME_NAMESPACE&gt;
+AGS API MCP URL: &lt;YOUR_CONFIRMED_MCP_URL&gt;
+
+Inspect existing MCP configuration first. Reuse a matching entry; otherwise add
+only this AGS API connection in the project&#39;s .codex/config.toml. Do not replace
+unrelated settings. Show the configuration change and the server name, then tell
+me how to authenticate. Do not modify resources in AGS.
+</code></pre>
+<ol>
+<li>Check that the proposed URL and namespace match your development environment.</li>
+<li>Review the configuration change and apply it when the assistant requests that step.</li>
+<li>Note the configured MCP server name, for example <code>ags-api</code>.</li>
+<li>Restart/reload Codex if it does not load the new tools automatically.</li>
+</ol>
+<p><strong>Expected result:</strong> Codex has an AGS API MCP entry for your deployment. A reachable
+URL or a saved config file is not yet proof of authenticated access.</p>
+<h3 id="step-9-authenticate-and-verify-a-live-read">Step 9. Authenticate and verify a live read<a class="anchor" href="#step-9-authenticate-and-verify-a-live-read" aria-label="Link to section">#</a></h3>
+<ol>
+<li><p>Open <strong>Settings → MCP servers</strong> in the desktop client and select
+<strong>Authenticate</strong> for the AGS entry when offered. Alternatively, use the terminal:</p>
+<pre><code class="language-sh">codex mcp login &lt;YOUR_CONFIGURED_SERVER_NAME&gt;
+</code></pre>
+</li>
+<li><p>Complete AGS sign-in in the browser and review the requested access. Use the
+account that can access your development game.</p>
+</li>
+<li><p>Return to Codex. If necessary, restart/reload so the tools become available.</p>
+</li>
+<li><p>Send this prompt:</p>
+<pre><code class="language-text">Use the AGS API MCP connection to check my development setup read-only.
+Target game namespace: &lt;YOUR_GAME_NAMESPACE&gt;.
+First verify that authentication is fresh. Then read the target namespace
+configuration or its IAM client list, if my account has access.
+Report which live operation succeeded and whether it confirms the intended
+namespace. Do not create or update anything. Do not print credentials or tokens.
+</code></pre>
+</li>
+</ol>
+<p><strong>Expected result:</strong> the assistant reports an actual successful authenticated read
+for the intended environment. A generic explanation of namespaces is not sufficient.
+If access is rejected, resolve sign-in or permissions before starting integration.</p>
+<h2 id="prepare-the-project-connection">Prepare the project connection<a class="anchor" href="#prepare-the-project-connection" aria-label="Link to section">#</a></h2>
+<p>Send one prompt at a time and inspect its result before moving to the next step.
+These examples use plain language, so they do not depend on a host&#39;s slash-command
+syntax. In hosts that expose the plugin commands, <code>/ags init</code> starts clean-slate
+setup and <code>/ags &lt;your request&gt;</code> routes later work.</p>
+<h3 id="step-10-prepare-the-project-connection">Step 10. Prepare the project connection<a class="anchor" href="#step-10-prepare-the-project-connection" aria-label="Link to section">#</a></h3>
+<p>Paste this prompt and fill in the values you collected:</p>
+<pre><code class="language-text">Use the AccelByte AGS skill to connect this project to my existing development game.
+
+Admin Portal: &lt;YOUR_ADMIN_PORTAL_URL&gt;
+Game namespace: &lt;YOUR_GAME_NAMESPACE&gt;
+AGS Base URL: &lt;YOUR_AGS_BASE_URL&gt;
+Public client ID: &lt;YOUR_CLIENT_ID_OR_WRITE_NOT_CREATED_YET&gt;
+
+Inspect existing configuration and installed SDK versions first. Reuse existing
+resources that fit. If a client is missing, show the exact client configuration
+needed for this project&#39;s first guest-login integration before creating it.
+Keep browser configuration public-only and secrets server-side. Configure the
+connection, and report which connection checks passed and what remains.
+Do not add gameplay, matchmaking, or other services in this step.
+</code></pre>
+<ol>
+<li><p>Verify the proposed target before accepting any AGS resource creation.</p>
+</li>
+<li><p>If the assistant requests an SDK installation as a separate step, send:</p>
+<pre><code class="language-text">Use the AccelByte AGS skill to install or verify the SDK appropriate to the
+detected project. Reuse compatible existing packages, configure the development
+connection, and run the relevant build/type checks. Do not implement another feature.
+</code></pre>
+</li>
+<li><p>If a local operation requires the AGS CLI, ask the plugin to install/verify it
+for your OS. Follow its setup instructions, then run <code>ags auth login</code> and
+<code>ags auth status</code> for the intended profile. CLI authentication is separate from
+MCP authentication; do not assume signing in to one signs in to both.</p>
+</li>
+</ol>
+<p><strong>Expected result:</strong> the correct SDK/configuration is in place, the project checks
+pass, and any missing provider/client access is explicitly identified.</p>
+<p><a id="integration-stages"></a></p>
+<h2 id="integration-stages-1">Integration stages<a class="anchor" href="#integration-stages-1" aria-label="Link to section">#</a></h2>
+<p>Complete and verify one stage before starting the next. The detailed plans are in
+<a href="ags-plans/README.html">docs/ags-plans</a>; each stage below provides its agent handoff.</p>
+<table>
+<thead>
+<tr>
+<th>Stage</th>
+<th>Feature</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td><a href="#stage-1">Device ID guest login</a></td>
+</tr>
+<tr>
+<td>2</td>
+<td><a href="#stage-2">Private Cloud Save</a></td>
+</tr>
+<tr>
+<td>3</td>
+<td><a href="#stage-3">Trusted replay and ranking</a></td>
+</tr>
+<tr>
+<td>4</td>
+<td><a href="#stage-4">Server-issued draft configuration</a></td>
+</tr>
+<tr>
+<td>5</td>
+<td><a href="#stage-5">Friend rooms</a></td>
+</tr>
+<tr>
+<td>6</td>
+<td><a href="#stage-6">Asynchronous Saved-XI competition</a></td>
+</tr>
+</tbody></table>
+<p><a id="stage-1"></a></p>
+<h3 id="stage-1-device-id-guest-login">Stage 1: Device ID guest login<a class="anchor" href="#stage-1-device-id-guest-login" aria-label="Link to section">#</a></h3>
+<p>Use the <a href="ags-plans/2026-09-02-device-id-login.html">detailed agent plan</a> for prerequisites,
+implementation scope, design details, and acceptance checks.</p>
+<pre><code class="language-text">Use the AccelByte AGS skill and docs/ags-plans/2026-09-02-device-id-login.md as the
+implementation plan for this stage only. Inspect the current branch and completed
+prerequisites first. Resolve any missing environment or authorization settings
+before dependent implementation. Preserve existing offline mechanics, implement
+the scoped player flow, and run every acceptance check. Record automated,
+browser, and live-service evidence separately in docs/10-progress-tracker.md.
+Report blockers honestly and stop before the next stage.
+</code></pre>
+<p><a id="stage-2"></a></p>
+<h3 id="stage-2-private-cloud-save">Stage 2: Private Cloud Save<a class="anchor" href="#stage-2-private-cloud-save" aria-label="Link to section">#</a></h3>
+<p>Use the <a href="ags-plans/2026-09-03-cloud-save-run-sync.html">detailed agent plan</a> for prerequisites,
+implementation scope, design details, and acceptance checks.</p>
+<pre><code class="language-text">Use the AccelByte AGS skill and docs/ags-plans/2026-09-03-cloud-save-run-sync.md as the
+implementation plan for this stage only. Inspect the current branch and completed
+prerequisites first. Resolve any missing environment or authorization settings
+before dependent implementation. Preserve existing offline mechanics, implement
+the scoped player flow, and run every acceptance check. Record automated,
+browser, and live-service evidence separately in docs/10-progress-tracker.md.
+Report blockers honestly and stop before the next stage.
+</code></pre>
+<p><a id="stage-3"></a></p>
+<h3 id="stage-3-trusted-replay-and-ranking">Stage 3: Trusted replay and ranking<a class="anchor" href="#stage-3-trusted-replay-and-ranking" aria-label="Link to section">#</a></h3>
+<p>Use the <a href="ags-plans/2026-09-03-trusted-ranking.html">detailed agent plan</a> for prerequisites,
+implementation scope, design details, and acceptance checks.</p>
+<pre><code class="language-text">Use the AccelByte AGS skill and docs/ags-plans/2026-09-03-trusted-ranking.md as the
+implementation plan for this stage only. Inspect the current branch and completed
+prerequisites first. Resolve any missing environment or authorization settings
+before dependent implementation. Preserve existing offline mechanics, implement
+the scoped player flow, and run every acceptance check. Record automated,
+browser, and live-service evidence separately in docs/10-progress-tracker.md.
+Report blockers honestly and stop before the next stage.
+</code></pre>
+<p><a id="stage-4"></a></p>
+<h3 id="stage-4-server-issued-draft-configuration">Stage 4: Server-issued draft configuration<a class="anchor" href="#stage-4-server-issued-draft-configuration" aria-label="Link to section">#</a></h3>
+<p>Use the <a href="ags-plans/2026-09-04-game-record-draft-config.html">detailed agent plan</a> for prerequisites,
+implementation scope, design details, and acceptance checks.</p>
+<pre><code class="language-text">Use the AccelByte AGS skill and docs/ags-plans/2026-09-04-game-record-draft-config.md as the
+implementation plan for this stage only. Inspect the current branch and completed
+prerequisites first. Resolve any missing environment or authorization settings
+before dependent implementation. Preserve existing offline mechanics, implement
+the scoped player flow, and run every acceptance check. Record automated,
+browser, and live-service evidence separately in docs/10-progress-tracker.md.
+Report blockers honestly and stop before the next stage.
+</code></pre>
+<p><a id="stage-5"></a></p>
+<h3 id="stage-5-friend-rooms">Stage 5: Friend rooms<a class="anchor" href="#stage-5-friend-rooms" aria-label="Link to section">#</a></h3>
+<p>Use the <a href="ags-plans/2026-09-03-friend-room-session.html">detailed agent plan</a> for prerequisites,
+implementation scope, design details, and acceptance checks.</p>
+<pre><code class="language-text">Use the AccelByte AGS skill and docs/ags-plans/2026-09-03-friend-room-session.md as the
+implementation plan for this stage only. Inspect the current branch and completed
+prerequisites first. Resolve any missing environment or authorization settings
+before dependent implementation. Preserve existing offline mechanics, implement
+the scoped player flow, and run every acceptance check. Record automated,
+browser, and live-service evidence separately in docs/10-progress-tracker.md.
+Report blockers honestly and stop before the next stage.
+</code></pre>
+<p><a id="stage-6"></a></p>
+<h3 id="stage-6-asynchronous-saved-xi-competition">Stage 6: Asynchronous Saved-XI competition<a class="anchor" href="#stage-6-asynchronous-saved-xi-competition" aria-label="Link to section">#</a></h3>
+<p>Use the <a href="ags-plans/2026-09-03-saved-xi-head-to-head.html">detailed agent plan</a> for prerequisites,
+implementation scope, design details, and acceptance checks.</p>
+<pre><code class="language-text">Use the AccelByte AGS skill and docs/ags-plans/2026-09-03-saved-xi-head-to-head.md as the
+implementation plan for this stage only. Inspect the current branch and completed
+prerequisites first. Resolve any missing environment or authorization settings
+before dependent implementation. Preserve existing offline mechanics, implement
+the scoped player flow, and run every acceptance check. Record automated,
+browser, and live-service evidence separately in docs/10-progress-tracker.md.
+Report blockers honestly and stop before the next stage.
+</code></pre>
+<p><a id="debugging-and-completion"></a></p>
+<h2 id="debugging-and-completion-1">Debugging and completion<a class="anchor" href="#debugging-and-completion-1" aria-label="Link to section">#</a></h2>
+<p>If a step fails, paste a redacted error and describe the expected behavior:</p>
+<pre><code class="language-text">Use the AccelByte AGS skill to diagnose this integration failure.
+Feature: &lt;LOGIN_OR_STORAGE_OR_SESSION&gt;
+Expected: &lt;WHAT_SHOULD_HAPPEN&gt;
+Observed: &lt;WHAT_ACTUALLY_HAPPENED&gt;
+Environment: development
+HTTP status and redacted error: &lt;ERROR_WITHOUT_TOKENS_OR_SECRETS&gt;
+
+Inspect the current configuration and relevant code. Identify the failing
+operation and its caller before suggesting changes. Show the smallest supported
+fix and the check that would prove it worked. Do not broaden permissions blindly.
+</code></pre>
+<p><strong>Expected result:</strong> a diagnosis tied to an operation and evidence, followed by a
+specific fix and verification—not a replacement of the entire integration.</p>
+<h2 id="common-setup-problems">Common setup problems<a class="anchor" href="#common-setup-problems" aria-label="Link to section">#</a></h2>
+<table>
+<thead>
+<tr>
+<th>Problem</th>
+<th>What to do</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Marketplace added but skill unavailable</td>
+<td>Install/enable <code>accelbyte-ai-plugins</code>, restart Codex, and repeat Step 7</td>
+</tr>
+<tr>
+<td><code>/plugins</code> or Add Marketplace is missing</td>
+<td>Use the documented marketplace CLI command, then the client&#39;s plugin manager; update the client if plugin support is absent</td>
+</tr>
+<tr>
+<td><code>codex</code> command is not recognized</td>
+<td>Use the installed app&#39;s UI, or install the CLI through the official Codex instructions and reopen the terminal</td>
+</tr>
+<tr>
+<td>Plugin answers questions but cannot read AGS</td>
+<td>Complete MCP configuration and authentication in Steps 8–9</td>
+</tr>
+<tr>
+<td>MCP URL returns 401</td>
+<td>It may be reachable but unauthenticated; complete sign-in and retry the live read</td>
+</tr>
+<tr>
+<td>MCP URL returns 404 or points to the wrong game</td>
+<td>Confirm the deployment-specific host and namespace path</td>
+</tr>
+<tr>
+<td>Live operation is forbidden</td>
+<td>Confirm the correct account/game and inspect the exact operation&#39;s required access</td>
+</tr>
+<tr>
+<td>Assistant tries to implement too much</td>
+<td>Restate one feature, its boundaries, and its acceptance checks</td>
+</tr>
+</tbody></table>
+<h2 id="you-have-finished-when">You have finished when<a class="anchor" href="#you-have-finished-when" aria-label="Link to section">#</a></h2>
+<ul>
+<li>You can sign in to the AGS Admin Portal and select your development game.</li>
+<li>AccelByte AI Plugins is installed, enabled, and recognized by the assistant.</li>
+<li>An authenticated live read confirms access to your intended AGS environment.</li>
+<li>You have used a focused prompt to implement or verify guest login and reviewed
+the resulting evidence.</li>
+</ul>
+<p>Use the implementation reference below when a stage needs more service detail.
+For each completed stage, record local, browser, and live-service evidence
+separately. Unverified stages remain open.</p>
+<h2 id="sources-and-verification">Sources and verification<a class="anchor" href="#sources-and-verification" aria-label="Link to section">#</a></h2>
+<p>The signup form and official namespace/client documentation were inspected on
+September 17, 2026. Plugin installation and MCP URL instructions were checked
+against the installed AccelByte AI Plugins <strong>0.6.13</strong> documentation; use the
+upstream installation guide for later releases. No account was registered and no
+plugin installation or live AGS authentication was performed to write this tutorial.</p>
+<ul>
+<li><a href="https://prod.gamingservices.accelbyte.io/auth/register?utm_source=github&amp;utm_medium=source-code&amp;utm_campaign=sa-content&amp;utm_content=2026-09-18-82-0-inspired-prototype">AGS signup</a></li>
+<li><a href="https://docs.accelbyte.io/gaming-services/getting-started/shared-cloud/shared-cloud-intro/">Public Cloud introduction</a></li>
+<li><a href="https://docs.accelbyte.io/gaming-services/modules/foundations/identity-access/how-to/namespaces/create-a-game-namespace/">Create a game namespace</a></li>
+<li><a href="https://docs.accelbyte.io/gaming-services/getting-started/get-client-id/">Get Client ID and connection values</a></li>
+<li><a href="https://github.com/AccelByte/ai-plugins/blob/main/README.md">AccelByte AI Plugins README</a></li>
+<li><a href="https://github.com/AccelByte/ai-plugins/blob/main/INSTALL.md">AccelByte AI Plugins installation guide</a></li>
+<li><a href="https://developers.openai.com/plugins/build/plugins#add-a-marketplace-from-the-cli">OpenAI: add a plugin marketplace</a></li>
+<li><a href="https://learn.chatgpt.com/docs/extend/mcp">OpenAI: MCP configuration and authentication</a></li>
+</ul>
+<p><a id="implementation-reference"></a></p>
+<h2 id="connected-implementation-reference">Connected implementation reference<a class="anchor" href="#connected-implementation-reference" aria-label="Link to section">#</a></h2>
+<p>These reference notes describe the connected project. Its source paths and
+completed verification claims are background, not features implemented in the
+offline starter. Follow the stages above to build your own integration.</p>
+<p><a id="reference-1"></a></p>
+<h3 id="01--registration-and-setup">01 — Registration and setup<a class="anchor" href="#01--registration-and-setup" aria-label="Link to section">#</a></h3>
+<h3 id="outcome">Outcome<a class="anchor" href="#outcome" aria-label="Link to section">#</a></h3>
+<p>You have a development game namespace, separate browser and server OAuth clients,
+and a local checkout configured to use them. This is developer onboarding; player
+login is covered in the next chapter.</p>
+<h3 id="register-and-create-the-namespace">Register and create the namespace<a class="anchor" href="#register-and-create-the-namespace" aria-label="Link to section">#</a></h3>
+<ol>
+<li>Follow the <a href="https://docs.accelbyte.io/gaming-services/getting-started/">official getting-started guide</a>
+to register a developer account, verify it, and complete studio onboarding.
+For an existing studio, use an administrator invitation.</li>
+<li>Open the studio Admin Portal and confirm you can administer game resources.</li>
+<li>Create or select a development <strong>game namespace</strong>. Use its identifier in the
+application, rather than substituting the studio/publisher identifier.</li>
+<li>Obtain the AGS service base URL for that environment. Portal, application, and
+AGS service URLs serve different purposes.</li>
+<li>Record the base URL, game namespace, client IDs, and frontend/backend origins
+in private configuration. Keep server secrets in a separate secret store.</li>
+</ol>
+<p>Existing project evidence uses Shared Cloud. Confirm your own deployment model
+before configuring permissions. Shared Cloud uses module/group grants; Private
+Cloud/BYOC may use resource/action grants. A custom hostname alone does not prove
+the model; inspect the environment&#39;s permission catalogue.</p>
+<h3 id="configure-the-oauth-clients">Configure the OAuth clients<a class="anchor" href="#configure-the-oauth-clients" aria-label="Link to section">#</a></h3>
+<p>Create a Public client for browser login and a Confidential client for the trusted
+backend. Configure the Public client&#39;s redirect URI to match the application.
+Device ID login does not navigate an OAuth callback; a future redirect-based
+provider needs its actual callback registered separately.</p>
+<table>
+<thead>
+<tr>
+<th>Caller</th>
+<th>Runtime token</th>
+<th>Operations to verify</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Browser Public client</td>
+<td>Player token from Device ID login</td>
+<td>Current user, own Player Records, Session lifecycle, Lobby connection</td>
+</tr>
+<tr>
+<td>Backend acting for a player</td>
+<td>Forwarded player token</td>
+<td>Current-user validation, Session reads, Leaderboard reads, public Saved-XI reads</td>
+</tr>
+<tr>
+<td>Backend Confidential client</td>
+<td>Service token from server credentials</td>
+<td>Game Record read; Player Record create/read/update; Statistics user-value create/read/update</td>
+</tr>
+</tbody></table>
+<p>Enable Device ID authentication for development. Grant only the operations needed.
+The existing Game Record integration records Shared Cloud module/group
+<code>m_cloud_save/g_game_records</code> with <strong>READ</strong>; verify the equivalent in your environment.
+Discover other exact grants from current API metadata and the permission catalogue;
+service names alone do not establish group IDs.</p>
+<p>Public clients still require player tokens for authenticated resource calls.
+Successful login does not prove Cloud Save, Session, or server Statistics access.</p>
+<h3 id="configure-the-checkout-and-sdk">Configure the checkout and SDK<a class="anchor" href="#configure-the-checkout-and-sdk" aria-label="Link to section">#</a></h3>
+<p>Use Node.js 22.13 or newer. From the repository root:</p>
+<pre><code class="language-powershell">npm ci
+if (-not (Test-Path -LiteralPath apps/web/.env.local)) {
+  Copy-Item apps/web/.env.example apps/web/.env.local
+}
+</code></pre>
+<p>This preserves an existing <code>.env.local</code>. Fill it using your own values:</p>
+<table>
+<thead>
+<tr>
+<th>Variable</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>NEXT_PUBLIC_ACCELBYTE_BASE_URL</code></td>
+<td>Browser-safe AGS service URL</td>
+</tr>
+<tr>
+<td><code>NEXT_PUBLIC_ACCELBYTE_NAMESPACE</code></td>
+<td>Browser-safe game namespace</td>
+</tr>
+<tr>
+<td><code>NEXT_PUBLIC_ACCELBYTE_CLIENT_ID</code></td>
+<td>Browser-safe Public client ID</td>
+</tr>
+<tr>
+<td><code>NEXT_PUBLIC_ACCELBYTE_REDIRECT_URI</code></td>
+<td>Public client redirect configuration</td>
+</tr>
+<tr>
+<td><code>ACCELBYTE_SERVER_CLIENT_ID</code></td>
+<td>Server-side Confidential client ID</td>
+</tr>
+<tr>
+<td><code>ACCELBYTE_SERVER_CLIENT_SECRET</code></td>
+<td>Server secret store or ignored local environment only</td>
+</tr>
+</tbody></table>
+<p>Never put a secret in <code>NEXT_PUBLIC_*</code>. Keep access/refresh tokens out of environment
+files, browser storage, screenshots, and published diagnostics.</p>
+<p>The SDK packages are already declared. <code>npm ci</code> installs their lockfile versions:</p>
+<table>
+<thead>
+<tr>
+<th>Package</th>
+<th>Use</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>@accelbyte/sdk</code></td>
+<td>SDK configuration and in-memory tokens</td>
+</tr>
+<tr>
+<td><code>@accelbyte/sdk-iam</code></td>
+<td>Login and current-user verification</td>
+</tr>
+<tr>
+<td><code>@accelbyte/sdk-cloudsave</code></td>
+<td>Player Records and Game Records</td>
+</tr>
+<tr>
+<td><code>@accelbyte/sdk-social</code></td>
+<td>Statistics APIs</td>
+</tr>
+<tr>
+<td><code>@accelbyte/sdk-leaderboard</code></td>
+<td>Ranking reads</td>
+</tr>
+<tr>
+<td><code>@accelbyte/sdk-session</code></td>
+<td>Game sessions</td>
+</tr>
+<tr>
+<td><code>@accelbyte/sdk-lobby</code></td>
+<td>Session notification socket</td>
+</tr>
+</tbody></table>
+<p>Start with <code>npm run dev --workspace @football-11/web</code>. The UI-only preview does
+not provide trusted API routes. Complete the resource chapters before expecting
+all connected features to work in a new namespace.</p>
+<h3 id="troubleshooting-and-acceptance">Troubleshooting and acceptance<a class="anchor" href="#troubleshooting-and-acceptance" aria-label="Link to section">#</a></h3>
+<table>
+<thead>
+<tr>
+<th>Symptom</th>
+<th>First check</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Missing browser configuration</td>
+<td>Public values existed when the frontend was built</td>
+</tr>
+<tr>
+<td>Unexpected namespace at login</td>
+<td>Client, base URL, and namespace belong to one environment</td>
+</tr>
+<tr>
+<td><code>SERVER_NOT_CONFIGURED</code></td>
+<td>Confidential credentials reached the server runtime</td>
+</tr>
+<tr>
+<td>One service is forbidden</td>
+<td>That exact call&#39;s token and environment-specific authorization</td>
+</tr>
+</tbody></table>
+<p>Setup passes when configuration loads without secrets in browser output,
+operator access works, and chapter 02&#39;s token/current-user check passes. Record
+service access evidence as each later chapter is completed.</p>
+<p>Sources: environment example (connected-branch path: <code>../../apps/web/.env.example</code>),
+<a href="https://github.com/AccelByte/f11/blob/main/apps/web/package.json">SDK packages</a>,
+browser configuration (connected-branch path: <code>../../apps/web/src/services/ags/config.ts</code>), and
+server configuration (connected-branch path: <code>../../apps/web/src/server/agsServerGateway.ts</code>).</p>
+<p><a id="reference-2"></a></p>
+<h3 id="02--login-and-identity">02 — Login and identity<a class="anchor" href="#02--login-and-identity" aria-label="Link to section">#</a></h3>
+<h3 id="outcome-and-prerequisites">Outcome and prerequisites<a class="anchor" href="#outcome-and-prerequisites" aria-label="Link to section">#</a></h3>
+<p>Guest sign-in returns an authenticated AGS player; reloading the same browser
+origin restores that identity. Complete the Public client and Device ID setup in
+<a href="#reference-1">chapter 01</a>. Guest login is implemented; account
+upgrade/linking is not.</p>
+<h3 id="connect-the-authentication-flow">Connect the authentication flow<a class="anchor" href="#connect-the-authentication-flow" aria-label="Link to section">#</a></h3>
+<ol>
+<li>Read <code>football11.ags-device.v1</code> from browser storage. If absent, generate and
+store a random UUID with <code>crypto.randomUUID()</code>. It is not an AGS user ID or fingerprint.</li>
+<li>Construct the SDK with base URL, namespace, Public client ID, and redirect URI.
+Do not supply a client secret.</li>
+<li>Use <code>DeviceGuestAuth</code> to call <code>AgsAuthGateway.loginWithDevice</code>. The wrapper shares
+an in-flight promise to prevent concurrent login requests.</li>
+<li>The adapter calls <code>IamOAuthClient.exchangeTokenOauthByPlatformId</code> for <code>device</code>,
+with the device ID, <code>createHeadless: true</code>, and <code>skipSetCookie: true</code>.</li>
+<li>Require an access token and user ID, check the returned namespace, then install
+access and refresh tokens on the SDK instance in memory.</li>
+<li>Call <code>IamUserClient.getCurrentUser()</code> and require its user ID to match the login
+response before exposing the authenticated identity.</li>
+<li>Reuse the authenticated SDK for Cloud Save, Session, and Lobby. For the trusted
+application API, send the current access token in <code>Authorization: Bearer ...</code>.</li>
+</ol>
+<p>Recorded IAM operations are <code>POST /iam/v3/oauth/platforms/device/token</code> and
+<code>GET /iam/v3/public/users/me</code>. The first obtains a token; the second requires it.
+Development evidence required no additional Shared Cloud permission group for
+these public operations. Verify provider/client behavior in your own namespace.</p>
+<h3 id="identity-and-session-lifetime">Identity and session lifetime<a class="anchor" href="#identity-and-session-lifetime" aria-label="Link to section">#</a></h3>
+<table>
+<thead>
+<tr>
+<th>Value</th>
+<th>Lifetime and use</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Random Device ID</td>
+<td>Persisted for this browser origin; restores the development guest</td>
+</tr>
+<tr>
+<td>AGS user ID</td>
+<td>Returned by authenticated IAM; owns saves and submissions</td>
+</tr>
+<tr>
+<td>Access/refresh tokens</td>
+<td>SDK memory; never persisted by the application</td>
+</tr>
+<tr>
+<td>Display name</td>
+<td>Presentation only; never an authorization key</td>
+</tr>
+</tbody></table>
+<p>Reload authenticates again with the stored Device ID. Different profiles, cleared
+storage, or another origin can produce a different guest. Moving from Sites to
+GitHub Pages does not transfer browser identity automatically.</p>
+<p>Handle expiry/rejection with visible sign-in and retry. An in-memory refresh token
+is not proof that every long-running Session/Lobby recovery case works; test those
+separately. Keep the <code>DeviceGuestAuth</code> instance stable so its request guard survives
+ordinary UI rerenders.</p>
+<h3 id="verification">Verification<a class="anchor" href="#verification" aria-label="Link to section">#</a></h3>
+<pre><code class="language-sh">npm run ags:auth:smoke
+</code></pre>
+<p>This creates development identities. Confirm token minting, current-user lookup,
+same-device restoration, and different-device separation. In the actual browser:</p>
+<ul>
+<li><input disabled="" type="checkbox"> Sign-in shows progress and completes only after user verification.</li>
+<li><input disabled="" type="checkbox"> Reload preserves the same guest on the same origin.</li>
+<li><input disabled="" type="checkbox"> An isolated profile gets a different guest.</li>
+<li><input disabled="" type="checkbox"> Failed login leaves a retryable state.</li>
+<li><input disabled="" type="checkbox"> Browser storage contains no access or refresh token.</li>
+</ul>
+<h3 id="troubleshooting">Troubleshooting<a class="anchor" href="#troubleshooting" aria-label="Link to section">#</a></h3>
+<table>
+<thead>
+<tr>
+<th>Symptom</th>
+<th>Investigation</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Token request rejected</td>
+<td>Device ID provider, Public client, namespace, and base URL</td>
+</tr>
+<tr>
+<td>Current-user read fails after login</td>
+<td>Token installed before lookup; correct SDK instance</td>
+</tr>
+<tr>
+<td>Wrong guest after reload</td>
+<td>Origin/profile changed or Device ID cleared/replaced</td>
+</tr>
+<tr>
+<td>Repeated login requests</td>
+<td>Stable <code>DeviceGuestAuth</code> instance and pending-request guard</td>
+</tr>
+<tr>
+<td>Downstream unauthorized</td>
+<td>Same authenticated SDK or current bearer token reaches that call</td>
+</tr>
+</tbody></table>
+<h3 id="remaining-account-recovery-work">Remaining account recovery work<a class="anchor" href="#remaining-account-recovery-work" aria-label="Link to section">#</a></h3>
+<p>Choose a supported durable provider, implement upgrade/linking to the existing
+guest identity, and prove that the same AGS user and saves return on another device.
+Alternatively, explicitly accept and communicate unrecoverable guest accounts
+before connected-product release. Developer registration does not provide player recovery.</p>
+<p>Sources: auth gateway (connected-branch path: <code>../../apps/web/src/services/ags/authGateway.ts</code>),
+request deduplication (connected-branch path: <code>../../apps/web/src/services/ags/deviceAuth.ts</code>),
+Device ID storage (connected-branch path: <code>../../apps/web/src/services/ags/deviceIdentity.ts</code>), and
+<a href="#stage-1">login evidence</a>.</p>
+<p><a id="reference-3"></a></p>
+<h3 id="03--player-storage-with-cloud-save">03 — Player storage with Cloud Save<a class="anchor" href="#03--player-storage-with-cloud-save" aria-label="Link to section">#</a></h3>
+<h3 id="outcome-and-prerequisites-1">Outcome and prerequisites<a class="anchor" href="#outcome-and-prerequisites-1" aria-label="Link to section">#</a></h3>
+<p>An authenticated player can save a completed run, verify readback, and restore it
+after reload. Finish <a href="#reference-2">login</a> first. Ordinary saves use
+the player&#39;s token and do not need a Confidential client.</p>
+<p>Cloud Save is the durable latest-run store. Despite its <code>services/local</code> path,
+<code>runStore.ts</code> now maps and validates records rather than persisting completed runs
+in browser storage. The older local/cloud reconciliation plan is historical.</p>
+<h3 id="record-ownership-and-configuration">Record ownership and configuration<a class="anchor" href="#record-ownership-and-configuration" aria-label="Link to section">#</a></h3>
+<p>The application creates Player Records as needed. Do not seed empty placeholders
+that fail validation. The namespace Game Record in chapter 04 is created by an operator.</p>
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Visibility / writer</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>football11_latest_run_v1</code></td>
+<td>Private / player</td>
+<td>Latest completed run</td>
+</tr>
+<tr>
+<td><code>football11_active_draft_challenge_v1</code></td>
+<td>Private / server</td>
+<td>Player-bound issued challenge</td>
+</tr>
+<tr>
+<td><code>football11_trusted_settlement_v1</code></td>
+<td>Private / server</td>
+<td>Accepted ranked-result receipt</td>
+</tr>
+<tr>
+<td><code>football11_saved_xi_v1</code></td>
+<td>Public / server</td>
+<td>Published eligible XI</td>
+</tr>
+<tr>
+<td><code>football11_saved_xi_challenge_v1</code></td>
+<td>Private / server</td>
+<td>Opponent challenge and private evidence</td>
+</tr>
+<tr>
+<td><code>football11_async_history_v1</code></td>
+<td>Private / server</td>
+<td>Competition history and recovery</td>
+</tr>
+</tbody></table>
+<p>Visibility and authority are separate: public Saved XIs remain <code>SERVER</code>-owned.
+Private player-written saves do not become trusted competitive results.</p>
+<h3 id="connect-save-and-restore">Connect save and restore<a class="anchor" href="#connect-save-and-restore" aria-label="Link to section">#</a></h3>
+<ol>
+<li>Convert the in-memory completion with <code>createCloudRunRecord</code>, binding its owner
+to the authenticated AGS user. Reject mismatched ownership.</li>
+<li>Include seed, version bundle, actions, state hashes, result, timestamp, optional
+room context, and frozen configuration needed to reproduce the record.</li>
+<li>Check serialized UTF-8 size. The application guard is <strong>250 × 1024 bytes</strong>;
+this project policy is not a universal AGS service-limit claim.</li>
+<li>Read the latest record. If valid with the same checksum, return <code>already-saved</code>.</li>
+<li>Otherwise write the candidate with <code>__META.is_public: false</code>, then read back.
+A new completion deliberately replaces an older or damaged latest slot.</li>
+<li>Check namespace/key/user in the response, then validate ownership, schema,
+checksum, supported versions, replayed result, and state hashes.</li>
+<li>Report success only for matching readback. On reload, read and validate AGS data
+before restoring it into application state.</li>
+</ol>
+<p>The adapter uses <code>PublicPlayerRecordApi.getRecord_ByUserId_ByKey</code> and
+<code>updateRecord_ByUserId_ByKey</code> on the authenticated SDK. A read returning <code>404</code>
+means no save yet. A checksum catches corruption, but a modified browser can
+recompute it; protected results still require trusted server validation.</p>
+<h3 id="failure-and-concurrency-behavior">Failure and concurrency behavior<a class="anchor" href="#failure-and-concurrency-behavior" aria-label="Link to section">#</a></h3>
+<p>After a failed save, the result remains in the current tab for retry. It is not a
+durable offline backup; reloading can lose the unsaved result. Legacy locally
+persisted latest-run values are ignored.</p>
+<p>This is one latest slot, not history or multi-device merging. The current path
+does not use optimistic-concurrency writes. Concurrent different completions can
+overwrite one another; readback detects mismatches but does not provide transactional
+history. Design durable history separately in <a href="#reference-9">chapter 09</a>.</p>
+<table>
+<thead>
+<tr>
+<th>Symptom</th>
+<th>Investigation</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Save rejected with 401/403</td>
+<td>Reauthenticate; verify the owning player&#39;s token</td>
+</tr>
+<tr>
+<td>Readback differs</td>
+<td>Concurrent writers, returned owner/key, and checksum</td>
+</tr>
+<tr>
+<td>Unsupported version</td>
+<td>Release migration policy; do not bypass validation</td>
+</tr>
+<tr>
+<td>Browser network error without status</td>
+<td>Browser network/CORS and transport, separately from AGS authorization</td>
+</tr>
+<tr>
+<td>Node passes but browser fails</td>
+<td>Reproduce on the deployed origin; Node does not enforce browser CORS</td>
+</tr>
+</tbody></table>
+<h3 id="acceptance">Acceptance<a class="anchor" href="#acceptance" aria-label="Link to section">#</a></h3>
+<pre><code class="language-sh">npm run ags:cloud-save:smoke
+</code></pre>
+<p>The smoke uses a separate development test-record key. Also verify the real latest
+slot in the browser:</p>
+<ul>
+<li><input disabled="" type="checkbox"> Save and matching readback succeed for the authenticated owner.</li>
+<li><input disabled="" type="checkbox"> Same-guest reload restores the result; another guest cannot restore it as its own.</li>
+<li><input disabled="" type="checkbox"> An identical retry is harmless; a new completion replaces the previous latest value.</li>
+<li><input disabled="" type="checkbox"> Malformed, incompatible, and unavailable saves produce understandable recovery states.</li>
+</ul>
+<p>The tracker retains a Pages browser persistence investigation. Close it with
+deployed save/reload evidence before declaring that deployment complete.</p>
+<p>Sources: record mapping/validation (connected-branch path: <code>../../apps/web/src/services/local/runStore.ts</code>),
+Cloud Save gateway (connected-branch path: <code>../../apps/web/src/services/ags/authGateway.ts</code>),
+contracts (connected-branch path: <code>../../packages/contracts/src/index.ts</code>), and
+<a href="05-ags-and-cloudflare.html">current storage responsibility</a>.</p>
+<p><a id="reference-4"></a></p>
+<h3 id="04--game-configuration-and-issued-challenges">04 — Game configuration and issued challenges<a class="anchor" href="#04--game-configuration-and-issued-challenges" aria-label="Link to section">#</a></h3>
+<h3 id="outcome-and-prerequisites-2">Outcome and prerequisites<a class="anchor" href="#outcome-and-prerequisites-2" aria-label="Link to section">#</a></h3>
+<p>The backend reads shared configuration from an AGS Game Record and freezes it into
+each issued challenge. Existing challenges retain their original revision when an
+operator changes the active configuration. This integration is implemented.</p>
+<p>You need player login, the trusted backend&#39;s Confidential client, permission to
+read Game Records, and permission to create/read/update server-owned Player Records.
+The next chapter explains the backend&#39;s authentication boundary.</p>
+<h3 id="configure-the-game-record">Configure the Game Record<a class="anchor" href="#configure-the-game-record" aria-label="Link to section">#</a></h3>
+<p>Create <code>football11_game_config_v1</code> in the game namespace as a server-owned Game
+Record. The value must match this exact schema:</p>
+<pre><code class="language-json">{
+  &quot;schemaVersion&quot;: 1,
+  &quot;activeRevision&quot;: &quot;1&quot;,
+  &quot;revisions&quot;: {
+    &quot;1&quot;: {
+      &quot;maxOfferedPlayers&quot;: 15,
+      &quot;maxRerolls&quot;: 5
+    }
+  }
+}
+</code></pre>
+<p><code>schemaVersion</code> is numeric; revision identifiers are strings. The active revision
+must exist. Offer limits must be integers from 3–15 and reroll limits integers from
+0–5. The parser rejects unsupported shapes and unexpected keys at the validated
+levels rather than silently using defaults.</p>
+<p>The runtime Confidential client reads this record; it does not need permission to
+edit configuration. Operators use their own authorized administration access to
+create or activate revisions. Recorded Shared Cloud access is
+<code>m_cloud_save/g_game_records</code> <strong>READ</strong>.</p>
+<h3 id="connect-challenge-issuance">Connect challenge issuance<a class="anchor" href="#connect-challenge-issuance" aria-label="Link to section">#</a></h3>
+<ol>
+<li>The authenticated browser posts a request to <code>/api/draft-challenges</code>. Reuse
+the existing request builder and <code>IssueDraftChallengeRequestV1</code> contract.</li>
+<li>The route requires JSON, applies a 4 KiB body limit, and passes the bearer token
+to <code>issueDraftChallenge</code>.</li>
+<li>The backend validates the player through IAM and confirms the game namespace.</li>
+<li>It checks <code>football11_active_draft_challenge_v1</code>. The same idempotency key and
+room context return the existing challenge rather than issuing a different one.</li>
+<li>For a new challenge, <code>GameRecordAdminApi.getRecord_ByKey</code> reads the configuration
+using the service token. The gateway verifies namespace, key, and server ownership.</li>
+<li>The backend validates the active revision, creates the challenge, and stores a
+private <code>SERVER</code>-owned player receipt containing its frozen configuration.</li>
+<li>The browser uses the returned challenge. Trusted result submission later compares
+its seed, versions, revision, and configuration against the stored receipt.</li>
+</ol>
+<p>Solo issuance stores one player&#39;s receipt. Room issuance additionally reads the
+canonical Session, validates the leader/start conditions, identifies eligible
+participants, and writes their challenge receipts. This does not finish the room
+mutation-authority work described in <a href="#reference-7">chapter 07</a>.</p>
+<p>There is one active-challenge record per player. Starting a different challenge
+supersedes the previous unfinished challenge. It is not a queue of outstanding runs.</p>
+<h3 id="change-configuration-safely">Change configuration safely<a class="anchor" href="#change-configuration-safely" aria-label="Link to section">#</a></h3>
+<ol>
+<li>Add a new revision with valid values before selecting it as active.</li>
+<li>Change <code>activeRevision</code> to that revision using operator access.</li>
+<li>Issue a new challenge and confirm it receives the new snapshot.</li>
+<li>Submit an existing eligible challenge and confirm it still uses its old snapshot.</li>
+<li>Retain old revisions while issued challenges can still be submitted.</li>
+</ol>
+<p>The backend must fail visibly when configuration is absent or invalid. A browser
+fallback would bypass the server-issued contract and should not be added.</p>
+<h3 id="troubleshooting-and-acceptance-1">Troubleshooting and acceptance<a class="anchor" href="#troubleshooting-and-acceptance-1" aria-label="Link to section">#</a></h3>
+<table>
+<thead>
+<tr>
+<th>Symptom</th>
+<th>Investigation</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Start fails while login works</td>
+<td>Game Record exists in the same namespace; service token can read it</td>
+</tr>
+<tr>
+<td>Configuration rejected</td>
+<td>Numeric schema version, string revision, valid ranges, exact field names</td>
+</tr>
+<tr>
+<td>Changed limits rejected at submission</td>
+<td>Submitted snapshot differs from the stored issued challenge</td>
+</tr>
+<tr>
+<td>Old unfinished run rejected</td>
+<td>A newer active challenge may have superseded its receipt</td>
+</tr>
+<tr>
+<td>Same retry issues new data</td>
+<td>Request did not preserve its idempotency key/room context</td>
+</tr>
+</tbody></table>
+<ul>
+<li><input disabled="" type="checkbox"> Valid configuration produces a player-bound receipt and challenge.</li>
+<li><input disabled="" type="checkbox"> Missing/malformed configuration produces an error, with no fallback challenge.</li>
+<li><input disabled="" type="checkbox"> A retry with the same request identity returns the existing challenge.</li>
+<li><input disabled="" type="checkbox"> Revision changes affect new challenges; forged snapshots fail trusted submission.</li>
+</ul>
+<p>Sources: <a href="#stage-4">configuration plan and schema</a>,
+issuance service (connected-branch path: <code>../../apps/web/src/server/draftChallenges.ts</code>),
+HTTP route (connected-branch path: <code>../../apps/web/app/api/draft-challenges/route.ts</code>), and
+browser adapter (connected-branch path: <code>../../apps/web/src/services/ags/draftChallenges.ts</code>).</p>
+<p><a id="reference-5"></a></p>
+<h3 id="05--trusted-backend-and-protected-writes">05 — Trusted backend and protected writes<a class="anchor" href="#05--trusted-backend-and-protected-writes" aria-label="Link to section">#</a></h3>
+<h3 id="outcome-and-prerequisites-3">Outcome and prerequisites<a class="anchor" href="#outcome-and-prerequisites-3" aria-label="Link to section">#</a></h3>
+<p>The application derives the player from AGS authentication, validates submitted
+evidence outside the browser, and writes competitive data using server credentials.
+Trusted ranking and Saved-XI settlement are implemented; full room mutation and
+comparison authority remain unfinished.</p>
+<p>Complete setup, login, and Game Record configuration. A running server is required;
+the static preview alone cannot provide trusted endpoints.</p>
+<h3 id="keep-two-authentication-contexts">Keep two authentication contexts<a class="anchor" href="#keep-two-authentication-contexts" aria-label="Link to section">#</a></h3>
+<table>
+<thead>
+<tr>
+<th>Context</th>
+<th>How it authenticates</th>
+<th>Responsibilities</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Player request</td>
+<td>Browser bearer token, validated with IAM current-user lookup</td>
+<td>Identify the user; read Session and public ranking/discovery data</td>
+</tr>
+<tr>
+<td>Protected backend operation</td>
+<td>Confidential client credentials exchanged for a service token</td>
+<td>Read configuration; write protected records and Statistics</td>
+</tr>
+</tbody></table>
+<p><code>AgsServerGateway</code> creates separate SDK contexts for these operations. A server
+token establishes service permission; it does not establish which player owns an
+incoming request. Derive that identity from the validated player token and check
+the expected namespace.</p>
+<p>The server reads <code>ACCELBYTE_SERVER_CLIENT_ID</code> and <code>ACCELBYTE_SERVER_CLIENT_SECRET</code>.
+Base URL, namespace, and Public client ID can use the public configuration fallback;
+the source also supports server-side <code>ACCELBYTE_BASE_URL</code>, <code>ACCELBYTE_NAMESPACE</code>,
+and <code>ACCELBYTE_PUBLIC_CLIENT_ID</code> overrides. Keep both contexts on the intended environment.</p>
+<h3 id="connect-the-trusted-submission">Connect the trusted submission<a class="anchor" href="#connect-the-trusted-submission" aria-label="Link to section">#</a></h3>
+<p>The implemented route is <code>POST /api/runs/submit</code>. Use the request contract and
+browser adapter rather than posting a displayed score or a user ID.</p>
+<ol>
+<li>Require <code>application/json</code>, a valid JSON body within 64 KiB, and a bearer token.</li>
+<li>Parse the exact <code>TrustedRunSubmissionV1</code> schema: run/challenge identity, seed,
+version bundle, frozen configuration, ordered actions, and optional room ID.</li>
+<li>Validate supported versions and bounded actions. Unexpected fields and malformed
+or incomplete evidence are rejected.</li>
+<li>Call IAM to derive the authenticated user and check its namespace.</li>
+<li>Read that user&#39;s private active-challenge receipt. Require the submission to
+match the server-issued player, challenge, seed, versions, and configuration.</li>
+<li>For a room result, read the canonical Session with the player token. Check
+namespace/template, active membership, locked participation, active challenge,
+and the server&#39;s derivation of the player&#39;s seed.</li>
+<li>Replay through the shared packages and derive the result and hash on the server.
+A client-provided total is not used to authorize an update.</li>
+<li>Read the trusted settlement receipt. A matching previous run/result is a duplicate;
+the same run ID with a different result hash is a conflict.</li>
+<li>Settle the Statistic, persist/read back the private server-owned receipt, then
+return a sanitized ranking view.</li>
+</ol>
+<p>The browser receives <code>{ ok: true, data: ... }</code> or
+<code>{ ok: false, error: { code, message, details } }</code>. Responses use <code>no-store</code>.
+Treat a failed protected submission separately from ordinary Cloud Save status.</p>
+<h3 id="retry-and-authority-boundaries">Retry and authority boundaries<a class="anchor" href="#retry-and-authority-boundaries" aria-label="Link to section">#</a></h3>
+<p>Best-points settlement uses <code>MAX</code> before storing its receipt. If the statistic write
+succeeds but the receipt fails, retrying the same accepted result cannot inflate
+the best score. The receipt records the result hash and binds duplicate handling
+to that result. This is the implemented recovery pattern, not a multi-resource
+database transaction.</p>
+<p>Saved-XI Challenge Score uses a different pattern: pending history and an absolute
+score write. Follow <a href="#reference-8">chapter 08</a>; do not replace it with
+an additive retry.</p>
+<p>Keep server credentials outside browser bundles. Do not trust a submitted owner,
+an unverified decoded token, a display name, or a <code>trusted</code> label stored by a player.
+Server-owned AGS metadata and server validation establish the protected write path.</p>
+<h3 id="troubleshooting-and-acceptance-2">Troubleshooting and acceptance<a class="anchor" href="#troubleshooting-and-acceptance-2" aria-label="Link to section">#</a></h3>
+<table>
+<thead>
+<tr>
+<th>Symptom</th>
+<th>Investigation</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>401 / missing session</td>
+<td>Bearer token supplied and still valid</td>
+</tr>
+<tr>
+<td>403 / wrong namespace</td>
+<td>Browser token and backend target are from the same game namespace</td>
+</tr>
+<tr>
+<td>Schema or version rejection</td>
+<td>Client build matches deployed server and issued contract</td>
+</tr>
+<tr>
+<td>Receipt/configuration read fails</td>
+<td>Correct key, namespace, ownership metadata, and service permissions</td>
+</tr>
+<tr>
+<td>409 settlement conflict</td>
+<td>Same run identifier was submitted with different evidence</td>
+</tr>
+<tr>
+<td>502 upstream failure</td>
+<td>Inspect redacted stage-specific error and AGS response; retry the original operation</td>
+</tr>
+</tbody></table>
+<ul>
+<li><input disabled="" type="checkbox"> A legal issued submission produces a verified receipt and numeric update.</li>
+<li><input disabled="" type="checkbox"> Duplicate accepted evidence does not double-apply a result.</li>
+<li><input disabled="" type="checkbox"> Wrong namespace, seed, configuration, versions, membership, and tampered evidence fail.</li>
+<li><input disabled="" type="checkbox"> Rejected input causes no competitive mutation.</li>
+<li><input disabled="" type="checkbox"> Receipt metadata is private and <code>SERVER</code>-owned on readback.</li>
+</ul>
+<p>Sources: trusted route (connected-branch path: <code>../../apps/web/app/api/runs/submit/route.ts</code>),
+replay service (connected-branch path: <code>../../apps/web/src/server/trustedReplay.ts</code>),
+AGS gateway (connected-branch path: <code>../../apps/web/src/server/agsServerGateway.ts</code>), and
+<a href="#stage-3">trusted ranking evidence</a>.</p>
+<p><a id="reference-6"></a></p>
+<h3 id="06--statistics-and-leaderboards">06 — Statistics and Leaderboards<a class="anchor" href="#06--statistics-and-leaderboards" aria-label="Link to section">#</a></h3>
+<h3 id="outcome-and-prerequisites-4">Outcome and prerequisites<a class="anchor" href="#outcome-and-prerequisites-4" aria-label="Link to section">#</a></h3>
+<p>Accepted results update server-owned numeric values, and players can read the
+associated ranking. Complete the <a href="#reference-5">trusted backend</a> first.
+The integration is implemented, but fair ranking across the content-version
+migration remains a release decision.</p>
+<p>Statistics stores numeric values; Cloud Save stores structured evidence. The
+application uses <code>@accelbyte/sdk-social</code> for Statistics APIs and
+<code>@accelbyte/sdk-leaderboard</code> for ranking reads.</p>
+<h3 id="configure-the-resources">Configure the resources<a class="anchor" href="#configure-the-resources" aria-label="Link to section">#</a></h3>
+<p>Create these resources in the same game namespace:</p>
+<table>
+<thead>
+<tr>
+<th>Resource</th>
+<th>Setting</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Best-points Statistic</td>
+<td>Code</td>
+<td><code>football11bestpoints</code></td>
+</tr>
+<tr>
+<td>Best-points Statistic</td>
+<td>Visibility / setter</td>
+<td>Public / <code>SERVER</code></td>
+</tr>
+<tr>
+<td>Best-points Statistic</td>
+<td>Bounds / cycle</td>
+<td>0–114 / no cycle</td>
+</tr>
+<tr>
+<td>Leaderboard</td>
+<td>Code</td>
+<td><code>football11-best-points</code></td>
+</tr>
+<tr>
+<td>Leaderboard</td>
+<td>Backing Statistic</td>
+<td><code>football11bestpoints</code></td>
+</tr>
+<tr>
+<td>Leaderboard</td>
+<td>Ordering / period</td>
+<td>Descending / all-time</td>
+</tr>
+<tr>
+<td>Challenge Score Statistic</td>
+<td>Code</td>
+<td><code>football11challengescore</code></td>
+</tr>
+<tr>
+<td>Challenge Score Statistic</td>
+<td>Visibility / setter</td>
+<td>Private (<code>SERVERONLY</code>) / <code>SERVER</code></td>
+</tr>
+<tr>
+<td>Challenge Score Statistic</td>
+<td>Default / minimum</td>
+<td>0 / 0</td>
+</tr>
+<tr>
+<td>Challenge Score Statistic</td>
+<td>Leaderboard</td>
+<td>None</td>
+</tr>
+</tbody></table>
+<p>Use the checked-in Challenge Score definition (connected-branch path: <code>../../tools/ags/resources/football11-challenge-score.stat.json</code>)
+when creating that Statistic. The runtime uses <code>MAX</code> for best points and <code>OVERRIDE</code>
+for Challenge Score; these are update strategies chosen per server operation.
+Verify Confidential-client access to create/read/update user values and player-token
+access to ranking reads using the environment&#39;s actual permission metadata.</p>
+<h3 id="connect-best-points-settlement">Connect best-points settlement<a class="anchor" href="#connect-best-points-settlement" aria-label="Link to section">#</a></h3>
+<ol>
+<li>After trusted replay, obtain the authenticated user ID and server-derived points.</li>
+<li>Call <code>UserStatisticAdminApi.updateStatitemValueBulk_v2</code> with the Statistic code,
+user ID, points, and <code>updateStrategy: &#39;MAX&#39;</code>.</li>
+<li>Check the matching item&#39;s <code>success</code> flag. An HTTP-successful bulk response alone
+does not prove that this user&#39;s update succeeded.</li>
+<li>Read through <code>createStatitemValueBulkGetOrDefault_ByUserId_v2</code> and require a
+finite value at least as high as the accepted points.</li>
+<li>Persist the trusted receipt as described in chapter 05.</li>
+</ol>
+<p>Lower results cannot replace a higher best, and repeating the same value cannot
+inflate it. Challenge Score can decrease, so its settlement uses the separate
+pending-history/absolute-value workflow in chapter 08.</p>
+<h3 id="connect-ranking-reads">Connect ranking reads<a class="anchor" href="#connect-ranking-reads" aria-label="Link to section">#</a></h3>
+<p>The server&#39;s read path uses a player-token SDK context:</p>
+<ol>
+<li>Read the user&#39;s all-time rank with
+<code>LeaderboardDataV3Api.getUser_ByLeaderboardCode_ByUserId_v3</code>.</li>
+<li>Treat <code>404</code> as not yet ranked, not as a zero-point ranked entry.</li>
+<li>Read a five-entry neighborhood with <code>getAlltime_ByLeaderboardCode_v3</code>, exclude
+hidden entries, and project only the fields needed by the application.</li>
+<li>Compare materialized ranking points with the expected settled best. Return
+<code>ranked</code>, <code>stale</code>, <code>empty</code>, or <code>unranked</code> as appropriate.</li>
+</ol>
+<p>A Statistic update and a materialized Leaderboard read may not be visible at the
+same instant. Keep a stale/pending state and retry reads; do not resubmit an additive
+score to force a refresh. This project uses sanitized display labels, so adding
+profile enrichment would require separately verified IAM calls and permissions.</p>
+<h3 id="resolve-content-version-migration">Resolve content-version migration<a class="anchor" href="#resolve-content-version-migration" aria-label="Link to section">#</a></h3>
+<p>The current catalogue recalibration changes the score distribution. Choose a new
+Statistic/Leaderboard pair or an explicit reset/migration before treating old and
+new scores as comparable. A resource-code change requires updates to
+<code>TRUSTED_POINTS_STAT_CODE</code>, <code>TRUSTED_LEADERBOARD_CODE</code>, smoke checks, and Saved-XI
+discovery. Rehearse it in development before production; this guide performs no reset.</p>
+<h3 id="troubleshooting-and-acceptance-3">Troubleshooting and acceptance<a class="anchor" href="#troubleshooting-and-acceptance-3" aria-label="Link to section">#</a></h3>
+<table>
+<thead>
+<tr>
+<th>Symptom</th>
+<th>Investigation</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Statistic update fails</td>
+<td>Exact code, setter policy, service token, and per-item response</td>
+</tr>
+<tr>
+<td>Statistic correct but rank absent</td>
+<td>Leaderboard linkage and materialization; retry ranking reads</td>
+</tr>
+<tr>
+<td>Browser can change protected values</td>
+<td>Review setter policy and authorization before release</td>
+</tr>
+<tr>
+<td>Saved-XI discovery sees incompatible scores</td>
+<td>Content-version migration and resource-code alignment</td>
+</tr>
+</tbody></table>
+<p>Run <code>npm run ags:trusted-ranking:smoke</code> with the backend configured as in chapter 10.
+Verify accepted update/readback, unchanged best after duplicate/lower submissions,
+rejection without mutation, and correct empty/unranked/stale handling. Resolve the
+tracked migration decision before marking ranking ready for connected release.</p>
+<p>Sources: gateway calls (connected-branch path: <code>../../apps/web/src/server/agsServerGateway.ts</code>),
+resource constants (connected-branch path: <code>../../apps/web/src/server/trustedReplay.ts</code>),
+ranking client (connected-branch path: <code>../../apps/web/src/services/ags/trustedRanking.ts</code>), and
+<a href="#stage-3">ranking plan</a>.</p>
+<p><a id="reference-7"></a></p>
+<h3 id="07--sessions-and-lobby">07 — Sessions and Lobby<a class="anchor" href="#07--sessions-and-lobby" aria-label="Link to section">#</a></h3>
+<h3 id="outcome-and-prerequisites-5">Outcome and prerequisites<a class="anchor" href="#outcome-and-prerequisites-5" aria-label="Link to section">#</a></h3>
+<p>Authenticated players create, discover, join, and leave a shared room. Membership
+and room state converge through canonical Session reads, accelerated by Lobby
+notifications. The development loop is implemented; trusted room authority and
+the full recovery matrix remain unfinished.</p>
+<p>Complete login, Game Records, and the trusted backend first. Session owns the room;
+Lobby supplies notifications. This flow needs no Matchmaking, AMS, or dedicated server.</p>
+<h3 id="configure-the-session-template">Configure the Session template<a class="anchor" href="#configure-the-session-template" aria-label="Link to section">#</a></h3>
+<p>Create the template in the application&#39;s game namespace:</p>
+<table>
+<thead>
+<tr>
+<th>Setting</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Name</td>
+<td><code>football11-friend-room-v1</code></td>
+</tr>
+<tr>
+<td>Server type</td>
+<td><code>NONE</code></td>
+</tr>
+<tr>
+<td>Persistent</td>
+<td><code>false</code></td>
+</tr>
+<tr>
+<td>Initial joinability</td>
+<td><code>OPEN</code></td>
+</tr>
+<tr>
+<td>Minimum / maximum players</td>
+<td>1 / 8</td>
+</tr>
+<tr>
+<td>Session TTL</td>
+<td>24 hours</td>
+</tr>
+<tr>
+<td>Inactive timeout</td>
+<td>120 seconds</td>
+</tr>
+<tr>
+<td>Invite timeout</td>
+<td>60 seconds</td>
+</tr>
+<tr>
+<td>Native join-code generation</td>
+<td>Enabled</td>
+</tr>
+</tbody></table>
+<p>The recorded environment reserves persistent sessions for dedicated-server
+sessions. Use this nonpersistent template for the no-server room.</p>
+<p>Verify player-token access to create/read/query/join/update/leave and code operations
+in your environment. The earlier plan explicitly did not treat an unpersisted
+Public-client permission edit as proof; successful authenticated operations are
+the relevant evidence. Do not replace that with an assumed grant list.</p>
+<p>Application settings are separate from template lifetime settings:</p>
+<table>
+<thead>
+<tr>
+<th>Browser variable</th>
+<th>Default</th>
+<th>Accepted range</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>NEXT_PUBLIC_FRIEND_ROOM_MAX_PLAYERS</code></td>
+<td>8</td>
+<td>Integer 1–8</td>
+</tr>
+<tr>
+<td><code>NEXT_PUBLIC_FRIEND_ROOM_ROUND_SECONDS</code></td>
+<td>900</td>
+<td>Integer 30–3600</td>
+</tr>
+<tr>
+<td><code>NEXT_PUBLIC_FRIEND_ROOM_COUNTDOWN_SECONDS</code></td>
+<td>30</td>
+<td>Integer 3–300</td>
+</tr>
+</tbody></table>
+<h3 id="connect-session-operations">Connect Session operations<a class="anchor" href="#connect-session-operations" aria-label="Link to section">#</a></h3>
+<p>Create <code>AgsSessionGateway</code> from the shared SDK only after login has installed its
+token. Keep Session initialization behind the browser/hydration boundary.</p>
+<table>
+<thead>
+<tr>
+<th>Application operation</th>
+<th>Current SDK operation</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Create room</td>
+<td><code>createGamesession</code></td>
+</tr>
+<tr>
+<td>Discover rooms</td>
+<td><code>createGamesession_ByNS</code></td>
+</tr>
+<tr>
+<td>Restore own sessions</td>
+<td><code>getUsersMeGamesessions</code></td>
+</tr>
+<tr>
+<td>Read canonical snapshot</td>
+<td><code>getGamesession_BySessionId</code></td>
+</tr>
+<tr>
+<td>Join by ID / code</td>
+<td><code>createJoin_BySessionId</code> / <code>createGamesessionJoinCode</code></td>
+</tr>
+<tr>
+<td>Update state</td>
+<td><code>patchGamesession_BySessionId</code></td>
+</tr>
+<tr>
+<td>Revoke / regenerate code</td>
+<td><code>deleteCode_BySessionId</code> / <code>updateCode_BySessionId</code></td>
+</tr>
+<tr>
+<td>Leave</td>
+<td><code>deleteLeave_BySessionId</code></td>
+</tr>
+</tbody></table>
+<p>Validate returned namespace, template name, server type, and supported joinability.
+Discovery presents compatible, non-full, open rooms. Store the compact application
+room aggregate in the <code>football11Room</code> Session attribute; do not treat arbitrary
+unvalidated attributes as a valid room.</p>
+<p>An update reads the current snapshot, computes the next aggregate, and patches with
+the current Session <code>version</code>. A <code>409</code> causes a fresh read and bounded retry; do not
+keep replaying a stale version. The adapter currently permits four attempts.</p>
+<p>Keep rooms open while waiting and between rounds; close joining for an active round.
+Challenge issuance goes through the trusted backend, which stores player-bound
+receipts. The Session snapshot carries the canonical room challenge used by trusted
+submission checks.</p>
+<h3 id="connect-lobby-notifications">Connect Lobby notifications<a class="anchor" href="#connect-lobby-notifications" aria-label="Link to section">#</a></h3>
+<ol>
+<li>Create <code>Lobby.WebSocket</code> from the authenticated SDK.</li>
+<li>Call <code>connect()</code> before registering callbacks: the installed SDK creates its
+native socket during that call.</li>
+<li>Listen for <code>messageSessionNotif</code> with <code>OnSessionJoined</code>,
+<code>OnSessionMembersChanged</code>, <code>OnGameSessionUpdated</code>, or <code>OnSessionEnded</code>.</li>
+<li>Treat the message as a refresh hint. Read the canonical Session instead of
+applying the message payload as authoritative state.</li>
+<li>Retain the four-second polling fallback for missed events and reconnects.</li>
+<li>Remove listeners and disconnect when leaving the room or disposing the connection.</li>
+</ol>
+<p>The TypeScript adapter receives raw envelopes and tolerates missing session IDs.
+Notification delivery alone is not proof of state convergence; compare canonical
+snapshots on separate clients.</p>
+<h3 id="complete-authority-and-recovery-work">Complete authority and recovery work<a class="anchor" href="#complete-authority-and-recovery-work" aria-label="Link to section">#</a></h3>
+<p>Existing cooperative browser guards do not stop a modified member client from
+altering the room aggregate. Finish these items before competitive acceptance:</p>
+<ol>
+<li>Move leader/start mutations through the trusted boundary, checking the live
+leader, membership, readiness, and expected Session state there.</li>
+<li>Build comparison output from trusted result receipts instead of accepting
+member-written result summaries from Session attributes.</li>
+<li>Verify hosted room-context submission, including rejected membership/seed changes.</li>
+<li>Capture explicit exit behavior for abandonment, timeout, host loss, and reconnect.</li>
+</ol>
+<p>Ranked room replay already checks canonical membership and challenge context.
+That protection does not make every room update or displayed comparison trusted.</p>
+<h3 id="verification-and-troubleshooting">Verification and troubleshooting<a class="anchor" href="#verification-and-troubleshooting" aria-label="Link to section">#</a></h3>
+<pre><code class="language-sh">node --env-file=apps/web/.env.local tools/ags/smoke-friend-room.mjs
+</code></pre>
+<p>This creates test identities/sessions against AGS. Also use two isolated browser
+profiles to verify create/join, shared membership/readiness, closed-join rejection,
+code revoke/regeneration, reopen, next-round state, reconnect, and leave cleanup.</p>
+<table>
+<thead>
+<tr>
+<th>Symptom</th>
+<th>Investigation</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Room absent from discovery</td>
+<td>Joinability, capacity, template/namespace compatibility, valid attributes</td>
+</tr>
+<tr>
+<td>Join returns 403</td>
+<td>Closed room or authorization; inspect canonical state and actual response</td>
+</tr>
+<tr>
+<td>Repeated 409 updates</td>
+<td>Concurrent writes and stale Session versions</td>
+</tr>
+<tr>
+<td>No Lobby refreshes</td>
+<td>Login order, socket setup/listener order, event topic, polling fallback</td>
+</tr>
+<tr>
+<td>Reload cannot restore room</td>
+<td>Own-session query, membership, session lifetime, compatible saved room context</td>
+</tr>
+</tbody></table>
+<p>Acceptance requires both service lifecycle evidence and browser convergence/recovery,
+plus completion of the authority items above. The tracker still marks those exits open.</p>
+<p>Sources: Session adapter (connected-branch path: <code>../../apps/web/src/services/ags/sessionGateway.ts</code>),
+Lobby adapter (connected-branch path: <code>../../apps/web/src/services/ags/lobbyGateway.ts</code>),
+room state (connected-branch path: <code>../../apps/web/src/state/friendRoomMachine.ts</code>), and
+<a href="#stage-5">Session evidence</a>.</p>
+<p><a id="reference-8"></a></p>
+<h3 id="08--saved-xi-discovery-and-settlement">08 — Saved-XI discovery and settlement<a class="anchor" href="#08--saved-xi-discovery-and-settlement" aria-label="Link to section">#</a></h3>
+<h3 id="outcome-and-prerequisites-6">Outcome and prerequisites<a class="anchor" href="#outcome-and-prerequisites-6" aria-label="Link to section">#</a></h3>
+<p>The backend publishes an eligible record, selects a compatible opponent from AGS
+ranking data, and settles a challenge into private AGS state. This integration is
+implemented and uses no Matchmaking queue or shared live Session.</p>
+<p>Complete trusted replay, best-points ranking, and the private Challenge Score
+Statistic in chapters 05–06. At least two compatible published records are needed
+to verify successful opponent discovery; an empty candidate set is a valid outcome.</p>
+<h3 id="resource-and-route-map">Resource and route map<a class="anchor" href="#resource-and-route-map" aria-label="Link to section">#</a></h3>
+<table>
+<thead>
+<tr>
+<th>Resource</th>
+<th>Ownership and purpose</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>football11_saved_xi_v1</code></td>
+<td>Public, <code>SERVER</code>-owned Player Record; one published XI per user</td>
+</tr>
+<tr>
+<td><code>football11_saved_xi_challenge_v1</code></td>
+<td>Private, <code>SERVER</code>-owned Player Record; issued token, snapshots, seed</td>
+</tr>
+<tr>
+<td><code>football11_async_history_v1</code></td>
+<td>Private, <code>SERVER</code>-owned Player Record; up to 20 matches and recovery state</td>
+</tr>
+<tr>
+<td><code>football11challengescore</code></td>
+<td>Private, <code>SERVER</code>-set Statistic; default/minimum zero; no Leaderboard</td>
+</tr>
+</tbody></table>
+<p>The application writes Player Records at runtime. Create the Statistic first using
+the resource definition (connected-branch path: <code>../../tools/ags/resources/football11-challenge-score.stat.json</code>).</p>
+<table>
+<thead>
+<tr>
+<th>Application API</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>GET /api/saved-xi</code></td>
+<td>Read competition status</td>
+</tr>
+<tr>
+<td><code>PUT /api/saved-xi</code></td>
+<td>Publish or replace an eligible XI</td>
+</tr>
+<tr>
+<td><code>POST /api/opponents/nearby</code></td>
+<td>Issue an opponent challenge</td>
+</tr>
+<tr>
+<td><code>GET /api/asynchronous-matches</code></td>
+<td>Read competition status/history</td>
+</tr>
+<tr>
+<td><code>POST /api/asynchronous-matches</code></td>
+<td>Resolve the issued challenge</td>
+</tr>
+</tbody></table>
+<p>All routes require the player&#39;s bearer token. They are application-owned routes,
+not native AGS endpoint names.</p>
+<h3 id="publish-the-record">Publish the record<a class="anchor" href="#publish-the-record" aria-label="Link to section">#</a></h3>
+<ol>
+<li>Authenticate the requesting player through IAM.</li>
+<li>Replay the submitted run and read that player&#39;s trusted settlement receipt.</li>
+<li>Require receipt run ID, result hash, and points to match the replay.</li>
+<li>Read the server-owned best-points Statistic. Only a trusted run tied with that
+current best can be published.</li>
+<li>Write the public <code>SERVER</code>-owned record and verify its metadata/readback. An
+explicit replacement updates this one slot; it does not create unlimited entries.</li>
+</ol>
+<p>Public records contain the data required for discovery, including their owner
+identity. The application&#39;s public-facing response is a separate sanitized
+projection; do not claim the underlying public AGS record is anonymous.</p>
+<h3 id="discover-and-issue-a-challenge">Discover and issue a challenge<a class="anchor" href="#discover-and-issue-a-challenge" aria-label="Link to section">#</a></h3>
+<ol>
+<li>Load the requesting player&#39;s Saved XI, private history, and existing challenge.</li>
+<li>Refuse new issuance while a settlement is pending or the rolling daily limit is reached.</li>
+<li>Reuse an existing unconsumed, unexpired challenge instead of creating a new opponent.</li>
+<li>Read nearby entries from <code>football11-best-points</code> at ±10 ranks, expanding once
+to ±50 if needed. The backend chooses the candidate set; the browser does not.</li>
+<li>Bulk-read public Saved XIs using the player token. Exclude self, missing/invalid
+records, incompatible versions, and recent opponents.</li>
+<li>Select a surviving candidate and store full snapshots plus a private seed in
+the server-owned challenge record. Return an opaque token and sanitized preview.</li>
+</ol>
+<p>Current limits are a ten-minute token lifetime, 24-hour same-opponent exclusion,
+20 matches in a rolling 24 hours, and at most 20 stored history entries. These are
+application rules enforced by the backend, not generic AGS defaults.</p>
+<h3 id="resolve-without-double-applying-a-score">Resolve without double-applying a score<a class="anchor" href="#resolve-without-double-applying-a-score" aria-label="Link to section">#</a></h3>
+<ol>
+<li>Authenticate, load the issued challenge, and require the exact token.</li>
+<li>If history already contains its match, return the settled result or repair the
+same pending settlement. Do not perform a new resolution for a duplicate request.</li>
+<li>Otherwise reject consumed/expired challenges and incompatible snapshots.</li>
+<li>Derive the result on the server and calculate the absolute next Challenge Score.</li>
+<li>Persist immutable match evidence with <code>settlementStatus: &#39;pending&#39;</code> in history,
+then mark the issued challenge consumed.</li>
+<li>Write the absolute target using Statistics <code>OVERRIDE</code>, verify exact readback,
+and mark the history entry settled.</li>
+</ol>
+<p>Only the challenger changes. An absolute retry plus the stored target repairs a
+partial failure without applying the change again. This documented retry behavior
+does not imply cross-record transactional isolation under arbitrary concurrent
+requests; concurrency/abuse review remains part of release hardening.</p>
+<h3 id="verification-and-troubleshooting-1">Verification and troubleshooting<a class="anchor" href="#verification-and-troubleshooting-1" aria-label="Link to section">#</a></h3>
+<p>Run <code>npm run ags:saved-xi:smoke</code> with the backend and namespace configured as in
+chapter 10. The smoke creates two development players and changes test data.</p>
+<ul>
+<li><input disabled="" type="checkbox"> Only a matching trusted personal-best run can be published.</li>
+<li><input disabled="" type="checkbox"> Published metadata is public and server-owned; challenges/history remain private.</li>
+<li><input disabled="" type="checkbox"> Discovery is backend-selected and excludes incompatible/recent opponents.</li>
+<li><input disabled="" type="checkbox"> Duplicate resolution returns the same result and leaves the opponent&#39;s score unchanged.</li>
+<li><input disabled="" type="checkbox"> Pending settlement recovers after retry/reload without another score change.</li>
+<li><input disabled="" type="checkbox"> Expired, wrong-token, and daily-limit cases return understandable errors.</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Symptom</th>
+<th>Investigation</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>RUN_NOT_TRUSTED</code></td>
+<td>Receipt and submitted replay describe the same run</td>
+</tr>
+<tr>
+<td><code>NOT_PERSONAL_BEST</code></td>
+<td>Trusted result equals the current best Statistic</td>
+</tr>
+<tr>
+<td>No opponent</td>
+<td>Other published records, rank materialization, versions, cooldowns</td>
+</tr>
+<tr>
+<td>Pending settlement blocks search</td>
+<td>Retry the original resolution and inspect Statistic readback</td>
+</tr>
+<tr>
+<td>Challenge expired</td>
+<td>Request a new challenge after checking existing settlement state</td>
+</tr>
+</tbody></table>
+<p>Sources: competition service (connected-branch path: <code>../../apps/web/src/server/savedXiCompetition.ts</code>),
+AGS gateway (connected-branch path: <code>../../apps/web/src/server/agsServerGateway.ts</code>),
+browser adapter (connected-branch path: <code>../../apps/web/src/services/ags/savedXiCompetition.ts</code>), and
+<a href="#stage-6">recorded evidence</a>.</p>
+<p><a id="reference-9"></a></p>
+<h3 id="09--daily-challenges-public-results-and-history">09 — Daily challenges, public results, and history<a class="anchor" href="#09--daily-challenges-public-results-and-history" aria-label="Link to section">#</a></h3>
+<h3 id="status-and-prerequisites">Status and prerequisites<a class="anchor" href="#status-and-prerequisites" aria-label="Link to section">#</a></h3>
+<p>These integrations remain planned. This chapter describes the implementation work
+needed to complete the guide&#39;s scope; none of the proposed resources or routes
+below should be assumed to exist.</p>
+<p>Reuse authenticated identity, server-issued challenges, trusted result receipts,
+and AGS-backed storage from the earlier chapters. A latest-run slot and a bounded
+Saved-XI match history do not constitute general result history.</p>
+<h3 id="establish-the-contracts-first">Establish the contracts first<a class="anchor" href="#establish-the-contracts-first" aria-label="Link to section">#</a></h3>
+<table>
+<thead>
+<tr>
+<th>Concern</th>
+<th>Contract to decide</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Daily identity</td>
+<td>UTC period, mode/category, canonical challenge ID, start/end time</td>
+</tr>
+<tr>
+<td>Versioning</td>
+<td>Pinned seed, content/rules/simulation versions, configuration snapshot</td>
+</tr>
+<tr>
+<td>Attempts</td>
+<td>Replay eligibility and which attempt can affect daily ranking</td>
+</tr>
+<tr>
+<td>Public result</td>
+<td>Opaque public ID, approved fields, removal/unavailable behavior</td>
+</tr>
+<tr>
+<td>History</td>
+<td>Retention, bounded index or pagination, ownership, missing-result handling</td>
+</tr>
+<tr>
+<td>Storage authority</td>
+<td>Server-writable canonical daily/result records; private player history</td>
+</tr>
+</tbody></table>
+<p>Choose final record keys and API contracts when implementing. Verify the target
+Cloud Save operations and concurrency guarantees before choosing how canonical
+creation works; a single read-then-write check is not proof of uniqueness.</p>
+<h3 id="implement-the-daily-lifecycle">Implement the daily lifecycle<a class="anchor" href="#implement-the-daily-lifecycle" aria-label="Link to section">#</a></h3>
+<ol>
+<li>Use server time to determine the active UTC period.</li>
+<li>Create or return one canonical challenge for that period and category.</li>
+<li>Freeze seed, versions, and configuration at creation; deployments must not
+silently alter a still-active daily challenge.</li>
+<li>Choose scheduled creation or idempotent lazy creation. Prove behavior when
+concurrent requests race, and record which path is authoritative.</li>
+<li>Bind player participation to the canonical challenge through server-owned receipts.</li>
+<li>Enforce the chosen attempt/ranking rule at trusted submission time. Keep daily
+categories separate from random-run ranking unless comparability is explicitly established.</li>
+</ol>
+<p>The current Game Record supports shared configuration. An AGS Game Record is a
+candidate for canonical daily data, but the final storage/concurrency design is
+still to be implemented and verified.</p>
+<h3 id="publish-a-trusted-public-projection">Publish a trusted public projection<a class="anchor" href="#publish-a-trusted-public-projection" aria-label="Link to section">#</a></h3>
+<ol>
+<li>Start from an accepted server result and retain its immutable evidence privately.</li>
+<li>Generate an opaque public result identifier, separate from the private player key.</li>
+<li>Publish only approved summary fields needed by the result route.</li>
+<li>Serve the stable public projection through the backend; do not expose tokens,
+private account data, or raw validation evidence.</li>
+<li>Return an unavailable response for unknown/private/removed results and provide
+a removal path for published data.</li>
+</ol>
+<p>The Phase 3 plan proposes <code>/results/{publicResultId}</code> and related data routes;
+they are not implemented endpoints. Share-image design is outside this integration
+guide, but any downstream renderer must consume the same approved public projection.</p>
+<h3 id="add-durable-player-history">Add durable player history<a class="anchor" href="#add-durable-player-history" aria-label="Link to section">#</a></h3>
+<p>Store a durable history index under the authenticated AGS user. Define a bounded
+size or pagination before choosing record layout. Write references only after the
+associated result is safely stored, and design retry/reconciliation for partial failures.</p>
+<p>A browser cache can improve read performance, but must not become the durable source.
+After identity restoration, retrieve the authoritative AGS index and handle removed
+or unavailable results. Cross-device history depends on the recovery/linking work
+in chapter 02; a fresh Device ID does not recover a previous guest&#39;s records.</p>
+<h3 id="acceptance-and-likely-failure-cases">Acceptance and likely failure cases<a class="anchor" href="#acceptance-and-likely-failure-cases" aria-label="Link to section">#</a></h3>
+<ul>
+<li><input disabled="" type="checkbox"> Concurrent requests for one UTC period return the same canonical challenge.</li>
+<li><input disabled="" type="checkbox"> Midnight rollover produces a new challenge without altering the old one.</li>
+<li><input disabled="" type="checkbox"> A deployment during the period leaves active versions/configuration unchanged.</li>
+<li><input disabled="" type="checkbox"> Attempt eligibility is enforced on the server and retries cannot add extra ranked attempts.</li>
+<li><input disabled="" type="checkbox"> Only accepted results receive public projections; removed/private results do not leak.</li>
+<li><input disabled="" type="checkbox"> History survives cache removal and restores for the same authenticated account.</li>
+<li><input disabled="" type="checkbox"> Partial writes recover without dangling or duplicate visible history entries.</li>
+</ul>
+<p>Investigate duplicate daily challenges as a concurrency problem, changed challenges
+as a version-freezing problem, and lost history as an identity or durable-index
+problem. Do not mask any of them by rebuilding authoritative state from browser storage.</p>
+<p>Source: <a href="phases/phase-03-sharing-and-daily.html">Phase 3 contracts and exit criteria</a>.
+Keep P3-01 through P3-05 in the <a href="10-progress-tracker.html">tracker</a> open until their
+implementation and acceptance evidence exists.</p>
+<p><a id="reference-10"></a></p>
+<h3 id="10--deployment-and-integration-verification">10 — Deployment and integration verification<a class="anchor" href="#10--deployment-and-integration-verification" aria-label="Link to section">#</a></h3>
+<h3 id="outcome-1">Outcome<a class="anchor" href="#outcome-1" aria-label="Link to section">#</a></h3>
+<p>The intended deployment can authenticate players, persist/recover data, run trusted
+operations, and recover room/settlement state. Passing local tests or creating AGS
+resources alone does not establish this outcome.</p>
+<h3 id="configure-both-runtime-boundaries">Configure both runtime boundaries<a class="anchor" href="#configure-both-runtime-boundaries" aria-label="Link to section">#</a></h3>
+<ol>
+<li>Supply browser-safe AGS values before building the frontend. Its bundle needs
+the correct base URL, game namespace, and Public client ID.</li>
+<li>Put Confidential-client credentials in the backend secret store. Configure the
+server&#39;s namespace/base URL consistently with the browser.</li>
+<li>Deploy the trusted API routes with the server runtime. A static frontend can
+call them but cannot execute them.</li>
+<li>For same-origin hosting, leave <code>NEXT_PUBLIC_API_ORIGIN</code> empty. The adapter uses
+relative <code>/api/...</code> requests.</li>
+<li>For a split deployment, configure the trusted API origin and allow only the
+intended frontend origins in the backend CORS policy. The generic adapter accepts
+an HTTPS origin, without credentials, query, fragment, or a path prefix.</li>
+</ol>
+<p><strong>Current Pages-build detail:</strong> <code>vite.preview.config.ts</code> requires
+<code>NEXT_PUBLIC_API_ORIGIN</code> in Pages mode. Set it to the intended Sites backend
+before building, and keep the backend origin allowlist aligned with the frontend.
+<code>FOOTBALL11_PAGES_URL</code> changes the Pages
+frontend URL/base-path configuration, not the API backend.</p>
+<p>Register callback URLs when using redirect-based login. The current Device ID flow
+does not redirect. Browser identity is scoped to the frontend origin, so moving
+origins may create a new guest even when both deployments use the same namespace.</p>
+<h3 id="run-repository-checks">Run repository checks<a class="anchor" href="#run-repository-checks" aria-label="Link to section">#</a></h3>
+<pre><code class="language-sh">npm ci
+npm run verify
+</code></pre>
+<p><code>verify</code> runs formatting, typechecking, lint, tests, and the production build.
+It does not prove live AGS access. For static Pages output also run:</p>
+<pre><code class="language-sh">npm run build:pages --workspace @football-11/web
+</code></pre>
+<p>Inspect public output for private configuration before publishing. For this
+documentation change, no application tests or live smokes were rerun; the commands
+here are the verification procedure for an actual integration/deployment.</p>
+<h3 id="run-live-development-checks">Run live development checks<a class="anchor" href="#run-live-development-checks" aria-label="Link to section">#</a></h3>
+<p>These commands create test identities/records, sessions, and Statistic values.
+Use a development namespace, keep credentials in the ignored environment file,
+and retain redacted output rather than tokens or raw identity dumps.</p>
+<pre><code class="language-sh">npm run ags:auth:smoke
+npm run ags:cloud-save:smoke
+node --env-file=apps/web/.env.local tools/ags/smoke-friend-room.mjs
+</code></pre>
+<p>For trusted ranking and Saved-XI checks, build first and start the trusted backend.
+The smoke scripts default to <code>http://127.0.0.1:8787</code>; use the actual running server
+address if it differs. Configure custom targets in the same PowerShell session:</p>
+<pre><code class="language-powershell">$env:FOOTBALL11_TRUSTED_ROUTE_URL = &#39;https://your-backend.example/api/runs/submit&#39;
+$env:FOOTBALL11_COMPETITION_BASE_URL = &#39;https://your-backend.example&#39;
+npm run ags:trusted-ranking:smoke
+npm run ags:saved-xi:smoke
+</code></pre>
+<p>Replace the placeholder origin. The ranking smoke derives <code>/api/draft-challenges</code>
+from its target origin unless <code>FOOTBALL11_CHALLENGE_ROUTE_URL</code> overrides it.
+The npm smoke scripts load AGS credentials from <code>apps/web/.env.local</code>; setting the
+route URL does not change their AGS namespace automatically.</p>
+<table>
+<thead>
+<tr>
+<th>Check</th>
+<th>Evidence to retain</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Auth</td>
+<td>Token mint/current-user success; same-device and different-device behavior</td>
+</tr>
+<tr>
+<td>Cloud Save</td>
+<td>Write/readback/replay checks and payload size</td>
+</tr>
+<tr>
+<td>Trusted ranking</td>
+<td>Valid acceptance, duplicate handling, tamper rejection, receipt/Statistic/rank readback</td>
+</tr>
+<tr>
+<td>Sessions</td>
+<td>Create/query/join/code/update/leave lifecycle</td>
+</tr>
+<tr>
+<td>Saved-XI</td>
+<td>Two-player discovery, protected record metadata, duplicate resolution, unchanged opponent score</td>
+</tr>
+</tbody></table>
+<h3 id="verify-in-the-deployed-browser">Verify in the deployed browser<a class="anchor" href="#verify-in-the-deployed-browser" aria-label="Link to section">#</a></h3>
+<ul>
+<li><input disabled="" type="checkbox"> Same-guest login and reload work on the real frontend origin.</li>
+<li><input disabled="" type="checkbox"> Latest-run Cloud Save reports success, then restores after reload.</li>
+<li><input disabled="" type="checkbox"> Trusted challenge issuance and result submission reach the intended backend.</li>
+<li><input disabled="" type="checkbox"> A rejected or expired token causes an actionable error, not a silent success.</li>
+<li><input disabled="" type="checkbox"> Two isolated players converge on room state and recover from reconnect/leave.</li>
+<li><input disabled="" type="checkbox"> Saved-XI pending settlement and duplicate resolution recover correctly.</li>
+<li><input disabled="" type="checkbox"> Cross-origin preflights allow the required method and Authorization/Content-Type
+headers; errors retain appropriate CORS headers; unapproved origins are rejected.</li>
+</ul>
+<p>A Node smoke cannot validate browser CORS. The existing Pages Cloud Save warning
+must be closed with actual deployed save/reload evidence. Likewise, Lobby notification
+delivery does not replace multi-client Session convergence checks.</p>
+<h3 id="integration-completion-gates">Integration completion gates<a class="anchor" href="#integration-completion-gates" aria-label="Link to section">#</a></h3>
+<table>
+<thead>
+<tr>
+<th>Remaining item</th>
+<th>Evidence needed</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Account recovery/loss policy</td>
+<td>Verified linking flow or explicit accepted account-loss policy</td>
+</tr>
+<tr>
+<td>Content-version rankings</td>
+<td>Applied and verified migration/reset/new-resource decision</td>
+</tr>
+<tr>
+<td>Room authority</td>
+<td>Server-enforced mutations and comparison based on trusted receipts</td>
+</tr>
+<tr>
+<td>Room recovery</td>
+<td>Hosted context, abandonment, timeout, and host-loss verification</td>
+</tr>
+<tr>
+<td>Daily/public/history</td>
+<td>Chapter 09 implemented and its acceptance checks passed</td>
+</tr>
+<tr>
+<td>Deployed persistence</td>
+<td>Browser save/readback/reload succeeds on the target origin</td>
+</tr>
+<tr>
+<td>Release operations</td>
+<td>Narrow permissions, dependency/security review, reconciliation, migration and rollback rehearsal</td>
+</tr>
+</tbody></table>
+<p>Record namespace/environment labels, build/version, test date, expected/observed
+outcome, and redacted evidence in the <a href="10-progress-tracker.html">progress tracker</a>.
+Mark a feature complete only after its acceptance passes. Unresolved AGS integration
+gates do not retroactively invalidate the standalone Functional MVP.</p>
+<p>This guide covers integration completion. The project&#39;s separate rights and product
+release gates remain in the <a href="phases/phase-06-mvp-hardening-and-release.html">connected-release checklist</a>.</p>
+<p>Sources: <a href="11-github-pages.html">hosting guide</a>,
+API URL adapter (connected-branch path: <code>../../apps/web/src/services/apiUrl.ts</code>),
+Pages build configuration (connected-branch path: <code>../../apps/web/vite.preview.config.ts</code>),
+CORS policy (connected-branch path: <code>../../apps/web/src/server/apiCors.ts</code>), and
+smoke scripts (connected-branch path: <code>../../tools/ags/</code>).</p>
+</article><footer>Football 11 · Generated from the repository documentation. <a href="https://football-11.workspace-025025.chatgpt.site">Back to the game</a></footer></main></div></body></html>

@@ -1,0 +1,339 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Phase 2 Detailed Plan — AGS Foundation · Football 11</title><meta name="description" content="Build Football 11 from offline mechanics to online features. Read the setup guide, six integration stages, and copy-ready prompts."><link rel="stylesheet" href="../../tutorial.css"></head>
+<body><a class="skip" href="#tutorial-content">Skip to tutorial</a><header><a class="brand" href="../../index.html"><span>11</span> FOOTBALL 11 <small>THE PLAYBOOK</small></a><nav aria-label="Main navigation"><a href="../../index.html">Tutorial</a><a class="play" href="https://football-11.workspace-025025.chatgpt.site">Play the game ↗</a></nav></header>
+<div class="layout"><aside><details open><summary>On this page</summary><nav aria-label="Tutorial sections"><a class="level-2" href="#work-estimate--one-developer-with-agentic-ai">Work estimate — one developer with agentic AI</a>
+<a class="level-2" href="#why-ags-work-starts-here">Why AGS work starts here</a>
+<a class="level-2" href="#phase-outcome">Phase outcome</a>
+<a class="level-2" href="#entry-conditions">Entry conditions</a>
+<a class="level-2" href="#delivery-slices">Delivery slices</a>
+<a class="level-3" href="#current-slice-2a-evidence">Current Slice 2A evidence</a>
+<a class="level-2" href="#slice-2a--react-guest-login-with-ags-device-id">Slice 2A — React guest login with AGS Device ID</a>
+<a class="level-3" href="#player-flow">Player flow</a>
+<a class="level-3" href="#adapter-boundary">Adapter boundary</a>
+<a class="level-3" href="#exit-criterion">Exit criterion</a>
+<a class="level-2" href="#slice-2b--ags-cloud-save-for-game-data">Slice 2B — AGS Cloud Save for game data</a>
+<a class="level-3" href="#exit-criterion-1">Exit criterion</a>
+<a class="level-2" href="#slice-2c--trusted-replay-and-user-binding">Slice 2C — Trusted replay and user binding</a>
+<a class="level-3" href="#exit-criterion-2">Exit criterion</a>
+<a class="level-2" href="#slice-2d--trusted-statistics-update">Slice 2D — Trusted Statistics update</a>
+<a class="level-2" href="#slice-2e--leaderboard-presentation">Slice 2E — Leaderboard presentation</a>
+<a class="level-2" href="#phase-wide-test-matrix">Phase-wide test matrix</a>
+<a class="level-2" href="#phase-exit-checklist">Phase exit checklist</a></nav></details><a class="source" href="https://github.com/AccelByte/f11/blob/main/docs/phases/phase-02-ags-foundation.md">View Markdown source ↗</a></aside><main id="tutorial-content"><div class="intro">BUILD YOUR GAME · ONE FEATURE AT A TIME</div><article><h1 id="phase-2-detailed-plan--ags-foundation">Phase 2 Detailed Plan — AGS Foundation<a class="anchor" href="#phase-2-detailed-plan--ags-foundation" aria-label="Link to section">#</a></h1>
+<p><strong>Last updated:</strong> September 3, 2026
+<strong>Status:</strong> Complete in development; Slices 2A–2E pass through the public Sites Worker, with account upgrade/linking deferred as a connected-product release gate
+<strong>Parent roadmap:</strong> <a href="../07-mvp-roadmap.html">07 — MVP roadmap</a>
+<strong>Phase index:</strong> <a href="README.html">Detailed delivery plans</a>
+<strong>First AGS slice:</strong> <a href="../12-accelbyte-integration-guide.html#stage-1">Device ID guest login plan</a></p>
+<h2 id="work-estimate--one-developer-with-agentic-ai">Work estimate — one developer with agentic AI<a class="anchor" href="#work-estimate--one-developer-with-agentic-ai" aria-label="Link to section">#</a></h2>
+<ul>
+<li><strong>Effort:</strong> 4–7 builder-days.</li>
+<li><strong>Elapsed time:</strong> 1–1.75 weeks, excluding namespace-access waits.</li>
+<li><strong>Primary uncertainty:</strong> exact TypeScript SDK operations, browser Device ID
+support, Cloud Save limits, namespace configuration, Sites server-to-AGS
+authentication, permissions, and access latency.</li>
+</ul>
+<h2 id="why-ags-work-starts-here">Why AGS work starts here<a class="anchor" href="#why-ags-work-starts-here" aria-label="Link to section">#</a></h2>
+<p>Phases 1A and 1B have proved the standalone game. Phase 2 is the first
+online-service phase and moves every
+AGS concern into one deliberate foundation:</p>
+<ol>
+<li>IAM Device ID identity;</li>
+<li>Cloud Save for rich game/run records;</li>
+<li>trusted replay and authenticated user binding through the Sites managed server
+runtime unless evidence favors AGS Extend;</li>
+<li>server-owned Statistics updates; and</li>
+<li>player-facing Leaderboards.</li>
+</ol>
+<p>This boundary keeps the Functional MVP independent of credentials, namespace
+setup, and network availability while still maximizing AGS once connected work
+begins. ChatGPT Sites continues to host the React client and is the first runtime to
+evaluate for the trusted server endpoint. D1 is not part of the planned data path,
+while AGS Extend and a separately provisioned Cloudflare Worker remain alternatives
+only if a demonstrated integration or runtime requirement justifies them.</p>
+<h2 id="phase-outcome">Phase outcome<a class="anchor" href="#phase-outcome" aria-label="Link to section">#</a></h2>
+<p>A player can enter the React application as an AGS guest, see locally proven
+run data synchronized through Cloud Save, submit replay evidence to a trusted
+server boundary connected to AGS, and see an accepted competitive value in the intended
+leaderboard under the same AGS identity.</p>
+<h2 id="entry-conditions">Entry conditions<a class="anchor" href="#entry-conditions" aria-label="Link to section">#</a></h2>
+<ul>
+<li>Phase 1B has a stable local identity adapter and checksummed run-record contract.</li>
+<li>The target AGS Shared Cloud development environment, public browser client,
+and <code>apps/web</code> source root are selected.</li>
+<li><code>@accelbyte/sdk</code> 4.3.3, <code>@accelbyte/sdk-iam</code> 6.3.6, and the Cloud Save,
+Statistics, and Leaderboard SDK packages are installed and verified through
+the repository lockfile and executable tests.</li>
+<li>Each live AGS slice has an approved game-flow plan and current read-only auth
+preflight before namespace inspection or mutation.</li>
+</ul>
+<p>Slice 2B now has an approved plan at
+<a href="../12-accelbyte-integration-guide.html#stage-2"><code>docs/12-accelbyte-integration-guide.md#stage-2</code></a>.
+It selects Cloud Save only for the generic replayable run document, keeps
+competitive values in server-owned Statistics, and defines readback,
+replay, conflict, and visible recovery evidence before completion.</p>
+<p>Slices 2C–2E use the approved trusted-ranking plan at
+<a href="../12-accelbyte-integration-guide.html#stage-3"><code>docs/12-accelbyte-integration-guide.md#stage-3</code></a>.
+The implementation packages the Vinext application as a Sites Worker with a
+single ranked-run endpoint. It validates the AGS player, replays only the exact
+supported mechanics/content version, settles a bounded <code>SERVER</code>-set best-points
+statistic with <code>MAX</code>, stores a private server-owned receipt, and reads the live
+all-time leaderboard with the player&#39;s authenticated token. A redacted smoke
+against the built Worker proves acceptance, duplicate safety, tamper and version
+rejection, receipt ownership, statistic readback, and rank materialization. The
+same smoke passes through the deployed public Sites route, whose root also
+returns HTTP 200.</p>
+<h2 id="delivery-slices">Delivery slices<a class="anchor" href="#delivery-slices" aria-label="Link to section">#</a></h2>
+<table>
+<thead>
+<tr>
+<th>Slice</th>
+<th>Player-visible outcome</th>
+<th>AGS capability</th>
+<th>Dependency</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>2A — Guest identity</td>
+<td>Continue as guest and restore the same player</td>
+<td>IAM Device ID</td>
+<td>Public IAM client and enabled login method</td>
+</tr>
+<tr>
+<td>2B — Cloud game data</td>
+<td>Save and reload runs across sessions under the AGS user</td>
+<td>Cloud Save</td>
+<td>2A and approved record/key limits</td>
+</tr>
+<tr>
+<td>2C — Trusted replay</td>
+<td>Submit evidence without trusting a claimed user or result</td>
+<td>Sites server runtime first</td>
+<td>2A–2B and approved trusted-service pattern</td>
+</tr>
+<tr>
+<td>2D — Competitive statistics</td>
+<td>One accepted run updates the intended numeric value once</td>
+<td>Statistics</td>
+<td>2C and configured stat definitions</td>
+</tr>
+<tr>
+<td>2E — Leaderboard UI</td>
+<td>See rank, score, and nearby players</td>
+<td>Leaderboards</td>
+<td>2D and configured leaderboard</td>
+</tr>
+</tbody></table>
+<p>Each slice needs both service evidence and a visible player-flow check before
+the next slice begins.</p>
+<h3 id="current-slice-2a-evidence">Current Slice 2A evidence<a class="anchor" href="#current-slice-2a-evidence" aria-label="Link to section">#</a></h3>
+<p>The browser implementation has an application-owned AGS config reader, stable
+random Device ID storage, deduplicated login service, SDK adapter, in-memory
+token attachment, authenticated current-user verification, and visible
+idle/restoring/logging-in/verifying/error/authenticated states. Five focused
+adapter tests pass as part of the 52-test repository suite.</p>
+<p>The development Device ID provider is active. A redacted live smoke check now
+proves token minting, an authenticated current-user lookup, same-device
+restoration, and clean-device separation without printing tokens or user IDs.
+Browser QA through the local preview proves the first-use action, live login,
+draft enablement, visible retry behavior, same-guest reload, and a different
+guest from isolated browser storage. Source and resolved-SDK inspection confirm
+that access and refresh tokens stay on the SDK instance rather than being
+copied to application storage. Slice 2A is therefore complete in development.
+Production use still needs account linking/upgrade or an explicit acceptance of
+Device ID account-loss risk; that later release choice does not block the
+Functional MVP or Slice 2B development.</p>
+<hr>
+<h2 id="slice-2a--react-guest-login-with-ags-device-id">Slice 2A — React guest login with AGS Device ID<a class="anchor" href="#slice-2a--react-guest-login-with-ags-device-id" aria-label="Link to section">#</a></h2>
+<h3 id="player-flow">Player flow<a class="anchor" href="#player-flow" aria-label="Link to section">#</a></h3>
+<pre><code class="language-text">Open app
+  -&gt; read the versioned random device identifier
+  -&gt; show Continue as guest on first use
+  -&gt; create crypto.randomUUID() if no identifier exists
+  -&gt; call the exact installed IAM SDK Device ID operation
+  -&gt; receive an AGS user session
+  -&gt; verify it with an authenticated current-user/profile call
+  -&gt; publish the authenticated player to the React application
+</code></pre>
+<p>“Guest” is product language; Device ID is the AGS mechanism. Never derive the
+identifier from IP, user agent, canvas, hardware, or any other fingerprint.</p>
+<h3 id="adapter-boundary">Adapter boundary<a class="anchor" href="#adapter-boundary" aria-label="Link to section">#</a></h3>
+<pre><code class="language-ts">type AuthenticatedPlayer = {
+  userId: string;
+  displayName?: string;
+  isGuest: boolean;
+};
+
+interface AuthGateway {
+  loginWithDeviceId(deviceId: string): Promise&lt;AuthenticatedPlayer&gt;;
+  logout(): Promise&lt;void&gt;;
+}
+</code></pre>
+<p>AGS imports stay under <code>apps/web/src/services/ags</code>. React screens and the domain
+package use application-owned types. Browser configuration contains only base
+URL, namespace, and public client ID. No confidential secret may enter a browser
+variable, JavaScript bundle, repository file, or response.</p>
+<p>Keep tokens in memory or the SDK-supported session mechanism; do not copy them
+into local storage. A failed retry reuses the existing device identifier. Normal
+logout retains it. Destructive guest reset must warn about unrecoverable progress.</p>
+<h3 id="exit-criterion">Exit criterion<a class="anchor" href="#exit-criterion" aria-label="Link to section">#</a></h3>
+<p>The visible React action reaches authenticated state, Device ID login returns a
+non-empty AGS user ID/session, a second authenticated IAM lookup succeeds, reload
+restores the same AGS user, and two clean profiles create different users.</p>
+<hr>
+<h2 id="slice-2b--ags-cloud-save-for-game-data">Slice 2B — AGS Cloud Save for game data<a class="anchor" href="#slice-2b--ags-cloud-save-for-game-data" aria-label="Link to section">#</a></h2>
+<p>Cloud Save becomes the remote implementation of the persistence interface proven
+in Phase 1B. It stores rich, player-owned game data rather than flattening a run
+into Statistics calls.</p>
+<p>Minimum record fields:</p>
+<pre><code class="language-ts">type CloudRunRecordV1 = {
+  schemaVersion: &#39;football11-cloud-run-v1&#39;;
+  runId: string;
+  ownerUserId: string;
+  seed: string;
+  versions: MechanicsVersion;
+  actions: DraftAction[];
+  stateHashes: string[];
+  result: RunResult;
+  createdAt: string;
+  authority: &#39;player&#39; | &#39;trusted&#39;;
+  checksum: string;
+};
+</code></pre>
+<p>Implementation checkpoints:</p>
+<ol>
+<li>Verify the exact Cloud Save SDK operations, permissions, key constraints,
+visibility rules, payload limits, and overwrite semantics.</li>
+<li>Bind records to the authenticated AGS user returned by Slice 2A.</li>
+<li>Use a stable <code>runId</code> so retries are idempotent.</li>
+<li>Write and read back before showing “Synced.”</li>
+<li>Check schema, owner, versions, and checksum on every read.</li>
+<li>Define local-to-cloud reconciliation: the newest verified local result may
+upload after login, but a conflict never silently overwrites a different run.</li>
+<li>Retain enough replay evidence to reproduce the final state hash. If payload
+limits require compaction, derive verbose views locally rather than dropping
+versions, actions, or hashes.</li>
+</ol>
+<h3 id="exit-criterion-1">Exit criterion<a class="anchor" href="#exit-criterion-1" aria-label="Link to section">#</a></h3>
+<p>One authenticated player writes a complete run, reads it back in a clean session,
+reproduces the same result/hash, and receives visible recoverable states for
+offline, rejected, malformed, and conflicting records.</p>
+<hr>
+<h2 id="slice-2c--trusted-replay-and-user-binding">Slice 2C — Trusted replay and user binding<a class="anchor" href="#slice-2c--trusted-replay-and-user-binding" aria-label="Link to section">#</a></h2>
+<p>Evaluate a server-backed Sites deployment first. It keeps the authoritative endpoint
+with the existing hosted application while moving validation out of the player-controlled
+browser. The trusted handler must derive the user from validated AGS authentication
+context, replay the submitted actions through the same versioned mechanics package,
+and ignore client-claimed result totals.</p>
+<pre><code class="language-text">Browser submits token/session context + seed + versions + ordered actions
+  -&gt; trusted Sites server handler validates the AGS player identity
+  -&gt; selects the exact supported content/mechanics versions
+  -&gt; replays every action and rejects illegal transitions
+  -&gt; derives assessment, 38-match season, explanation, and final hash
+  -&gt; writes or marks the Cloud Save record as trusted
+  -&gt; returns the canonical accepted result
+</code></pre>
+<p>The Slice 2C design must verify the Sites runtime&#39;s request contract, AGS token
+validation path, server-side secret handling, outbound AGS operations, resource
+limits, latency, and deployment behavior before implementation. Choose AGS Extend
+instead only when this verification finds a material AGS-integration or runtime
+advantage; choose a separately provisioned Worker only when neither managed route
+fits. No D1 dependency is planned unless exactly-once settlement or another concrete
+relational/transactional requirement proves it necessary.</p>
+<h3 id="exit-criterion-2">Exit criterion<a class="anchor" href="#exit-criterion-2" aria-label="Link to section">#</a></h3>
+<p>Valid evidence produces one canonical result for the authenticated AGS user;
+missing, expired, wrong-namespace, tampered, duplicate, and unsupported-version
+submissions create no trusted result or competitive mutation.</p>
+<hr>
+<h2 id="slice-2d--trusted-statistics-update">Slice 2D — Trusted Statistics update<a class="anchor" href="#slice-2d--trusted-statistics-update" aria-label="Link to section">#</a></h2>
+<p>Statistics stores only approved numeric aggregates that drive leaderboards or
+progression. The full run remains in Cloud Save.</p>
+<ol>
+<li>Finalize statistic codes, bounds, update strategy, and cycle/reset behavior.</li>
+<li>Discover exact operations and permissions in the selected environment.</li>
+<li>Update only after Slice 2C accepts the canonical replay.</li>
+<li>Make settlement idempotent so a retry cannot double-increment a counter.</li>
+<li>Read the value back and retain a settlement receipt/reference.</li>
+</ol>
+<p><strong>Exit criterion:</strong> one accepted run changes the intended statistic exactly once;
+rejected, replayed, or duplicate submissions do not change it.</p>
+<hr>
+<h2 id="slice-2e--leaderboard-presentation">Slice 2E — Leaderboard presentation<a class="anchor" href="#slice-2e--leaderboard-presentation" aria-label="Link to section">#</a></h2>
+<p>Show loading, unranked, ranked, empty, stale, and retryable-error states. Read
+the configured leaderboard after the Statistics update; never display a locally
+predicted rank. Keep leaderboard values separate from full Cloud Save records.</p>
+<p><strong>Exit criterion:</strong> the visible UI shows the exact trusted statistic for the
+signed-in player and resolves the approved around-me or rank-range view.</p>
+<h2 id="phase-wide-test-matrix">Phase-wide test matrix<a class="anchor" href="#phase-wide-test-matrix" aria-label="Link to section">#</a></h2>
+<table>
+<thead>
+<tr>
+<th>Scenario</th>
+<th>Expected result</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>First visit</td>
+<td>One AGS guest identity is created</td>
+</tr>
+<tr>
+<td>Reload</td>
+<td>Same AGS guest identity is restored</td>
+</tr>
+<tr>
+<td>Parallel login clicks</td>
+<td>One login request is in flight</td>
+</tr>
+<tr>
+<td>Offline login/save</td>
+<td>Recoverable UI; local record and device ID remain intact</td>
+</tr>
+<tr>
+<td>Cleared browser storage</td>
+<td>New guest identity with the approved account-loss warning</td>
+</tr>
+<tr>
+<td>Wrong namespace/client</td>
+<td>Visible configuration/auth error; no false local-to-cloud claim</td>
+</tr>
+<tr>
+<td>Cloud Save readback differs</td>
+<td>No “Synced” label; preserve the verified local record</td>
+</tr>
+<tr>
+<td>Tampered replay evidence</td>
+<td>Trusted submission rejected; no stat mutation</td>
+</tr>
+<tr>
+<td>Duplicate submission</td>
+<td>One trusted Cloud Save result and one statistic effect</td>
+</tr>
+<tr>
+<td>Unranked player</td>
+<td>Explicit unranked state, not rank zero</td>
+</tr>
+</tbody></table>
+<h2 id="phase-exit-checklist">Phase exit checklist<a class="anchor" href="#phase-exit-checklist" aria-label="Link to section">#</a></h2>
+<ul>
+<li><input checked="" disabled="" type="checkbox"> Device ID login and authenticated verification are complete in React.</li>
+<li><input checked="" disabled="" type="checkbox"> Cloud Save write/readback preserves the replayable record under the AGS user.</li>
+<li><input checked="" disabled="" type="checkbox"> Exact SDK versions, operations, permissions, and limits are recorded.</li>
+<li><input checked="" disabled="" type="checkbox"> Trusted replay derives identity and result without trusting browser totals.</li>
+<li><input checked="" disabled="" type="checkbox"> Competitive Statistics settles an accepted run exactly once.</li>
+<li><input checked="" disabled="" type="checkbox"> The player sees the resulting value/rank in the Leaderboard UI.</li>
+<li><input checked="" disabled="" type="checkbox"> No confidential credential appears in the browser bundle or repository.</li>
+<li><input checked="" disabled="" type="checkbox"> Device ID account-loss and upgrade requirements remain explicit release gates.</li>
+</ul>
+<p>The trusted path passes focused tests, the built local Worker, and the published
+Sites route with live AGS readback. The public root returns HTTP 200; a legal
+replay is accepted, its duplicate is idempotent, tampered and unsupported
+submissions are rejected, and the private <code>SERVER</code> receipt, Statistic value,
+and Leaderboard rank all read back successfully.</p>
+<p>Phase 2 exits when the React player flow proves AGS identity, remote game-data
+persistence, trusted replay, Statistics, and Leaderboards end to end. Friend rooms
+remain Phase 4, while daily challenges and public sharing follow in Phase 3.
+AGS Matchmaking, AMS, D1, AGS Extend, and a separately provisioned Worker remain
+deferred unless a later verified requirement selects one of them.</p>
+<p>That development exit is now complete. Account upgrade/linking remains deferred:
+it does not block the Functional MVP or this technical foundation, but it must be
+resolved before an official connected-product release.</p>
+</article><footer>Football 11 · Generated from the repository documentation. <a href="https://football-11.workspace-025025.chatgpt.site">Back to the game</a></footer></main></div></body></html>

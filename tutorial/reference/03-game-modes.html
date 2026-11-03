@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Game Modes · Football 11</title><meta name="description" content="Build Football 11 from offline mechanics to online features. Read the setup guide, six integration stages, and copy-ready prompts."><link rel="stylesheet" href="../tutorial.css"></head>
+<body><a class="skip" href="#tutorial-content">Skip to tutorial</a><header><a class="brand" href="../index.html"><span>11</span> FOOTBALL 11 <small>THE PLAYBOOK</small></a><nav aria-label="Main navigation"><a href="../index.html">Tutorial</a><a class="play" href="https://football-11.workspace-025025.chatgpt.site">Play the game ↗</a></nav></header>
+<div class="layout"><aside><details open><summary>On this page</summary><nav aria-label="Tutorial sections"><a class="level-2" href="#mode-summary">Mode summary</a>
+<a class="level-2" href="#random-run">Random run</a>
+<a class="level-2" href="#daily-challenge">Daily challenge</a>
+<a class="level-2" href="#play-with-friends">Play with friends</a>
+<a class="level-3" href="#implemented-development-flow">Implemented development flow</a>
+<a class="level-3" href="#room-states">Room states</a>
+<a class="level-3" href="#important-boundary">Important boundary</a>
+<a class="level-3" href="#open-rules">Open rules</a>
+<a class="level-2" href="#challenge-saved-xi">Challenge saved XI</a>
+<a class="level-3" href="#proposed-flow">Proposed flow</a>
+<a class="level-3" href="#open-rules-1">Open rules</a></nav></details><a class="source" href="https://github.com/AccelByte/f11/blob/main/docs/03-game-modes.md">View Markdown source ↗</a></aside><main id="tutorial-content"><div class="intro">BUILD YOUR GAME · ONE FEATURE AT A TIME</div><article><h1 id="game-modes">Game Modes<a class="anchor" href="#game-modes" aria-label="Link to section">#</a></h1>
+<p><strong>Last updated:</strong> September 3, 2026
+<strong>Status:</strong> Mode set confirmed; random mode complete and friend-room development loop verified</p>
+<h2 id="mode-summary">Mode summary<a class="anchor" href="#mode-summary" aria-label="Link to section">#</a></h2>
+<table>
+<thead>
+<tr>
+<th>Mode</th>
+<th>Opponent or cohort</th>
+<th>Synchronization</th>
+<th>Persistent ranking</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Random run</td>
+<td>Self</td>
+<td>None</td>
+<td>Optional personal best</td>
+</tr>
+<tr>
+<td>Daily challenge</td>
+<td>Everyone receives one seed</td>
+<td>Asynchronous</td>
+<td>Daily leaderboard</td>
+</tr>
+<tr>
+<td>Play with friends</td>
+<td>Members of a discoverable open AGS game session</td>
+<td>Live room, simultaneous repeated drafts</td>
+<td>Per-round room comparison</td>
+</tr>
+<tr>
+<td>Challenge saved XI</td>
+<td>Nearby leaderboard player</td>
+<td>Asynchronous</td>
+<td>Match record and leaderboard</td>
+</tr>
+</tbody></table>
+<h2 id="random-run">Random run<a class="anchor" href="#random-run" aria-label="Link to section">#</a></h2>
+<p>Purpose: unlimited practice and replayability.</p>
+<ul>
+<li>A new server-issued seed is generated per run.</li>
+<li>No shared schedule is required.</li>
+<li>The result may update personal best statistics.</li>
+<li>Random runs should not dilute the daily leaderboard.</li>
+</ul>
+<h2 id="daily-challenge">Daily challenge<a class="anchor" href="#daily-challenge" aria-label="Link to section">#</a></h2>
+<p>Purpose: create a shared public conversation.</p>
+<ul>
+<li>One deterministic seed is active for the challenge period.</li>
+<li>Every eligible player receives the same initial offer. Later offers remain
+identical only when the players have taken the same prior actions; divergent
+selections produce deterministic branches from the same seed.</li>
+<li>The simulation version is fixed for that challenge.</li>
+<li>The daily leaderboard ranks an authoritative result statistic.</li>
+<li>The first authoritative completed attempt is the ranked result. Later
+attempts are allowed as practice and cannot replace that result.</li>
+</ul>
+<h2 id="play-with-friends">Play with friends<a class="anchor" href="#play-with-friends" aria-label="Link to section">#</a></h2>
+<p>Purpose: let players discover or directly join one long-lived active room, draft
+simultaneously, compare, and continue into another round together.</p>
+<h3 id="implemented-development-flow">Implemented development flow<a class="anchor" href="#implemented-development-flow" aria-label="Link to section">#</a></h3>
+<ol>
+<li>The host authenticates with AGS.</li>
+<li>The host creates a no-server AGS game session as its first member, with initial
+joinability <code>OPEN</code>; minimum 1 and maximum 8 are configurable. AGS marks the
+<code>type=NONE</code> template nonpersistent because persistence is DS-only; Football 11
+keeps the same active session across rounds instead.</li>
+<li>Other authenticated players browse compatible non-full rooms and join by session
+ID. A native session code remains retrievable as an optional direct-join path.</li>
+<li>The room shows membership and readiness.</li>
+<li>The host may start the first challenge alone or with ready members. Starting
+changes AGS joinability to <code>CLOSED</code> before the participant set locks.</li>
+<li>Every participant locked for that round receives the same deterministic seed.</li>
+<li>Each participant independently drafts an XI at the same time.</li>
+<li>Progress is visible at a lightweight level, such as 7/11 or finished.</li>
+<li>Results unlock for comparison when the completion rule is satisfied.</li>
+<li>Reveal changes joinability back to <code>OPEN</code> and starts a configurable intermission
+countdown. The next start closes joinability again and locks opted-in members
+into a new challenge ordinal and seed.</li>
+</ol>
+<h3 id="room-states">Room states<a class="anchor" href="#room-states" aria-label="Link to section">#</a></h3>
+<pre><code>WAITING
+→ STARTING
+→ DRAFTING
+→ REVEAL
+→ COUNTDOWN
+→ STARTING
+
+Any phase → TERMINATED
+</code></pre>
+<p><code>TERMINATED</code> is reserved for an ended or unrecoverable AGS session. AGS
+<code>joinability=CLOSED</code> is temporary during <code>STARTING</code> and <code>DRAFTING</code>; it does not end
+the room. Readiness is a guard/opt-in state rather than a room phase.</p>
+<h3 id="important-boundary">Important boundary<a class="anchor" href="#important-boundary" aria-label="Link to section">#</a></h3>
+<p>AGS owns the room, controlled <code>OPEN</code>/<code>CLOSED</code> joinability, membership, availability,
+leader, optional session code, and lightweight session state. The current development
+integration carries round state in a compact Session attribute and keeps private
+draft actions in the browser. The future trusted football handler will own participant
+locks, challenge issuance, replay validation, countdown transitions, and accepted
+results before competitive release.</p>
+<h3 id="open-rules">Open rules<a class="anchor" href="#open-rules" aria-label="Link to section">#</a></h3>
+<ul>
+<li>Whether the proposed 30-second initial intermission needs adjustment after
+playtesting; the value remains configurable.</li>
+<li>Visible-browser abandon, deadline-timeout, and host-loss behavior; the service
+probe already verifies the 120-second inactive template value and native leader
+migration.</li>
+</ul>
+<h2 id="challenge-saved-xi">Challenge saved XI<a class="anchor" href="#challenge-saved-xi" aria-label="Link to section">#</a></h2>
+<p>Purpose: offer asynchronous competition without AGS Matchmaking tickets or a
+dedicated game server.</p>
+<h3 id="proposed-flow">Proposed flow<a class="anchor" href="#proposed-flow" aria-label="Link to section">#</a></h3>
+<ol>
+<li>Read the current player&#39;s leaderboard rank.</li>
+<li>Query approximately ten nearby leaderboard entries.</li>
+<li>Exclude the current player, invalid records, and recently faced opponents.</li>
+<li>Randomly select one eligible opponent on the trusted backend.</li>
+<li>Load that opponent&#39;s saved XI and simulation version.</li>
+<li>Simulate or resolve the matchup under a version-compatible ruleset.</li>
+<li>Store the match record and update authoritative statistics.</li>
+</ol>
+<p>This feature is called opponent discovery or ghost competition in these
+documents. It is not AGS Matchmaking.</p>
+<h3 id="open-rules-1">Open rules<a class="anchor" href="#open-rules-1" aria-label="Link to section">#</a></h3>
+<ul>
+<li>Whether the challenger drafts a new XI or uses their currently saved best XI.</li>
+<li>How rating changes are calculated.</li>
+<li>How to handle XIs created under old simulation versions.</li>
+<li>Rematch cooldown and anti-farming rules.</li>
+<li>Whether nearby range expands when fewer than ten eligible players exist.</li>
+</ul>
+</article><footer>Football 11 · Generated from the repository documentation. <a href="https://football-11.workspace-025025.chatgpt.site">Back to the game</a></footer></main></div></body></html>

@@ -1,0 +1,572 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Phase 1A Detailed Plan — Core Mechanics Engine · Football 11</title><meta name="description" content="Build Football 11 from offline mechanics to online features. Read the setup guide, six integration stages, and copy-ready prompts."><link rel="stylesheet" href="../../tutorial.css"></head>
+<body><a class="skip" href="#tutorial-content">Skip to tutorial</a><header><a class="brand" href="../../index.html"><span>11</span> FOOTBALL 11 <small>THE PLAYBOOK</small></a><nav aria-label="Main navigation"><a href="../../index.html">Tutorial</a><a class="play" href="https://football-11.workspace-025025.chatgpt.site">Play the game ↗</a></nav></header>
+<div class="layout"><aside><details open><summary>On this page</summary><nav aria-label="Tutorial sections"><a class="level-2" href="#work-estimate--one-developer-with-agentic-ai">Work estimate — one developer with agentic AI</a>
+<a class="level-2" href="#why-this-phase-exists">Why this phase exists</a>
+<a class="level-2" href="#phase-outcome">Phase outcome</a>
+<a class="level-2" href="#entry-conditions">Entry conditions</a>
+<a class="level-2" href="#non-goals">Non-goals</a>
+<a class="level-2" href="#package-boundary">Package boundary</a>
+<a class="level-2" href="#versioned-mechanics-contract">Versioned mechanics contract</a>
+<a class="level-2" href="#core-data-model">Core data model</a>
+<a class="level-2" href="#deterministic-random-number-design">Deterministic random-number design</a>
+<a class="level-3" href="#rule">Rule</a>
+<a class="level-3" href="#proposed-rng-v1">Proposed <code>rng-v1</code></a>
+<a class="level-3" href="#independent-derived-streams">Independent derived streams</a>
+<a class="level-2" href="#constraint-selection-algorithm">Constraint selection algorithm</a>
+<a class="level-2" href="#candidate-and-placement-algorithm">Candidate and placement algorithm</a>
+<a class="level-3" href="#iscompletable-forward-feasibility-check"><code>isCompletable</code> forward-feasibility check</a>
+<a class="level-3" href="#hasplayablecontinuation-constraint-aware-check"><code>hasPlayableContinuation</code> constraint-aware check</a>
+<a class="level-2" href="#offer-construction-algorithm">Offer construction algorithm</a>
+<a class="level-2" href="#reroll-algorithm">Reroll algorithm</a>
+<a class="level-2" href="#roster-assessment-algorithm">Roster assessment algorithm</a>
+<a class="level-3" href="#1-quality">1. Quality</a>
+<a class="level-3" href="#2-positioning">2. Positioning</a>
+<a class="level-3" href="#3-chemistry">3. Chemistry</a>
+<a class="level-3" href="#4-tactical-balance">4. Tactical balance</a>
+<a class="level-3" href="#5-leadership">5. Leadership</a>
+<a class="level-3" href="#composite-rating">Composite rating</a>
+<a class="level-2" href="#attack-defence-and-control-ratings">Attack, defence, and control ratings</a>
+<a class="level-2" href="#season-simulation-algorithm">Season simulation algorithm</a>
+<a class="level-3" href="#league-profile">League profile</a>
+<a class="level-3" href="#match-strength-difference">Match strength difference</a>
+<a class="level-3" href="#outcome-weights">Outcome weights</a>
+<a class="level-2" href="#explanation-algorithm">Explanation algorithm</a>
+<a class="level-2" href="#action-replay-and-validation">Action replay and validation</a>
+<a class="level-2" href="#headless-tools">Headless tools</a>
+<a class="level-2" href="#verification-strategy">Verification strategy</a>
+<a class="level-3" href="#golden-tests">Golden tests</a>
+<a class="level-3" href="#property-and-invariant-tests">Property and invariant tests</a>
+<a class="level-3" href="#completion-checks-and-deferred-calibration">Completion checks and deferred calibration</a>
+<a class="level-2" href="#implementation-sequence">Implementation sequence</a>
+<a class="level-2" href="#exit-checklist">Exit checklist</a></nav></details><a class="source" href="https://github.com/AccelByte/f11/blob/main/docs/phases/phase-01a-core-mechanics-engine.md">View Markdown source ↗</a></aside><main id="tutorial-content"><div class="intro">BUILD YOUR GAME · ONE FEATURE AT A TIME</div><article><h1 id="phase-1a-detailed-plan--core-mechanics-engine">Phase 1A Detailed Plan — Core Mechanics Engine<a class="anchor" href="#phase-1a-detailed-plan--core-mechanics-engine" aria-label="Link to section">#</a></h1>
+<p><strong>Last updated:</strong> September 4, 2026
+<strong>Status:</strong> Complete; Phase 1B entry gate passed
+<strong>Parent roadmap:</strong> <a href="../07-mvp-roadmap.html">07 — MVP roadmap</a><br><strong>Phase index:</strong> <a href="README.html">Detailed delivery plans</a></p>
+<h2 id="work-estimate--one-developer-with-agentic-ai">Work estimate — one developer with agentic AI<a class="anchor" href="#work-estimate--one-developer-with-agentic-ai" aria-label="Link to section">#</a></h2>
+<ul>
+<li><strong>Effort:</strong> 2–3 builder-days.</li>
+<li><strong>Elapsed time:</strong> 2–3 working days.</li>
+<li><strong>Primary uncertainty:</strong> constraint-aware continuation across cooldown states
+and alternate-team bounded-offer reroll availability.</li>
+</ul>
+<h2 id="why-this-phase-exists">Why this phase exists<a class="anchor" href="#why-this-phase-exists" aria-label="Link to section">#</a></h2>
+<p>The game must be fun, deterministic, and internally coherent before React,
+Cloudflare routing, AGS, sharing, or multiplayer can add value. This phase
+builds the draft generator, roster rules, assessment, season simulation, and
+explanation system as a headless TypeScript library with a command-line fixture
+runner.</p>
+<p>No UI or online service is allowed to become a dependency of the mechanics.</p>
+<h2 id="phase-outcome">Phase outcome<a class="anchor" href="#phase-outcome" aria-label="Link to section">#</a></h2>
+<p>Given a seed, content version, rules version, formation, and sequence of player
+actions, the engine always produces the same legal offers and final result. It
+can also prove that every offered player/slot choice leaves at least one path to
+a complete XI.</p>
+<h2 id="entry-conditions">Entry conditions<a class="anchor" href="#entry-conditions" aria-label="Link to section">#</a></h2>
+<ul>
+<li>Phase 0 has approved the formation, position-rating eligibility, content boundary,
+reroll behavior, scoring categories, and explanation vocabulary.</li>
+<li>A representative validated player-season fixture set exists.</li>
+<li>Attribute values use documented ranges and provenance.</li>
+<li>Product owners accept that all coefficients below are a versioned MVP tuning
+baseline, not immutable football truth.</li>
+<li>Competitive calibration is explicitly deferred; this phase blocks only on
+correctness, determinism, reproducibility, and roster completion.</li>
+</ul>
+<h2 id="non-goals">Non-goals<a class="anchor" href="#non-goals" aria-label="Link to section">#</a></h2>
+<ul>
+<li>React screens or animations.</li>
+<li>Worker APIs, D1, authentication, or AGS integration.</li>
+<li>Real-time match simulation or a visual football match engine.</li>
+<li>Machine-learning or generative-AI scoring.</li>
+<li>Hiding subjective football choices inside undocumented constants.</li>
+</ul>
+<h2 id="package-boundary">Package boundary<a class="anchor" href="#package-boundary" aria-label="Link to section">#</a></h2>
+<pre><code class="language-text">packages/domain/src/
+  random/
+    RandomSource.ts
+    seed.ts
+    sfc32.ts
+  formation/
+    slots.ts
+    eligibility.ts
+    feasibility.ts
+  draft/
+    constraints.ts
+    generateOffer.ts
+    applyAction.ts
+    replayDraft.ts
+  assessment/
+    quality.ts
+    positioning.ts
+    chemistry.ts
+    tacticalBalance.ts
+    leadership.ts
+    teamRatings.ts
+  simulation/
+    leagueProfile.ts
+    simulateMatch.ts
+    simulateSeason.ts
+  explanation/
+    facts.ts
+    templates.ts
+  version.ts
+
+packages/content/src/
+  playerSeasons/
+  formations/
+  chemistryLinks/
+  leagueProfiles/
+
+packages/test-fixtures/
+  seeds/
+  rosters/
+  expected/
+
+tools/
+  simulate-fixture.ts
+  analyze-offers.ts
+  analyze-balance.ts
+</code></pre>
+<p>Every function receives plain serializable inputs and returns plain
+serializable outputs. No module imports React, browser storage, network clients,
+D1, or AGS packages.</p>
+<h2 id="versioned-mechanics-contract">Versioned mechanics contract<a class="anchor" href="#versioned-mechanics-contract" aria-label="Link to section">#</a></h2>
+<p>Every challenge pins:</p>
+<pre><code class="language-ts">type MechanicsVersion = {
+  contentVersion: string;
+  rulesVersion: string;
+  rngVersion: &quot;rng-v1&quot;;
+  offerVersion: &quot;offer-v1&quot;;
+  assessmentVersion: &quot;assessment-v1&quot;;
+  seasonVersion: &quot;season-v1&quot;;
+  explanationVersion: &quot;explanation-v1&quot;;
+};
+</code></pre>
+<p>Any change that can alter an offer, legal placement, score, match outcome, or
+explanation fact requires the corresponding version to change. Old result
+replays load the old version or fail explicitly as unsupported; they must never
+silently run under new rules.</p>
+<h2 id="core-data-model">Core data model<a class="anchor" href="#core-data-model" aria-label="Link to section">#</a></h2>
+<p>The names are application-owned proposed contracts, not final code signatures.</p>
+<pre><code class="language-ts">type PlayerSeason = {
+  id: string;
+  playerIdentityId: string;
+  displayName: string;
+  clubCode: string;
+  seasonCode: string;
+  eraCode: string;
+  ratingsByPosition: Partial&lt;Record&lt;PositionCode, number&gt;&gt;; // validated 0..100
+  categoryTags: string[]; // e.g. FW; never used as placeable slots
+  attributes: Record&lt;string, number&gt;; // validated 0..100
+  tacticalTraits: Record&lt;string, number&gt;; // validated 0..100
+  leadership: number; // validated 0..100
+  dataVersion: string;
+};
+
+type DraftAction =
+  | { type: &quot;select&quot;; round: number; playerSeasonId: string; slotCode: string }
+  | { type: &quot;reroll&quot;; round: number };
+
+type DraftState = {
+  challengeId: string;
+  round: number;
+  roster: Record&lt;string, string&gt;;
+  selectedIdentityIds: string[];
+  rerollsRemaining: number;
+  currentConstraint: string;
+  currentOfferIds: string[];
+  rejectedOfferIdsByRound: Record&lt;number, string[]&gt;;
+  cooldownUntilRoundByPlayerSeasonId: Record&lt;string, number&gt;;
+  versions: MechanicsVersion;
+};
+</code></pre>
+<p>The MVP content validator permits at most one player-season record per
+<code>playerIdentityId</code>. Selecting that card removes it from the run. A later
+content version may allow multiple seasons in the catalogue, but the runtime
+must still exclude every record sharing a selected <code>playerIdentityId</code>.</p>
+<p>Whenever an offer is resolved by selection or reroll, each unselected card gets
+<code>cooldownUntilRound = currentRound + 2</code>. It is excluded while
+<code>round &lt;= cooldownUntilRound</code> and becomes eligible at <code>currentRound + 3</code>.
+Selected identities remain excluded for the rest of the run.</p>
+<h2 id="deterministic-random-number-design">Deterministic random-number design<a class="anchor" href="#deterministic-random-number-design" aria-label="Link to section">#</a></h2>
+<h3 id="rule">Rule<a class="anchor" href="#rule" aria-label="Link to section">#</a></h3>
+<p>Never call <code>Math.random()</code> in domain, Worker, test, or replay code. All random
+behavior receives a <code>RandomSource</code>.</p>
+<h3 id="proposed-rng-v1">Proposed <code>rng-v1</code><a class="anchor" href="#proposed-rng-v1" aria-label="Link to section">#</a></h3>
+<p>Use a documented string-to-seed hash such as <code>xmur3</code> to produce four unsigned
+32-bit seeds, then use the integer-only <code>sfc32</code> generator. Pin the exact source
+implementation with golden output vectors.</p>
+<p>This generator is suitable for reproducible game randomness, not cryptography.
+Opaque public identifiers, access tokens, and security nonces must use platform
+cryptographic randomness instead.</p>
+<h3 id="independent-derived-streams">Independent derived streams<a class="anchor" href="#independent-derived-streams" aria-label="Link to section">#</a></h3>
+<p>Derive a new stream from explicit state rather than consuming one global stream:</p>
+<pre><code class="language-text">base = seed | contentVersion | rulesVersion | mode
+
+constraint stream = hash(base | round | &quot;constraint&quot;)
+offer stream      = hash(base | round | rerollOrdinal | &quot;offer&quot;)
+season stream     = hash(base | rosterChecksum | &quot;season&quot;)
+match stream      = hash(season stream | matchIndex)
+</code></pre>
+<p>This prevents an extra random call in an animation, explanation, or earlier
+round from changing every later outcome. Stream labels are part of <code>rng-v1</code>.</p>
+<h2 id="constraint-selection-algorithm">Constraint selection algorithm<a class="anchor" href="#constraint-selection-algorithm" aria-label="Link to section">#</a></h2>
+<p>Each round presents one club-plus-era constraint. At content-build time, create
+a <code>ConstraintProfile</code> for every allowed pair:</p>
+<pre><code class="language-text">constraint key
+eligible player-season IDs
+position coverage bitset
+candidate count per slot group
+validation status
+</code></pre>
+<p>At runtime:</p>
+<ol>
+<li>Determine currently open formation slots.</li>
+<li>Deterministically shuffle active constraint profiles with the round&#39;s
+constraint stream.</li>
+<li>Move the previous round&#39;s constraint behind alternatives when another valid
+profile exists, avoiding accidental immediate repetition.</li>
+<li>For each profile in shuffled order, build its feasible candidates using the
+algorithm below.</li>
+<li>Choose the first profile that can produce three valid offers.</li>
+<li>If none can do so, return <code>CONTENT_UNSATISFIABLE</code> with diagnostic facts. Do
+not silently weaken the club/era rule.</li>
+</ol>
+<p>The content-validation tool must exercise reachable draft states before a
+content version can ship so the runtime error is exceptional rather than a
+normal fallback.</p>
+<h2 id="candidate-and-placement-algorithm">Candidate and placement algorithm<a class="anchor" href="#candidate-and-placement-algorithm" aria-label="Link to section">#</a></h2>
+<p>For the chosen constraint:</p>
+<ol>
+<li>Begin with player-seasons in the active content version matching the club
+and era.</li>
+<li>Exclude already selected <code>playerIdentityId</code> values.</li>
+<li>Exclude cards whose two-round cooldown includes the current round.</li>
+<li>Exclude the current rejected offer IDs when generating a same-round reroll.
+Exclude the current club/era profile as well, so the reroll changes teams.</li>
+<li>Find each candidate&#39;s compatible open slots by looking up explicit entries
+in <code>ratingsByPosition</code>; an absent position is illegal.</li>
+<li>For every candidate/slot pair, simulate that placement and call
+<code>isCompletable</code>.</li>
+<li>Keep only candidate/slot pairs for which the remaining roster can still be
+completed.</li>
+<li>Discard candidates with no safe slot.</li>
+</ol>
+<p>The offer contains each player and the safe slot codes for that player. The
+Worker later rejects a placement that was not in this set.</p>
+<h3 id="iscompletable-forward-feasibility-check"><code>isCompletable</code> forward-feasibility check<a class="anchor" href="#iscompletable-forward-feasibility-check" aria-label="Link to section">#</a></h3>
+<p>Model remaining roster construction as a bipartite graph:</p>
+<pre><code class="language-text">left nodes:  remaining formation slots
+right nodes: unselected player identities in the active content version
+edge:        player can legally occupy slot
+</code></pre>
+<p>Run a deterministic maximum matching using sorted node IDs. With at most eleven
+slots, a simple augmenting-path matcher is sufficient and easier to audit than
+a more complex implementation.</p>
+<p>The state is completable only when the maximum matching covers every remaining
+slot. Memoize by the canonical tuple of open slots and selected identity IDs.</p>
+<p>This maximum-matching check is necessary but not sufficient: it proves that a
+roster can be completed from the catalogue, but not that every future round can
+still present at least three cards under an allowed club-plus-era constraint.</p>
+<h3 id="hasplayablecontinuation-constraint-aware-check"><code>hasPlayableContinuation</code> constraint-aware check<a class="anchor" href="#hasplayablecontinuation-constraint-aware-check" aria-label="Link to section">#</a></h3>
+<p>Before a candidate/slot pair becomes offerable, run a deterministic memoized
+search from the resulting state:</p>
+<ol>
+<li>If every slot is filled, return true.</li>
+<li>Enumerate active constraint profiles in stable seeded order.</li>
+<li>Build a candidate set using the same exclusions and maximum-matching
+rules as the real next round.</li>
+<li>Keep a set only when every displayed candidate has at least one safe
+placement that itself reaches a playable continuation.</li>
+<li>Return true when at least one constraint can produce such a set;
+otherwise return false with a diagnostic state signature.</li>
+</ol>
+<p>Memoize by content/rules version, open slots, selected identities, active
+cooldowns, round, and reroll exclusions. The content-build validator exhaustively walks all reachable
+offer choices for the release fixture set. Runtime must not silently weaken the
+constraint or exceed the validated deployment cap.</p>
+<h2 id="offer-construction-algorithm">Offer construction algorithm<a class="anchor" href="#offer-construction-algorithm" aria-label="Link to section">#</a></h2>
+<p>The initial maximum offer size is fifteen. A validated AGS Game Record revision
+may configure an integer from three to fifteen; a scarce constraint can return
+fewer than the cap but never fewer than three. Sites freezes the selected value
+into the challenge before draft creation.</p>
+<ol>
+<li>Deterministically shuffle constraint-aware feasible candidates using the offer stream.</li>
+<li>Keep only candidates with at least one forward-safe placement.</li>
+<li>Return the first candidates in deterministic shuffled order, capped by the
+challenge&#39;s frozen <code>maxOfferedPlayers</code> value.</li>
+</ol>
+<p>The headless analyzer reports dominance and fallback rates. It must not rewrite
+an offer after seeing the player&#39;s eventual selection.</p>
+<h2 id="reroll-algorithm">Reroll algorithm<a class="anchor" href="#reroll-algorithm" aria-label="Link to section">#</a></h2>
+<p>The recommended <code>offer-v1</code> rule is:</p>
+<ol>
+<li>A run begins with the configured allowance, five by default and bounded to
+zero through five.</li>
+<li>Exclude the current club/era constraint and select a different playable
+team through the same deterministic constraint stream.</li>
+<li>Add the visible player-season IDs to <code>rejectedOfferIdsByRound[round]</code>.</li>
+<li>Put those discarded cards on cooldown for the next two numbered rounds.</li>
+<li>Increment <code>rerollOrdinal</code> and derive a new offer stream.</li>
+<li>Generate up to the configured cap of new feasible candidates, excluding selected, cooling down,
+and rejected
+identities.</li>
+<li>Consume the reroll only after a replacement offer is successfully produced.</li>
+<li>If no different team can provide at least three safe replacements, disable
+reroll for that state and expose the reason; do not consume the resource.</li>
+</ol>
+<p>Content validation must report how often rerolls would be unavailable. If the
+rate is material, expand content or revise the alternate-team rule before UI
+work begins.</p>
+<p>Rejected cards are excluded from the current replacement offer and then follow
+the normal two-round cooldown. Any card not selected from the final offer also
+enters that cooldown when the round advances.</p>
+<h2 id="roster-assessment-algorithm">Roster assessment algorithm<a class="anchor" href="#roster-assessment-algorithm" aria-label="Link to section">#</a></h2>
+<p>All intermediate values are clamped to <code>0..100</code> and retained as explanation
+facts. Coefficients live in versioned configuration rather than component code.</p>
+<h3 id="1-quality">1. Quality<a class="anchor" href="#1-quality" aria-label="Link to section">#</a></h3>
+<p>Each player-season explicitly stores its legal position ratings. Define
+<code>bestPositionRating</code> as the highest stored value for that record. Team Quality
+<code>Q</code> is the mean best-position rating of all eleven selected players. This keeps
+intrinsic player strength visible even when the user places a player in a
+lower-rated legal position.</p>
+<p>The selected slot&#39;s effective rating is read directly from
+<code>ratingsByPosition[slot.code]</code>. Unit ratings use that effective value; they do
+not recompute an undocumented natural or makeshift penalty.</p>
+<h3 id="2-positioning">2. Positioning<a class="anchor" href="#2-positioning" aria-label="Link to section">#</a></h3>
+<p>For each selected player:</p>
+<pre><code class="language-text">positionFit = 100 * selectedPositionRating / bestPositionRating
+</code></pre>
+<p>Team Positioning <code>P</code> is the mean <code>positionFit</code>, clamped to <code>0..100</code>. A player
+used at their best recorded position contributes 100; a lower-rated but legal
+position contributes proportionally. An absent position is invalid rather than
+receiving a generic makeshift score.</p>
+<h3 id="3-chemistry">3. Chemistry<a class="anchor" href="#3-chemistry" aria-label="Link to section">#</a></h3>
+<p>The formation defines a weighted adjacency graph—for example, centre-back to
+fullback, midfield-to-midfield, and midfield-to-forward links. Only edges in
+that graph contribute.</p>
+<p>Each content-version pair relationship provides or deterministically derives a
+<code>pairAffinity</code> from <code>0..100</code>. The derivation order and values must be documented,
+for example explicit teammate overlap before weaker same-league/era familiarity.
+Unknown does not mean hostile; use a documented neutral baseline.</p>
+<pre><code class="language-text">C = sum(edge.weight * pairAffinity(edge.players)) / sum(edge.weight)
+</code></pre>
+<p>Relationship data must be symmetric and provenance-backed. Do not hand-edit a
+specific player&#39;s chemistry to force a desired final record without recording
+the content/rules change.</p>
+<h3 id="4-tactical-balance">4. Tactical balance<a class="anchor" href="#4-tactical-balance" aria-label="Link to section">#</a></h3>
+<p><code>assessment-v1</code> starts with six visible axes:</p>
+<ul>
+<li>width;</li>
+<li>chance creation;</li>
+<li>ball winning;</li>
+<li>pace/direct threat;</li>
+<li>defensive cover;</li>
+<li>aerial presence.</li>
+</ul>
+<p>Each axis calculates a role-weighted supply from the eleven players. The
+formation configuration defines an acceptable minimum and optional maximum.</p>
+<pre><code class="language-text">if supply &lt; minimum:
+  axisScore = 100 * supply / minimum
+else if maximum is absent or supply &lt;= maximum:
+  axisScore = 100
+else:
+  axisScore = max(60, 100 - 40 * (supply - maximum) / (100 - maximum))
+</code></pre>
+<p>Team Tactical Balance <code>T</code> is the configured weighted mean of axis scores.
+Oversupply penalties apply only to axes where excess genuinely creates a
+trade-off; otherwise the axis has no maximum.</p>
+<h3 id="5-leadership">5. Leadership<a class="anchor" href="#5-leadership" aria-label="Link to section">#</a></h3>
+<p>Leadership should reward both one captain and supporting organizers:</p>
+<pre><code class="language-text">L = 0.60 * highestLeadership
+  + 0.40 * mean(topThreeLeadershipValues)
+</code></pre>
+<h3 id="composite-rating">Composite rating<a class="anchor" href="#composite-rating" aria-label="Link to section">#</a></h3>
+<p>Proposed <code>assessment-v1</code> baseline:</p>
+<pre><code class="language-text">R = 0.35Q + 0.20P + 0.20C + 0.20T + 0.05L
+</code></pre>
+<p>The UI should show the categories, not present <code>R</code> as objective football truth.
+Balance tests may adjust these weights before the version is approved.</p>
+<h2 id="attack-defence-and-control-ratings">Attack, defence, and control ratings<a class="anchor" href="#attack-defence-and-control-ratings" aria-label="Link to section">#</a></h2>
+<p>The season model needs more structure than one composite number. Formation slot
+configuration defines normalized contribution weights for three units. Each
+unit uses the selected position rating plus the retained attributes and traits;
+broad content tags such as <code>FW</code> never decide placement:</p>
+<ul>
+<li><code>A</code> — attack: finishing, chance creation, width, pace, and attacking slot
+quality;</li>
+<li><code>D</code> — defence: goalkeeping, ball winning, defensive cover, aerial presence,
+and defensive slot quality;</li>
+<li><code>M</code> — control: midfield quality, chance creation, ball winning, positioning,
+and chemistry.</li>
+</ul>
+<p>Each unit is a <code>0..100</code> weighted mean derived from the same retained facts used
+above. The exact attribute weights live in <code>assessment-v1.json</code> and must sum to
+<code>1.0</code> per unit.</p>
+<h2 id="season-simulation-algorithm">Season simulation algorithm<a class="anchor" href="#season-simulation-algorithm" aria-label="Link to section">#</a></h2>
+<h3 id="league-profile">League profile<a class="anchor" href="#league-profile" aria-label="Link to section">#</a></h3>
+<p>Create a versioned <code>league-profile-v1</code> containing nineteen abstract opponent
+profiles. Each profile has <code>attack</code>, <code>defence</code>, and <code>control</code> ratings. Play each
+profile once at home and once away for 38 matches. This provides a stable
+difficulty curve without pretending to simulate licensed real clubs.</p>
+<h3 id="match-strength-difference">Match strength difference<a class="anchor" href="#match-strength-difference" aria-label="Link to section">#</a></h3>
+<p>For each match:</p>
+<pre><code class="language-text">delta = 0.45 * (team.A - opponent.D)
+      + 0.40 * (team.D - opponent.A)
+      + 0.15 * (team.M - opponent.M)
+      + venueBias
+
+venueBias = +2 at home, -2 away
+</code></pre>
+<h3 id="outcome-weights">Outcome weights<a class="anchor" href="#outcome-weights" aria-label="Link to section">#</a></h3>
+<pre><code class="language-text">winWeight  = exp(delta / 12)
+lossWeight = exp(-delta / 12)
+drawWeight = exp(-0.35 - abs(delta) / 18)
+
+total = winWeight + drawWeight + lossWeight
+P(win)  = winWeight / total
+P(draw) = drawWeight / total
+P(loss) = lossWeight / total
+</code></pre>
+<p>Use the match-specific deterministic random stream to sample the outcome. Sum
+three points for a win and one for a draw. The MVP result contains no goals or
+goal difference; add them only with a separately approved, versioned goal
+model. Label a zero-loss season <strong>Invincible</strong> and a 38-win, 114-point season
+<strong>Perfect</strong>.</p>
+<p>These constants are an initial calibration model. They must be evaluated with
+fixtures and population simulations, then frozen under <code>season-v1</code> or changed
+with a new version.</p>
+<h2 id="explanation-algorithm">Explanation algorithm<a class="anchor" href="#explanation-algorithm" aria-label="Link to section">#</a></h2>
+<p>Explanations are deterministic templates built from assessment and season facts.</p>
+<ol>
+<li>Collect category scores and tactical-axis scores.</li>
+<li>Sort by score, using stable fact keys as tie-breakers.</li>
+<li>Select the strongest relevant fact and the weakest relevant fact.</li>
+<li>Add a positioning or chemistry fact when it materially changed a unit score.</li>
+<li>Render approved templates with player/slot names and measured values.</li>
+<li>Store fact keys and values with the rendered explanation.</li>
+</ol>
+<p>Example shape:</p>
+<pre><code class="language-text">Strong chance creation and midfield control drove the attack.
+Lower-rated defensive placement and limited wide cover increased upset risk.
+</code></pre>
+<p>Every clause must trace to a retained fact. No unconstrained generated prose is
+part of MVP result calculation.</p>
+<h2 id="action-replay-and-validation">Action replay and validation<a class="anchor" href="#action-replay-and-validation" aria-label="Link to section">#</a></h2>
+<p>The canonical engine consumes an initial challenge plus ordered actions:</p>
+<pre><code class="language-text">create initial state
+  -&gt; generate expected offer
+  -&gt; validate action round and offered player
+  -&gt; validate chosen slot is forward-safe
+  -&gt; apply selection or reroll
+  -&gt; derive next state
+  -&gt; repeat until eleven slots are filled
+  -&gt; assess roster
+  -&gt; simulate season
+  -&gt; build explanation facts and result
+</code></pre>
+<p>Replaying the same action sequence must yield the same intermediate state hash
+after every action, not only the same final points.</p>
+<h2 id="headless-tools">Headless tools<a class="anchor" href="#headless-tools" aria-label="Link to section">#</a></h2>
+<p>Plan these developer commands:</p>
+<pre><code class="language-text">npm run mechanics:fixture -- --seed &lt;seed&gt; --actions &lt;file&gt;
+npm run mechanics:offers -- --content-version &lt;version&gt;
+npm run mechanics:balance -- --runs 10000
+</code></pre>
+<p>The fixture runner prints offers, legal slots, state hashes, category scores,
+unit ratings, match outcomes, points, and explanation facts. It can emit JSON
+for golden tests.</p>
+<p>The offer analyzer reports:</p>
+<ul>
+<li>constraints with insufficient candidates;</li>
+<li>unreachable or over-scarce slots;</li>
+<li>states with no completion matching;</li>
+<li>reroll-unavailable rate;</li>
+<li>dominated-choice and quality-fallback rates;</li>
+<li>player/club/era appearance distribution.</li>
+</ul>
+<p>The optional calibration analyzer runs at least three deterministic bot policies:</p>
+<ul>
+<li>random legal choice;</li>
+<li>highest immediate slot quality;</li>
+<li>fit-aware choice that protects scarce slots.</li>
+</ul>
+<p>Compare their result distributions to create tuning evidence after the
+Functional MVP. These comparisons do not block React integration.</p>
+<h2 id="verification-strategy">Verification strategy<a class="anchor" href="#verification-strategy" aria-label="Link to section">#</a></h2>
+<h3 id="golden-tests">Golden tests<a class="anchor" href="#golden-tests" aria-label="Link to section">#</a></h3>
+<ul>
+<li>Published RNG vectors for <code>xmur3</code> plus <code>sfc32</code>.</li>
+<li>Known seed produces exact constraints and offers.</li>
+<li>Known actions produce exact state hashes.</li>
+<li>Known XI produces exact category and unit scores.</li>
+<li>Known season seed produces exact 38 outcomes and points.</li>
+<li>Known facts produce exact explanation text.</li>
+</ul>
+<h3 id="property-and-invariant-tests">Property and invariant tests<a class="anchor" href="#property-and-invariant-tests" aria-label="Link to section">#</a></h3>
+<ul>
+<li>Offers contain three to fifteen unique player identities according to the configured cap and safe availability.</li>
+<li>Every offered player has at least one safe open slot.</li>
+<li>Every accepted offered placement leaves a completable roster.</li>
+<li>Every accepted offered placement leaves a constraint-aware path of future
+bounded offers to a complete XI.</li>
+<li>Selected player identities never repeat.</li>
+<li>Passed-over cards never appear during their next two rounds and become
+eligible again in the third when other rules permit.</li>
+<li>Rerolls never increase and are never consumed on failed generation.</li>
+<li>All category, axis, and unit scores stay within <code>0..100</code>.</li>
+<li>Wins plus draws plus losses always equal 38.</li>
+<li>Points always equal <code>3 * wins + draws</code>.</li>
+<li>Replay is identical across browser-compatible and Worker runtimes.</li>
+<li>No production mechanics path calls <code>Math.random()</code>.</li>
+</ul>
+<h3 id="completion-checks-and-deferred-calibration">Completion checks and deferred calibration<a class="anchor" href="#completion-checks-and-deferred-calibration" aria-label="Link to section">#</a></h3>
+<ul>
+<li>Run at least 10,000 seeded auto-drafts without a dead end.</li>
+<li>Record points, W/D/L, category, and perfect-season distributions.</li>
+<li>Record player, position, club, era, and constraint appearance rates.</li>
+<li>Later, verify obviously stronger balanced fixtures outperform weak fixtures over a
+large common seed set, without demanding monotonic results for every seed.</li>
+<li>Later, verify tactical and positioning changes materially affect distributions.</li>
+<li>Do not require target-band approval before the Functional MVP; open a tuning
+version when calibration begins.</li>
+</ul>
+<h2 id="implementation-sequence">Implementation sequence<a class="anchor" href="#implementation-sequence" aria-label="Link to section">#</a></h2>
+<ol>
+<li>Add schemas and content validation.</li>
+<li>Implement and freeze <code>rng-v1</code> golden vectors.</li>
+<li>Implement formation eligibility and maximum-matching feasibility.</li>
+<li>Implement constraint and offer generation.</li>
+<li>Implement action application, rerolls, state hashes, and replay.</li>
+<li>Implement five-category roster assessment.</li>
+<li>Implement attack/defence/control derivation and league profile.</li>
+<li>Implement 38-match season simulation.</li>
+<li>Implement explanation facts and templates.</li>
+<li>Add fixture and offer analyzers plus a non-blocking distribution report.</li>
+<li>Freeze the first mechanically valid versions.</li>
+<li>Tune data/configuration in a later balance pass using recorded distributions.</li>
+</ol>
+<h2 id="exit-checklist">Exit checklist<a class="anchor" href="#exit-checklist" aria-label="Link to section">#</a></h2>
+<ul>
+<li><input checked="" disabled="" type="checkbox"> Mechanics run as a pure headless TypeScript package.</li>
+<li><input checked="" disabled="" type="checkbox"> RNG implementation and derived streams have golden vectors.</li>
+<li><input checked="" disabled="" type="checkbox"> Constraints and offers are deterministic and reproducible.</li>
+<li><input checked="" disabled="" type="checkbox"> Every offered placement passes forward-feasibility matching.</li>
+<li><input checked="" disabled="" type="checkbox"> Reroll behavior and exhaustion are deterministic.</li>
+<li><input checked="" disabled="" type="checkbox"> Assessment categories and coefficients are versioned and explainable.</li>
+<li><input checked="" disabled="" type="checkbox"> Season simulation produces valid deterministic 38-match records.</li>
+<li><input checked="" disabled="" type="checkbox"> Every explanation clause traces to a retained fact.</li>
+<li><input checked="" disabled="" type="checkbox"> Ten thousand automated drafts finish without a dead end.</li>
+<li><input checked="" disabled="" type="checkbox"> Distribution and policy observations are recorded for later tuning.</li>
+<li><input checked="" disabled="" type="checkbox"> No React, Worker, D1, or AGS dependency exists in the domain package.</li>
+</ul>
+<p>Exit evidence: 42 tests pass; <code>npm run mechanics:fixture</code> resolves a complete
+replayable result; <code>npm run mechanics:offers</code> completed 10,000 randomized runs
+with 5,791 rerolls and zero failures. The checked-in report records points,
+W/D/L, category, constraint, position, and player appearance distributions.</p>
+<p><strong>Exit criterion:</strong> a headless runner can generate, complete, replay, assess,
+and simulate thousands of seeded drafts with no illegal offer or dead end. The
+first mechanically valid versions may enter UI integration without competitive
+balance approval.</p>
+</article><footer>Football 11 · Generated from the repository documentation. <a href="https://football-11.workspace-025025.chatgpt.site">Back to the game</a></footer></main></div></body></html>

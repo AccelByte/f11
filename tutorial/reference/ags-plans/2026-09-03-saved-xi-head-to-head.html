@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Stage 6: Asynchronous Saved-XI competition · Football 11</title><meta name="description" content="Build Football 11 from offline mechanics to online features. Read the setup guide, six integration stages, and copy-ready prompts."><link rel="stylesheet" href="../../tutorial.css"></head>
+<body><a class="skip" href="#tutorial-content">Skip to tutorial</a><header><a class="brand" href="../../index.html"><span>11</span> FOOTBALL 11 <small>THE PLAYBOOK</small></a><nav aria-label="Main navigation"><a href="../../index.html">Tutorial</a><a class="play" href="https://football-11.workspace-025025.chatgpt.site">Play the game ↗</a></nav></header>
+<div class="layout"><aside><details open><summary>On this page</summary><nav aria-label="Tutorial sections"><a class="level-2" href="#prerequisites">Prerequisites</a>
+<a class="level-2" href="#implementation-scope">Implementation scope</a>
+<a class="level-2" href="#acceptance-checks">Acceptance checks</a>
+<a class="level-2" href="#outside-this-step">Outside this step</a>
+<a class="level-2" href="#agent-execution-checklist">Agent execution checklist</a>
+<a class="level-2" href="#connected-design-reference">Connected design reference</a>
+<a class="level-3" href="#confirmed-boundary">Confirmed boundary</a>
+<a class="level-3" href="#player-flow">Player flow</a>
+<a class="level-3" href="#versioned-mechanics">Versioned mechanics</a>
+<a class="level-3" href="#ags-service-selection">AGS service selection</a>
+<a class="level-3" href="#trusted-http-surface">Trusted HTTP surface</a>
+<a class="level-3" href="#remaining-release-considerations">Remaining release considerations</a>
+<a class="level-2" href="#agent-handoff-prompt">Agent handoff prompt</a></nav></details><a class="source" href="https://github.com/AccelByte/f11/blob/main/docs/ags-plans/2026-09-03-saved-xi-head-to-head.md">View Markdown source ↗</a></aside><main id="tutorial-content"><div class="intro">BUILD YOUR GAME · ONE FEATURE AT A TIME</div><article><h1 id="stage-6-asynchronous-saved-xi-competition">Stage 6: Asynchronous Saved-XI competition<a class="anchor" href="#stage-6-asynchronous-saved-xi-competition" aria-label="Link to section">#</a></h1>
+<p><a href="../12-accelbyte-integration-guide.html#stage-6">Integration tutorial</a> · <a href="README.html">All plans</a></p>
+<p><strong>Status:</strong> Not started on the offline starter branch.</p>
+<h2 id="prerequisites">Prerequisites<a class="anchor" href="#prerequisites" aria-label="Link to section">#</a></h2>
+<p>Trusted ranking and replay are complete. Server-owned result and identity binding are available.</p>
+<h2 id="implementation-scope">Implementation scope<a class="anchor" href="#implementation-scope" aria-label="Link to section">#</a></h2>
+<p>Let players explicitly publish a compatible verified XI. Discover nearby leaderboard opponents and resolve asynchronous matches on the trusted backend using the existing head-to-head mechanics. Bind immutable snapshots to expiring single-use challenges; define cooldowns, bounded history, scoring, and retry repair before implementing them.</p>
+<p>Keep <code>apps/web/src/game/session.ts</code> as the adapter around <code>packages/domain</code>;
+preserve the existing draft, reroll, and season behavior. Inspect the actual
+branch and installed SDK signatures before choosing API calls. The online
+reference implementation is on public main (development master); it is not
+present on the offline starter. Inspect only the relevant feature when needed.</p>
+<h2 id="acceptance-checks">Acceptance checks<a class="anchor" href="#acceptance-checks" aria-label="Link to section">#</a></h2>
+<p>Only verified XIs publish; incompatible/self opponents are excluded; repeated settlement is idempotent; expiry and cooldowns hold; two-player checks prove only the intended score changes.</p>
+<p>Run <code>npm run typecheck</code>, <code>npm test</code>, and <code>npm run build</code>. Record automated,
+live-service, and browser evidence separately in the progress tracker. Missing
+credentials or service access are blockers, not successful verification.</p>
+<h2 id="outside-this-step">Outside this step<a class="anchor" href="#outside-this-step" aria-label="Link to section">#</a></h2>
+<p>Realtime matches, Elo, and silently replacing a published XI after every draft.</p>
+<h2 id="agent-execution-checklist">Agent execution checklist<a class="anchor" href="#agent-execution-checklist" aria-label="Link to section">#</a></h2>
+<ol>
+<li>Read this entire plan, the repository instructions, and the current progress
+tracker. On <code>offline-starter</code> or a learner&#39;s branch, confirm prerequisite
+stages through their evidence; do not infer readiness from connected notes.</li>
+<li>Inspect the current manifests, domain code, UI state, and any existing service
+adapters. Choose a narrow implementation boundary and list the files to change.</li>
+<li>Use the applicable AGS skill to verify the selected namespace, caller type,
+SDK signatures, and least-privilege resource settings. Keep secrets on the
+trusted server and out of source, screenshots, and logs. If access is missing,
+record the blocker; do not substitute mock results for live verification.</li>
+<li>Implement only this stage&#39;s scope and relevant design details below. Preserve
+deterministic mechanics and offline play. Do not copy the entire connected
+application or bring in later stages to make this one pass.</li>
+<li>Add meaningful coverage for the new state transitions and failure cases, run
+the acceptance checks, and verify the player-visible flow in the browser.</li>
+<li>Update the tracker with changed files, commands/results, redacted live evidence,
+and remaining blockers. Mark the stage Done only when its acceptance checks
+pass. Summarize what the next agent can rely on, then stop.</li>
+</ol>
+<h2 id="connected-design-reference">Connected design reference<a class="anchor" href="#connected-design-reference" aria-label="Link to section">#</a></h2>
+<p>The following detailed design notes are recovered from the original connected
+implementation plans. They explain service choices, data contracts, authority,
+and integration boundaries. Resource names and source paths are examples from
+that implementation; inspect the current branch and namespace before using them.
+Past-tense descriptions are reference behavior, not proof that this stage is
+implemented or verified in the learner&#39;s branch. The scope and acceptance checks
+above govern this stage; defer any later-stage feature mentioned below.</p>
+<h3 id="confirmed-boundary">Confirmed boundary<a class="anchor" href="#confirmed-boundary" aria-label="Link to section">#</a></h3>
+<p>Football 11 publishes one explicit, trusted personal-best XI per player. The
+player may replace it with a later eligible personal best; ordinary completed
+runs do not publish implicitly. The existing best-season-points Leaderboard is
+used only to find nearby players. It is not a competitive matchmaking queue,
+and the flow does not use AGS Matchmaking, Session Management, AMS, or a
+dedicated server.</p>
+<p>Each challenge runs one deterministic neutral <code>head-to-head-v1</code> match. Only the
+challenger&#39;s private Challenge Score changes: a win adds <code>3</code>, a draw adds <code>0</code>,
+and a loss subtracts <code>2</code> without crossing zero. The opponent&#39;s score and Saved
+XI never change as a side effect of being challenged. Two-sided Elo and a
+Challenge Score leaderboard are deliberately outside v1.</p>
+<h3 id="player-flow">Player flow<a class="anchor" href="#player-flow" aria-label="Link to section">#</a></h3>
+<ol>
+<li>An authenticated player completes a trusted replay and explicitly publishes
+or replaces the resulting personal-best XI.</li>
+<li>The trusted handler reads nearby entries from the existing season-points
+Leaderboard, excludes the caller, incompatible or unavailable XIs, and any
+opponent challenged in the preceding 24 hours, then expands the search from
+±10 to ±50 positions when necessary.</li>
+<li>The player previews one eligible opponent and receives an opaque, single-use
+challenge token that expires after ten minutes.</li>
+<li>The trusted handler consumes the token, verifies both immutable XI snapshots
+and their versions, simulates the match from canonical server-owned evidence,
+and stores the result.</li>
+<li>Settlement applies an absolute server-owned Statistic value exactly once.
+A reload can repair a consumed-but-unsettled match from the stored evidence
+without creating another match or applying the delta twice.</li>
+<li>The player sees the result, current Challenge Score, cooldown/expiry states,
+and bounded immutable match history. Public responses do not expose raw
+opponent user IDs, seeds, or private simulation evidence.</li>
+</ol>
+<h3 id="versioned-mechanics">Versioned mechanics<a class="anchor" href="#versioned-mechanics" aria-label="Link to section">#</a></h3>
+<p><code>data/config/head-to-head-v1.json</code> gives each attack-versus-defence duel 42.5%
+of the team comparison and control 15%. Canonical participant ordering makes a
+seed and XI pair reproducible regardless of which participant is presented
+first. Strict content, assessment, formation, Saved-XI schema, and head-to-head
+versions prevent unlike evidence from being compared silently.</p>
+<h3 id="ags-service-selection">AGS service selection<a class="anchor" href="#ags-service-selection" aria-label="Link to section">#</a></h3>
+<ul>
+<li><strong>IAM</strong> authenticates the browser&#39;s player token at every trusted route.</li>
+<li><strong>Cloud Save</strong> holds the server-owned Saved-XI snapshot, issued challenge,
+bounded immutable history, and settlement evidence that Statistics cannot
+model.</li>
+<li><strong>Statistics</strong> holds the private, <code>SERVER</code>-set
+<code>football11challengescore</code>, with a minimum and default of zero.</li>
+<li><strong>Leaderboards</strong> supplies candidates through the already trusted
+best-season-points ranking; there is no Challenge Score leaderboard.</li>
+<li><strong>Public Player Record bulk reads</strong> retrieve candidate Saved XIs through the
+authenticated player context. Confidential admin bulk reads were rejected by
+the live service and are not part of the final path.</li>
+</ul>
+<p>Cloud Save record metadata tags were also excluded after the live service
+rejected that shape. These findings are encoded in the gateway rather than
+left as deployment assumptions.</p>
+<h3 id="trusted-http-surface">Trusted HTTP surface<a class="anchor" href="#trusted-http-surface" aria-label="Link to section">#</a></h3>
+<pre><code class="language-text">GET  /api/saved-xi
+PUT  /api/saved-xi
+POST /api/opponents/nearby
+GET  /api/asynchronous-matches
+POST /api/asynchronous-matches
+</code></pre>
+<p>Every route requires a bearer token, applies JSON and request-size checks where
+relevant, disables caching, and returns sanitized errors. The browser never
+submits an authoritative outcome, score, opponent identity, or simulation seed.</p>
+<h3 id="remaining-release-considerations">Remaining release considerations<a class="anchor" href="#remaining-release-considerations" aria-label="Link to section">#</a></h3>
+<p>The mechanics are structurally verified, but outcome calibration still needs
+player-facing balance testing before a production release. Production Device
+guest recovery and public-content rights remain separate release gates. Phase
+4&#39;s authoritative room mutations, abandon, timeout, and host-loss work also
+remain unfinished; completing Phase 5 does not close those items.</p>
+<p>The source and live development integration are complete. Publishing this new
+build to the existing public Sites project is a separate deployment action and
+must be explicitly authorized because it changes a public application.</p>
+<h2 id="agent-handoff-prompt">Agent handoff prompt<a class="anchor" href="#agent-handoff-prompt" aria-label="Link to section">#</a></h2>
+<pre><code class="language-text">Use the AccelByte AGS skill and docs/ags-plans/2026-09-03-saved-xi-head-to-head.md as the
+implementation plan for this stage only. Inspect the current branch and completed
+prerequisites first. Resolve any missing environment or authorization settings
+before dependent implementation. Preserve existing offline mechanics, implement
+the scoped player flow, and run every acceptance check. Record automated,
+browser, and live-service evidence separately in docs/10-progress-tracker.md.
+Report blockers honestly and stop before the next stage.
+</code></pre>
+</article><footer>Football 11 · Generated from the repository documentation. <a href="https://football-11.workspace-025025.chatgpt.site">Back to the game</a></footer></main></div></body></html>

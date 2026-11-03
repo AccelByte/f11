@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>PostHog Pages publication — September 22, 2026 · Football 11</title><meta name="description" content="Build Football 11 from offline mechanics to online features. Read the setup guide, six integration stages, and copy-ready prompts."><link rel="stylesheet" href="../../tutorial.css"></head>
+<body><a class="skip" href="#tutorial-content">Skip to tutorial</a><header><a class="brand" href="../../index.html"><span>11</span> FOOTBALL 11 <small>THE PLAYBOOK</small></a><nav aria-label="Main navigation"><a href="../../index.html">Tutorial</a><a class="play" href="https://football-11.workspace-025025.chatgpt.site">Play the game ↗</a></nav></header>
+<div class="layout"><aside><details open><summary>On this page</summary><nav aria-label="Tutorial sections"></nav></details><a class="source" href="https://github.com/AccelByte/f11/blob/main/docs/verification/2026-09-22-posthog-pages.md">View Markdown source ↗</a></aside><main id="tutorial-content"><div class="intro">BUILD YOUR GAME · ONE FEATURE AT A TIME</div><article><h1 id="posthog-pages-publication--september-22-2026">PostHog Pages publication — September 22, 2026<a class="anchor" href="#posthog-pages-publication--september-22-2026" aria-label="Link to section">#</a></h1>
+<p>The connected source and compiled frontend were atomically published to
+<code>AccelByte/f11</code> as parentless snapshots. Remote readback matched both published
+commits, and each published branch has exactly one reachable commit. The
+<code>offline-starter</code> branch was not changed.</p>
+<p>The Pages snapshot is <code>7a793eb0fe9e33982d8abdc5a4a405dd73ada48f</code>. It contains
+seven static files, including <code>.nojekyll</code>, and no source ancestry, environment
+files, server output, or source maps. The first source snapshot was <code>8193fd0</code>;
+the current source snapshot may additionally contain this verification record.</p>
+<p>Pre-publication checks passed:</p>
+<ul>
+<li>Typecheck and all 143 tests, including three analytics regressions.</li>
+<li>Focused analytics tests and the Pages build after the final configuration change.</li>
+<li>Formatting and lint for changed code; full lint has existing warnings.</li>
+<li>Source and compiled-tree checks against recognizable credential patterns and
+configured private values: no matches in 185 source files or seven static files.</li>
+<li>Source documentation relative links and whitespace checks.</li>
+<li>Analytics ingestion preflight: HTTP 200, allowed Pages origin, POST, and
+content-type header.</li>
+</ul>
+<p>The full formatting check reports issues in 59 untouched files. No unrelated
+formatting changes were included.</p>
+<p>At the post-push check, the live Pages root still served the previous bundle.
+GitHub&#39;s public Actions listing showed no deployment for the new Pages commit,
+and that commit had no check runs. Publication of the branch is verified;
+deployment of the new build and receipt of an actual browser pageview are not
+yet verified. A repository administrator should inspect or trigger the Pages
+deployment, then perform the analytics acceptance checks in
+<a href="../11-github-pages.html#demo-visit-analytics">the Pages guide</a>.</p>
+<p>This release does not alter the game backend or establish that a PostHog
+dashboard insight has been configured.</p>
+</article><footer>Football 11 · Generated from the repository documentation. <a href="https://football-11.workspace-025025.chatgpt.site">Back to the game</a></footer></main></div></body></html>

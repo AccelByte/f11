@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Phase 0 Exit Review · Football 11</title><meta name="description" content="Build Football 11 from offline mechanics to online features. Read the setup guide, six integration stages, and copy-ready prompts."><link rel="stylesheet" href="../../tutorial.css"></head>
+<body><a class="skip" href="#tutorial-content">Skip to tutorial</a><header><a class="brand" href="../../index.html"><span>11</span> FOOTBALL 11 <small>THE PLAYBOOK</small></a><nav aria-label="Main navigation"><a href="../../index.html">Tutorial</a><a class="play" href="https://football-11.workspace-025025.chatgpt.site">Play the game ↗</a></nav></header>
+<div class="layout"><aside><details open><summary>On this page</summary><nav aria-label="Tutorial sections"><a class="level-2" href="#decision">Decision</a>
+<a class="level-2" href="#exit-evidence">Exit evidence</a>
+<a class="level-2" href="#carried-decisions-that-do-not-block-phase-1a">Carried decisions that do not block Phase 1A</a>
+<a class="level-2" href="#phase-1a-entry-handoff">Phase 1A entry handoff</a></nav></details><a class="source" href="https://github.com/AccelByte/f11/blob/main/docs/phases/phase-00-exit-review.md">View Markdown source ↗</a></aside><main id="tutorial-content"><div class="intro">BUILD YOUR GAME · ONE FEATURE AT A TIME</div><article><h1 id="phase-0-exit-review">Phase 0 Exit Review<a class="anchor" href="#phase-0-exit-review" aria-label="Link to section">#</a></h1>
+<p><strong>Reviewed:</strong> September 4, 2026
+<strong>Result:</strong> Passed for Phase 1A
+<strong>Scope:</strong> Functional MVP mechanics path</p>
+<h2 id="decision">Decision<a class="anchor" href="#decision" aria-label="Link to section">#</a></h2>
+<p>Phase 0 is complete for the standalone Functional MVP mechanics path. Phase 1A
+may start without waiting for AGS, public deployment, competitive balancing, or
+commercial content approval.</p>
+<h2 id="exit-evidence">Exit evidence<a class="anchor" href="#exit-evidence" aria-label="Link to section">#</a></h2>
+<table>
+<thead>
+<tr>
+<th>Gate</th>
+<th>Result</th>
+<th>Evidence</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Working objective and audience assumption</td>
+<td>Pass</td>
+<td>Football 11, English-language global football-fan prototype</td>
+</tr>
+<tr>
+<td>Formation and position eligibility</td>
+<td>Pass</td>
+<td>Explicit 4-3-3 seats and documented broad-role-to-formation inference policy</td>
+</tr>
+<tr>
+<td>Duplicate, reroll, and cooldown rules</td>
+<td>Pass</td>
+<td>One identity per run; selected removal; two-round rejected-card cooldown</td>
+</tr>
+<tr>
+<td>Content provenance</td>
+<td>Pass</td>
+<td>Two pinned OpenFootball revisions, public-domain notice, generator version, seed, disclaimer, and card hash</td>
+</tr>
+<tr>
+<td>Content contract</td>
+<td>Pass</td>
+<td>JSON Schema plus cross-record validator; 1,041 named records validate</td>
+</tr>
+<tr>
+<td>Formation coverage</td>
+<td>Pass</td>
+<td>Every canonical position has multiple candidate records</td>
+</tr>
+<tr>
+<td>Scoring inputs</td>
+<td>Pass</td>
+<td>Versioned assessment and nineteen-opponent league configurations</td>
+</tr>
+<tr>
+<td>Reference fixtures</td>
+<td>Pass</td>
+<td>Three valid XIs score deterministically; duplicate XI is rejected</td>
+</tr>
+<tr>
+<td>Implementation boundaries</td>
+<td>Pass</td>
+<td>React DOM UI, framework-free domain package, local MVP adapters, AGS in Phase 2</td>
+</tr>
+<tr>
+<td>Browser baseline</td>
+<td>Pass</td>
+<td>Recorded desktop/mobile browser and viewport matrix</td>
+</tr>
+<tr>
+<td>Automated checks</td>
+<td>Pass</td>
+<td>Four catalogue tests, five OpenFootball adapter tests, and ten Phase 0 configuration/fixture/design-case tests</td>
+</tr>
+</tbody></table>
+<h2 id="carried-decisions-that-do-not-block-phase-1a">Carried decisions that do not block Phase 1A<a class="anchor" href="#carried-decisions-that-do-not-block-phase-1a" aria-label="Link to section">#</a></h2>
+<ul>
+<li>Public-product rights for club and competition names/marks.</li>
+<li>Final public catalogue size; 60–80 remains an estimate, not a gate.</li>
+<li>Launch geography and go-to-market language beyond the English prototype.</li>
+<li>Competitive balance and target result distributions.</li>
+<li>Public share-card facts and connected-release configuration.</li>
+</ul>
+<p>If club-name rights are unavailable when public release work begins, replace
+club identifiers through a new content version without changing the domain
+schema or mechanics interfaces.</p>
+<h2 id="phase-1a-entry-handoff">Phase 1A entry handoff<a class="anchor" href="#phase-1a-entry-handoff" aria-label="Link to section">#</a></h2>
+<p>Start with:</p>
+<ol>
+<li>framework-free TypeScript domain contracts;</li>
+<li><code>rng-v1</code> and published golden vectors;</li>
+<li>formation eligibility and forward-feasibility matching;</li>
+<li>deterministic constraints, offers, rerolls, state hashes, and replay;</li>
+<li>exact reproduction of the Phase 0 reference assessment fixtures.</li>
+</ol>
+<p>Phase 1A remains blocked only if its implementation reveals a content state that
+cannot support at least three-card continuation or a deterministic reroll. That is an
+engine/content defect to diagnose, not a reason to reopen the confirmed UI or
+AGS boundaries.</p>
+</article><footer>Football 11 · Generated from the repository documentation. <a href="https://football-11.workspace-025025.chatgpt.site">Back to the game</a></footer></main></div></body></html>

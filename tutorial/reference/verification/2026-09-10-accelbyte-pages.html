@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>AccelByte Pages deployment — September 10, 2026 · Football 11</title><meta name="description" content="Build Football 11 from offline mechanics to online features. Read the setup guide, six integration stages, and copy-ready prompts."><link rel="stylesheet" href="../../tutorial.css"></head>
+<body><a class="skip" href="#tutorial-content">Skip to tutorial</a><header><a class="brand" href="../../index.html"><span>11</span> FOOTBALL 11 <small>THE PLAYBOOK</small></a><nav aria-label="Main navigation"><a href="../../index.html">Tutorial</a><a class="play" href="https://football-11.workspace-025025.chatgpt.site">Play the game ↗</a></nav></header>
+<div class="layout"><aside><details open><summary>On this page</summary><nav aria-label="Tutorial sections"></nav></details><a class="source" href="https://github.com/AccelByte/f11/blob/main/docs/verification/2026-09-10-accelbyte-pages.md">View Markdown source ↗</a></aside><main id="tutorial-content"><div class="intro">BUILD YOUR GAME · ONE FEATURE AT A TIME</div><article><h1 id="accelbyte-pages-deployment--september-10-2026">AccelByte Pages deployment — September 10, 2026<a class="anchor" href="#accelbyte-pages-deployment--september-10-2026" aria-label="Link to section">#</a></h1>
+<p>The compiled frontend is published to the separate <code>gh-pages</code> branch of
+<code>AccelByte/f11</code>, commit <code>478c5412abaa4a84b278df19a1b62d5a8a164e78</code>.
+Remote verification confirms <code>main</code> remains unchanged at
+<code>8bb7cb0852c2b8a27f6313a686409fa772cdc6fe</code>, the single source-snapshot commit.
+The deployment branch contains only six static files, including <code>.nojekyll</code>;
+it contains no source history, environment files, or server bundle.</p>
+<p>The build targets <code>https://accelbyte.github.io/f11/</code>; its metadata, asset paths,
+and browser redirect configuration use that URL. <code>FOOTBALL11_PAGES_URL</code> can
+override the target for a later build. The frontend continues to call the
+existing Sites backend. Its CORS allowlist now supports both AccelByte Pages
+and the previous personal-account Pages origin, with exact origin matching.</p>
+<p>The Sites backend is publicly deployed as version 21 from source
+<code>609a4523e2ea8a9041a9b1a785a37060d38ed630</code>. Deployment status is succeeded.
+No runtime credentials or access-policy changes were needed.</p>
+<p>Validation passed: typecheck, 140 tests, both production builds, lint with
+warnings and no errors, static asset references, correct Pages metadata, and an
+in-memory comparison of static output against configured private values with
+no matches. A test-only variable rename removed two newly introduced lint
+warnings; the five focused CORS tests passed again afterward.</p>
+<p>Hosted HTTP checks pass for all fourteen preflight combinations across the
+two allowed origins, seven methods/routes per origin. Both origins receive
+readable 401 responses without authentication. An unapproved origin receives
+403. The original Sites root returns 200. The Pages root now returns the game
+bundle instead of the README. Browser verification confirms the actual game
+screen, successful guest sign-in, and a Sites-issued first-round draft with
+fifteen offered players and five rerolls from the AccelByte Pages origin. The
+rendered draft screen was visually reviewed. DOC-05 is Done; this was a login
+and draft-start smoke, not a full eleven-round regression.</p>
+<p>The publication fixes the hosting configuration; it does not close the
+separately tracked Cloud Save investigation for the earlier personal-account
+Pages deployment or imply a complete multiplayer regression test.</p>
+</article><footer>Football 11 · Generated from the repository documentation. <a href="https://football-11.workspace-025025.chatgpt.site">Back to the game</a></footer></main></div></body></html>

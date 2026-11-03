@@ -1,0 +1,398 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Decisions and Open Questions · Football 11</title><meta name="description" content="Build Football 11 from offline mechanics to online features. Read the setup guide, six integration stages, and copy-ready prompts."><link rel="stylesheet" href="../tutorial.css"></head>
+<body><a class="skip" href="#tutorial-content">Skip to tutorial</a><header><a class="brand" href="../index.html"><span>11</span> FOOTBALL 11 <small>THE PLAYBOOK</small></a><nav aria-label="Main navigation"><a href="../index.html">Tutorial</a><a class="play" href="https://football-11.workspace-025025.chatgpt.site">Play the game ↗</a></nav></header>
+<div class="layout"><aside><details open><summary>On this page</summary><nav aria-label="Tutorial sections"><a class="level-2" href="#confirmed-decisions">Confirmed decisions</a>
+<a class="level-2" href="#proposed-decisions-awaiting-validation">Proposed decisions awaiting validation</a>
+<a class="level-2" href="#open-product-questions">Open product questions</a>
+<a class="level-2" href="#open-football-design-questions">Open football-design questions</a>
+<a class="level-2" href="#open-friend-room-verification-questions">Open friend-room verification questions</a>
+<a class="level-2" href="#open-technical-questions">Open technical questions</a>
+<a class="level-2" href="#next-decisions-to-make">Next decisions to make</a>
+<a class="level-2" href="#saved-xi-mechanics-boundary">Saved-XI mechanics boundary</a>
+<a class="level-2" href="#delivery-decision-order">Delivery decision order</a></nav></details><a class="source" href="https://github.com/AccelByte/f11/blob/main/docs/09-decisions-and-open-questions.md">View Markdown source ↗</a></aside><main id="tutorial-content"><div class="intro">BUILD YOUR GAME · ONE FEATURE AT A TIME</div><article><h1 id="decisions-and-open-questions">Decisions and Open Questions<a class="anchor" href="#decisions-and-open-questions" aria-label="Link to section">#</a></h1>
+<p><strong>Last updated:</strong> September 4, 2026
+<strong>Status:</strong> Living decision register</p>
+<h2 id="confirmed-decisions">Confirmed decisions<a class="anchor" href="#confirmed-decisions" aria-label="Link to section">#</a></h2>
+<table>
+<thead>
+<tr>
+<th>Date</th>
+<th>Decision</th>
+<th>Rationale</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>2026-09-02</td>
+<td>Build for football, not esports</td>
+<td>Aligns with the intended all-time starting-XI fantasy</td>
+</tr>
+<tr>
+<td>2026-09-02</td>
+<td>Preserve a full eleven-player draft</td>
+<td>The formation is central to the result and sharing fantasy</td>
+</tr>
+<tr>
+<td>2026-09-02</td>
+<td>Launch web-first</td>
+<td>Direct shared-link entry and one deployable client</td>
+</tr>
+<tr>
+<td>2026-09-02</td>
+<td>Use React-first for the MVP</td>
+<td>The game is primarily cards, choices, formation UI, and reveals</td>
+</tr>
+<tr>
+<td>2026-09-02</td>
+<td>Keep simulation state outside rendering components</td>
+<td>Enables deterministic tests and later presentation changes</td>
+</tr>
+<tr>
+<td>2026-09-02</td>
+<td>Host the Functional MVP React build with ChatGPT Sites</td>
+<td>Avoid application-owned hosting infrastructure during “it works” validation</td>
+</tr>
+<tr>
+<td>2026-09-02</td>
+<td>Defer application-owned Cloudflare Worker and D1 work</td>
+<td>Remove a backend and migration dependency from the Functional MVP</td>
+</tr>
+<tr>
+<td>2026-09-02</td>
+<td>Keep Phase 1B local and defer AGS until after the Functional MVP</td>
+<td>Prove “it works” without credentials or network dependencies; preserve adapter boundaries for IAM and Cloud Save</td>
+</tr>
+<tr>
+<td>2026-09-03</td>
+<td>Make AGS Foundation Phase 2 and move sharing/daily to Phase 3</td>
+<td>Supersedes the original Phase 3 numbering: the core mechanics and local Functional MVP are proven, so establish identity, persistence, trust, Statistics, and Leaderboards before connected sharing</td>
+</tr>
+<tr>
+<td>2026-09-04</td>
+<td>Retire durable local run saves after Cloud Save integration</td>
+<td>AGS Cloud Save is the sole durable latest-result store; the browser keeps only an in-memory submission envelope, and each newly completed run replaces the prior cloud latest value after verified readback</td>
+</tr>
+<tr>
+<td>2026-09-02</td>
+<td>Use AGS for identity, sessions, statistics, and leaderboards</td>
+<td>Avoid rebuilding native game-backend capabilities</td>
+</tr>
+<tr>
+<td>2026-09-03</td>
+<td>Use discoverable AGS sessions with controlled joinability; keep native session codes optional</td>
+<td>Sessions are <code>OPEN</code> for browsing/joining while waiting, revealed, or counting down, <code>CLOSED</code> while starting/drafting, and reopened at reveal; join-by-ID remains primary while codes are a secondary direct path</td>
+</tr>
+<tr>
+<td>2026-09-02</td>
+<td>Friends draft simultaneously in one live room</td>
+<td>Creates shared presence while preserving independent decisions</td>
+</tr>
+<tr>
+<td>2026-09-03</td>
+<td>Create and start friend rooms with one member; configure the maximum at 8 initially</td>
+<td>A creator can establish or play in a room before others join, while the cap remains tunable</td>
+</tr>
+<tr>
+<td>2026-09-03</td>
+<td>Keep one AGS session across repeated friend-room rounds</td>
+<td>Result reveal starts a configurable countdown, then locks a fresh participant set, challenge ordinal, and seed instead of closing the room; 30 seconds is the proposed initial value for playtesting</td>
+</tr>
+<tr>
+<td>2026-09-02</td>
+<td>Treat leaderboard opponents as asynchronous discovery</td>
+<td>No matchmaking ticket, session allocation, or dedicated server needed</td>
+</tr>
+<tr>
+<td>2026-09-03</td>
+<td>Use a neutral symmetric <code>head-to-head-v1</code> match for Saved-XI challenges</td>
+<td>Equal attack/defence duel weights plus a smaller control weight make role reversal auditable; canonical Saved-XI ordering preserves deterministic results</td>
+</tr>
+<tr>
+<td>2026-09-03</td>
+<td>Start with challenger-only Challenge Score instead of two-sided Elo</td>
+<td>Win/draw/loss applies <code>+3/0/-2</code> with a zero floor while the opponent remains unchanged, avoiding offline rating loss and two-player settlement in the first competitive slice</td>
+</tr>
+<tr>
+<td>2026-09-04</td>
+<td>Publish a Saved XI only through an explicit trusted personal-best action</td>
+<td>Ordinary completions cannot silently replace a player&#39;s asynchronous opponent; a later eligible personal best can be chosen deliberately</td>
+</tr>
+<tr>
+<td>2026-09-04</td>
+<td>Use ten-minute single-use challenge tokens and a 24-hour same-opponent cooldown</td>
+<td>Short-lived opaque authority prevents client-selected evidence and replay, while the cooldown encourages varied nearby opponents</td>
+</tr>
+<tr>
+<td>2026-09-04</td>
+<td>Keep Phase 5 history immutable, bounded, and repairable</td>
+<td>A consumed challenge can be settled exactly once after interruption without duplicating the match or applying its score delta twice</td>
+</tr>
+<tr>
+<td>2026-09-02</td>
+<td>Exclude Analytics, Achievements, Store, and Entitlements from MVP</td>
+<td>Reduce initial integration surface</td>
+</tr>
+<tr>
+<td>2026-09-02</td>
+<td>Label Functional MVP results player-authoritative</td>
+<td>Determinism supports replay, but a browser-only calculation is not tamper-proof</td>
+</tr>
+<tr>
+<td>2026-09-03</td>
+<td>Require a trusted service before ranked competition</td>
+<td>Evaluate the existing Sites managed server runtime first; use AGS Extend only for a verified AGS-integration advantage, and a separately provisioned Worker only for a demonstrated runtime gap</td>
+</tr>
+<tr>
+<td>2026-09-02</td>
+<td>Use one 4-3-3 with <code>GK</code>, <code>LB</code>, two <code>CB</code>, <code>RB</code>, <code>DM</code>, <code>CM</code>, <code>AM</code>, <code>LW</code>, <code>CF</code>, and <code>RW</code></td>
+<td>Keeps the first formation explicit and auditable</td>
+</tr>
+<tr>
+<td>2026-09-02</td>
+<td>Store legal position ratings on each player-season record</td>
+<td>Player eligibility and strength come from football data rather than generic placement labels</td>
+</tr>
+<tr>
+<td>2026-09-02</td>
+<td>Use <code>CF</code> as the centre-forward code; keep <code>FW</code> only as a broad tag</td>
+<td>Prevents category labels from becoming ambiguous formation slots</td>
+</tr>
+<tr>
+<td>2026-09-02</td>
+<td>Allow one player-season card per real player identity in MVP content</td>
+<td>Enforces no duplicates while deferring multi-season identity removal</td>
+</tr>
+<tr>
+<td>2026-09-02</td>
+<td>Remove a selected card from that run&#39;s virtual deck</td>
+<td>A chosen player cannot be offered again in the same run</td>
+</tr>
+<tr>
+<td>2026-09-02</td>
+<td>Test a six-minute draft target first</td>
+<td>Balances eleven meaningful choices with browser-session pacing</td>
+</tr>
+<tr>
+<td>2026-09-02</td>
+<td>Rank only the first authoritative daily completion</td>
+<td>Later replays remain practice rather than score fishing</td>
+</tr>
+<tr>
+<td>2026-09-02</td>
+<td>Use Invincible for zero losses and Perfect for 38 wins / 114 points</td>
+<td>Separates an undefeated season from the literal maximum record</td>
+</tr>
+<tr>
+<td>2026-09-02</td>
+<td>Exclude goals and goal difference from MVP results</td>
+<td>No credible versioned goal model exists yet</td>
+</tr>
+<tr>
+<td>2026-09-02</td>
+<td>Keep rerolled cards out of the same-round replacement, then apply the normal two-round cooldown</td>
+<td>Preserves reroll value and prevents immediate later repetition</td>
+</tr>
+<tr>
+<td>2026-09-02</td>
+<td>Show legal positions and their ratings on every offer card</td>
+<td>Players should see the exact data used for placement decisions</td>
+</tr>
+<tr>
+<td>2026-09-02</td>
+<td>Give every passed-over card a two-round cooldown</td>
+<td>Avoids immediate repetition while allowing unselected cards to return later</td>
+</tr>
+<tr>
+<td>2026-09-02</td>
+<td>Define Phase 1B as a local Functional MVP boundary</td>
+<td>Proves the standalone game works before online features expand scope</td>
+</tr>
+<tr>
+<td>2026-09-02</td>
+<td>Defer competitive balance tuning until after the Functional MVP</td>
+<td>Correctness and reproducibility block implementation; calibration does not</td>
+</tr>
+<tr>
+<td>2026-09-02</td>
+<td>Prepare StatsBomb Open Data Premier League 2015/16 as the first prototype data candidate (superseded 2026-09-03)</td>
+<td>Historical bootstrap decision; later Wyscout content was itself superseded by OpenFootball on 2026-09-04</td>
+</tr>
+<tr>
+<td>2026-09-02</td>
+<td>Treat StatsBomb as metadata provenance, not the source of Football 11 ratings (superseded 2026-09-03)</td>
+<td>Historical constraint; the retired catalogue and importer are no longer active</td>
+</tr>
+<tr>
+<td>2026-09-02</td>
+<td>Use the full validated 550-player StatsBomb candidate for Phase 1A (superseded 2026-09-03)</td>
+<td>Historical mechanics baseline was replaced by Wyscout and then OpenFootball</td>
+</tr>
+<tr>
+<td>2026-09-02</td>
+<td>Accept the documented StatsBomb-to-Football-11 position mapping (superseded 2026-09-03)</td>
+<td>Historical mapping; the active OpenFootball catalogue uses fictional role cards</td>
+</tr>
+<tr>
+<td>2026-09-03</td>
+<td>Prepare the Wyscout PL 2017/18 CC BY 4.0 dataset (superseded 2026-09-04)</td>
+<td>Historical licensed candidate; its catalogue and importer were retired when the five-season OpenFootball source became active</td>
+</tr>
+<tr>
+<td>2026-09-03</td>
+<td>Promote Wyscout/Figshare PL 2017/18 (superseded 2026-09-04)</td>
+<td>Historical application content version replaced by <code>openfootball-premier-league-2020-2025-club-role-v1</code></td>
+</tr>
+<tr>
+<td>2026-09-04</td>
+<td>Use five complete OpenFootball EPL seasons, 2020/21–2024/25</td>
+<td>The public-domain result source provides 1,900 matches and 27 clubs while keeping the starter scope bounded</td>
+</tr>
+<tr>
+<td>2026-09-04</td>
+<td>Represent content as fictional club-season role cards</td>
+<td>OpenFootball lacks complete five-season player evidence; observed club results can support club strength, while all individual fields remain explicitly synthetic</td>
+</tr>
+<tr>
+<td>2026-09-04</td>
+<td>Group draft constraints by club and <code>2020s</code> era</td>
+<td>Individual cards retain season provenance, while a shared era gives all 27 club profiles enough positional depth for bounded offers and 10,000/10,000 complete drafts</td>
+</tr>
+<tr>
+<td>2026-09-04</td>
+<td>Replace the five-season fictional pool with named 2023/24 squads</td>
+<td>This is the only selected OpenFootball Premier League season with all 20 club squad tables. Preserve observed identities and broad roles, infer formation positions, and keep ratings explicitly synthetic.</td>
+</tr>
+<tr>
+<td>2026-09-04</td>
+<td>Make offer and reroll limits deployment-configurable</td>
+<td>Defaults are 15 visible safe cards and 5 run-wide rerolls; validated environment bounds are 3–15 and 0–5, and trusted replay uses the same server configuration</td>
+</tr>
+<tr>
+<td>2026-09-04</td>
+<td>Make rerolls replace the team constraint as well as the visible players</td>
+<td><code>rules-v2</code> deterministically excludes the current club/era, requires a different team with at least three safe cards, and preserves the reroll when none is available</td>
+</tr>
+<tr>
+<td>2026-09-03</td>
+<td>Keep football-data.org out of the checked-in catalogue</td>
+<td>Its subscription terms are application-bound and post-cancellation restrictive; free access is stated as non-commercial</td>
+</tr>
+<tr>
+<td>2026-09-02</td>
+<td>Freeze <code>assessment-v1</code> and <code>league-profile-v1</code> as mechanics inputs</td>
+<td>Phase 1A needs exact configuration and reference outputs; competitive tuning remains later</td>
+</tr>
+<tr>
+<td>2026-09-02</td>
+<td>Keep the Functional MVP as a React DOM interface without Phaser</td>
+<td>Cards, formation placement, and result screens do not need a continuous canvas runtime</td>
+</tr>
+<tr>
+<td>2026-09-02</td>
+<td>Use npm workspaces with separate web, domain, contract, content, and fixture packages</td>
+<td>Preserves simulation/render/storage boundaries and matches the one-developer agentic workflow</td>
+</tr>
+<tr>
+<td>2026-09-02</td>
+<td>Treat Phase 0 as complete for Phase 1A while carrying public-content rights separately</td>
+<td>The rights decision does not block private mechanics work because replacement identities preserve the schema</td>
+</tr>
+</tbody></table>
+<h2 id="proposed-decisions-awaiting-validation">Proposed decisions awaiting validation<a class="anchor" href="#proposed-decisions-awaiting-validation" aria-label="Link to section">#</a></h2>
+<ul>
+<li>Use club plus era as the random offer constraint.</li>
+<li>Use the prepared OpenFootball Premier League 2023/24 named-squad pool
+for prototype evaluation, subject to football curation and club/competition rights review.</li>
+<li>Generate synthetic ratings and gameplay attributes once, deterministically,
+and store them in a versioned manifest.</li>
+<li>Treat 60–80 records only as a possible later release-curation estimate, not a
+Phase 1A or Functional MVP acceptance gate.</li>
+<li>Offer up to fifteen players per round, subject to the configured cap and safe availability.</li>
+<li>Use five visible assessment dimensions.</li>
+<li>Store rich player run/result records in AGS Cloud Save starting in Phase 2.</li>
+<li>Store only trusted aggregate competitive values in AGS Statistics.</li>
+<li>Avoid Durable Objects for the initial friend-room mode.</li>
+<li>Use the AccelByte TypeScript SDK behind an application-owned adapter rather
+than importing generated SDK types throughout React components.</li>
+<li>Use Device ID as a development/staging guest entry, with production gated on
+an account-upgrade/linking policy.</li>
+</ul>
+<h2 id="open-product-questions">Open product questions<a class="anchor" href="#open-product-questions" aria-label="Link to section">#</a></h2>
+<ol>
+<li>What is the product name and one-line public objective?</li>
+<li>Is launch Indonesia/SEA-first or global-first?</li>
+<li>Does legal/product review approve real player identities and club names/marks
+for a public game, or must the release use replacement identities?</li>
+<li>Which 60–80 players, if that estimate holds, form the first curated pool?</li>
+<li>Are real player names acceptable for the prototype?</li>
+<li>Which result metrics appear on the public share card?</li>
+</ol>
+<h2 id="open-football-design-questions">Open football-design questions<a class="anchor" href="#open-football-design-questions" aria-label="Link to section">#</a></h2>
+<ol>
+<li>How much real teammate overlap should influence chemistry?</li>
+<li>How are cross-era tactical differences represented?</li>
+<li>How are goalkeeper quality and defensive organization represented fairly?</li>
+</ol>
+<h2 id="open-friend-room-verification-questions">Open friend-room verification questions<a class="anchor" href="#open-friend-room-verification-questions" aria-label="Link to section">#</a></h2>
+<ol>
+<li>What explicit abandon, deadline-timeout, and host-loss UX should ship after the
+already verified primary loop and native leader migration?</li>
+<li>Which Phase 2 trusted-handler operations will own leader/start transitions and
+replay-derived result submission for production?</li>
+</ol>
+<h2 id="open-technical-questions">Open technical questions<a class="anchor" href="#open-technical-questions" aria-label="Link to section">#</a></h2>
+<ol>
+<li>Durable provider and UX for upgrading/linking a Device ID guest.</li>
+<li>Production hardening values for the verified AGS Session template timeouts and
+code/rate/full-room limits.</li>
+<li>Trusted authority and permission shape for Phase 4 leader/start mutations and
+room-result acceptance.</li>
+<li>Result-image rendering technology.</li>
+</ol>
+<h2 id="next-decisions-to-make">Next decisions to make<a class="anchor" href="#next-decisions-to-make" aria-label="Link to section">#</a></h2>
+<p>The local Functional MVP, connected Phase 2 foundation, Phase 4 development room
+loop, and Phase 5 Saved-XI competition are working. The highest-leverage next
+decisions are:</p>
+<ol>
+<li>Select the trusted authority for Phase 4 leader/start transitions and
+replay-derived room-result acceptance.</li>
+<li>Finish the friend-room abandon, timeout, and host-loss contract against that
+boundary.</li>
+<li>Define Phase 3 daily-seed lifecycle and public-safe immutable result access.</li>
+<li>Choose the production guest-upgrade and account-loss policy.</li>
+<li>Resolve public-content rights and release curation.</li>
+<li>Balance-test <code>head-to-head-v1</code> before treating its current calibration as a
+production competitive model.</li>
+</ol>
+<p>These remain honest release gates without reopening the verified Phase 5 service
+and mechanics contract.</p>
+<h2 id="saved-xi-mechanics-boundary">Saved-XI mechanics boundary<a class="anchor" href="#saved-xi-mechanics-boundary" aria-label="Link to section">#</a></h2>
+<p>Phase 5 is implemented and verified end to end. <code>head-to-head-v1</code> provides one
+neutral match, symmetric attack/defence duels, a smaller control contribution,
+canonical deterministic sampling, draws, and strict version equality. Trusted
+publication stores an explicit personal-best XI; nearby discovery reads the
+existing season-points Leaderboard; opaque ten-minute tokens, 24-hour cooldown,
+immutable history, and idempotent repair protect settlement. The private,
+server-set Challenge Score changes only for the challenger by <code>+3/0/-2</code> with a
+zero floor, and no Challenge Score leaderboard exists. Live two-player AGS smoke
+evidence covers the connected path. Two-sided Elo remains deliberately deferred.</p>
+<h2 id="delivery-decision-order">Delivery decision order<a class="anchor" href="#delivery-decision-order" aria-label="Link to section">#</a></h2>
+<p>The detailed Phase 0–6 plans are indexed in
+<a href="phases/README.html">Detailed MVP delivery plans</a>. Open questions should be closed
+at the phase that first depends on them:</p>
+<ol>
+<li>Phase 0 closes the minimum football rules, content contract, simulation, and
+repository layout needed for implementation.</li>
+<li>Phase 1B closes the local Functional MVP when one visible random run saves,
+reloads, and reproduces on the same device.</li>
+<li>Phase 2 closes AGS environment, SDK, IAM, Cloud Save, trusted replay,
+Statistics, and Leaderboard setup one approved integration slice at a time.</li>
+<li>Phase 3 closes daily replay and public share-content rules on top of that
+authenticated and trusted foundation.</li>
+<li>Phase 4 closes room size, joinability, host, reconnect, timeout, and result
+visibility rules.</li>
+<li>Phase 5 closes Saved-XI replacement, rating, cooldown, and version
+compatibility rules.</li>
+<li>Phase 6 closes production Device ID risk, release budgets, and go/no-go
+ownership.</li>
+</ol>
+</article><footer>Football 11 · Generated from the repository documentation. <a href="https://football-11.workspace-025025.chatgpt.site">Back to the game</a></footer></main></div></body></html>

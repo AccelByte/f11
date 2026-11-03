@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Stage 1: Device ID guest login · Football 11</title><meta name="description" content="Build Football 11 from offline mechanics to online features. Read the setup guide, six integration stages, and copy-ready prompts."><link rel="stylesheet" href="../../tutorial.css"></head>
+<body><a class="skip" href="#tutorial-content">Skip to tutorial</a><header><a class="brand" href="../../index.html"><span>11</span> FOOTBALL 11 <small>THE PLAYBOOK</small></a><nav aria-label="Main navigation"><a href="../../index.html">Tutorial</a><a class="play" href="https://football-11.workspace-025025.chatgpt.site">Play the game ↗</a></nav></header>
+<div class="layout"><aside><details open><summary>On this page</summary><nav aria-label="Tutorial sections"><a class="level-2" href="#prerequisites">Prerequisites</a>
+<a class="level-2" href="#implementation-scope">Implementation scope</a>
+<a class="level-2" href="#acceptance-checks">Acceptance checks</a>
+<a class="level-2" href="#outside-this-step">Outside this step</a>
+<a class="level-2" href="#agent-execution-checklist">Agent execution checklist</a>
+<a class="level-2" href="#connected-design-reference">Connected design reference</a>
+<a class="level-3" href="#goal">Goal</a>
+<a class="level-3" href="#non-goals">Non-goals</a>
+<a class="level-3" href="#affected-areas">Affected areas</a>
+<a class="level-3" href="#ags-modules">AGS modules</a>
+<a class="level-3" href="#service-selection">Service selection</a>
+<a class="level-3" href="#authorization-plan">Authorization plan</a>
+<a class="level-3" href="#implementation-steps">Implementation steps</a>
+<a class="level-3" href="#risks-and-open-questions">Risks and open questions</a>
+<a class="level-2" href="#agent-handoff-prompt">Agent handoff prompt</a></nav></details><a class="source" href="https://github.com/AccelByte/f11/blob/main/docs/ags-plans/2026-09-02-device-id-login.md">View Markdown source ↗</a></aside><main id="tutorial-content"><div class="intro">BUILD YOUR GAME · ONE FEATURE AT A TIME</div><article><h1 id="stage-1-device-id-guest-login">Stage 1: Device ID guest login<a class="anchor" href="#stage-1-device-id-guest-login" aria-label="Link to section">#</a></h1>
+<p><a href="../12-accelbyte-integration-guide.html#stage-1">Integration tutorial</a> · <a href="README.html">All plans</a></p>
+<p><strong>Status:</strong> Not started on the offline starter branch.</p>
+<h2 id="prerequisites">Prerequisites<a class="anchor" href="#prerequisites" aria-label="Link to section">#</a></h2>
+<p>The offline draft completes successfully. Tutorial setup has selected a development namespace and browser-safe public client.</p>
+<h2 id="implementation-scope">Implementation scope<a class="anchor" href="#implementation-scope" aria-label="Link to section">#</a></h2>
+<p>Add an explicit Continue as guest action, verify the authenticated current user, and keep stable device identity on this browser origin. Keep tokens in memory and secrets out of the browser. Expose pending, failure, and retry states. Keep offline play available.</p>
+<p>Keep <code>apps/web/src/game/session.ts</code> as the adapter around <code>packages/domain</code>;
+preserve the existing draft, reroll, and season behavior. Inspect the actual
+branch and installed SDK signatures before choosing API calls. The online
+reference implementation is on public main (development master); it is not
+present on the offline starter. Inspect only the relevant feature when needed.</p>
+<h2 id="acceptance-checks">Acceptance checks<a class="anchor" href="#acceptance-checks" aria-label="Link to section">#</a></h2>
+<p>First login succeeds; same-origin reload restores the same guest; an isolated profile gets a different guest; failed login offers retry without a success state.</p>
+<p>Run <code>npm run typecheck</code>, <code>npm test</code>, and <code>npm run build</code>. Record automated,
+live-service, and browser evidence separately in the progress tracker. Missing
+credentials or service access are blockers, not successful verification.</p>
+<h2 id="outside-this-step">Outside this step<a class="anchor" href="#outside-this-step" aria-label="Link to section">#</a></h2>
+<p>Cloud Save, ranking, sessions, and server-authoritative scoring.</p>
+<h2 id="agent-execution-checklist">Agent execution checklist<a class="anchor" href="#agent-execution-checklist" aria-label="Link to section">#</a></h2>
+<ol>
+<li>Read this entire plan, the repository instructions, and the current progress
+tracker. On <code>offline-starter</code> or a learner&#39;s branch, confirm prerequisite
+stages through their evidence; do not infer readiness from connected notes.</li>
+<li>Inspect the current manifests, domain code, UI state, and any existing service
+adapters. Choose a narrow implementation boundary and list the files to change.</li>
+<li>Use the applicable AGS skill to verify the selected namespace, caller type,
+SDK signatures, and least-privilege resource settings. Keep secrets on the
+trusted server and out of source, screenshots, and logs. If access is missing,
+record the blocker; do not substitute mock results for live verification.</li>
+<li>Implement only this stage&#39;s scope and relevant design details below. Preserve
+deterministic mechanics and offline play. Do not copy the entire connected
+application or bring in later stages to make this one pass.</li>
+<li>Add meaningful coverage for the new state transitions and failure cases, run
+the acceptance checks, and verify the player-visible flow in the browser.</li>
+<li>Update the tracker with changed files, commands/results, redacted live evidence,
+and remaining blockers. Mark the stage Done only when its acceptance checks
+pass. Summarize what the next agent can rely on, then stop.</li>
+</ol>
+<h2 id="connected-design-reference">Connected design reference<a class="anchor" href="#connected-design-reference" aria-label="Link to section">#</a></h2>
+<p>The following detailed design notes are recovered from the original connected
+implementation plans. They explain service choices, data contracts, authority,
+and integration boundaries. Resource names and source paths are examples from
+that implementation; inspect the current branch and namespace before using them.
+Past-tense descriptions are reference behavior, not proof that this stage is
+implemented or verified in the learner&#39;s branch. The scope and acceptance checks
+above govern this stage; defer any later-stage feature mentioned below.</p>
+<h3 id="goal">Goal<a class="anchor" href="#goal" aria-label="Link to section">#</a></h3>
+<p>A first-time player can intentionally continue as a guest, receive an AGS user
+session, pass a second authenticated IAM lookup, and enter the game through the
+visible React flow. Reloading the browser keeps the same local device identity.</p>
+<h3 id="non-goals">Non-goals<a class="anchor" href="#non-goals" aria-label="Link to section">#</a></h3>
+<ul>
+<li>Email/password, Steam, Epic, Google, console, or other provider login.</li>
+<li>Account linking or guest-account upgrade implementation.</li>
+<li>Worker token validation.</li>
+<li>Statistics or Leaderboards integration.</li>
+<li>Lobby, Session Management, friend rooms, Matchmaking, or AMS.</li>
+<li>Production approval for unrecoverable Device ID-only accounts.</li>
+</ul>
+<h3 id="affected-areas">Affected areas<a class="anchor" href="#affected-areas" aria-label="Link to section">#</a></h3>
+<p>The intended production boundaries are:</p>
+<ul>
+<li>React application bootstrap and provider composition.</li>
+<li>Guest-login screen and authenticated shell.</li>
+<li>Application-owned AGS configuration/client factory.</li>
+<li>Application-owned auth gateway and error mapping.</li>
+<li>Local device-identity persistence.</li>
+<li>Focused auth unit tests and browser-flow tests.</li>
+</ul>
+<p>The intended paths and adapter contract are documented in
+<a href="../phases/phase-02-ags-foundation.html">Phase 2 — AGS foundation</a>. Implementation
+belongs in <code>apps/web/</code>.</p>
+<h3 id="ags-modules">AGS modules<a class="anchor" href="#ags-modules" aria-label="Link to section">#</a></h3>
+<ul>
+<li>IAM only.</li>
+</ul>
+<h3 id="service-selection">Service selection<a class="anchor" href="#service-selection" aria-label="Link to section">#</a></h3>
+<ul>
+<li><strong>Selected:</strong> AGS IAM Device ID identity because the slice is authentication
+and account identity.</li>
+<li><strong>Rejected:</strong> Cloud Save, because it is not an identity provider and cannot
+issue an AGS user token.</li>
+<li><strong>Rejected:</strong> D1-only guest accounts, because that would duplicate IAM and
+would not provide the AGS identity required by Sessions, Statistics, and
+Leaderboards.</li>
+<li><strong>Not yet selected:</strong> any durable account provider for guest upgrade. That is
+a later product and IAM decision.</li>
+</ul>
+<h3 id="authorization-plan">Authorization plan<a class="anchor" href="#authorization-plan" aria-label="Link to section">#</a></h3>
+<pre><code class="language-text">Caller:                web game/browser UI
+Environment:           shared cloud
+Environment evidence:  ignored browser config and authenticated AGS CLI discovery agree on the selected development environment
+Token source:          user access token minted by Device ID login
+IAM client type:       public
+Secret location:       none
+AGS calls:             POST /iam/v3/oauth/platforms/device/token; GET /iam/v3/public/users/me
+Permission discovery:  installed SDK source plus authenticated AGS CLI operation metadata
+Required permissions:  none exposed for either public operation; the profile call uses the minted user token
+Shared Cloud groups:   none required for these public operations
+Verified access:       yes; token minting and authenticated current-user lookup pass in the development environment
+</code></pre>
+<p>The Device ID login/token-minting operation may run without a user token. The
+verification lookup must attach the newly minted user token. Any design that
+requires a client secret in React is rejected.</p>
+<h3 id="implementation-steps">Implementation steps<a class="anchor" href="#implementation-steps" aria-label="Link to section">#</a></h3>
+<ol>
+<li>Use the existing <code>apps/web/</code> product source root and preserve its local
+identity adapter as a development/offline implementation.</li>
+<li>Supply browser-safe AGS configuration for development without adding any
+secret to the client.</li>
+<li>Install pinned compatible versions of <code>@accelbyte/sdk</code> and
+<code>@accelbyte/sdk-iam</code>; record declared and resolved versions.</li>
+<li>Inspect the resolved SDK source/types and the target environment&#39;s API
+metadata to identify the exact Device ID login and verification operations.</li>
+<li>Run the read-only authorization/provider preflight against the target
+namespace. Stop if the login method, client type, or required access is not
+verified.</li>
+<li>Add a small AGS client factory and an application-owned <code>AuthGateway</code>.</li>
+<li>Add device-identity persistence using a random UUID and a versioned storage
+key; do not fingerprint the browser.</li>
+<li>Add <code>AuthProvider</code> state for idle, restoring, logging in, verifying,
+authenticated, and error.</li>
+<li>Add the visible <strong>Continue as guest</strong> flow, guest disclosure, retry state,
+and configuration-error state.</li>
+<li>Keep the session tab-local and retain the device identifier across reloads;
+explicit logout and destructive guest reset remain later account-management
+work so this login slice does not add an unsafe reset path.</li>
+<li>Add unit tests for identity persistence, request de-duplication, error
+mapping, and state transitions.</li>
+<li>Run the real development-namespace login, authenticated verification call,
+reload test, and clean-profile separation test.</li>
+</ol>
+<h3 id="risks-and-open-questions">Risks and open questions<a class="anchor" href="#risks-and-open-questions" aria-label="Link to section">#</a></h3>
+<ol>
+<li>Which provider and UX will upgrade/link a guest before production social or
+competitive use?</li>
+<li>Will the product require account linking before connected public release, or
+explicitly accept Device ID account-loss risk?</li>
+<li>When account management is added, what should explicit logout and destructive
+guest reset do while preserving a clear account-loss warning?</li>
+</ol>
+<h2 id="agent-handoff-prompt">Agent handoff prompt<a class="anchor" href="#agent-handoff-prompt" aria-label="Link to section">#</a></h2>
+<pre><code class="language-text">Use the AccelByte AGS skill and docs/ags-plans/2026-09-02-device-id-login.md as the
+implementation plan for this stage only. Inspect the current branch and completed
+prerequisites first. Resolve any missing environment or authorization settings
+before dependent implementation. Preserve existing offline mechanics, implement
+the scoped player flow, and run every acceptance check. Record automated,
+browser, and live-service evidence separately in docs/10-progress-tracker.md.
+Report blockers honestly and stop before the next stage.
+</code></pre>
+</article><footer>Football 11 · Generated from the repository documentation. <a href="https://football-11.workspace-025025.chatgpt.site">Back to the game</a></footer></main></div></body></html>

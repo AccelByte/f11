@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Stage 5: Friend rooms · Football 11</title><meta name="description" content="Build Football 11 from offline mechanics to online features. Read the setup guide, six integration stages, and copy-ready prompts."><link rel="stylesheet" href="../../tutorial.css"></head>
+<body><a class="skip" href="#tutorial-content">Skip to tutorial</a><header><a class="brand" href="../../index.html"><span>11</span> FOOTBALL 11 <small>THE PLAYBOOK</small></a><nav aria-label="Main navigation"><a href="../../index.html">Tutorial</a><a class="play" href="https://football-11.workspace-025025.chatgpt.site">Play the game ↗</a></nav></header>
+<div class="layout"><aside><details open><summary>On this page</summary><nav aria-label="Tutorial sections"><a class="level-2" href="#prerequisites">Prerequisites</a>
+<a class="level-2" href="#implementation-scope">Implementation scope</a>
+<a class="level-2" href="#acceptance-checks">Acceptance checks</a>
+<a class="level-2" href="#outside-this-step">Outside this step</a>
+<a class="level-2" href="#agent-execution-checklist">Agent execution checklist</a>
+<a class="level-2" href="#connected-design-reference">Connected design reference</a>
+<a class="level-3" href="#confirmed-service-contract">Confirmed service contract</a>
+<a class="level-3" href="#lobby-grounding">Lobby grounding</a>
+<a class="level-3" href="#trust-boundary-and-remaining-release-work">Trust boundary and remaining release work</a>
+<a class="level-2" href="#agent-handoff-prompt">Agent handoff prompt</a></nav></details><a class="source" href="https://github.com/AccelByte/f11/blob/main/docs/ags-plans/2026-09-03-friend-room-session.md">View Markdown source ↗</a></aside><main id="tutorial-content"><div class="intro">BUILD YOUR GAME · ONE FEATURE AT A TIME</div><article><h1 id="stage-5-friend-rooms">Stage 5: Friend rooms<a class="anchor" href="#stage-5-friend-rooms" aria-label="Link to section">#</a></h1>
+<p><a href="../12-accelbyte-integration-guide.html#stage-5">Integration tutorial</a> · <a href="README.html">All plans</a></p>
+<p><strong>Status:</strong> Not started on the offline starter branch.</p>
+<h2 id="prerequisites">Prerequisites<a class="anchor" href="#prerequisites" aria-label="Link to section">#</a></h2>
+<p>Device ID works for two isolated players. Solo drafting works. Complete server-issued challenges first if rooms need verified results.</p>
+<h2 id="implementation-scope">Implementation scope<a class="anchor" href="#implementation-scope" aria-label="Link to section">#</a></h2>
+<p>Plan an AGS Session template for small no-dedicated-server rooms and use Lobby for notifications. Implement create/discover/join/leave, readiness, reconnect, and a shared round lifecycle. Define member-specific seeds, deadlines, and result ownership explicitly before implementation. Keep every player&#39;s draft in the shared mechanics engine.</p>
+<p>Keep <code>apps/web/src/game/session.ts</code> as the adapter around <code>packages/domain</code>;
+preserve the existing draft, reroll, and season behavior. Inspect the actual
+branch and installed SDK signatures before choosing API calls. The online
+reference implementation is on public main (development master); it is not
+present on the offline starter. Inspect only the relevant feature when needed.</p>
+<h2 id="acceptance-checks">Acceptance checks<a class="anchor" href="#acceptance-checks" aria-label="Link to section">#</a></h2>
+<p>Two isolated guests converge on membership and readiness; draft/reveal transitions agree; leave/rejoin and interrupted connections recover; unauthorized mutations are rejected or clearly documented as an unresolved cooperative-prototype boundary.</p>
+<p>Run <code>npm run typecheck</code>, <code>npm test</code>, and <code>npm run build</code>. Record automated,
+live-service, and browser evidence separately in the progress tracker. Missing
+credentials or service access are blockers, not successful verification.</p>
+<h2 id="outside-this-step">Outside this step<a class="anchor" href="#outside-this-step" aria-label="Link to section">#</a></h2>
+<p>Matchmaking, AMS, dedicated servers, and claiming client-written room results are authoritative.</p>
+<h2 id="agent-execution-checklist">Agent execution checklist<a class="anchor" href="#agent-execution-checklist" aria-label="Link to section">#</a></h2>
+<ol>
+<li>Read this entire plan, the repository instructions, and the current progress
+tracker. On <code>offline-starter</code> or a learner&#39;s branch, confirm prerequisite
+stages through their evidence; do not infer readiness from connected notes.</li>
+<li>Inspect the current manifests, domain code, UI state, and any existing service
+adapters. Choose a narrow implementation boundary and list the files to change.</li>
+<li>Use the applicable AGS skill to verify the selected namespace, caller type,
+SDK signatures, and least-privilege resource settings. Keep secrets on the
+trusted server and out of source, screenshots, and logs. If access is missing,
+record the blocker; do not substitute mock results for live verification.</li>
+<li>Implement only this stage&#39;s scope and relevant design details below. Preserve
+deterministic mechanics and offline play. Do not copy the entire connected
+application or bring in later stages to make this one pass.</li>
+<li>Add meaningful coverage for the new state transitions and failure cases, run
+the acceptance checks, and verify the player-visible flow in the browser.</li>
+<li>Update the tracker with changed files, commands/results, redacted live evidence,
+and remaining blockers. Mark the stage Done only when its acceptance checks
+pass. Summarize what the next agent can rely on, then stop.</li>
+</ol>
+<h2 id="connected-design-reference">Connected design reference<a class="anchor" href="#connected-design-reference" aria-label="Link to section">#</a></h2>
+<p>The following detailed design notes are recovered from the original connected
+implementation plans. They explain service choices, data contracts, authority,
+and integration boundaries. Resource names and source paths are examples from
+that implementation; inspect the current branch and namespace before using them.
+Past-tense descriptions are reference behavior, not proof that this stage is
+implemented or verified in the learner&#39;s branch. The scope and acceptance checks
+above govern this stage; defer any later-stage feature mentioned below.</p>
+<h3 id="confirmed-service-contract">Confirmed service contract<a class="anchor" href="#confirmed-service-contract" aria-label="Link to section">#</a></h3>
+<ul>
+<li>Template: <code>football11-friend-room-v1</code>.</li>
+<li>Server type: <code>NONE</code>; Matchmaking, AMS, and a dedicated/listen server are not used.</li>
+<li>Persistence: <code>false</code>, because AGS persistent sessions are dedicated-server only.</li>
+<li>Initial joinability: <code>OPEN</code>.</li>
+<li>Capacity: minimum 1; application maximum configurable and bounded to 1–8, with 8
+as the current template/default value.</li>
+<li>Initial operations: public create, read, available-session query, join by ID,
+join by code, partial update, code revoke/regenerate, and leave.</li>
+<li>Lifecycle: 24-hour TTL, 120-second inactive timeout, 60-second invite timeout,
+and native code generation enabled.</li>
+</ul>
+<p>Authenticated AGS CLI readback confirms this template. The TypeScript application
+pins <code>@accelbyte/sdk</code> 4.3.3, IAM 6.3.6, Session 5.3.6, and Lobby 5.2.8. Generated
+browser bundles identify their internal generated modules one patch lower; the
+package manifests and lockfile remain the installation authority.</p>
+<p>The earlier Public-client permission update did not persist in IAM readback, so it
+is not claimed as configured evidence. Real Device-user Session calls nevertheless
+prove that the target client can perform every operation used by the current flow.</p>
+<h3 id="lobby-grounding">Lobby grounding<a class="anchor" href="#lobby-grounding" aria-label="Link to section">#</a></h3>
+<p>The TypeScript Lobby SDK exposes the raw <code>messageSessionNotif</code> websocket envelope,
+but not typed Session V2 topic payloads. Inspection of the project&#39;s pinned Unreal
+SDK confirms the relevant topic names:</p>
+<ul>
+<li><code>OnSessionJoined</code>;</li>
+<li><code>OnSessionMembersChanged</code>;</li>
+<li><code>OnGameSessionUpdated</code>; and</li>
+<li><code>OnSessionEnded</code>.</li>
+</ul>
+<p>Football 11 therefore treats Lobby messages as invalidation hints and always reads
+the canonical Session snapshot after a relevant notification. A four-second bounded
+poll remains the missed-event and reconnect fallback. Browser QA also found that the
+generated Lobby client creates its native socket inside <code>connect()</code>, so callbacks
+must be registered after that call.</p>
+<h3 id="trust-boundary-and-remaining-release-work">Trust boundary and remaining release work<a class="anchor" href="#trust-boundary-and-remaining-release-work" aria-label="Link to section">#</a></h3>
+<p>This is a functional development integration, not a production-authoritative room
+aggregate. Every current Session member that has public update permission can PATCH
+attributes, so browser checks for leader authority, readiness, progress, and result
+submission are cooperative guards rather than an anti-cheat boundary. The completed
+Phase 2 trusted replay service now binds ranked room evidence to canonical Session
+membership and seed derivation. Trusted room-start mutations and receipt-backed
+comparison acceptance are still required before Phase 4 results are suitable for
+competitive release.</p>
+<p>The remaining Phase 4 exit work is visible-browser coverage for explicit abandon,
+deadline timeout, and host loss, followed by a repeat of the authority-sensitive
+cases against the Phase 2 trusted handler. These gaps do not block continued
+development of the primary friend-room loop, but they do block calling Phase 4
+production-complete.</p>
+<h2 id="agent-handoff-prompt">Agent handoff prompt<a class="anchor" href="#agent-handoff-prompt" aria-label="Link to section">#</a></h2>
+<pre><code class="language-text">Use the AccelByte AGS skill and docs/ags-plans/2026-09-03-friend-room-session.md as the
+implementation plan for this stage only. Inspect the current branch and completed
+prerequisites first. Resolve any missing environment or authorization settings
+before dependent implementation. Preserve existing offline mechanics, implement
+the scoped player flow, and run every acceptance check. Record automated,
+browser, and live-service evidence separately in docs/10-progress-tracker.md.
+Report blockers honestly and stop before the next stage.
+</code></pre>
+</article><footer>Football 11 · Generated from the repository documentation. <a href="https://football-11.workspace-025025.chatgpt.site">Back to the game</a></footer></main></div></body></html>

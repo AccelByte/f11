@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Tutorial and hosting migration — November 3, 2026 · Football 11</title><meta name="description" content="Build Football 11 from offline mechanics to online features. Read the setup guide, six integration stages, and copy-ready prompts."><link rel="stylesheet" href="../../tutorial.css"></head>
+<body><a class="skip" href="#tutorial-content">Skip to tutorial</a><header><a class="brand" href="../../index.html"><span>11</span> FOOTBALL 11 <small>THE PLAYBOOK</small></a><nav aria-label="Main navigation"><a href="../../index.html">Tutorial</a><a class="play" href="https://football-11.workspace-025025.chatgpt.site">Play the game ↗</a></nav></header>
+<div class="layout"><aside><details open><summary>On this page</summary><nav aria-label="Tutorial sections"><a class="level-2" href="#requested-deployment">Requested deployment</a>
+<a class="level-2" href="#approved-ags-setup">Approved AGS setup</a>
+<a class="level-2" href="#verification">Verification</a></nav></details><a class="source" href="https://github.com/AccelByte/f11/blob/main/docs/verification/2026-11-03-deployment.md">View Markdown source ↗</a></aside><main id="tutorial-content"><div class="intro">BUILD YOUR GAME · ONE FEATURE AT A TIME</div><article><h1 id="tutorial-and-hosting-migration--november-3-2026">Tutorial and hosting migration — November 3, 2026<a class="anchor" href="#tutorial-and-hosting-migration--november-3-2026" aria-label="Link to section">#</a></h1>
+<h2 id="requested-deployment">Requested deployment<a class="anchor" href="#requested-deployment" aria-label="Link to section">#</a></h2>
+<p>GitHub Pages hosts the generated integration tutorial and links to the game on
+this account&#39;s new ChatGPT Site. The game has a Tutorial menu link. Markdown
+under <code>docs/</code> remains the source of truth.</p>
+<h2 id="approved-ags-setup">Approved AGS setup<a class="anchor" href="#approved-ags-setup" aria-label="Link to section">#</a></h2>
+<p>Read-only discovery found the selected namespace and its default public game
+client. Device ID credentials, statistics, leaderboards, and the trusted server
+client are absent. The previous deployment&#39;s server credentials cannot be reused.</p>
+<p>The proposed setup preserves this prototype&#39;s existing guest flow and its
+visible browser-data-loss warning. It does not implement account linking.</p>
+<p>Create a confidential client named <code>Football 11 Sites Trusted Replay</code>, with a
+fresh random ID and secret, no audiences, the new Site as base/redirect URI,
+and these catalog-verified module permissions:</p>
+<pre><code class="language-json">{
+  &quot;oauthClientType&quot;: &quot;Confidential&quot;,
+  &quot;clientName&quot;: &quot;Football 11 Sites Trusted Replay&quot;,
+  &quot;modulePermissions&quot;: [
+    {
+      &quot;moduleId&quot;: &quot;m_cloud_save&quot;,
+      &quot;selectedGroups&quot;: [
+        { &quot;groupId&quot;: &quot;g_game_records&quot;, &quot;selectedActions&quot;: [2] },
+        { &quot;groupId&quot;: &quot;g_player_records&quot;, &quot;selectedActions&quot;: [1, 2, 4] }
+      ]
+    },
+    {
+      &quot;moduleId&quot;: &quot;m_statistics&quot;,
+      &quot;selectedGroups&quot;: [
+        { &quot;groupId&quot;: &quot;g_user_statistics_value&quot;, &quot;selectedActions&quot;: [1, 2, 4] }
+      ]
+    }
+  ]
+}
+</code></pre>
+<p>Use the discovered <code>ags iam clients create --namespace &lt;selected namespace&gt; --json @&lt;ignored request file&gt;</code> command. Generate the secret only after approval;
+keep it in ignored local configuration and Sites secret storage.</p>
+<p>Enable Device ID with the discovered <code>ags iam platform-credentials create</code>
+operation and minimal body <code>{&quot;RedirectUri&quot;:&quot;http://127.0.0.1&quot;,&quot;IsActive&quot;:true}</code>.
+Bootstrap the game&#39;s existing Game Record, two server-set Statistics, the v3
+season leaderboard, and friend-room Session template from the repository contracts.
+Keep their identifiers and gameplay settings consistent with the connected
+implementation. Do not grant the runtime client configuration-write permissions.</p>
+<p>Write the new deployment&#39;s configuration to a separate ignored environment
+file, preserving the earlier deployment&#39;s local configuration.</p>
+<h2 id="verification">Verification<a class="anchor" href="#verification" aria-label="Link to section">#</a></h2>
+<p>The user approved this setup in the current chat. The confidential client was
+created and its type and exact module permissions read back. The Game Record is
+verified <code>SERVER</code>-set. Device ID login, both Statistics, the season Leaderboard,
+and the friend-room Session template are configured. Saved-XI discovery reuses
+the season Leaderboard; its private Challenge Score has no Leaderboard.</p>
+<p>Typecheck, all 143 tests, and both Pages and Sites Worker builds pass. Generated
+tutorial HTML passes all local-link and section-anchor checks across 37 pages.
+Live guest identity, same-device recovery, Cloud Save write/readback/replay, and
+Session create/discover/join/code/update/leave checks pass. Lobby WebSocket
+delivery was not verified by the Session smoke.</p>
+<p>Publication and deployed browser checks are pending. Existing connected-release
+authority/recovery and account-linking gates remain tracked separately.</p>
+</article><footer>Football 11 · Generated from the repository documentation. <a href="https://football-11.workspace-025025.chatgpt.site">Back to the game</a></footer></main></div></body></html>

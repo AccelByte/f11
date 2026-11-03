@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Phase 1B Detailed Plan — Local React Functional MVP · Football 11</title><meta name="description" content="Build Football 11 from offline mechanics to online features. Read the setup guide, six integration stages, and copy-ready prompts."><link rel="stylesheet" href="../../tutorial.css"></head>
+<body><a class="skip" href="#tutorial-content">Skip to tutorial</a><header><a class="brand" href="../../index.html"><span>11</span> FOOTBALL 11 <small>THE PLAYBOOK</small></a><nav aria-label="Main navigation"><a href="../../index.html">Tutorial</a><a class="play" href="https://football-11.workspace-025025.chatgpt.site">Play the game ↗</a></nav></header>
+<div class="layout"><aside><details open><summary>On this page</summary><nav aria-label="Tutorial sections"><a class="level-2" href="#work-estimate--one-developer-with-agentic-ai">Work estimate — one developer with agentic AI</a>
+<a class="level-2" href="#why-this-phase-exists">Why this phase exists</a>
+<a class="level-2" href="#phase-outcome">Phase outcome</a>
+<a class="level-2" href="#entry-conditions">Entry conditions</a>
+<a class="level-2" href="#explicit-non-goals">Explicit non-goals</a>
+<a class="level-2" href="#package-boundary">Package boundary</a>
+<a class="level-2" href="#player-flow">Player flow</a>
+<a class="level-2" href="#browser-state-model">Browser state model</a>
+<a class="level-2" href="#local-persistence-contract">Local persistence contract</a>
+<a class="level-2" href="#work-sequence">Work sequence</a>
+<a class="level-3" href="#1b-a--react-application-shell">1B-A — React application shell</a>
+<a class="level-3" href="#1b-b--mechanics-integration">1B-B — Mechanics integration</a>
+<a class="level-3" href="#1b-c--local-identity-and-replay-storage">1B-C — Local identity and replay storage</a>
+<a class="level-3" href="#1b-d--player-surfaces">1B-D — Player surfaces</a>
+<a class="level-3" href="#1b-e--verification-and-sites-ready-build">1B-E — Verification and Sites-ready build</a>
+<a class="level-2" href="#failure-behavior">Failure behavior</a>
+<a class="level-2" href="#verification-evidence">Verification evidence</a>
+<a class="level-2" href="#exit-checklist">Exit checklist</a></nav></details><a class="source" href="https://github.com/AccelByte/f11/blob/main/docs/phases/phase-01-solo-vertical-slice.md">View Markdown source ↗</a></aside><main id="tutorial-content"><div class="intro">BUILD YOUR GAME · ONE FEATURE AT A TIME</div><article><h1 id="phase-1b-detailed-plan--local-react-functional-mvp">Phase 1B Detailed Plan — Local React Functional MVP<a class="anchor" href="#phase-1b-detailed-plan--local-react-functional-mvp" aria-label="Link to section">#</a></h1>
+<p><strong>Last updated:</strong> September 3, 2026
+<strong>Status:</strong> Complete; local Functional MVP exit checks passed
+<strong>Parent roadmap:</strong> <a href="../07-mvp-roadmap.html">07 — MVP roadmap</a><br><strong>Phase index:</strong> <a href="README.html">Detailed delivery plans</a></p>
+<h2 id="work-estimate--one-developer-with-agentic-ai">Work estimate — one developer with agentic AI<a class="anchor" href="#work-estimate--one-developer-with-agentic-ai" aria-label="Link to section">#</a></h2>
+<ul>
+<li><strong>Effort:</strong> 2–3 builder-days.</li>
+<li><strong>Elapsed time:</strong> 2–3 working days.</li>
+<li><strong>Primary uncertainty:</strong> responsive player-flow defects and packaging the
+existing React build for ChatGPT Sites.</li>
+</ul>
+<h2 id="why-this-phase-exists">Why this phase exists<a class="anchor" href="#why-this-phase-exists" aria-label="Link to section">#</a></h2>
+<p>Phase 1A proves the rules headlessly. Phase 1B makes the same engine playable
+in React and proves the complete game on one device before any online-service
+dependency is introduced.</p>
+<p>The Functional MVP is intentionally local. It creates a random local profile,
+stores the latest replayable result in browser storage, and verifies a checksum
+on readback. Results remain player-authoritative: the checksum detects accidental
+or casual local modification, but it is not competitive security.</p>
+<p>All AGS integration now begins in Phase 2 — AGS Foundation. That phase replaces
+the local identity and persistence adapters with IAM Device ID and Cloud Save,
+then adds trusted replay, Statistics, and Leaderboards. An application-owned
+Cloudflare Worker and D1 remain deferred.</p>
+<h2 id="phase-outcome">Phase outcome<a class="anchor" href="#phase-outcome" aria-label="Link to section">#</a></h2>
+<p>A player can open the React app, receive or restore a local guest profile,
+complete eleven legal choices, use rerolls, see every relevant position rating,
+receive the deterministic 38-match season result, save a checksummed replay
+record locally, reload it, and view the same result.</p>
+<h2 id="entry-conditions">Entry conditions<a class="anchor" href="#entry-conditions" aria-label="Link to section">#</a></h2>
+<ul>
+<li>Phase 1A passes its golden, invariant, replay, and 10,000-seed suite.</li>
+<li>The React application consumes the shared domain/content packages directly.</li>
+<li>ChatGPT Sites build requirements are present for <code>apps/web</code>.</li>
+</ul>
+<h2 id="explicit-non-goals">Explicit non-goals<a class="anchor" href="#explicit-non-goals" aria-label="Link to section">#</a></h2>
+<ul>
+<li>AGS SDK installation, IAM Device ID, Cloud Save, Statistics, or Leaderboards.</li>
+<li>Application-owned Cloudflare Worker or D1 database.</li>
+<li>Server-authoritative or tamper-proof results.</li>
+<li>Daily challenges, sharing, rooms, saved-XI rivals, or account sync.</li>
+<li>Phaser, live match visuals, production polish, or broad balance tuning.</li>
+<li>Deployment before the user explicitly requests it.</li>
+</ul>
+<h2 id="package-boundary">Package boundary<a class="anchor" href="#package-boundary" aria-label="Link to section">#</a></h2>
+<pre><code class="language-text">apps/
+  web/                   React UI, local adapters, Sites configuration
+packages/
+  domain/                deterministic engine; no React or storage imports
+  contracts/             serializable local and later remote record shapes
+  content/               pinned catalogue/configuration loaders
+  test-fixtures/         golden runs and browser-flow fixtures
+</code></pre>
+<p>React components depend on application-owned identity and persistence
+interfaces. Phase 2 can add AGS implementations behind those boundaries without
+moving football rules into components or generated SDK types.</p>
+<h2 id="player-flow">Player flow<a class="anchor" href="#player-flow" aria-label="Link to section">#</a></h2>
+<pre><code class="language-text">Open app
+  -&gt; obtain or restore a random local profile identifier
+  -&gt; load and checksum-verify the latest local result when one exists
+  -&gt; start a random challenge using Web Crypto seed material
+  -&gt; domain creates the first deterministic offer, capped at fifteen safe cards
+  -&gt; player selects a legal player/slot or rerolls
+  -&gt; repeat until all eleven 4-3-3 slots are filled
+  -&gt; domain replays actions, assesses the XI, and simulates 38 matches
+  -&gt; app writes one versioned run/result record to local browser storage
+  -&gt; app reads it back and verifies its checksum
+  -&gt; result screen shows XI, W-D-L, points, categories, and explanation
+</code></pre>
+<h2 id="browser-state-model">Browser state model<a class="anchor" href="#browser-state-model" aria-label="Link to section">#</a></h2>
+<pre><code class="language-text">booting
+  -&gt; local-profile-ready
+  -&gt; ready
+  -&gt; drafting
+  -&gt; calculating-result
+  -&gt; saving-local-result
+  -&gt; result
+  -&gt; recoverable-local-storage-error
+</code></pre>
+<p>Draft state contains only serializable mechanics data. Card selection, focus,
+modal visibility, and animation timing are presentation-only.</p>
+<h2 id="local-persistence-contract">Local persistence contract<a class="anchor" href="#local-persistence-contract" aria-label="Link to section">#</a></h2>
+<p>The MVP stores one latest-run record under a versioned browser key:</p>
+<pre><code class="language-ts">type LocalRunRecordV1 = {
+  schemaVersion: &#39;football11-local-run-v1&#39;;
+  runId: string;
+  localProfileId: string;
+  seed: string;
+  versions: MechanicsVersion;
+  actions: DraftAction[];
+  stateHashes: string[];
+  result: RunResult;
+  createdAt: string;
+  authority: &#39;player&#39;;
+  checksum: string;
+};
+</code></pre>
+<p>The checksum covers every field except itself. A malformed, unsupported, or
+checksum-mismatched record is rejected and never labelled restored or verified.
+Clearing browser storage removes the profile and saved result. This is expected
+for the local MVP and must not be described as account sync.</p>
+<h2 id="work-sequence">Work sequence<a class="anchor" href="#work-sequence" aria-label="Link to section">#</a></h2>
+<h3 id="1b-a--react-application-shell">1B-A — React application shell<a class="anchor" href="#1b-a--react-application-shell" aria-label="Link to section">#</a></h3>
+<ol>
+<li>Create <code>apps/web</code> with React, TypeScript, the product theme, and Sites config.</li>
+<li>Add home, draft, formation, and result surfaces.</li>
+<li>Add explicit ready, draft, result, and recoverable-error states.</li>
+</ol>
+<h3 id="1b-b--mechanics-integration">1B-B — Mechanics integration<a class="anchor" href="#1b-b--mechanics-integration" aria-label="Link to section">#</a></h3>
+<ol>
+<li>Import the approved domain/content packages without copying rules.</li>
+<li>Generate fresh seeds with Web Crypto and pin all mechanics versions.</li>
+<li>Send every select/reroll action through the shared transition function.</li>
+<li>Resolve through the shared replay/assessment/season pipeline.</li>
+<li>Render only retained assessment, season, and explanation facts.</li>
+</ol>
+<h3 id="1b-c--local-identity-and-replay-storage">1B-C — Local identity and replay storage<a class="anchor" href="#1b-c--local-identity-and-replay-storage" aria-label="Link to section">#</a></h3>
+<ol>
+<li>Create a random, versioned local profile identifier without fingerprinting.</li>
+<li>Keep identity and persistence behind small application adapters.</li>
+<li>Save versions, seed, actions, state hashes, and the complete result.</li>
+<li>Read back and checksum-verify the record before showing “Saved.”</li>
+<li>Restore and expose the latest result on a later visit.</li>
+</ol>
+<h3 id="1b-d--player-surfaces">1B-D — Player surfaces<a class="anchor" href="#1b-d--player-surfaces" aria-label="Link to section">#</a></h3>
+<ol>
+<li>Show three offer cards with legal positions and ratings.</li>
+<li>Preview the effective slot rating before committing a choice.</li>
+<li>Show filled/open formation slots, round, rerolls, and cooldown behavior.</li>
+<li>Show the final XI, record, five categories, units, explanation, and replay hash.</li>
+<li>Support 360×640, 390×844, and 1280×720 without hover-only controls.</li>
+</ol>
+<h3 id="1b-e--verification-and-sites-ready-build">1B-E — Verification and Sites-ready build<a class="anchor" href="#1b-e--verification-and-sites-ready-build" aria-label="Link to section">#</a></h3>
+<ol>
+<li>Run the complete Phase 1A suite in the integrated workspace.</li>
+<li>Complete a browser run including a reroll and all eleven placements.</li>
+<li>Verify local save/readback, checksum rejection, and latest-result restoration.</li>
+<li>Pass typecheck, unit/integration tests, lint, formatting, and production build.</li>
+<li>Keep deployment user-triggered.</li>
+</ol>
+<h2 id="failure-behavior">Failure behavior<a class="anchor" href="#failure-behavior" aria-label="Link to section">#</a></h2>
+<table>
+<thead>
+<tr>
+<th>Failure</th>
+<th>Player behavior</th>
+<th>Record behavior</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Local storage unavailable</td>
+<td>Explain that the draft cannot be saved</td>
+<td>No verified-save claim</td>
+</tr>
+<tr>
+<td>Invalid local action</td>
+<td>Prevent and explain it</td>
+<td>No state mutation</td>
+</tr>
+<tr>
+<td>Local write/readback fails</td>
+<td>Preserve the visible completed result</td>
+<td>Do not claim “Saved”</td>
+</tr>
+<tr>
+<td>Unsupported stored version</td>
+<td>Explain that the prior result was not loaded</td>
+<td>Preserve no false verified state</td>
+</tr>
+<tr>
+<td>Local data is tampered</td>
+<td>Reject on checksum mismatch</td>
+<td>Never label restored, ranked, or trusted</td>
+</tr>
+</tbody></table>
+<h2 id="verification-evidence">Verification evidence<a class="anchor" href="#verification-evidence" aria-label="Link to section">#</a></h2>
+<ul>
+<li>The browser flow completed all eleven rounds after a reroll and rendered the
+deterministic result at desktop, 390×844, and 360×640 with no narrow-viewport
+horizontal overflow.</li>
+<li><code>apps/web/src/game/session.test.ts</code> exercises direct shared-domain transitions
+and complete-run resolution.</li>
+<li><code>apps/web/src/services/local/local-services.test.ts</code> proves stable random local
+identity, full replay-record roundtrip, and checksum rejection.</li>
+<li>The result UI labels every outcome player-authoritative and exposes the replay
+hash; it makes no ranked or server-verified claim.</li>
+<li>The Sites/vinext production artifact is prepared only after the root verification
+command passes. Deployment remains a separate explicit action.</li>
+</ul>
+<h2 id="exit-checklist">Exit checklist<a class="anchor" href="#exit-checklist" aria-label="Link to section">#</a></h2>
+<ul>
+<li><input checked="" disabled="" type="checkbox"> A stable random local guest profile is created and restored without fingerprinting.</li>
+<li><input checked="" disabled="" type="checkbox"> Eleven legal rounds can be completed through React.</li>
+<li><input checked="" disabled="" type="checkbox"> The integrated run uses the exact Phase 1A transitions and result resolver.</li>
+<li><input checked="" disabled="" type="checkbox"> A complete replayable record survives local write/readback and checksum verification.</li>
+<li><input checked="" disabled="" type="checkbox"> The result includes XI, W-D-L, points, five categories, units, and explanation.</li>
+<li><input checked="" disabled="" type="checkbox"> The UI labels the result player-authoritative, not ranked or server-verified.</li>
+<li><input checked="" disabled="" type="checkbox"> The final format, lint, typecheck, test, and production-build command passes.</li>
+<li><input checked="" disabled="" type="checkbox"> The ChatGPT Sites build is ready; deployment remains user-triggered.</li>
+</ul>
+<p><strong>Exit criterion:</strong> one visible random run works from local guest entry through a
+saved, reloadable, deterministic result. This closes the standalone Functional
+MVP; AGS identity, account sync, Cloud Save, and competitive trust begin in
+Phase 2.</p>
+</article><footer>Football 11 · Generated from the repository documentation. <a href="https://football-11.workspace-025025.chatgpt.site">Back to the game</a></footer></main></div></body></html>

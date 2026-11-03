@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Service Responsibility Map · Football 11</title><meta name="description" content="Build Football 11 from offline mechanics to online features. Read the setup guide, six integration stages, and copy-ready prompts."><link rel="stylesheet" href="../tutorial.css"></head>
+<body><a class="skip" href="#tutorial-content">Skip to tutorial</a><header><a class="brand" href="../index.html"><span>11</span> FOOTBALL 11 <small>THE PLAYBOOK</small></a><nav aria-label="Main navigation"><a href="../index.html">Tutorial</a><a class="play" href="https://football-11.workspace-025025.chatgpt.site">Play the game ↗</a></nav></header>
+<div class="layout"><aside><details open><summary>On this page</summary><nav aria-label="Tutorial sections"><a class="level-2" href="#decision">Decision</a>
+<a class="level-2" href="#local-to-ags-migration">Local-to-AGS migration</a>
+<a class="level-2" href="#why-cloud-save-not-statistics">Why Cloud Save, not Statistics</a>
+<a class="level-2" href="#trust-limitation">Trust limitation</a>
+<a class="level-2" href="#module-growth-path">Module growth path</a>
+<a class="level-2" href="#browser-secret-rules-for-phase-2">Browser secret rules for Phase 2</a></nav></details><a class="source" href="https://github.com/AccelByte/f11/blob/main/docs/05-ags-and-cloudflare.md">View Markdown source ↗</a></aside><main id="tutorial-content"><div class="intro">BUILD YOUR GAME · ONE FEATURE AT A TIME</div><article><h1 id="service-responsibility-map">Service Responsibility Map<a class="anchor" href="#service-responsibility-map" aria-label="Link to section">#</a></h1>
+<p><strong>Last updated:</strong> September 4, 2026
+<strong>Status:</strong> Connected runtime uses AGS Cloud Save as the sole durable latest-run store; Phase 4 friend rooms development-integrated</p>
+<h2 id="decision">Decision<a class="anchor" href="#decision" aria-label="Link to section">#</a></h2>
+<p>Use ChatGPT Sites for the React build. Prove the complete game locally in Phase 1B,
+then maximize AGS in Phase 2. Do not make AGS credentials, Cloudflare Worker code,
+or D1 prerequisites for the Functional MVP.</p>
+<table>
+<thead>
+<tr>
+<th>Concern</th>
+<th>Phase 1B owner</th>
+<th>Phase 2/later owner</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Guest identity</td>
+<td>Random local profile</td>
+<td>AGS IAM Device ID plus account linking</td>
+</tr>
+<tr>
+<td>Full run/result record</td>
+<td>Checksummed browser record</td>
+<td>AGS Cloud Save</td>
+</tr>
+<tr>
+<td>Numeric progression</td>
+<td>Deferred</td>
+<td>AGS Statistics after trusted replay</td>
+</tr>
+<tr>
+<td>Ranking</td>
+<td>Deferred</td>
+<td>AGS Leaderboards</td>
+</tr>
+<tr>
+<td>Controlled-joinability friend rooms and optional session codes</td>
+<td>Not in Phase 1B</td>
+<td>AGS Session Management development integration implemented in Phase 4; trusted mutations remain Phase 2 work</td>
+</tr>
+<tr>
+<td>React hosting</td>
+<td>ChatGPT Sites-ready build</td>
+<td>ChatGPT Sites static client plus managed server runtime when required</td>
+</tr>
+<tr>
+<td>Deterministic mechanics</td>
+<td>Shared domain package in browser</td>
+<td>Same package/version in the Sites server runtime</td>
+</tr>
+<tr>
+<td>Trusted replay</td>
+<td>Deferred</td>
+<td>Evaluate the Sites managed server runtime first</td>
+</tr>
+<tr>
+<td>Separate Worker / D1</td>
+<td>Deferred</td>
+<td>Add only after a documented unmet requirement</td>
+</tr>
+</tbody></table>
+<h2 id="local-to-ags-migration">Local-to-AGS migration<a class="anchor" href="#local-to-ags-migration" aria-label="Link to section">#</a></h2>
+<p>The Phase 1B adapters establish the contract without coupling screens to storage:</p>
+<pre><code class="language-text">LocalIdentity       -&gt; Phase 2 IAM Device ID implementation
+LocalRunRecordV1    -&gt; Phase 2 CloudRunRecordV1 mapping
+local save/readback -&gt; Phase 2 Cloud Save write/readback
+player checksum     -&gt; retained integrity check, not trusted authority
+</code></pre>
+<p>That migration is now complete. The browser retains the Device ID needed to restore
+the development guest, but it no longer persists or reads completed run records. Any
+legacy latest-run value is ignored rather than imported. A completion is mapped
+directly to the private Cloud Save record, written, read back, and replay-
+verified. Because the key explicitly represents the latest run, a newer completion
+replaces the previous cloud value, including an obsolete or damaged slot. Reload
+recovery reads the cloud value directly, eliminating local/cloud reconciliation.</p>
+<h2 id="why-cloud-save-not-statistics">Why Cloud Save, not Statistics<a class="anchor" href="#why-cloud-save-not-statistics" aria-label="Link to section">#</a></h2>
+<p>A run contains seed, version pins, ordered actions, state hashes, XI, assessment,
+38 match outcomes, explanation facts, and the final hash. Cloud Save is the intended
+AGS home for that structured player/game record. Statistics is reserved for small
+trusted numeric values that drive leaderboards, achievements, or progression.</p>
+<p>Phase 2 therefore stores rich game data in Cloud Save and writes Statistics only
+after trusted replay accepts the run.</p>
+<h2 id="trust-limitation">Trust limitation<a class="anchor" href="#trust-limitation" aria-label="Link to section">#</a></h2>
+<p>Phase 1B checksums catch malformed or modified local records but do not stop a player
+from changing browser code and recomputing a checksum. Direct player Cloud Save writes
+will have the same authority limitation. Competitive results require an authenticated
+trusted replay boundary that derives both user identity and result.</p>
+<p>The first implementation choice is a server-backed ChatGPT Sites deployment. Sites
+server code runs in a managed Cloudflare Workers runtime, so the existing hosted app
+can expose the authenticated replay endpoint without provisioning a second hosting
+surface. The static Functional MVP remains unchanged; server execution is introduced
+only for the connected competitive slice.</p>
+<p>AGS Extend remains a valid alternative when live evidence shows that native AGS
+authentication, routing, SDK access, latency, or operational integration materially
+outweighs keeping the trusted endpoint with the Sites application. A separately
+provisioned Cloudflare Worker is the final runtime fallback. D1 remains excluded unless
+idempotency or another concrete relational/transactional requirement cannot be
+represented safely with the selected AGS records and operations.</p>
+<h2 id="module-growth-path">Module growth path<a class="anchor" href="#module-growth-path" aria-label="Link to section">#</a></h2>
+<ol>
+<li><strong>Phase 1B:</strong> local profile + checksummed latest-run persistence.</li>
+<li><strong>Phase 2:</strong> IAM Device ID + Cloud Save + trusted replay + Statistics + Leaderboards.</li>
+<li><strong>Phase 3:</strong> daily challenges, public result sharing, share assets, and synced history.</li>
+<li><strong>Phase 4:</strong> the development integration now uses AGS Session Management for
+discoverable rooms whose joinability closes during drafts and reopens at reveal,
+optional native session join codes, and repeated rounds in one active no-server
+session. The template is nonpersistent because live AGS metadata reserves
+persistence for DS sessions. Production leader/result authority still routes
+through the Phase 2 trusted-boundary work.</li>
+<li><strong>Phase 5:</strong> trusted saved-XI discovery and settlement; add non-AGS storage only
+when evidence proves it necessary.</li>
+</ol>
+<h2 id="browser-secret-rules-for-phase-2">Browser secret rules for Phase 2<a class="anchor" href="#browser-secret-rules-for-phase-2" aria-label="Link to section">#</a></h2>
+<ul>
+<li>Use an AGS public client in the browser.</li>
+<li>Never ship a confidential client secret in browser JavaScript or client-visible
+Sites configuration; server-only values use hosted Sites secrets.</li>
+<li>Keep SDK access behind application adapters.</li>
+<li>Do not persist OAuth access tokens in browser storage.</li>
+<li>Verify exact SDK operations, permissions, Cloud Save limits, and namespace
+configuration against the selected versions before live integration.</li>
+</ul>
+</article><footer>Football 11 · Generated from the repository documentation. <a href="https://football-11.workspace-025025.chatgpt.site">Back to the game</a></footer></main></div></body></html>

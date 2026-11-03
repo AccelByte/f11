@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Phase 0 Content and Scoring Contract · Football 11</title><meta name="description" content="Build Football 11 from offline mechanics to online features. Read the setup guide, six integration stages, and copy-ready prompts."><link rel="stylesheet" href="../../tutorial.css"></head>
+<body><a class="skip" href="#tutorial-content">Skip to tutorial</a><header><a class="brand" href="../../index.html"><span>11</span> FOOTBALL 11 <small>THE PLAYBOOK</small></a><nav aria-label="Main navigation"><a href="../../index.html">Tutorial</a><a class="play" href="https://football-11.workspace-025025.chatgpt.site">Play the game ↗</a></nav></header>
+<div class="layout"><aside><details open><summary>On this page</summary><nav aria-label="Tutorial sections"><a class="level-2" href="#functional-mvp-assumptions">Functional MVP assumptions</a>
+<a class="level-2" href="#mechanics-content-pool">Mechanics content pool</a>
+<a class="level-2" href="#position-role-policy">Position-role policy</a>
+<a class="level-2" href="#frozen-catalogue-contract">Frozen catalogue contract</a>
+<a class="level-2" href="#assessment-configuration">Assessment configuration</a>
+<a class="level-2" href="#golden-roster-fixtures">Golden roster fixtures</a>
+<a class="level-2" href="#rights-boundary">Rights boundary</a></nav></details><a class="source" href="https://github.com/AccelByte/f11/blob/main/docs/phases/phase-00-content-contract.md">View Markdown source ↗</a></aside><main id="tutorial-content"><div class="intro">BUILD YOUR GAME · ONE FEATURE AT A TIME</div><article><h1 id="phase-0-content-and-scoring-contract">Phase 0 Content and Scoring Contract<a class="anchor" href="#phase-0-content-and-scoring-contract" aria-label="Link to section">#</a></h1>
+<p><strong>Last updated:</strong> September 4, 2026
+<strong>Status:</strong> Frozen for Phase 1A implementation
+<strong>Parent:</strong> <a href="phase-00-design-lock.html">Phase 0 — Design lock</a></p>
+<h2 id="functional-mvp-assumptions">Functional MVP assumptions<a class="anchor" href="#functional-mvp-assumptions" aria-label="Link to section">#</a></h2>
+<ul>
+<li>Working product name: <strong>Football 11</strong>.</li>
+<li>Working objective: build an all-time starting XI and discover whether it can
+complete a perfect 38-match season.</li>
+<li>Initial prototype language: English.</li>
+<li>Initial prototype audience: global football fans; launch geography remains a
+later go-to-market decision and does not change the mechanics contract.</li>
+<li>Presentation: React DOM interface with no canvas game engine in the
+Functional MVP.</li>
+</ul>
+<h2 id="mechanics-content-pool">Mechanics content pool<a class="anchor" href="#mechanics-content-pool" aria-label="Link to section">#</a></h2>
+<p>Use the complete validated OpenFootball Premier League 2023/24 named-squad
+catalogue as the active mechanics pool:</p>
+<ul>
+<li>380 matches.</li>
+<li>20 club squad tables.</li>
+<li>1,041 named player cards.</li>
+<li>One unique observed player identity per card.</li>
+</ul>
+<p>Do not reduce the mechanics pool to the earlier 60–80 planning estimate before
+the Phase 1A offer analyzer has measured position scarcity, repeated offers,
+constraint gaps, and reroll availability. Final release curation is a content
+and rights decision, not a Phase 1A entry requirement.</p>
+<h2 id="position-role-policy">Position-role policy<a class="anchor" href="#position-role-policy" aria-label="Link to section">#</a></h2>
+<p>The following fine-grained roles are accepted for the Functional MVP candidate.
+They are inferred gameplay constructs, not observed claims about a player&#39;s
+career.</p>
+<table>
+<thead>
+<tr>
+<th>Fictional primary role</th>
+<th>Football 11 eligibility</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Goalkeeper</td>
+<td><code>GK</code></td>
+</tr>
+<tr>
+<td>Left back</td>
+<td><code>LB</code>, <code>LW</code></td>
+</tr>
+<tr>
+<td>Centre back</td>
+<td><code>CB</code>, <code>DM</code></td>
+</tr>
+<tr>
+<td>Right back</td>
+<td><code>RB</code>, <code>RW</code></td>
+</tr>
+<tr>
+<td>Holding midfielder</td>
+<td><code>DM</code>, <code>CM</code></td>
+</tr>
+<tr>
+<td>Central midfielder</td>
+<td><code>CM</code>, <code>DM</code>, <code>AM</code></td>
+</tr>
+<tr>
+<td>Attacking midfielder</td>
+<td><code>AM</code>, <code>CM</code></td>
+</tr>
+<tr>
+<td>Left winger</td>
+<td><code>LW</code>, <code>AM</code>, <code>CF</code></td>
+</tr>
+<tr>
+<td>Centre forward</td>
+<td><code>CF</code>, <code>LW</code>, <code>RW</code></td>
+</tr>
+<tr>
+<td>Right winger</td>
+<td><code>RW</code>, <code>AM</code>, <code>CF</code></td>
+</tr>
+</tbody></table>
+<p>Secondary positions receive a four-point step-down from the preceding modeled
+eligibility. The role counts and shared <code>2020s</code> club constraint protect draft
+feasibility. An absent canonical position is illegal; there is no generic
+makeshift penalty.</p>
+<h2 id="frozen-catalogue-contract">Frozen catalogue contract<a class="anchor" href="#frozen-catalogue-contract" aria-label="Link to section">#</a></h2>
+<p>The machine-readable contract is
+<code>data/schema/player-catalogue-v1.schema.json</code>. The checked-in validator also
+enforces cross-record rules that JSON Schema alone does not express conveniently:</p>
+<ul>
+<li>unique card, real-player identity, and source-player identifiers;</li>
+<li>known club references and matching content versions;</li>
+<li>at least one legal canonical position per player;</li>
+<li>integer ratings and gameplay attributes in <code>0..100</code>;</li>
+<li>complete v1 attribute and tactical-trait keys;</li>
+<li>synthetic, non-official rating provenance with matching generator and seed;</li>
+<li>exact player/team counts and position-coverage summary;</li>
+<li>a canonical SHA-256 hash of all player records.</li>
+</ul>
+<p>Run:</p>
+<pre><code class="language-powershell">python tools/catalogue/validate_catalogue.py
+</code></pre>
+<h2 id="assessment-configuration">Assessment configuration<a class="anchor" href="#assessment-configuration" aria-label="Link to section">#</a></h2>
+<p><code>data/config/assessment-v1.json</code> freezes:</p>
+<ul>
+<li>the eleven unique <code>4-3-3-v1</code> slot identifiers;</li>
+<li>composite weights: Quality 35%, Positioning 20%, Chemistry 20%, Tactical
+balance 20%, and Leadership 5%;</li>
+<li>neutral, same-season, and same-club chemistry affinities;</li>
+<li>sixteen weighted formation-adjacency edges;</li>
+<li>six tactical axes, their role weights, minimums, and contribution weights;</li>
+<li>leadership treatment and attack/defence/control unit weights;</li>
+<li>deterministic rounding policy.</li>
+</ul>
+<p>All weight groups sum to <code>1.0</code>. These are mechanically frozen inputs for the
+first implementation, not a claim of competitive balance. Any coefficient
+change after Phase 1A golden vectors exist requires a new configuration version.</p>
+<p><code>data/config/league-profile-v1.json</code> freezes nineteen abstract opponents. Each
+is played home and away for exactly 38 matches. These are not licensed real
+clubs.</p>
+<h2 id="golden-roster-fixtures">Golden roster fixtures<a class="anchor" href="#golden-roster-fixtures" aria-label="Link to section">#</a></h2>
+<p><code>data/fixtures/phase-00-golden-rosters-v1.json</code> contains three valid XIs and one
+invalid XI. A Python reference calculation freezes the Phase 0 expected inputs
+and outputs that the Phase 1A TypeScript engine must reproduce.</p>
+<table>
+<thead>
+<tr>
+<th>Fixture</th>
+<th>Purpose</th>
+<th align="right">Composite</th>
+<th align="right">Quality</th>
+<th align="right">Positioning</th>
+<th align="right">Chemistry</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>elite-balanced</code></td>
+<td>Highest effective slot ratings</td>
+<td align="right">84.41</td>
+<td align="right">85.00</td>
+<td align="right">100.00</td>
+<td align="right">54.00</td>
+</tr>
+<tr>
+<td><code>star-heavy-mispositioned</code></td>
+<td>Legal but lower-rated placements</td>
+<td align="right">81.08</td>
+<td align="right">80.91</td>
+<td align="right">89.61</td>
+<td align="right">54.90</td>
+</tr>
+<tr>
+<td><code>single-club-coherent</code></td>
+<td>Lower-quality single-club XI with strong affinity</td>
+<td align="right">88.37</td>
+<td align="right">82.00</td>
+<td align="right">97.10</td>
+<td align="right">82.00</td>
+</tr>
+<tr>
+<td><code>duplicate-identity</code></td>
+<td>Same identity in both centre-back seats</td>
+<td align="right">Rejected</td>
+<td align="right">—</td>
+<td align="right">—</td>
+<td align="right">—</td>
+</tr>
+</tbody></table>
+<p>The coherent XI outperforming the raw-rating XI is intentional evidence that
+team fit is not cosmetic. This is a correctness fixture, not balance approval.</p>
+<p><code>data/fixtures/phase-00-draft-cases-v1.json</code> freezes selected-card removal,
+passed-card cooldown timing, reroll replacement exclusion, failed-reroll
+resource behavior, and the forward-safe-placement requirement.</p>
+<p><code>data/fixtures/phase-00-match-cases-v1.json</code> freezes the match-strength delta
+and normalized win/draw/loss probabilities for even, stronger, and weaker team
+inputs. Phase 1A adds exact sampled 38-match outcomes after <code>rng-v1</code> exists.</p>
+<p>Regenerate and verify:</p>
+<pre><code class="language-powershell">python tools/phase0/prepare_phase0_fixtures.py
+python -m unittest discover -s tools/phase0 -p &quot;test_*.py&quot; -v
+</code></pre>
+<h2 id="rights-boundary">Rights boundary<a class="anchor" href="#rights-boundary" aria-label="Link to section">#</a></h2>
+<p>OpenFootball is the active public-domain source. Preserve repository and pinned
+revision provenance. Gameplay cards must separate observed identities and broad
+roles from inferred positions and synthetic, non-official ratings. Public use
+of player identities and club/competition names or marks still requires
+product/legal approval independent of the dataset&#39;s public-domain status.</p>
+<p>That decision does not block Phase 1A or a private Functional MVP: the exact
+schema can be populated with replacement club identifiers while preserving
+mechanics and golden contract shapes.</p>
+</article><footer>Football 11 · Generated from the repository documentation. <a href="https://football-11.workspace-025025.chatgpt.site">Back to the game</a></footer></main></div></body></html>
