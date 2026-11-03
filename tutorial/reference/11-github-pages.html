@@ -44,6 +44,10 @@ preflights, preserves authentication errors, and rejects other cross-origin
 callers. All existing bearer-token and trusted replay checks remain active.
 CORS allows an origin, not a repository path; other pages under the same GitHub
 account share that origin, but they still require valid player authorization.</p>
+<p>Browser latest-run saving now uses the same backend through
+<code>GET</code>/<code>PUT /api/latest-run</code>. This fixed-slot route derives its owner from the
+verified player and forwards that player&#39;s token to AGS; it does not grant
+service-token access to client-written saves. Its request limit is 128 KiB.</p>
 <h2 id="acceptance">Acceptance<a class="anchor" href="#acceptance" aria-label="Link to section">#</a></h2>
 <h3 id="demo-visit-analytics">Demo visit analytics<a class="anchor" href="#demo-visit-analytics" aria-label="Link to section">#</a></h3>
 <p>The Pages source includes PostHog pageview tracking. Set

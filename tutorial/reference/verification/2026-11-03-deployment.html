@@ -3,7 +3,9 @@
 <body><a class="skip" href="#tutorial-content">Skip to tutorial</a><header><a class="brand" href="../../index.html"><span>11</span> FOOTBALL 11 <small>THE PLAYBOOK</small></a><nav aria-label="Main navigation"><a href="../../index.html">Tutorial</a><a class="play" href="https://football-11.workspace-025025.chatgpt.site">Play the game ↗</a></nav></header>
 <div class="layout"><aside><details open><summary>On this page</summary><nav aria-label="Tutorial sections"><a class="level-2" href="#requested-deployment">Requested deployment</a>
 <a class="level-2" href="#approved-ags-setup">Approved AGS setup</a>
-<a class="level-2" href="#verification">Verification</a></nav></details><a class="source" href="https://github.com/AccelByte/f11/blob/main/docs/verification/2026-11-03-deployment.md">View Markdown source ↗</a></aside><main id="tutorial-content"><div class="intro">BUILD YOUR GAME · ONE FEATURE AT A TIME</div><article><h1 id="tutorial-and-hosting-migration--november-3-2026">Tutorial and hosting migration — November 3, 2026<a class="anchor" href="#tutorial-and-hosting-migration--november-3-2026" aria-label="Link to section">#</a></h1>
+<a class="level-2" href="#verification">Verification</a>
+<a class="level-2" href="#published-endpoints">Published endpoints</a>
+<a class="level-2" href="#browser-persistence-repair">Browser persistence repair</a></nav></details><a class="source" href="https://github.com/AccelByte/f11/blob/main/docs/verification/2026-11-03-deployment.md">View Markdown source ↗</a></aside><main id="tutorial-content"><div class="intro">BUILD YOUR GAME · ONE FEATURE AT A TIME</div><article><h1 id="tutorial-and-hosting-migration--november-3-2026">Tutorial and hosting migration — November 3, 2026<a class="anchor" href="#tutorial-and-hosting-migration--november-3-2026" aria-label="Link to section">#</a></h1>
 <h2 id="requested-deployment">Requested deployment<a class="anchor" href="#requested-deployment" aria-label="Link to section">#</a></h2>
 <p>GitHub Pages hosts the generated integration tutorial and links to the game on
 this account&#39;s new ChatGPT Site. The game has a Tutorial menu link. Markdown
@@ -53,11 +55,70 @@ created and its type and exact module permissions read back. The Game Record is
 verified <code>SERVER</code>-set. Device ID login, both Statistics, the season Leaderboard,
 and the friend-room Session template are configured. Saved-XI discovery reuses
 the season Leaderboard; its private Challenge Score has no Leaderboard.</p>
-<p>Typecheck, all 143 tests, and both Pages and Sites Worker builds pass. Generated
+<p>Typecheck, all 150 tests, and both Pages and Sites Worker builds pass. Generated
 tutorial HTML passes all local-link and section-anchor checks across 37 pages.
 Live guest identity, same-device recovery, Cloud Save write/readback/replay, and
 Session create/discover/join/code/update/leave checks pass. Lobby WebSocket
 delivery was not verified by the Session smoke.</p>
-<p>Publication and deployed browser checks are pending. Existing connected-release
-authority/recovery and account-linking gates remain tracked separately.</p>
+<p>The updated Saved-XI smoke requests server-issued challenges and carries their
+frozen configuration. Live trusted replay verifies valid acceptance, duplicate
+idempotency, tamper/version rejection, private server-owned receipts, Statistic
+and Leaderboard readback. Live Saved-XI publication, discovery, single-use tokens,
+duplicate settlement, private history, challenger-only scoring, and cooldown
+checks also pass.</p>
+<h2 id="published-endpoints">Published endpoints<a class="anchor" href="#published-endpoints" aria-label="Link to section">#</a></h2>
+<table>
+<thead>
+<tr>
+<th>Surface</th>
+<th>URL</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>GitHub Pages game</td>
+<td><a href="https://accelbyte.github.io/f11/">https://accelbyte.github.io/f11/</a></td>
+</tr>
+<tr>
+<td>GitHub Pages tutorial</td>
+<td><a href="https://accelbyte.github.io/f11/tutorial/">https://accelbyte.github.io/f11/tutorial/</a></td>
+</tr>
+<tr>
+<td>Game in this account&#39;s Sites</td>
+<td><a href="https://football-11.workspace-025025.chatgpt.site">https://football-11.workspace-025025.chatgpt.site</a></td>
+</tr>
+<tr>
+<td>Sites tutorial</td>
+<td><a href="https://football-11.workspace-025025.chatgpt.site/tutorial/">https://football-11.workspace-025025.chatgpt.site/tutorial/</a></td>
+</tr>
+</tbody></table>
+<p>Functional Sites version 2 is deployed from source commit
+<code>fd47260ccb8847628bcd2cf06e45a71104e37e2f</code>. The matching browser-saving release
+is published to <code>AccelByte/f11</code> gh-pages as <code>966d283</code>. Subsequent documentation
+refreshes preserve this verified application behavior. Source history on the
+public main/offline-starter branches was not changed by this deployment.</p>
+<p>Both roots, tutorials, reference pages, and referenced assets return HTTP 200.
+The tutorial&#39;s Play links target the new Site. All supported API preflights
+allow the Pages origin; an unapproved origin receives 403. Missing-session
+latest-run requests return 401 with the correct Pages CORS header.</p>
+<h2 id="browser-persistence-repair">Browser persistence repair<a class="anchor" href="#browser-persistence-repair" aria-label="Link to section">#</a></h2>
+<p>Browser inspection reproduced the earlier saving warning. Direct Cloud Save
+OPTIONS returns 405 without CORS headers, although Node identity/storage checks
+pass. Browser saves now use fixed <code>GET</code>/<code>PUT /api/latest-run</code> routes. The backend
+verifies IAM identity and namespace, derives the owner, targets only the latest
+run key, and forwards the player&#39;s token. Writes validate replay, force private
+metadata, and accept at most 128 KiB. This route does not use the confidential
+client to elevate player-written saves.</p>
+<p>Seven focused tests cover token/namespace rejection, fixed-slot addressing,
+cross-owner/public-record rejection, malformed/oversized payloads, replay/private
+metadata, and the browser transport. They pass within the full 150-test suite.
+Changed-file formatting and lint pass, with existing warnings only. A targeted
+scan of 316 source/browser artifacts finds no configured confidential values or
+recognized credential patterns.</p>
+<p>In the deployed browser, both games complete eleven selections, report
+<strong>Result saved</strong>, and restore the same guest and result after reload. Sites
+restores its 58-point result; Pages independently restores its 45-point result.
+Both display <strong>Latest result restored</strong> without the earlier saving warning.
+The separate origins retain separate browser guest identities.</p>
+<p>Existing connected-release authority/recovery and account-linking gates remain
+tracked separately; this hosting migration does not mark those complete.</p>
 </article><footer>Football 11 · Generated from the repository documentation. <a href="https://football-11.workspace-025025.chatgpt.site">Back to the game</a></footer></main></div></body></html>

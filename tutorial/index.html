@@ -903,7 +903,14 @@ checksum, supported versions, replayed result, and state hashes.</li>
 <li>Report success only for matching readback. On reload, read and validate AGS data
 before restoring it into application state.</li>
 </ol>
-<p>The adapter uses <code>PublicPlayerRecordApi.getRecord_ByUserId_ByKey</code> and
+<p>Browser saves use <code>GET</code>/<code>PUT /api/latest-run</code> on the game backend because the
+current AGS Cloud Save endpoint does not accept browser CORS preflights. This
+fixed-slot route verifies the player&#39;s IAM identity, derives the owner from that
+identity, validates the replay on writes, and forwards the player&#39;s token to
+Cloud Save. It forces private visibility and never uses a service token for this
+player-written save. The HTTP route accepts at most 128 KiB per request.</p>
+<p>The direct Node/service-check adapter still uses
+<code>PublicPlayerRecordApi.getRecord_ByUserId_ByKey</code> and
 <code>updateRecord_ByUserId_ByKey</code> on the authenticated SDK. A read returning <code>404</code>
 means no save yet. A checksum catches corruption, but a modified browser can
 recompute it; protected results still require trusted server validation.</p>
