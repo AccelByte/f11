@@ -30,10 +30,26 @@ design change updates the relevant item in this document.</p>
 </tr>
 </thead>
 <tbody><tr>
+<td>DEPLOY-02</td>
+<td>Restore browser saving through the game backend</td>
+<td>In progress</td>
+<td>Deployed browser drafting and trusted scoring work, but direct Cloud Save OPTIONS returns 405 without CORS headers and browser saves fail. Next: add a fixed latest-run route using the authenticated player&#39;s token, verify ownership/private metadata, then prove browser save and reload on both frontends. This affects connected persistence; the standalone Functional MVP remains available.</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Item</th>
+<th>Status</th>
+<th>Evidence / next action</th>
+</tr>
+</thead>
+<tbody><tr>
 <td>DEPLOY-01</td>
 <td>Publish the tutorial and migrate the game to this account&#39;s Sites and new AGS namespace</td>
 <td>In progress</td>
-<td>Deployment requested November 3. AGS CLI authentication is valid against the newly selected environment; this Sites account has no Football 11 project. Next: generate HTML from the integration guide, expose it in the game menu, verify the new namespace configuration, publish a new Site, and update GitHub Pages links. Hosting migration does not block the existing Functional MVP.</td>
+<td>Tutorial menu and generator are implemented; 37 generated pages pass link/anchor checks. Typecheck, 143 tests, Pages and Sites builds pass; targeted lint has two existing warnings. Approved namespace setup is applied and read back. Live identity, Cloud Save, and Session lifecycle smokes pass. New Site and runtime secrets are configured in this account. See docs/verification/2026-11-03-deployment.md. Next: publish both artifacts and verify hosted tutorial, trusted API, and browser save/reload. This migration does not block the existing Functional MVP.</td>
 </tr>
 </tbody></table>
 <table>
